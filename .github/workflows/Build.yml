@@ -66,8 +66,6 @@ jobs:
           versioning: Semantic
           buildName: Paco
           allowDirtyBuild: true
-      - name: Rename build
-        run: sudo mv "build/Android/Paco.apk" "build/Android/Paco${{ steps.buildStep.outputs.buildVersion }}.apk"
       - uses: actions/upload-artifact@v2
         with:
           name: Build
