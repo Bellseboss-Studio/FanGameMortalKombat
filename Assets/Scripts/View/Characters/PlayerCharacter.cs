@@ -15,5 +15,11 @@ namespace View.Characters
         {
             OnInputChangedExtend(value.Get<Vector2>());
         }
+
+        private void OnCameraMovement(InputValue value)
+        {
+            var vector2 = value.Get<Vector2>();
+            OnCameraMovementExtend(vector2);
+        }
     }
 }

@@ -25,6 +25,14 @@ public class @FanGameMortalKombat : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""CameraMovement"",
+                    ""type"": ""Value"",
+                    ""id"": ""530395bd-3399-4ea5-a78f-d28de2dd1d88"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -45,7 +53,7 @@ public class @FanGameMortalKombat : IInputActionCollection, IDisposable
                     ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""MovementControllers"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -56,7 +64,7 @@ public class @FanGameMortalKombat : IInputActionCollection, IDisposable
                     ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""MovementControllers"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -67,7 +75,7 @@ public class @FanGameMortalKombat : IInputActionCollection, IDisposable
                     ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""MovementControllers"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -78,7 +86,7 @@ public class @FanGameMortalKombat : IInputActionCollection, IDisposable
                     ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""MovementControllers"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -135,6 +143,171 @@ public class @FanGameMortalKombat : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""MovementControllers"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""2D Vector Control"",
+                    ""id"": ""b972a2ed-e0c7-432d-acbf-0272450290ff"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MovementControllers"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""abf75051-521c-4ce1-b804-b548ad547e72"",
+                    ""path"": ""<Joystick>/stick/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MovementControllers"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""72300149-c71d-4a36-a6cb-ebb12ed218e7"",
+                    ""path"": ""<Joystick>/stick/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MovementControllers"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""48e3f3ec-acf8-402d-8291-f5a4215f2b59"",
+                    ""path"": ""<Joystick>/stick/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MovementControllers"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""83172c39-a0fa-4bf3-a705-16ef8077dee2"",
+                    ""path"": ""<Joystick>/stick/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MovementControllers"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""2D Vector Control"",
+                    ""id"": ""1ea4354d-e8de-42f1-a80b-28db36e49980"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraMovement"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""caddf4d7-bd9d-476a-8278-6fd7d8f4582b"",
+                    ""path"": ""<HID::DragonRise Inc.   Generic   USB  Joystick  >/hat/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraMovement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""66046792-8f75-483d-b24f-f82f61e1e58a"",
+                    ""path"": ""<HID::DragonRise Inc.   Generic   USB  Joystick  >/hat/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraMovement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""1e6754ab-c0e8-4e9c-a9f9-e2adac1ad9e2"",
+                    ""path"": ""<HID::DragonRise Inc.   Generic   USB  Joystick  >/hat/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraMovement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""75bd2325-d246-4e09-b37b-48ae15fe5505"",
+                    ""path"": ""<HID::DragonRise Inc.   Generic   USB  Joystick  >/hat/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraMovement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""2D Vector KeyBoard"",
+                    ""id"": ""eb9b1ba4-697b-4d47-bd04-d95f00f3fbaa"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraMovement"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""53bba0f9-6655-4768-bef0-dca9e6e405a9"",
+                    ""path"": ""<Keyboard>/i"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraMovement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""5f6a4ed1-87f9-4580-af3b-f7b61327e7d5"",
+                    ""path"": ""<Keyboard>/k"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraMovement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""f0cd0167-a44f-4af6-8d58-fb0534425216"",
+                    ""path"": ""<Keyboard>/j"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraMovement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""55f88a31-e4b2-4deb-891c-be27c939993d"",
+                    ""path"": ""<Keyboard>/l"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraMovement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 }
@@ -207,6 +380,7 @@ public class @FanGameMortalKombat : IInputActionCollection, IDisposable
         // PlayerMovement
         m_PlayerMovement = asset.FindActionMap("PlayerMovement", throwIfNotFound: true);
         m_PlayerMovement_MovementControllers = m_PlayerMovement.FindAction("MovementControllers", throwIfNotFound: true);
+        m_PlayerMovement_CameraMovement = m_PlayerMovement.FindAction("CameraMovement", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -257,11 +431,13 @@ public class @FanGameMortalKombat : IInputActionCollection, IDisposable
     private readonly InputActionMap m_PlayerMovement;
     private IPlayerMovementActions m_PlayerMovementActionsCallbackInterface;
     private readonly InputAction m_PlayerMovement_MovementControllers;
+    private readonly InputAction m_PlayerMovement_CameraMovement;
     public struct PlayerMovementActions
     {
         private @FanGameMortalKombat m_Wrapper;
         public PlayerMovementActions(@FanGameMortalKombat wrapper) { m_Wrapper = wrapper; }
         public InputAction @MovementControllers => m_Wrapper.m_PlayerMovement_MovementControllers;
+        public InputAction @CameraMovement => m_Wrapper.m_PlayerMovement_CameraMovement;
         public InputActionMap Get() { return m_Wrapper.m_PlayerMovement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -274,6 +450,9 @@ public class @FanGameMortalKombat : IInputActionCollection, IDisposable
                 @MovementControllers.started -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnMovementControllers;
                 @MovementControllers.performed -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnMovementControllers;
                 @MovementControllers.canceled -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnMovementControllers;
+                @CameraMovement.started -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnCameraMovement;
+                @CameraMovement.performed -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnCameraMovement;
+                @CameraMovement.canceled -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnCameraMovement;
             }
             m_Wrapper.m_PlayerMovementActionsCallbackInterface = instance;
             if (instance != null)
@@ -281,6 +460,9 @@ public class @FanGameMortalKombat : IInputActionCollection, IDisposable
                 @MovementControllers.started += instance.OnMovementControllers;
                 @MovementControllers.performed += instance.OnMovementControllers;
                 @MovementControllers.canceled += instance.OnMovementControllers;
+                @CameraMovement.started += instance.OnCameraMovement;
+                @CameraMovement.performed += instance.OnCameraMovement;
+                @CameraMovement.canceled += instance.OnCameraMovement;
             }
         }
     }
@@ -333,5 +515,6 @@ public class @FanGameMortalKombat : IInputActionCollection, IDisposable
     public interface IPlayerMovementActions
     {
         void OnMovementControllers(InputAction.CallbackContext context);
+        void OnCameraMovement(InputAction.CallbackContext context);
     }
 }
