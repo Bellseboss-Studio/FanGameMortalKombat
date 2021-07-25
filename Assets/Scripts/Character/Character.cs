@@ -28,13 +28,11 @@ namespace CharacterCustom
         {
             Instantiate(model3D, transform);
             pointInicialToPointToFar = pointFarToCamera.transform.localPosition;
-            Debug.Log($"{pointInicialToPointToFar}");
         }
         protected void Update()
         {
             rb.velocity = transform.forward * (speed * Time.deltaTime * speedGlobal);
             transform.Rotate(new Vector3(0, forceRotation * rotationGlobal, 0), Space.Self);
-            Debug.Log($"{(pointInicialToPointToFar.x + (maxInX * _inputValue.x))} - {(pointInicialToPointToFar.y + (maxInY * _inputValue.y))}");
             
             //camera
             var point = new Vector3(pointInicialToPointToFar.x + (maxInX * _inputValue.x), pointInicialToPointToFar.y + (maxInY * _inputValue.y), pointInicialToPointToFar.z);
@@ -81,7 +79,6 @@ namespace CharacterCustom
 
         public void Move(float _speed, float rotation)
         {
-            Debug.Log($"{speed} - {rotation}");
             speed = _speed;
             forceRotation = rotation;
         }
