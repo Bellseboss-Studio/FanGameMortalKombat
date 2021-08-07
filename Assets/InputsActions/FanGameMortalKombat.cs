@@ -218,7 +218,7 @@ public class @FanGameMortalKombat : IInputActionCollection, IDisposable
                     ""path"": ""<HID::DragonRise Inc.   Generic   USB  Joystick  >/hat/up"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Joystick;Gamepad"",
                     ""action"": ""CameraMovement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -229,7 +229,7 @@ public class @FanGameMortalKombat : IInputActionCollection, IDisposable
                     ""path"": ""<HID::DragonRise Inc.   Generic   USB  Joystick  >/hat/down"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Gamepad;Joystick"",
                     ""action"": ""CameraMovement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -240,7 +240,7 @@ public class @FanGameMortalKombat : IInputActionCollection, IDisposable
                     ""path"": ""<HID::DragonRise Inc.   Generic   USB  Joystick  >/hat/left"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Gamepad;Joystick"",
                     ""action"": ""CameraMovement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -251,7 +251,7 @@ public class @FanGameMortalKombat : IInputActionCollection, IDisposable
                     ""path"": ""<HID::DragonRise Inc.   Generic   USB  Joystick  >/hat/right"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Gamepad;Joystick"",
                     ""action"": ""CameraMovement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -304,6 +304,61 @@ public class @FanGameMortalKombat : IInputActionCollection, IDisposable
                     ""name"": ""right"",
                     ""id"": ""55f88a31-e4b2-4deb-891c-be27c939993d"",
                     ""path"": ""<Keyboard>/l"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraMovement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""2D Vector stickRight"",
+                    ""id"": ""95fdf5fb-9c0a-4404-bf02-d692a8e85687"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraMovement"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""86d16e93-c7bd-460f-a4ea-d8accaa1ebf9"",
+                    ""path"": ""<HID::DragonRise Inc.   Generic   USB  Joystick  >/rz"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraMovement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""af6eb5d2-85e7-49f2-ad70-1722673cb732"",
+                    ""path"": ""<HID::DragonRise Inc.   Generic   USB  Joystick  >/rz"",
+                    ""interactions"": """",
+                    ""processors"": ""Invert"",
+                    ""groups"": """",
+                    ""action"": ""CameraMovement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""b9e0e13c-1d50-45dc-a3c3-8cd0307c882c"",
+                    ""path"": ""<HID::DragonRise Inc.   Generic   USB  Joystick  >/z1"",
+                    ""interactions"": """",
+                    ""processors"": ""Invert"",
+                    ""groups"": """",
+                    ""action"": ""CameraMovement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""d4621495-87f1-4ee4-8821-9a01e2263dad"",
+                    ""path"": ""<HID::DragonRise Inc.   Generic   USB  Joystick  >/z1"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
