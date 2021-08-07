@@ -35,10 +35,28 @@ namespace InputSystemCustom
 
         private void TransformDirectionalForForce(Vector2 input)
         {
-            _character.Move(input);
+            
+            Vector3 targetDir = _character.GetPointToCamera().position - cameraTransform.position;
+            var forward = cameraTransform.forward;
+            var angleBetween = Vector3.Angle(forward, targetDir);
+            var anglr = Vector3.Cross(forward, targetDir);
+            if (anglr.y < 0)
+            {
+                angleBetween *= -1;
+            }
+            Rotating(angleBetween);
+
+            var transformForward = _character.GetTransform().TransformDirection(new Vector3(input.x,0,input.y));
+
+            _character.Move(transformForward);
             _character.SetCameraForward(cameraTransform);
         }
 
+        private void Rotating (float angle)
+        {
+            var targetRotation = Quaternion.Euler(0, angle, 0);;
+            _character.GetTransform().rotation = targetRotation;
+        }
         public override Vector2 GetDirection()
         {
             return inputToMovement;

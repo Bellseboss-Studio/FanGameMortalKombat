@@ -20,7 +20,7 @@ namespace CharacterCustom
         public OnInputChanged OnCameraMovementExtend;
         private Vector3 pointInicialToPointToFar;
         private Vector2 _inputValue;
-        private Vector2 movementPlayer;
+        private Vector3 movementPlayer;
         private Transform cameraForward;
 
         public string Id => id;
@@ -33,23 +33,9 @@ namespace CharacterCustom
         }
         protected void Update()
         {
-            Vector3 targetDir = pointToCamera.transform.position - cameraForward.position;
-            var forward = cameraForward.forward;
-            var angleBetween = Vector3.Angle(forward, targetDir);
-            var anglr = Vector3.Cross(forward, targetDir);
-            if (anglr.y < 0)
-            {
-                angleBetween *= -1;
-            }
-            Rotating(angleBetween);
-
-            var transformForward = transform.TransformDirection(new Vector3(movementPlayer.x,0,movementPlayer.y));
-            Debug.Log($"transformForward  {transformForward}");
-            
-            var rbVelocity = transformForward * (Time.deltaTime * speedGlobal);
+            var rbVelocity = movementPlayer * (Time.deltaTime * speedGlobal);
             rbVelocity.y = rb.velocity.y;
             rb.velocity = rbVelocity;
-            //transform.Rotate(new Vector3(0, forceRotation * rotationGlobal, 0), Space.Self);//Este se tiene que hacer con respecto al vector hacia donde se esta movimiendo.
         }
 
         private void Rotating (float horizontal, float vertical)
@@ -85,7 +71,7 @@ namespace CharacterCustom
             return transform;
         }
 
-        public void Move(Vector2 movementVector2)
+        public void Move(Vector3 movementVector2)
         {
             movementPlayer = movementVector2;
         }
