@@ -8,12 +8,14 @@ namespace InputSystemCustom
         private readonly Character _character;
         private Vector2 inputToMovement;
         private Vector2 lastPosition;
+        private Transform cameraTransform;
 
-        public MovementController(Character character)
+        public MovementController(Character character, GameObject camera)
         {
             _character = character;
             character.OnInputChangedExtend += OnInputChangedExtend;
             character.OnCameraMovementExtend += OnCameraMovementExtend;
+            cameraTransform = camera.transform;
         }
 
         private void OnCameraMovementExtend(Vector2 input)
@@ -33,7 +35,8 @@ namespace InputSystemCustom
 
         private void TransformDirectionalForForce(Vector2 input)
         {
-            _character.Move(input.y,input.x);
+            _character.Move(input);
+            _character.SetCameraForward(cameraTransform);
         }
 
         public override Vector2 GetDirection()

@@ -3,6 +3,7 @@
     public enum TypeOfInputs
     {
         PlayerControl,
+        ControlZeldaBreadOfTheWild,
         EnemyIa
     }
 }

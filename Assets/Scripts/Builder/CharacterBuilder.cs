@@ -1,6 +1,7 @@
 ﻿using System;
 using CharacterCustom;
 using InputSystemCustom;
+using UnityEngine;
 using Object = UnityEngine.Object;
 
 namespace Builder
@@ -9,10 +10,17 @@ namespace Builder
     {
         private Character _character;
         private TypeOfInputs _input;
+        private GameObject camera;
 
         public CharacterBuilder WithCharacter(Character character)
         {
             _character = character;
+            return this;
+        }
+
+        public CharacterBuilder WithCamera(GameObject cameraExternal)
+        {
+            camera = cameraExternal;
             return this;
         }
 
@@ -30,10 +38,13 @@ namespace Builder
             switch (_input)
             {
                 case TypeOfInputs.PlayerControl:
-                    valueOfInput = new MovementController(characterInstantiate);
+                    valueOfInput = new MovementController(characterInstantiate, camera);
                     break;
                 case TypeOfInputs.EnemyIa:
                     valueOfInput = new MovementEnemies();
+                    break;
+                case TypeOfInputs.ControlZeldaBreadOfTheWild:
+                    valueOfInput = new MovementFromZeldaBreadOdTheWild(characterInstantiate);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
