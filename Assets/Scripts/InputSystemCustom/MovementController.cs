@@ -15,9 +15,28 @@ namespace InputSystemCustom
             _character = character;
             character.OnInputChangedExtend += OnInputChangedExtend;
             character.OnCameraMovementExtend += OnCameraMovementExtend;
+            character.OnLeftShitOn += OnLeftShitOn;
+            character.OnLeftShitOff += OnLeftShitOff;
             cameraTransform = camera.transform;
         }
 
+        public override void ConfigureInputWithCharacter()
+        {
+            base.ConfigureInputWithCharacter();
+            _character.SetCameraForward(cameraTransform);
+        }
+
+        private void OnLeftShitOff()
+        {
+            Debug.Log("Off");
+            _character.NormalMotionInCamera();
+        }
+
+        private void OnLeftShitOn()
+        {
+            Debug.Log("On");
+            _character.SlowMotionInCamera();
+        }
         private void OnCameraMovementExtend(Vector2 input)
         {
             _character.CameraMovement(input);

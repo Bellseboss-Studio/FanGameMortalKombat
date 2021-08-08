@@ -1,4 +1,5 @@
-﻿using InputSystemCustom;
+﻿using Cinemachine;
+using InputSystemCustom;
 using UnityEngine;
 
 namespace CharacterCustom
@@ -16,8 +17,11 @@ namespace CharacterCustom
         protected float forceRotation;
         protected InputCustom _inputCustom;
         public delegate void OnInputChanged(Vector2 input);
+        public delegate void OnInputButton();
         public OnInputChanged OnInputChangedExtend;
         public OnInputChanged OnCameraMovementExtend;
+        public OnInputButton OnLeftShitOn;
+        public OnInputButton OnLeftShitOff;
         private Vector3 pointInicialToPointToFar;
         private Vector2 _inputValue;
         private Vector3 movementPlayer;
@@ -94,6 +98,32 @@ namespace CharacterCustom
         public void SetCameraForward(Transform cameraTransform)
         {
             cameraForward = cameraTransform;
+        }
+
+        public void NormalMotionInCamera()
+        {
+            if (cameraForward.gameObject.TryGetComponent<CinemachineFreeLook>(out var cinemachineFreeLook))
+            {
+                cinemachineFreeLook.m_XAxis.m_MaxSpeed = 300;    
+                cinemachineFreeLook.m_YAxis.m_MaxSpeed = 1;    
+            }
+            else
+            {
+                Debug.Log("Es nulo");
+            }
+        }
+
+        public void SlowMotionInCamera()
+        {
+            if (cameraForward.gameObject.TryGetComponent<CinemachineFreeLook>(out var cinemachineFreeLook))
+            {
+                cinemachineFreeLook.m_XAxis.m_MaxSpeed = 50;
+                cinemachineFreeLook.m_YAxis.m_MaxSpeed = .3f;
+            }
+            else
+            {
+                Debug.Log("Es nulo");
+            }
         }
     }
 }

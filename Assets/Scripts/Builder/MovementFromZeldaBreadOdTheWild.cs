@@ -12,6 +12,20 @@ namespace Builder
             _character = characterInstantiate;
             characterInstantiate.OnInputChangedExtend += OnInputChangedExtend;
             characterInstantiate.OnCameraMovementExtend += OnCameraMovementExtend;
+            characterInstantiate.OnLeftShitOn += OnLeftShitOn;
+            characterInstantiate.OnLeftShitOff += OnLeftShitOff;
+        }
+
+        private void OnLeftShitOff()
+        {
+            Debug.Log("Off");
+            //_character.NormalMotionInCamera();
+        }
+
+        private void OnLeftShitOn()
+        {
+            Debug.Log("On");
+            //_character.SlowMotionInCamera();
         }
 
         private void OnCameraMovementExtend(Vector2 input)

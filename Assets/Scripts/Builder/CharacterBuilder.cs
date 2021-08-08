@@ -50,6 +50,7 @@ namespace Builder
                     throw new ArgumentOutOfRangeException();
             }
             characterInstantiate.Configure(valueOfInput);
+            valueOfInput.ConfigureInputWithCharacter();
             return characterInstantiate;
         }
 

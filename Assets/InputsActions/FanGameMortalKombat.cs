@@ -33,6 +33,14 @@ public class @FanGameMortalKombat : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""ButtonsToAction"",
+                    ""type"": ""Button"",
+                    ""id"": ""496749ed-d84d-45dd-a865-dd726c2f6704"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press(behavior=2)""
                 }
             ],
             ""bindings"": [
@@ -365,6 +373,17 @@ public class @FanGameMortalKombat : IInputActionCollection, IDisposable
                     ""action"": ""CameraMovement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ad4f9e66-c240-417f-b627-65c822e4ae94"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""ButtonsToAction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -436,6 +455,7 @@ public class @FanGameMortalKombat : IInputActionCollection, IDisposable
         m_PlayerMovement = asset.FindActionMap("PlayerMovement", throwIfNotFound: true);
         m_PlayerMovement_MovementControllers = m_PlayerMovement.FindAction("MovementControllers", throwIfNotFound: true);
         m_PlayerMovement_CameraMovement = m_PlayerMovement.FindAction("CameraMovement", throwIfNotFound: true);
+        m_PlayerMovement_ButtonsToAction = m_PlayerMovement.FindAction("ButtonsToAction", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -487,12 +507,14 @@ public class @FanGameMortalKombat : IInputActionCollection, IDisposable
     private IPlayerMovementActions m_PlayerMovementActionsCallbackInterface;
     private readonly InputAction m_PlayerMovement_MovementControllers;
     private readonly InputAction m_PlayerMovement_CameraMovement;
+    private readonly InputAction m_PlayerMovement_ButtonsToAction;
     public struct PlayerMovementActions
     {
         private @FanGameMortalKombat m_Wrapper;
         public PlayerMovementActions(@FanGameMortalKombat wrapper) { m_Wrapper = wrapper; }
         public InputAction @MovementControllers => m_Wrapper.m_PlayerMovement_MovementControllers;
         public InputAction @CameraMovement => m_Wrapper.m_PlayerMovement_CameraMovement;
+        public InputAction @ButtonsToAction => m_Wrapper.m_PlayerMovement_ButtonsToAction;
         public InputActionMap Get() { return m_Wrapper.m_PlayerMovement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -508,6 +530,9 @@ public class @FanGameMortalKombat : IInputActionCollection, IDisposable
                 @CameraMovement.started -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnCameraMovement;
                 @CameraMovement.performed -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnCameraMovement;
                 @CameraMovement.canceled -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnCameraMovement;
+                @ButtonsToAction.started -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnButtonsToAction;
+                @ButtonsToAction.performed -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnButtonsToAction;
+                @ButtonsToAction.canceled -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnButtonsToAction;
             }
             m_Wrapper.m_PlayerMovementActionsCallbackInterface = instance;
             if (instance != null)
@@ -518,6 +543,9 @@ public class @FanGameMortalKombat : IInputActionCollection, IDisposable
                 @CameraMovement.started += instance.OnCameraMovement;
                 @CameraMovement.performed += instance.OnCameraMovement;
                 @CameraMovement.canceled += instance.OnCameraMovement;
+                @ButtonsToAction.started += instance.OnButtonsToAction;
+                @ButtonsToAction.performed += instance.OnButtonsToAction;
+                @ButtonsToAction.canceled += instance.OnButtonsToAction;
             }
         }
     }
@@ -571,5 +599,6 @@ public class @FanGameMortalKombat : IInputActionCollection, IDisposable
     {
         void OnMovementControllers(InputAction.CallbackContext context);
         void OnCameraMovement(InputAction.CallbackContext context);
+        void OnButtonsToAction(InputAction.CallbackContext context);
     }
 }

@@ -9,5 +9,10 @@ namespace InputSystemCustom
         public abstract Vector2 GetDirection();
         public abstract bool IsFireActionPressed();
         public abstract Vector2 GetLasPosition();
+
+        public virtual void ConfigureInputWithCharacter()
+        {
+            
+        }
     }
 }
