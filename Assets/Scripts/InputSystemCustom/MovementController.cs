@@ -68,7 +68,8 @@ namespace InputSystemCustom
             var transformForward = _character.GetTransform().TransformDirection(new Vector3(input.x,0,input.y));
 
             _character.Move(transformForward);
-            _character.SetCameraForward(cameraTransform);
+            //para actualizar la direccion del personaje, sin tener que esperar a que se presione alguno de los botones para moverse:
+            //Es crear el Observer en el opdate, y aqui se ejecuta la funcion que hace que se actualize el vector de movimiento
         }
 
         private void Rotating (float angle)
