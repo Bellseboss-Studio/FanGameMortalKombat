@@ -64,7 +64,7 @@ jobs:
           unityVersion: ${{ matrix.unityVersion }}
           targetPlatform: ${{ matrix.targetPlatform }}
           versioning: Semantic
-          buildName: Paco
+          buildName: FanGameMortalKombat
           allowDirtyBuild: true
       - uses: actions/upload-artifact@v2
         with:
