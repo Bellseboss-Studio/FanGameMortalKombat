@@ -11,7 +11,6 @@ namespace CharacterCustom
         [SerializeField] protected Rigidbody rb;
         [SerializeField] protected float speedGlobal;
         [SerializeField] protected float rotationGlobal;
-        [SerializeField] protected GameObject pointToCamera, pointFarToCamera;
         [SerializeField] private int maxInX, maxInY;
         protected float speed;
         protected float forceRotation;
@@ -22,9 +21,8 @@ namespace CharacterCustom
         public OnInputChanged OnCameraMovementExtend;
         public OnInputButton OnLeftShitOn;
         public OnInputButton OnLeftShitOff;
-        private Vector3 pointInicialToPointToFar;
         private Vector2 _inputValue;
-        private Vector3 movementPlayer;
+        protected Vector3 movementPlayer;
         private Transform cameraForward;
 
         public string Id => id;
@@ -33,7 +31,6 @@ namespace CharacterCustom
         protected virtual void Start()
         {
             Instantiate(model3D, transform);
-            pointInicialToPointToFar = pointFarToCamera.transform.localPosition;
         }
         protected void Update()
         {
@@ -78,16 +75,6 @@ namespace CharacterCustom
         public void Move(Vector3 movementVector2)
         {
             movementPlayer = movementVector2;
-        }
-
-        public Transform GetPointToCamera()
-        {
-            return pointToCamera.transform;
-        }
-
-        public Transform GetPointToGroupCamera()
-        {
-            return pointFarToCamera.transform;
         }
 
         public void CameraMovement(Vector2 input)

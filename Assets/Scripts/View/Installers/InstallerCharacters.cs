@@ -2,6 +2,7 @@ using Cinemachine;
 using FactoryCharacterFiles;
 using InputSystemCustom;
 using UnityEngine;
+using View.Characters;
 
 namespace View.Installers
 {
@@ -17,7 +18,7 @@ namespace View.Installers
         private void Start()
         {
             var charactersFactory = new CharactersFactory(Instantiate(charactersConfiguration));
-            var character = charactersFactory.Create(idCharacter).WithInput(TypeOfInputs.PlayerControl).WithCamera(cameraMainFreeLook.gameObject).Build();
+            var character = (PlayerCharacter) charactersFactory.Create(idCharacter).WithInput(TypeOfInputs.PlayerControl).WithCamera(cameraMainFreeLook.gameObject).Build();
 
             cameraMainFreeLook.Follow = character.GetPointToCamera();
             cameraMainFreeLook.LookAt = character.GetPointToCamera();

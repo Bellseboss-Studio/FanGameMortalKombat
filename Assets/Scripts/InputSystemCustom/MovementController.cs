@@ -1,18 +1,19 @@
 ﻿using CharacterCustom;
 using UnityEngine;
+using View.Characters;
 
 namespace InputSystemCustom
 {
     public class MovementController : InputCustom
     {
-        private readonly Character _character;
+        private readonly PlayerCharacter _character;
         private Vector2 inputToMovement;
         private Vector2 lastPosition;
         private Transform cameraTransform;
 
         public MovementController(Character character, GameObject camera)
         {
-            _character = character;
+            _character = (PlayerCharacter)character;
             character.OnInputChangedExtend += OnInputChangedExtend;
             character.OnCameraMovementExtend += OnCameraMovementExtend;
             character.OnLeftShitOn += OnLeftShitOn;

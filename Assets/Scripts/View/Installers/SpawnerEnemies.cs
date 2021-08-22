@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using FactoryCharacterFiles;
 using InputSystemCustom;
+using StatesOfEnemies;
 using UnityEngine;
+using View.Characters;
 
 namespace View.Installers
 {
@@ -21,7 +23,8 @@ namespace View.Installers
         private IEnumerator SpawnEnemy()
         {
             yield return new WaitForSeconds(5f);
-            _charactersFactory.Create(idCharacter).WithInput(TypeOfInputs.EnemyIa).Build();
+            var characterEnemy = (EnemyDefaultCharacter) _charactersFactory.Create(idCharacter).WithInput(TypeOfInputs.EnemyIa).InPosition(transform.position).Build();
+            characterEnemy.SetBehavior();
         }
     }
 }

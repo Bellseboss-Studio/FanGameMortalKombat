@@ -11,6 +11,12 @@ namespace Builder
         private Character _character;
         private TypeOfInputs _input;
         private GameObject camera;
+        private Vector3 position;
+
+        public CharacterBuilder()
+        {
+            position = Vector3.zero;
+        }
 
         public CharacterBuilder WithCharacter(Character character)
         {
@@ -29,11 +35,18 @@ namespace Builder
             _input = inputCustom;
             return this;
         }
+
+        public CharacterBuilder InPosition(Vector3 position)
+        {
+            this.position = position;
+            return this;
+        }
         
         public Character Build()
         {
             CheckPreConditions();
             var characterInstantiate = Object.Instantiate(_character);
+            characterInstantiate.transform.position = position;
             InputCustom valueOfInput = null;
             switch (_input)
             {
