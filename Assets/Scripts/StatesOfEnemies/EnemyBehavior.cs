@@ -25,7 +25,12 @@ namespace StatesOfEnemies
             {
                 targer = player;
                 _playerInRedZone = true;
-            }); 
+            });
+            enemyCharacter.SubscribeOnPlayerExitTrigger((player) =>
+            {
+                targer = null;
+                _playerInRedZone = false;
+            });
             return _enemyStatesConfiguration.GetInitialState();
         }
 

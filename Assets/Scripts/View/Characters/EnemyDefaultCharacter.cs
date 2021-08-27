@@ -44,7 +44,7 @@ namespace View.Characters
         public bool IsEnemyArrived(Vector3 concurrentPoint)
         {
             var position = transform.position;
-            Debug.Log($"(concurrentPoint - position) {(concurrentPoint - position).z}");
+            Debug.Log($"(concurrentPoint - position).sqrMagnitude {(concurrentPoint - position).sqrMagnitude} toleranceToArrivedPoint {toleranceToArrivedPoint}");
             return (concurrentPoint - position).sqrMagnitude < toleranceToArrivedPoint;
         }
 
