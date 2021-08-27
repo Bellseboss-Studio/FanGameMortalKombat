@@ -10,5 +10,6 @@ namespace StatesOfEnemies
         bool IsEnemyArrived(Vector3 concurrentPoint);
         int GetNextState();
         int GetRandom(int start, int end);
+        Vector3 GetTarget();
     }
 }

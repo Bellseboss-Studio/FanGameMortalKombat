@@ -4,6 +4,7 @@ using CharacterCustom;
 using JetBrains.Annotations;
 using StatesOfEnemies;
 using UnityEngine;
+using View.Characters.Enemy;
 
 namespace View.Characters
 {
@@ -12,11 +13,9 @@ namespace View.Characters
         protected EnemyBehavior behaviorEnemy;
         private List<Vector3> _points;
         [SerializeField]private float toleranceToArrivedPoint;
+        [SerializeField] private RedZoneComponent _redZoneComponent;
         
-        public delegate void OnPlayerEnterTrigger(GameObject player);
-        public delegate void OnPlayerExitTrigger(GameObject player);
-        public event OnPlayerExitTrigger OnPlayerEnter;
-        public event OnPlayerExitTrigger OnPlayerExit;
+        public delegate void OnPlayerTrigger(GameObject player);
 
         protected override void ConfigureExplicit()
         {
@@ -48,33 +47,33 @@ namespace View.Characters
             return (concurrentPoint - position).sqrMagnitude < toleranceToArrivedPoint;
         }
 
-        public void SubscribeOnPlayerEnterTrigger(OnPlayerExitTrigger action)
+        public void SubscribeOnPlayerEnterTrigger(OnPlayerTrigger action)
         {
-            OnPlayerEnter += action;
+            _redZoneComponent.OnPlayerEnter += action;
         }
         
         
-        public void UnsubscribeOnPlayerEnterTrigger(OnPlayerExitTrigger action)
+        public void UnsubscribeOnPlayerEnterTrigger(OnPlayerTrigger action)
         {
-            OnPlayerEnter -= action;
+            _redZoneComponent.OnPlayerEnter -= action;
         }
         public void CleanOnPlayerEnterTrigger()
         {
-            OnPlayerEnter = null;
+            
         }
-        public void SubscribeOnPlayerExitTrigger(OnPlayerExitTrigger action)
+        public void SubscribeOnPlayerExitTrigger(OnPlayerTrigger action)
         {
-            OnPlayerExit += action;
+            _redZoneComponent.OnPlayerExit += action;
         }
         
         
-        public void UnsubscribeOnPlayerExitTrigger(OnPlayerExitTrigger action)
+        public void UnsubscribeOnPlayerExitTrigger(OnPlayerTrigger action)
         {
-            OnPlayerExit -= action;
+            _redZoneComponent.OnPlayerExit -= action;
         }
         public void CleanOnPlayerExitTrigger()
         {
-            OnPlayerExit = null;
+            
         }
 
         public void SetPoints(List<GameObject> pointsList)
@@ -85,20 +84,5 @@ namespace View.Characters
             }
         }
 
-        private void OnTriggerEnter(Collider other)
-        {
-            if (other.gameObject.CompareTag("Player"))
-            {
-                OnPlayerEnter?.Invoke(other.gameObject);
-            }
-        }
-
-        private void OnTriggerExit(Collider other)
-        {
-            if (other.gameObject.CompareTag("Player"))
-            {
-                OnPlayerExit?.Invoke(other.gameObject);
-            }
-        }
     }
 }

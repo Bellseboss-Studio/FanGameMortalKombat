@@ -20,12 +20,12 @@ namespace StatesOfEnemies
             concurrentPoint = _points[behavior.GetRandom(0, _points.Count)];
             while (true)
             {
-                behavior.WalkToPoint(concurrentPoint);
                 while (!behavior.IsEnemyArrived(concurrentPoint))
                 {
+                    behavior.WalkToPoint(concurrentPoint);
                     if (behavior.IsPLayerInRedZone())
                     {
-                        behavior.SetNextState(EnemyStatesConfiguration.comebackState);
+                        behavior.SetNextState(EnemyStatesConfiguration.FollowTarget);
                         break;
                     }
                     yield return new WaitForSeconds(0.1f);

@@ -7,8 +7,9 @@ namespace StatesOfEnemies
     {
         private int InitialState;
 
-        public const int patrolState = 1;
-        public const int comebackState = 2;
+        public const int PatrolState = 1;
+        public const int ComebackState = 2;
+        public const int FollowTarget = 3;
 
         private readonly Dictionary<int, IEnemyState> _states;
 

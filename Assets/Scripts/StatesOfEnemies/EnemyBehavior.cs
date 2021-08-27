@@ -18,8 +18,9 @@ namespace StatesOfEnemies
         {
             _enemyCharacter = enemyCharacter;
             _enemyStatesConfiguration = new EnemyStatesConfiguration();
-            _enemyStatesConfiguration.AddInitialState(EnemyStatesConfiguration.patrolState, new PatrolState(_enemyCharacter.GetPoints()));
-            _enemyStatesConfiguration.AddState(EnemyStatesConfiguration.comebackState, new ComeBackState());
+            _enemyStatesConfiguration.AddInitialState(EnemyStatesConfiguration.PatrolState, new PatrolState(_enemyCharacter.GetPoints()));
+            _enemyStatesConfiguration.AddState(EnemyStatesConfiguration.ComebackState, new ComeBackState());
+            _enemyStatesConfiguration.AddState(EnemyStatesConfiguration.FollowTarget, new FollowTarget());
             _nextState = 0;
             enemyCharacter.SubscribeOnPlayerEnterTrigger((player) =>
             {
@@ -60,6 +61,11 @@ namespace StatesOfEnemies
         public int GetRandom(int start, int end)
         {
             return Random.Range(start, end);
+        }
+
+        public Vector3 GetTarget()
+        {
+            return targer.transform.position;
         }
 
         public void SetNextState(int nextStateFromState)

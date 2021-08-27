@@ -14,7 +14,7 @@ namespace StatesOfEnemies
         {
             Debug.Log("ComeBackState");
             yield return new WaitForSeconds(3f);
-            behavior.SetNextState(EnemyStatesConfiguration.patrolState);
+            behavior.SetNextState(EnemyStatesConfiguration.PatrolState);
         }
     }
 }
