@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3238535905166707716}
   - component: {fileID: 3238535905166707717}
   - component: {fileID: -4608976763323490782}
+  - component: {fileID: 706652456502329205}
   m_Layer: 0
   m_Name: EnemyDefault
   m_TagString: Untagged
@@ -48,10 +49,11 @@ MonoBehaviour:
   id: enemyDefault
   model3D: {fileID: 6619987477710302347, guid: b165f5b31d2e9b945b830c3796487653, type: 3}
   rb: {fileID: 3238535905166707717}
-  speedGlobal: 100
+  speedGlobal: 500
   rotationGlobal: 100
   maxInX: 5
   maxInY: 2
+  toleranceToArrivedPoint: 4
 --- !u!54 &3238535905166707717
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -82,3 +84,16 @@ CapsuleCollider:
   m_Height: 1.3803797
   m_Direction: 1
   m_Center: {x: 0, y: 0.61, z: 0}
+--- !u!135 &706652456502329205
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3238535905166707714}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.85
+  m_Center: {x: 0, y: 0, z: 0}

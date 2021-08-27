@@ -2,23 +2,30 @@
 using System.Collections;
 using UnityEngine;
 using View.Characters;
+using Random = UnityEngine.Random;
 
 namespace StatesOfEnemies
 {
     public class EnemyBehavior : MonoBehaviour, IBehavior
     {
-        [SerializeField] private bool playerInRedZone;
+        private bool _playerInRedZone;
         private int _nextState;
         private EnemyStatesConfiguration _enemyStatesConfiguration;
         private IEnemyCharacter _enemyCharacter;
+        private GameObject targer;
 
         public IEnemyState Configuration(IEnemyCharacter enemyCharacter)
         {
             _enemyCharacter = enemyCharacter;
             _enemyStatesConfiguration = new EnemyStatesConfiguration();
-            _enemyStatesConfiguration.AddInitialState(EnemyStatesConfiguration.patrolState, new PatrolState(_enemyCharacter.GetPointA(), _enemyCharacter.GetPointB()));
+            _enemyStatesConfiguration.AddInitialState(EnemyStatesConfiguration.patrolState, new PatrolState(_enemyCharacter.GetPoints()));
             _enemyStatesConfiguration.AddState(EnemyStatesConfiguration.comebackState, new ComeBackState());
             _nextState = 0;
+            enemyCharacter.SubscribeOnPlayerEnterTrigger((player) =>
+            {
+                targer = player;
+                _playerInRedZone = true;
+            }); 
             return _enemyStatesConfiguration.GetInitialState();
         }
 
@@ -40,9 +47,14 @@ namespace StatesOfEnemies
             _nextState = 0;
         }
 
-        private int GetNextState()
+        public int GetNextState()
         {
             return _nextState;
+        }
+
+        public int GetRandom(int start, int end)
+        {
+            return Random.Range(start, end);
         }
 
         public void SetNextState(int nextStateFromState)
@@ -57,7 +69,12 @@ namespace StatesOfEnemies
 
         public bool IsPLayerInRedZone()
         {
-            return playerInRedZone;
+            return _playerInRedZone;
+        }
+
+        public bool IsEnemyArrived(Vector3 concurrentPoint)
+        {
+            return _enemyCharacter.IsEnemyArrived(concurrentPoint);
         }
     }
 }

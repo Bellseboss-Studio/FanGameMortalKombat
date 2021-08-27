@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using FactoryCharacterFiles;
 using InputSystemCustom;
 using StatesOfEnemies;
@@ -12,6 +13,7 @@ namespace View.Installers
     {
         [SerializeField] private CharactersConfiguration charactersConfiguration;
         [SerializeField] private string idCharacter;
+        [SerializeField] private List<GameObject> points;
         private CharactersFactory _charactersFactory;
 
         private void Start()
@@ -24,6 +26,7 @@ namespace View.Installers
         {
             yield return new WaitForSeconds(5f);
             var characterEnemy = (EnemyDefaultCharacter) _charactersFactory.Create(idCharacter).WithInput(TypeOfInputs.EnemyIa).InPosition(transform.position).Build();
+            characterEnemy.SetPoints(points);
             characterEnemy.SetBehavior();
         }
     }

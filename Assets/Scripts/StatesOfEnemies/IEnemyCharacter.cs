@@ -1,11 +1,18 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace View.Characters
 {
     public interface IEnemyCharacter
     {
         void MoveToPoint(Vector3 toPoint);
-        Vector3 GetPointA();
-        Vector3 GetPointB();
+        List<Vector3> GetPoints();
+        bool IsEnemyArrived(Vector3 concurrentPoint);
+        void SubscribeOnPlayerEnterTrigger(EnemyDefaultCharacter.OnPlayerExitTrigger action);
+        void UnsubscribeOnPlayerEnterTrigger(EnemyDefaultCharacter.OnPlayerExitTrigger action);
+        void CleanOnPlayerEnterTrigger();
+        void SubscribeOnPlayerExitTrigger(EnemyDefaultCharacter.OnPlayerExitTrigger action);
+        void UnsubscribeOnPlayerExitTrigger(EnemyDefaultCharacter.OnPlayerExitTrigger action);
+        void CleanOnPlayerExitTrigger();
     }
 }

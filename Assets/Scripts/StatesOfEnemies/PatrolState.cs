@@ -1,30 +1,43 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace StatesOfEnemies
 {
     public class PatrolState : IEnemyState
     {
-        private readonly Vector3 _pointA;
-        private readonly Vector3 _pointB;
+        private readonly List<Vector3> _points;
         private Vector3 concurrentPoint;
 
-        public PatrolState(Vector3 pointA, Vector3 pointB)
+        public PatrolState(List<Vector3> points)
         {
-            _pointA = pointA;
-            _pointB = pointB;
-            concurrentPoint = pointB;
+            _points = points;
         }
 
         public IEnumerator DoAction(IBehavior behavior)
         {
             Debug.Log("PatrolState");
-            behavior.WalkToPoint(concurrentPoint);
-            while (!behavior.IsPLayerInRedZone())
+            concurrentPoint = _points[behavior.GetRandom(0, _points.Count)];
+            while (true)
             {
+                behavior.WalkToPoint(concurrentPoint);
+                while (!behavior.IsEnemyArrived(concurrentPoint))
+                {
+                    if (behavior.IsPLayerInRedZone())
+                    {
+                        behavior.SetNextState(EnemyStatesConfiguration.comebackState);
+                        break;
+                    }
+                    yield return new WaitForSeconds(0.1f);
+                }
+
+                if (behavior.GetNextState() != 0)
+                {
+                    break;
+                }
                 yield return new WaitForSeconds(0.1f);
+                concurrentPoint = _points[behavior.GetRandom(0, _points.Count)];;
             }
-            behavior.SetNextState(EnemyStatesConfiguration.comebackState);
         }
     }
 }
