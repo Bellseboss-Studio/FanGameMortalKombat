@@ -23,7 +23,7 @@ namespace StatesOfEnemies
                 while (!behavior.IsEnemyArrived(concurrentPoint))
                 {
                     behavior.WalkToPoint(concurrentPoint);
-                    if (behavior.IsPLayerInRedZone())
+                    if (behavior.IsPlayerInRedZone())
                     {
                         behavior.SetNextState(EnemyStatesConfiguration.FollowTarget);
                         break;

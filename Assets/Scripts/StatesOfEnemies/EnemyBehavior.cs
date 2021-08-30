@@ -8,11 +8,11 @@ namespace StatesOfEnemies
 {
     public class EnemyBehavior : MonoBehaviour, IBehavior
     {
-        private bool _playerInRedZone;
         private int _nextState;
         private EnemyStatesConfiguration _enemyStatesConfiguration;
         private IEnemyCharacter _enemyCharacter;
         private GameObject targer;
+        private bool playerIsInRedZone;
 
         public IEnemyState Configuration(IEnemyCharacter enemyCharacter)
         {
@@ -21,16 +21,16 @@ namespace StatesOfEnemies
             _enemyStatesConfiguration.AddInitialState(EnemyStatesConfiguration.PatrolState, new PatrolState(_enemyCharacter.GetPoints()));
             _enemyStatesConfiguration.AddState(EnemyStatesConfiguration.ComebackState, new ComeBackState());
             _enemyStatesConfiguration.AddState(EnemyStatesConfiguration.FollowTarget, new FollowTarget());
+            _enemyStatesConfiguration.AddState(EnemyStatesConfiguration.LookPlayer, new WaitState());
             _nextState = 0;
-            enemyCharacter.SubscribeOnPlayerEnterTrigger((player) =>
+            _enemyCharacter.SubscribeOnPlayerEnterTrigger((player) =>
             {
                 targer = player;
-                _playerInRedZone = true;
+                playerIsInRedZone = true;
             });
-            enemyCharacter.SubscribeOnPlayerExitTrigger((player) =>
+            _enemyCharacter.SubscribeOnPlayerExitTrigger((player) =>
             {
-                targer = null;
-                _playerInRedZone = false;
+                playerIsInRedZone = false;
             });
             return _enemyStatesConfiguration.GetInitialState();
         }
@@ -68,6 +68,21 @@ namespace StatesOfEnemies
             return targer.transform.position;
         }
 
+        public bool IsPlayerInYellowZone()
+        {
+            return _enemyCharacter.IsPlayerInYellowZone();
+        }
+
+        public void LookPlayer(Vector3 target)
+        {
+            _enemyCharacter.LookTarget(target);
+        }
+
+        public bool IsPlayerInGreenZone()
+        {
+            return _enemyCharacter.IsPlayerInGreenZone();
+        }
+
         public void SetNextState(int nextStateFromState)
         {
             _nextState = nextStateFromState;
@@ -78,9 +93,9 @@ namespace StatesOfEnemies
             _enemyCharacter.MoveToPoint(toPoint);
         }
 
-        public bool IsPLayerInRedZone()
+        public bool IsPlayerInRedZone()
         {
-            return _playerInRedZone;
+            return playerIsInRedZone;
         }
 
         public bool IsEnemyArrived(Vector3 concurrentPoint)

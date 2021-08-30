@@ -10,6 +10,7 @@ namespace StatesOfEnemies
         public const int PatrolState = 1;
         public const int ComebackState = 2;
         public const int FollowTarget = 3;
+        public const int LookPlayer = 4;
 
         private readonly Dictionary<int, IEnemyState> _states;
 
@@ -17,6 +18,7 @@ namespace StatesOfEnemies
         {
             _states = new Dictionary<int, IEnemyState>();
         }
+
 
         public void AddInitialState(int id, IEnemyState state)
         {

@@ -9,10 +9,9 @@ namespace View.Characters
         List<Vector3> GetPoints();
         bool IsEnemyArrived(Vector3 concurrentPoint);
         void SubscribeOnPlayerEnterTrigger(EnemyDefaultCharacter.OnPlayerTrigger action);
-        void UnsubscribeOnPlayerEnterTrigger(EnemyDefaultCharacter.OnPlayerTrigger action);
-        void CleanOnPlayerEnterTrigger();
         void SubscribeOnPlayerExitTrigger(EnemyDefaultCharacter.OnPlayerTrigger action);
-        void UnsubscribeOnPlayerExitTrigger(EnemyDefaultCharacter.OnPlayerTrigger action);
-        void CleanOnPlayerExitTrigger();
+        bool IsPlayerInYellowZone();
+        bool IsPlayerInGreenZone();
+        void LookTarget(Vector3 target);
     }
 }

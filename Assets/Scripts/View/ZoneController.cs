@@ -1,13 +1,12 @@
+using System;
 using UnityEngine;
 using View.Installers;
+using View.Zone;
 
 namespace View
 {
     public class ZoneController : MonoBehaviour
     {
-        [SerializeField] private GameObject pointA, pointB;
-        [SerializeField] private SpawnerEnemies spawner;
-    
-    
+     
     }
 }

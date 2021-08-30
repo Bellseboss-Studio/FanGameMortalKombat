@@ -9,12 +9,17 @@ namespace StatesOfEnemies
         {
             Debug.Log("Follow the player");
             yield return new WaitForSeconds(0.1f);
-            while (behavior.IsPLayerInRedZone())
+            while (behavior.IsPlayerInRedZone())
             {
+                if (!behavior.IsPlayerInYellowZone())
+                {
+                    behavior.SetNextState(EnemyStatesConfiguration.LookPlayer);
+                    break;
+                }
                 behavior.WalkToPoint(behavior.GetTarget());
                 yield return new WaitForSeconds(0.1f);
             }
-            behavior.SetNextState(EnemyStatesConfiguration.PatrolState);
         }
     }
 }
+

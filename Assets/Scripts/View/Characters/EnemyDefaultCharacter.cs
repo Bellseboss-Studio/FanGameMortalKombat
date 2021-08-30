@@ -5,6 +5,7 @@ using JetBrains.Annotations;
 using StatesOfEnemies;
 using UnityEngine;
 using View.Characters.Enemy;
+using View.Zone;
 
 namespace View.Characters
 {
@@ -14,7 +15,10 @@ namespace View.Characters
         private List<Vector3> _points;
         [SerializeField]private float toleranceToArrivedPoint;
         [SerializeField] private RedZoneComponent _redZoneComponent;
-        
+        private AreaZoneController yellowZone;
+        private AreaZoneController greenZone;
+        private GameObject target;
+
         public delegate void OnPlayerTrigger(GameObject player);
 
         protected override void ConfigureExplicit()
@@ -22,8 +26,10 @@ namespace View.Characters
             _points = new List<Vector3>();
         }
 
-        public void SetBehavior()
+        public void SetBehavior(AreaZoneController yellowZone, AreaZoneController greenZone)
         {
+            this.yellowZone = yellowZone;
+            this.greenZone = greenZone;
             behaviorEnemy = gameObject.AddComponent<EnemyBehavior>();
             var enemyState = behaviorEnemy.Configuration(this);
             StartCoroutine(behaviorEnemy.StartState(enemyState));
@@ -32,7 +38,6 @@ namespace View.Characters
         public void MoveToPoint(Vector3 toPoint)
         {
             movementPlayer = (toPoint - transform.position).normalized;
-            //Debug.Log($"toPoint {toPoint} transform.position {transform.position}");
         }
 
         public List<Vector3> GetPoints()
@@ -52,28 +57,25 @@ namespace View.Characters
             _redZoneComponent.OnPlayerEnter += action;
         }
         
-        
-        public void UnsubscribeOnPlayerEnterTrigger(OnPlayerTrigger action)
-        {
-            _redZoneComponent.OnPlayerEnter -= action;
-        }
-        public void CleanOnPlayerEnterTrigger()
-        {
-            
-        }
         public void SubscribeOnPlayerExitTrigger(OnPlayerTrigger action)
         {
             _redZoneComponent.OnPlayerExit += action;
         }
-        
-        
-        public void UnsubscribeOnPlayerExitTrigger(OnPlayerTrigger action)
+
+        public bool IsPlayerInYellowZone()
         {
-            _redZoneComponent.OnPlayerExit -= action;
+            return yellowZone.IsPlayerInThisZone();
         }
-        public void CleanOnPlayerExitTrigger()
+
+        public bool IsPlayerInGreenZone()
         {
-            
+            return greenZone.IsPlayerInThisZone();
+        }
+
+        public void LookTarget(Vector3 target)
+        {
+            movementPlayer = Vector3.zero;
+            transform.LookAt(target);
         }
 
         public void SetPoints(List<GameObject> pointsList)
