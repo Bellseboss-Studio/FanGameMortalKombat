@@ -30,9 +30,17 @@ namespace View.Characters
         {
             this.yellowZone = yellowZone;
             this.greenZone = greenZone;
+            
+            this.yellowZone.OnPlayerEnter += YellowZoneOnOnPlayerEnter;
+            
             behaviorEnemy = gameObject.AddComponent<EnemyBehavior>();
             var enemyState = behaviorEnemy.Configuration(this);
             StartCoroutine(behaviorEnemy.StartState(enemyState));
+        }
+
+        private void YellowZoneOnOnPlayerEnter(GameObject player)
+        {
+            Debug.Log("Player has entered");
         }
 
         public void MoveToPoint(Vector3 toPoint)

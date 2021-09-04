@@ -16,6 +16,7 @@ namespace View.Zone
             if (other.CompareTag("Player"))
             {
                 target = other.gameObject;
+                OnPlayerEnter?.Invoke(other.gameObject);
             }
         }
 
@@ -24,6 +25,7 @@ namespace View.Zone
             if (other.CompareTag("Player"))
             {
                 target = null;
+                OnPlayerExit?.Invoke(other.gameObject);
             }
         }
 
