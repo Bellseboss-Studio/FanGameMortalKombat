@@ -22,7 +22,7 @@ namespace View.Installers
 
             cameraMainFreeLook.Follow = character.GetPointToCamera();
             cameraMainFreeLook.LookAt = character.GetPointToCamera();
-
+            ServiceLocator.Instance.GetService<IObserverUI>().Observer(character);
             /*
             cameraMain.Follow = character.GetPointToCamera();
             var _player = new CinemachineTargetGroup.Target();

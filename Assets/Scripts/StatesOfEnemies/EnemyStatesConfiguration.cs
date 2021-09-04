@@ -11,6 +11,7 @@ namespace StatesOfEnemies
         public const int ComebackState = 2;
         public const int FollowTarget = 3;
         public const int LookPlayer = 4;
+        public const int AttackPlayer = 5;
 
         private readonly Dictionary<int, IEnemyState> _states;
 

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using CharacterCustom;
 using UnityEngine;
 
 namespace View.Characters
@@ -13,5 +14,9 @@ namespace View.Characters
         bool IsPlayerInYellowZone();
         bool IsPlayerInGreenZone();
         void LookTarget(Vector3 target);
+        bool IsPlayerInRangeOfAttack();
+        void StopMovement();
+        float GetVelocity();
+        void Attack(Character characterToAttack, float damage);
     }
 }

@@ -70,5 +70,10 @@ namespace View.Characters
             Debug.Log($"Press Off");
             _isOn = true;
         }
+
+        public float GetLife()
+        {
+            return life;
+        }
     }
 }

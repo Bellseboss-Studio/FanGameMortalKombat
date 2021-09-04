@@ -10,6 +10,8 @@ namespace CharacterCustom
         [SerializeField] protected GameObject model3D;
         [SerializeField] protected Rigidbody rb;
         [SerializeField] protected float speedGlobal;
+        [SerializeField] protected float velocityOfAttack;
+        [SerializeField] protected float life;
         protected float speed;
         protected float forceRotation;
         protected InputCustom _inputCustom;
@@ -22,6 +24,8 @@ namespace CharacterCustom
         private Vector2 _inputValue;
         protected Vector3 movementPlayer;
         private Transform cameraForward;
+        public delegate void OnEnterDamage(float damage);
+        public event OnEnterDamage OnEnterDamageEvent;
 
         public string Id => id;
         public GameObject Model3D => model3D;
@@ -109,6 +113,14 @@ namespace CharacterCustom
             {
                 Debug.Log("Es nulo");
             }
+        }
+
+        public void ApplyDamage(float damage)
+        {
+            life -= damage;
+            Debug.Log($"life is {life}");
+            OnEnterDamageEvent?.Invoke(damage);
+            
         }
     }
 }
