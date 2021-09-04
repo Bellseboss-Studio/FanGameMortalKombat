@@ -14,5 +14,9 @@ namespace StatesOfEnemies
         bool IsPlayerInYellowZone();
         void LookPlayer(Vector3 target);
         bool IsPlayerInGreenZone();
+        bool IsPlayerInRangeOfAttack();
+        void StopMovementForAttack();
+        float GetEnemyVelocity();
+        void Attack();
     }
 }

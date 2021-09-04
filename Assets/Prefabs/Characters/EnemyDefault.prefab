@@ -31,6 +31,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1526210693785348550}
+  - {fileID: 3270892004146105961}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -50,8 +51,11 @@ MonoBehaviour:
   model3D: {fileID: 6619987477710302347, guid: b165f5b31d2e9b945b830c3796487653, type: 3}
   rb: {fileID: 3238535905166707717}
   speedGlobal: 300
+  velocityOfAttack: 3
+  life: 0
   toleranceToArrivedPoint: 4
   _redZoneComponent: {fileID: 3473220092598404945}
+  rangeOfAttack: {fileID: 3319356424676952964}
 --- !u!54 &3238535905166707717
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -82,6 +86,64 @@ CapsuleCollider:
   m_Height: 1.3803797
   m_Direction: 1
   m_Center: {x: 0, y: 0.61, z: 0}
+--- !u!1 &6656430225980053765
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3270892004146105961}
+  - component: {fileID: 3319356424676952964}
+  - component: {fileID: 6166564974259543259}
+  m_Layer: 0
+  m_Name: RangeOfAttack
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3270892004146105961
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6656430225980053765}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3238535905166707715}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3319356424676952964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6656430225980053765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69eb5b730c4c63a46ba8538485c0d84d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radius: 2
+--- !u!135 &6166564974259543259
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6656430225980053765}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 2
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8562749952768989610
 GameObject:
   m_ObjectHideFlags: 0

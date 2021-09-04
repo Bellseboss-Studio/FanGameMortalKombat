@@ -17,6 +17,7 @@ namespace View.Characters
         [SerializeField] private RedZoneComponent _redZoneComponent;
         private AreaZoneController yellowZone;
         private AreaZoneController greenZone;
+        [SerializeField] private AreaZoneController rangeOfAttack;
         private GameObject target;
 
         public delegate void OnPlayerTrigger(GameObject player);
@@ -30,9 +31,17 @@ namespace View.Characters
         {
             this.yellowZone = yellowZone;
             this.greenZone = greenZone;
+            
+            this.yellowZone.OnPlayerEnter += YellowZoneOnOnPlayerEnter;
+            
             behaviorEnemy = gameObject.AddComponent<EnemyBehavior>();
             var enemyState = behaviorEnemy.Configuration(this);
             StartCoroutine(behaviorEnemy.StartState(enemyState));
+        }
+
+        private void YellowZoneOnOnPlayerEnter(GameObject player)
+        {
+            Debug.Log("Player has entered");
         }
 
         public void MoveToPoint(Vector3 toPoint)
@@ -48,7 +57,6 @@ namespace View.Characters
         public bool IsEnemyArrived(Vector3 concurrentPoint)
         {
             var position = transform.position;
-            Debug.Log($"(concurrentPoint - position).sqrMagnitude {(concurrentPoint - position).sqrMagnitude} toleranceToArrivedPoint {toleranceToArrivedPoint}");
             return (concurrentPoint - position).sqrMagnitude < toleranceToArrivedPoint;
         }
 
@@ -76,6 +84,26 @@ namespace View.Characters
         {
             movementPlayer = Vector3.zero;
             transform.LookAt(target);
+        }
+
+        public bool IsPlayerInRangeOfAttack()
+        {
+            return rangeOfAttack.IsPlayerInThisZone();
+        }
+
+        public void StopMovement()
+        {
+            movementPlayer = Vector3.zero;
+        }
+
+        public float GetVelocity()
+        {
+            return velocityOfAttack;
+        }
+
+        public void Attack(Character characterToAttack, float damage)
+        {
+            characterToAttack.ApplyDamage(damage);
         }
 
         public void SetPoints(List<GameObject> pointsList)

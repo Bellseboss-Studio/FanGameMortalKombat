@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using CharacterCustom;
 using UnityEngine;
 using View.Characters;
 using Random = UnityEngine.Random;
@@ -22,6 +23,7 @@ namespace StatesOfEnemies
             _enemyStatesConfiguration.AddState(EnemyStatesConfiguration.ComebackState, new ComeBackState());
             _enemyStatesConfiguration.AddState(EnemyStatesConfiguration.FollowTarget, new FollowTarget());
             _enemyStatesConfiguration.AddState(EnemyStatesConfiguration.LookPlayer, new WaitState());
+            _enemyStatesConfiguration.AddState(EnemyStatesConfiguration.AttackPlayer, new AttackPlayerState());
             _nextState = 0;
             _enemyCharacter.SubscribeOnPlayerEnterTrigger((player) =>
             {
@@ -81,6 +83,30 @@ namespace StatesOfEnemies
         public bool IsPlayerInGreenZone()
         {
             return _enemyCharacter.IsPlayerInGreenZone();
+        }
+
+        public bool IsPlayerInRangeOfAttack()
+        {
+            return _enemyCharacter.IsPlayerInRangeOfAttack();
+        }
+
+        public void StopMovementForAttack()
+        {
+            _enemyCharacter.StopMovement();
+        }
+
+        public float GetEnemyVelocity()
+        {
+            return _enemyCharacter.GetVelocity();
+        }
+
+        public void Attack()
+        {
+            if (targer.TryGetComponent<Character>(out var character))
+            {
+                _enemyCharacter.Attack(character, 3);   
+            }
+            Debug.Log("Target dont save");
         }
 
         public void SetNextState(int nextStateFromState)
