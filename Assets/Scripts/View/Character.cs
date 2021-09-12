@@ -1,4 +1,5 @@
-﻿using Cinemachine;
+﻿using System;
+using Cinemachine;
 using InputSystemCustom;
 using UnityEngine;
 
@@ -12,6 +13,9 @@ namespace CharacterCustom
         [SerializeField] protected float speedGlobal;
         [SerializeField] protected float velocityOfAttack;
         [SerializeField] protected float life;
+        [SerializeField] private string speedAnim;
+        [SerializeField] protected Animator animator;
+        [SerializeField] protected RuntimeAnimatorController controller;
         protected float speed;
         protected float forceRotation;
         protected InputCustom _inputCustom;
@@ -32,13 +36,19 @@ namespace CharacterCustom
 
         protected virtual void Start()
         {
-            Instantiate(model3D, transform);
+            var instantiate = Instantiate(model3D, transform);
+            animator = instantiate.GetComponent<Animator>();
+            animator.runtimeAnimatorController = controller;
         }
+
+        protected abstract void UpdateLegacy();
         protected void Update()
         {
             var rbVelocity = movementPlayer * (Time.deltaTime * speedGlobal);
+            animator.SetFloat(speedAnim,rbVelocity.sqrMagnitude);
             rbVelocity.y = rb.velocity.y;
             rb.velocity = rbVelocity;
+            UpdateLegacy();
         }
 
         private void Rotating (float horizontal, float vertical)
@@ -59,7 +69,16 @@ namespace CharacterCustom
         {
             _inputCustom = inputCustom;
             cameraForward = transform;
+            ValidationsCritical();
             ConfigureExplicit();
+        }
+
+        private void ValidationsCritical()
+        {
+            if (speedAnim == "")
+            {
+                throw new Exception("Parameter required");
+            }
         }
 
         protected abstract void ConfigureExplicit();

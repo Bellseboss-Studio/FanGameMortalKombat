@@ -22,6 +22,11 @@ namespace View.Characters
 
         public delegate void OnPlayerTrigger(GameObject player);
 
+        protected override void UpdateLegacy()
+        {
+            
+        }
+
         protected override void ConfigureExplicit()
         {
             _points = new List<Vector3>();

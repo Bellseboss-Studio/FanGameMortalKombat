@@ -48,11 +48,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: enemyDefault
-  model3D: {fileID: 6619987477710302347, guid: b165f5b31d2e9b945b830c3796487653, type: 3}
+  model3D: {fileID: 4173407519766695789, guid: 53b8dcdfd0b7cab4596892ab54931a7a, type: 3}
   rb: {fileID: 3238535905166707717}
   speedGlobal: 300
   velocityOfAttack: 3
   life: 0
+  speedAnim: speed
+  animator: {fileID: 0}
+  controller: {fileID: 9100000, guid: 1204e9d2cbde6414499876295e8c4a2f, type: 2}
   toleranceToArrivedPoint: 4
   _redZoneComponent: {fileID: 3473220092598404945}
   rangeOfAttack: {fileID: 3319356424676952964}

@@ -55,6 +55,9 @@ MonoBehaviour:
   speedGlobal: 600
   velocityOfAttack: 0
   life: 100
+  speedAnim: speed
+  animator: {fileID: 0}
+  controller: {fileID: 9100000, guid: eda7a823a612d2348b2fcb80d0538a59, type: 2}
   playerInput: {fileID: 1664086341}
   pointToCamera: {fileID: 7421841982931828701}
   pointFarToCamera: {fileID: 2149289635134946612}

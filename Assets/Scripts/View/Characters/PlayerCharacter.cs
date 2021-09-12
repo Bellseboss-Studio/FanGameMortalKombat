@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Diagnostics;
 using CharacterCustom;
 using UnityEngine;
@@ -10,12 +11,32 @@ namespace View.Characters
     {
         [SerializeField] private PlayerInput playerInput;
         [SerializeField] protected GameObject pointToCamera, pointFarToCamera;
+        private bool changeIdle;
 
         private Vector3 pointInicialToPointToFar;
         protected override void Start()
         {
             base.Start();
             pointInicialToPointToFar = pointFarToCamera.transform.localPosition;
+        }
+
+        protected override void UpdateLegacy()
+        {
+            if (!changeIdle)
+            {
+                if (Random.Range(0, 100) < 2)
+                {
+                    changeIdle = true;
+                    animator.SetTrigger("change_idle");
+                    StartCoroutine(DelayToIdle());
+                }
+            }
+        }
+
+        private IEnumerator DelayToIdle()
+        {
+            yield return new WaitForSeconds(5f);
+            changeIdle = false;
         }
 
         protected override void ConfigureExplicit()
