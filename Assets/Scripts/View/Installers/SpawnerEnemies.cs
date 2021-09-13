@@ -17,6 +17,7 @@ namespace View.Installers
         [SerializeField] private string idCharacter;
         [SerializeField] private List<GameObject> points;
         [SerializeField] private ZoneController zoneOur;
+        [SerializeField] private GameObject camera;
         private CharactersFactory _charactersFactory;
 
         private void Start()
@@ -33,6 +34,8 @@ namespace View.Installers
             var yellowZone = ServiceLocator.Instance.GetService<IGodObserver>().GetZone(zoneOur.NameZone, Zones.YELLOW);
             var greenZone = ServiceLocator.Instance.GetService<IGodObserver>().GetZone(zoneOur.NameZone, Zones.GREEN);
             characterEnemy.SetBehavior(yellowZone, greenZone);
+            characterEnemy.SetRootCamera(camera);
+
         }
     }
 }

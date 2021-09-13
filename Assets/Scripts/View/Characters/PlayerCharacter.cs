@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Diagnostics;
 using CharacterCustom;
 using UnityEngine;
@@ -10,18 +11,86 @@ namespace View.Characters
     {
         [SerializeField] private PlayerInput playerInput;
         [SerializeField] protected GameObject pointToCamera, pointFarToCamera;
+        [SerializeField] private string punch, kick;
+        private bool changeIdle;
+        private EventsOfFightPlayerInput playerInputFight;
 
         private Vector3 pointInicialToPointToFar;
+        public bool CanMove;
+        public bool CanReadInputs;
+
         protected override void Start()
         {
             base.Start();
             pointInicialToPointToFar = pointFarToCamera.transform.localPosition;
+            OnPunchEvent+=OnPunchEventInPlayer;
+            OnKickEvent += OnKickEventInPlayer;
+            CanMove = true;
+            CanReadInputs = true;
+            playerInputFight = new EventsOfFightPlayerInput(this, playerInput);
+            OnFinishedAnimatorFight += OnFinishedAnimatorPlayer;
+        }
+
+        private void OnFinishedAnimatorPlayer()
+        {
+            CanMove = true;
+            CanReadInputs = true;
+        }
+
+        private void OnKickEventInPlayer()
+        {
+            if (!CanReadInputs) return;
+            
+            animator.SetTrigger(kick);
+            CanMove = false;
+            CanReadInputs = false;
+            Move(Vector3.zero);
+        }
+
+        private void OnPunchEventInPlayer()
+        {
+            if (!CanReadInputs) return;
+            
+            animator.SetTrigger(punch);
+            CanMove = false;
+            CanReadInputs = false;
+            Move(Vector3.zero);
+        }
+
+        protected override void UpdateLegacy()
+        {
+            if (!changeIdle)
+            {
+                if (Random.Range(0, 100) < 2)
+                {
+                    changeIdle = true;
+                    animator.SetTrigger("change_idle");
+                    StartCoroutine(DelayToIdle());
+                }
+            }
+        }
+
+        private IEnumerator DelayToIdle()
+        {
+            yield return new WaitForSeconds(5f);
+            changeIdle = false;
         }
 
         protected override void ConfigureExplicit()
         {
             _inputCustom.playerInput = playerInput;
         }
+
+        public override float GetDamageForKick()
+        {
+            return power * 4;
+        }
+
+        public override float GetDamageForPunch()
+        {
+            return power * 2;
+        }
+
         private void OnMovementControllers(InputValue value)
         {
             OnInputChangedExtend(value.Get<Vector2>());
@@ -70,10 +139,16 @@ namespace View.Characters
             Debug.Log($"Press Off");
             _isOn = true;
         }
-
-        public float GetLife()
+        
+        public void OnPunch()
         {
-            return life;
+            OnPunchEvent?.Invoke();
         }
+        
+        public void OnKick()
+        {
+            OnKickEvent?.Invoke();
+        }
+        
     }
 }

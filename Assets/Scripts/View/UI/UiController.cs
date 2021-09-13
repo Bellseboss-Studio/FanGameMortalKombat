@@ -1,3 +1,4 @@
+using CharacterCustom;
 using UnityEngine;
 using UnityEngine.UI;
 

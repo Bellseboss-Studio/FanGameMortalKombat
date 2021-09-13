@@ -16,7 +16,10 @@ namespace StatesOfEnemies
             {
                 behavior.StopMovementForAttack();
                 yield return new WaitForSeconds(behavior.GetEnemyVelocity());
-                behavior.Attack();
+                if (behavior.IsPlayerInRangeOfAttack())
+                {
+                    behavior.Attack();
+                }
                 yield return new WaitForSeconds(0.1f);
             }
             behavior.SetNextState(EnemyStatesConfiguration.FollowTarget);

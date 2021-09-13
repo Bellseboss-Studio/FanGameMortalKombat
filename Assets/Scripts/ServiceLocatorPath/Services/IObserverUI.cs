@@ -1,9 +1,10 @@
-﻿using View.Characters;
+﻿using CharacterCustom;
+using View.Characters;
 
 namespace View.Installers
 {
     internal interface IObserverUI
     {
-        void Observer(PlayerCharacter character);
+        void Observer(Character character);
     }
 }

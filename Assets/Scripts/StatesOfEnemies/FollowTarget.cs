@@ -18,11 +18,9 @@ namespace StatesOfEnemies
                 }
                 if (!behavior.IsPlayerInYellowZone())
                 {
-                    Debug.Log("no esta dentro de la zona amarilla");
                     behavior.SetNextState(EnemyStatesConfiguration.LookPlayer);
                     break;
                 }
-                Debug.Log("esta en la red zone");
                 behavior.WalkToPoint(behavior.GetTarget());
                 yield return new WaitForSeconds(0.1f);
             }

@@ -50,14 +50,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: player
-  model3D: {fileID: 4173407519766695789, guid: 53b8dcdfd0b7cab4596892ab54931a7a, type: 3}
+  model3D: {fileID: 3055888929202094615, guid: cf9482671030d144e81b6c58bbe4ff9c, type: 3}
   rb: {fileID: 5361025647053283558}
   speedGlobal: 600
   velocityOfAttack: 0
   life: 100
+  speedAnim: speed
+  animator: {fileID: 0}
+  controller: {fileID: 9100000, guid: eda7a823a612d2348b2fcb80d0538a59, type: 2}
+  power: 10
+  nameOfAnimationTriggerForApplyDamage: damage
+  CanAnimateDamage: 0
   playerInput: {fileID: 1664086341}
   pointToCamera: {fileID: 7421841982931828701}
   pointFarToCamera: {fileID: 2149289635134946612}
+  punch: punch
+  kick: kick
+  CanMove: 0
+  CanReadInputs: 0
 --- !u!114 &1664086341
 MonoBehaviour:
   m_ObjectHideFlags: 0

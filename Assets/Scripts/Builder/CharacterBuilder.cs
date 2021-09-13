@@ -54,10 +54,7 @@ namespace Builder
                     valueOfInput = new MovementController(characterInstantiate, camera);
                     break;
                 case TypeOfInputs.EnemyIa:
-                    valueOfInput = new MovementEnemies();
-                    break;
-                case TypeOfInputs.ControlZeldaBreadOfTheWild:
-                    valueOfInput = new MovementFromZeldaBreadOdTheWild(characterInstantiate);
+                    valueOfInput = new MovementEnemies(characterInstantiate);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
