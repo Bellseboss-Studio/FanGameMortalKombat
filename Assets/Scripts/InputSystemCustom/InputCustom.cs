@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using CharacterCustom;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace InputSystemCustom
@@ -6,6 +7,8 @@ namespace InputSystemCustom
     public abstract class InputCustom
     {
         public PlayerInput playerInput;
+        protected Character _character;
+        protected Transform cameraTransform;
         public abstract Vector2 GetDirection();
         public abstract bool IsFireActionPressed();
         public abstract Vector2 GetLasPosition();
@@ -14,5 +17,15 @@ namespace InputSystemCustom
         {
             
         }
+
+        public abstract Vector3 InputCalculateForTheMovement(Vector2 input);
+        
+        protected void Rotating (float angle)
+        {
+            var targetRotation = Quaternion.Euler(0, angle, 0);;
+            _character.GetTransform().rotation = targetRotation;
+        }
+
+        protected abstract void RotatingCharacter();
     }
 }

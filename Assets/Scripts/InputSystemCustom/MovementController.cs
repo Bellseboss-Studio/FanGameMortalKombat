@@ -6,14 +6,14 @@ namespace InputSystemCustom
 {
     public class MovementController : InputCustom
     {
-        private readonly PlayerCharacter _character;
         private Vector2 inputToMovement;
         private Vector2 lastPosition;
-        private Transform cameraTransform;
+        private PlayerCharacter _playerCharacter;
 
         public MovementController(Character character, GameObject camera)
         {
-            _character = (PlayerCharacter)character;
+            _playerCharacter = (PlayerCharacter)character;
+            _character = character;
             character.OnInputChangedExtend += OnInputChangedExtend;
             character.OnCameraMovementExtend += OnCameraMovementExtend;
             character.OnLeftShitOn += OnLeftShitOn;
@@ -45,38 +45,20 @@ namespace InputSystemCustom
 
         private void OnInputChangedExtend(Vector2 input)
         {
-            inputToMovement = input;
-            TransformDirectionalForForce(input);
-            if (inputToMovement.sqrMagnitude > 0.1f)
+            inputToMovement = input;//adelante (0,0,1)
+            if (_playerCharacter.CanMove)
             {
+                TransformDirectionalForForce(input);
                 lastPosition = inputToMovement;
             }
+            RotatingCharacter();
         }
 
-        private void TransformDirectionalForForce(Vector2 input)
+        public void TransformDirectionalForForce(Vector2 input)
         {
-            
-            Vector3 targetDir = _character.GetPointToCamera().position - cameraTransform.position;
-            var forward = cameraTransform.forward;
-            var angleBetween = Vector3.Angle(forward, targetDir);
-            var anglr = Vector3.Cross(forward, targetDir);
-            if (anglr.y < 0)
-            {
-                angleBetween *= -1;
-            }
-            Rotating(angleBetween);
-
-            var transformForward = _character.GetTransform().TransformDirection(new Vector3(input.x,0,input.y));
+            var transformForward = InputCalculateForTheMovement(input);
 
             _character.Move(transformForward);
-            //para actualizar la direccion del personaje, sin tener que esperar a que se presione alguno de los botones para moverse:
-            //Es crear el Observer en el opdate, y aqui se ejecuta la funcion que hace que se actualize el vector de movimiento
-        }
-
-        private void Rotating (float angle)
-        {
-            var targetRotation = Quaternion.Euler(0, angle, 0);;
-            _character.GetTransform().rotation = targetRotation;
         }
         public override Vector2 GetDirection()
         {
@@ -91,6 +73,28 @@ namespace InputSystemCustom
         public override Vector2 GetLasPosition()
         {
             return lastPosition;
+        }
+        public override Vector3 InputCalculateForTheMovement(Vector2 input)
+        {
+            var transformForward = _character.GetTransform().TransformDirection(new Vector3(input.x, 0, input.y));
+            if (Mathf.Abs(transformForward.sqrMagnitude) > 0)
+            {
+                RotatingCharacter();
+            }
+            return transformForward;
+        }
+        protected override void RotatingCharacter()
+        {
+            var targetDir = _playerCharacter.GetPointToCamera().position - cameraTransform.position;
+            var forward = cameraTransform.forward;
+            var angleBetween = Vector3.Angle(forward, targetDir);
+            var anglr = Vector3.Cross(forward, targetDir);
+            if (anglr.y < 0)
+            {
+                angleBetween *= -1;
+            }
+
+            Rotating(angleBetween);
         }
     }
 }

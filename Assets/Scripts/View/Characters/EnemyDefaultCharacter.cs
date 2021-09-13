@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using CharacterCustom;
 using JetBrains.Annotations;
+using ServiceLocatorPath;
 using StatesOfEnemies;
 using UnityEngine;
 using View.Characters.Enemy;
+using View.UI;
 using View.Zone;
 
 namespace View.Characters
@@ -18,8 +20,13 @@ namespace View.Characters
         private AreaZoneController yellowZone;
         private AreaZoneController greenZone;
         [SerializeField] private AreaZoneController rangeOfAttack;
+        [SerializeField] private TypesEnemy type;
+        [SerializeField] private UiController _uiController;
         private GameObject target;
-
+        private ObserverUI _observerUI;
+        [SerializeField] private LookAtCameraForever cameraLook;
+        private Vector3 _toPoint;
+        public TypesEnemy TypeEnemy => type;
         public delegate void OnPlayerTrigger(GameObject player);
 
         protected override void UpdateLegacy()
@@ -30,6 +37,18 @@ namespace View.Characters
         protected override void ConfigureExplicit()
         {
             _points = new List<Vector3>();
+            _observerUI = new ObserverUI(_uiController);
+            _observerUI.Observer(this);
+        }
+
+        public override float GetDamageForKick()
+        {
+            return power * 2;
+        }
+
+        public override float GetDamageForPunch()
+        {
+            return power * 1;
         }
 
         public void SetBehavior(AreaZoneController yellowZone, AreaZoneController greenZone)
@@ -51,7 +70,7 @@ namespace View.Characters
 
         public void MoveToPoint(Vector3 toPoint)
         {
-            movementPlayer = (toPoint - transform.position).normalized;
+            _toPoint = toPoint;
         }
 
         public List<Vector3> GetPoints()
@@ -119,5 +138,19 @@ namespace View.Characters
             }
         }
 
+        public void SetRootCamera(GameObject cameraRoot)
+        {
+            cameraLook.SetCameraRoot(cameraRoot);
+        }
+
+        public Vector3 GetToPoint()
+        {
+            return _toPoint;
+        }
     }
+}
+
+public enum TypesEnemy
+{
+    Default
 }

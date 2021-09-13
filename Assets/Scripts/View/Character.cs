@@ -2,6 +2,7 @@
 using Cinemachine;
 using InputSystemCustom;
 using UnityEngine;
+using View.Characters;
 
 namespace CharacterCustom
 {
@@ -16,6 +17,9 @@ namespace CharacterCustom
         [SerializeField] private string speedAnim;
         [SerializeField] protected Animator animator;
         [SerializeField] protected RuntimeAnimatorController controller;
+        protected ControllerAnimationPlayer animatorControllerPlayer;
+        [SerializeField] protected float power;
+        [SerializeField] private string nameOfAnimationTriggerForApplyDamage;
         protected float speed;
         protected float forceRotation;
         protected InputCustom _inputCustom;
@@ -25,9 +29,15 @@ namespace CharacterCustom
         public OnInputChanged OnCameraMovementExtend;
         public OnInputButton OnLeftShitOn;
         public OnInputButton OnLeftShitOff;
+        public OnInputButton OnPunchEvent;
+        public OnInputButton OnKickEvent;
+        public OnInputButton OnFinishedAnimatorFight;
+        public OnInputButton OnFinishedAnimatorDamage;
         private Vector2 _inputValue;
         protected Vector3 movementPlayer;
         private Transform cameraForward;
+        public bool CanAnimateDamage;
+
         public delegate void OnEnterDamage(float damage);
         public event OnEnterDamage OnEnterDamageEvent;
 
@@ -39,12 +49,21 @@ namespace CharacterCustom
             var instantiate = Instantiate(model3D, transform);
             animator = instantiate.GetComponent<Animator>();
             animator.runtimeAnimatorController = controller;
+            OnFinishedAnimatorDamage += OnFinishedAnimatorDamageCharacter;
+            CanAnimateDamage = true;
+            animatorControllerPlayer = animator.gameObject.GetComponent<ControllerAnimationPlayer>();
+            animatorControllerPlayer.Configurate(this);
+        }
+
+        private void OnFinishedAnimatorDamageCharacter()
+        {
+            CanAnimateDamage = true;
         }
 
         protected abstract void UpdateLegacy();
         protected void Update()
         {
-            var rbVelocity = movementPlayer * (Time.deltaTime * speedGlobal);
+            var rbVelocity = _inputCustom.InputCalculateForTheMovement(_inputCustom.GetLasPosition()) * (Time.deltaTime * speedGlobal);
             animator.SetFloat(speedAnim,rbVelocity.sqrMagnitude);
             rbVelocity.y = rb.velocity.y;
             rb.velocity = rbVelocity;
@@ -137,9 +156,26 @@ namespace CharacterCustom
         public void ApplyDamage(float damage)
         {
             life -= damage;
-            Debug.Log($"life is {life}");
+            AnimateDamage();
             OnEnterDamageEvent?.Invoke(damage);
             
         }
+
+        private void AnimateDamage()
+        {
+            if (CanAnimateDamage)
+            {
+                animator.SetTrigger(nameOfAnimationTriggerForApplyDamage);
+                CanAnimateDamage = false;
+            }
+        }
+
+        public float GetLife()
+        {
+            return life;
+        }
+
+        public abstract float GetDamageForKick();
+        public abstract float GetDamageForPunch();
     }
 }

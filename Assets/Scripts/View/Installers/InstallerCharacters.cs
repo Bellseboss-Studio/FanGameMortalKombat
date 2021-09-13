@@ -23,24 +23,6 @@ namespace View.Installers
             cameraMainFreeLook.Follow = character.GetPointToCamera();
             cameraMainFreeLook.LookAt = character.GetPointToCamera();
             ServiceLocator.Instance.GetService<IObserverUI>().Observer(character);
-            /*
-            cameraMain.Follow = character.GetPointToCamera();
-            var _player = new CinemachineTargetGroup.Target();
-            _player.target = character.GetPointToCamera();
-            _player.weight = 1;
-            var _pointFar = new CinemachineTargetGroup.Target();
-            _pointFar.target = character.GetPointToGroupCamera();
-            _pointFar.weight = 1;
-            group.m_Targets = new[]
-            {
-                _player,
-                _pointFar
-            };
-            cameraMain.m_Lens.FieldOfView = 20;
-            var cinemachineTransposer = cameraMain.GetCinemachineComponent<CinemachineTransposer>();
-            var followOffset = cinemachineTransposer.m_FollowOffset;
-            cinemachineTransposer.m_FollowOffset = new Vector3(followOffset.x, 2, followOffset.z);
-            */
         }
     }
 }

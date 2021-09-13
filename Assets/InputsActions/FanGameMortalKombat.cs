@@ -41,6 +41,22 @@ public class @FanGameMortalKombat : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": ""Press(behavior=2)""
+                },
+                {
+                    ""name"": ""Punch"",
+                    ""type"": ""Button"",
+                    ""id"": ""6e9ba08c-0e5b-4931-b100-78729d4c354c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press""
+                },
+                {
+                    ""name"": ""Kick"",
+                    ""type"": ""Button"",
+                    ""id"": ""2f72d503-737a-4b34-8a92-a0b77b5eefc0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press""
                 }
             ],
             ""bindings"": [
@@ -384,6 +400,28 @@ public class @FanGameMortalKombat : IInputActionCollection, IDisposable
                     ""action"": ""ButtonsToAction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fb7220ca-f44a-45a5-a129-1c8d991d06de"",
+                    ""path"": ""<Keyboard>/z"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Punch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c98d9388-4ca6-4bb2-a06e-79be6898f98c"",
+                    ""path"": ""<Keyboard>/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Kick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -456,6 +494,8 @@ public class @FanGameMortalKombat : IInputActionCollection, IDisposable
         m_PlayerMovement_MovementControllers = m_PlayerMovement.FindAction("MovementControllers", throwIfNotFound: true);
         m_PlayerMovement_CameraMovement = m_PlayerMovement.FindAction("CameraMovement", throwIfNotFound: true);
         m_PlayerMovement_ButtonsToAction = m_PlayerMovement.FindAction("ButtonsToAction", throwIfNotFound: true);
+        m_PlayerMovement_Punch = m_PlayerMovement.FindAction("Punch", throwIfNotFound: true);
+        m_PlayerMovement_Kick = m_PlayerMovement.FindAction("Kick", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -508,6 +548,8 @@ public class @FanGameMortalKombat : IInputActionCollection, IDisposable
     private readonly InputAction m_PlayerMovement_MovementControllers;
     private readonly InputAction m_PlayerMovement_CameraMovement;
     private readonly InputAction m_PlayerMovement_ButtonsToAction;
+    private readonly InputAction m_PlayerMovement_Punch;
+    private readonly InputAction m_PlayerMovement_Kick;
     public struct PlayerMovementActions
     {
         private @FanGameMortalKombat m_Wrapper;
@@ -515,6 +557,8 @@ public class @FanGameMortalKombat : IInputActionCollection, IDisposable
         public InputAction @MovementControllers => m_Wrapper.m_PlayerMovement_MovementControllers;
         public InputAction @CameraMovement => m_Wrapper.m_PlayerMovement_CameraMovement;
         public InputAction @ButtonsToAction => m_Wrapper.m_PlayerMovement_ButtonsToAction;
+        public InputAction @Punch => m_Wrapper.m_PlayerMovement_Punch;
+        public InputAction @Kick => m_Wrapper.m_PlayerMovement_Kick;
         public InputActionMap Get() { return m_Wrapper.m_PlayerMovement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -533,6 +577,12 @@ public class @FanGameMortalKombat : IInputActionCollection, IDisposable
                 @ButtonsToAction.started -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnButtonsToAction;
                 @ButtonsToAction.performed -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnButtonsToAction;
                 @ButtonsToAction.canceled -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnButtonsToAction;
+                @Punch.started -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnPunch;
+                @Punch.performed -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnPunch;
+                @Punch.canceled -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnPunch;
+                @Kick.started -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnKick;
+                @Kick.performed -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnKick;
+                @Kick.canceled -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnKick;
             }
             m_Wrapper.m_PlayerMovementActionsCallbackInterface = instance;
             if (instance != null)
@@ -546,6 +596,12 @@ public class @FanGameMortalKombat : IInputActionCollection, IDisposable
                 @ButtonsToAction.started += instance.OnButtonsToAction;
                 @ButtonsToAction.performed += instance.OnButtonsToAction;
                 @ButtonsToAction.canceled += instance.OnButtonsToAction;
+                @Punch.started += instance.OnPunch;
+                @Punch.performed += instance.OnPunch;
+                @Punch.canceled += instance.OnPunch;
+                @Kick.started += instance.OnKick;
+                @Kick.performed += instance.OnKick;
+                @Kick.canceled += instance.OnKick;
             }
         }
     }
@@ -600,5 +656,7 @@ public class @FanGameMortalKombat : IInputActionCollection, IDisposable
         void OnMovementControllers(InputAction.CallbackContext context);
         void OnCameraMovement(InputAction.CallbackContext context);
         void OnButtonsToAction(InputAction.CallbackContext context);
+        void OnPunch(InputAction.CallbackContext context);
+        void OnKick(InputAction.CallbackContext context);
     }
 }
