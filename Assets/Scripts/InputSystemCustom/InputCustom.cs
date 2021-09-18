@@ -25,6 +25,12 @@ namespace InputSystemCustom
             var targetRotation = Quaternion.Euler(0, angle, 0);;
             _character.GetTransform().rotation = targetRotation;
         }
+        protected void RotatingObject3D (float angle)
+        {
+            //var targetRotation = Quaternion.Euler(0, angle, 0);
+            _character.GetTransformProtagonist().localEulerAngles =  new Vector3(0, angle, 0);
+            //_character.GetTransformProtagonist().eulerAngles = targetRotation;
+        }
 
         protected abstract void RotatingCharacter();
     }

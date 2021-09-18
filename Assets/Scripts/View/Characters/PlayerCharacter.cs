@@ -149,6 +149,5 @@ namespace View.Characters
         {
             OnKickEvent?.Invoke();
         }
-        
     }
 }

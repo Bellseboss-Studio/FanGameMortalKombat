@@ -20,6 +20,7 @@ namespace CharacterCustom
         protected ControllerAnimationPlayer animatorControllerPlayer;
         [SerializeField] protected float power;
         [SerializeField] private string nameOfAnimationTriggerForApplyDamage;
+        [SerializeField] protected float smoodTimeRotation;
         protected float speed;
         protected float forceRotation;
         protected InputCustom _inputCustom;
@@ -37,6 +38,7 @@ namespace CharacterCustom
         protected Vector3 movementPlayer;
         private Transform cameraForward;
         public bool CanAnimateDamage;
+        protected GameObject instantiate;
 
         public delegate void OnEnterDamage(float damage);
         public event OnEnterDamage OnEnterDamageEvent;
@@ -46,7 +48,7 @@ namespace CharacterCustom
 
         protected virtual void Start()
         {
-            var instantiate = Instantiate(model3D, transform);
+            instantiate = Instantiate(model3D, transform);
             animator = instantiate.GetComponent<Animator>();
             animator.runtimeAnimatorController = controller;
             OnFinishedAnimatorDamage += OnFinishedAnimatorDamageCharacter;
@@ -111,7 +113,12 @@ namespace CharacterCustom
         {
             return transform;
         }
-
+        
+        public Transform GetTransformProtagonist()
+        {
+            return instantiate.transform;
+        }
+        
         public void Move(Vector3 movementVector2)
         {
             movementPlayer = movementVector2;
@@ -177,5 +184,10 @@ namespace CharacterCustom
 
         public abstract float GetDamageForKick();
         public abstract float GetDamageForPunch();
+
+        public float GetSmoothTimeRotation()
+        {
+            return smoodTimeRotation;
+        }
     }
 }
