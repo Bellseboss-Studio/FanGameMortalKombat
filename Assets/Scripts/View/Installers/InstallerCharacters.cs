@@ -1,3 +1,4 @@
+using System;
 using Cinemachine;
 using FactoryCharacterFiles;
 using InputSystemCustom;
@@ -15,10 +16,16 @@ namespace View.Installers
         [SerializeField] private CinemachineTargetGroup group;
         private GameObject player, pointFar;
 
+        private void Awake()
+        {
+            Application.targetFrameRate = 60;
+        }
+
         private void Start()
         {
             var charactersFactory = new CharactersFactory(Instantiate(charactersConfiguration));
-            var character = (PlayerCharacter) charactersFactory.Create(idCharacter).WithInput(TypeOfInputs.PlayerControl).WithCamera(cameraMainFreeLook.gameObject).Build();
+            var character = (PlayerCharacter) charactersFactory.Create(idCharacter).WithInput(TypeOfInputs.PlayerControl).InPosition(transform.position).WithCamera(cameraMainFreeLook.gameObject)
+            .Build();
 
             cameraMainFreeLook.Follow = character.GetPointToCamera();
             cameraMainFreeLook.LookAt = character.GetPointToCamera();

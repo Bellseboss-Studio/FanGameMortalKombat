@@ -52,7 +52,7 @@ MonoBehaviour:
   id: player
   model3D: {fileID: 3055888929202094615, guid: cf9482671030d144e81b6c58bbe4ff9c, type: 3}
   rb: {fileID: 5361025647053283558}
-  speedGlobal: 600
+  speedGlobal: 300
   velocityOfAttack: 0
   life: 100
   speedAnim: speed
@@ -60,7 +60,7 @@ MonoBehaviour:
   controller: {fileID: 9100000, guid: eda7a823a612d2348b2fcb80d0538a59, type: 2}
   power: 10
   nameOfAnimationTriggerForApplyDamage: damage
-  smoodTimeRotation: 0.08
+  smoodTimeRotation: 0.06
   CanAnimateDamage: 0
   playerInput: {fileID: 1664086341}
   pointToCamera: {fileID: 7421841982931828701}
