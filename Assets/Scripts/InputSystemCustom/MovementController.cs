@@ -51,8 +51,6 @@ namespace InputSystemCustom
                 TransformDirectionalForForce(input);
                 lastPosition = inputToMovement;
             }
-            RotatingCharacter();
-            RotatingCharacterObject3D(input);
         }
 
         public void TransformDirectionalForForce(Vector2 input)
@@ -81,28 +79,17 @@ namespace InputSystemCustom
             if (Mathf.Abs(transformForward.sqrMagnitude) > 0)
             {
                 RotatingCharacter();
+                RotatingCharacterObject3D(input);
             }
             return transformForward;
         }
 
         private void RotatingCharacterObject3D(Vector2 input)
         {
-            /*var targetDir = new Vector3(input.x, 0, input.y);
-            var forward = _playerCharacter.GetTransform().forward;
-            //var forward = _playerCharacter.GetTransformProtagonist().forward;
-            var angleBetween = Vector3.Angle(forward, targetDir);
-            var anglr = Vector3.Cross(forward, targetDir);
-            if (anglr.y < 0)
-            {
-                //angleBetween *= -1;
-            }
-            */
             var eulerAnglesY = Mathf.Atan2(input.x, input.y) * Mathf.Rad2Deg + _playerCharacter.GetTransform().eulerAngles.y;
             float reference = 0;
             var smoothDampAngle = Mathf.SmoothDampAngle(_playerCharacter.GetTransformProtagonist().eulerAngles.y, eulerAnglesY, ref reference,_character.GetSmoothTimeRotation());
             _playerCharacter.GetTransformProtagonist().rotation = Quaternion.Euler(0f, smoothDampAngle, 0);
-            //Debug.Log(angleBetween);
-            //RotatingObject3D(angleBetween);
         }
 
         protected override void RotatingCharacter()
@@ -118,6 +105,15 @@ namespace InputSystemCustom
             }
 
             Rotating(angleBetween);
+        }
+        protected void RotatingCharacterNew()
+        {
+            var targetDir = _playerCharacter.GetPointToCamera().position - cameraTransform.position;
+            var eulerAnglesY = Mathf.Atan2(targetDir.x, targetDir.z) * Mathf.Rad2Deg + _character.GetTransform().eulerAngles.y;
+            float reference = 0;
+            var smoothDampAngle = Mathf.SmoothDampAngle(_character.GetTransform().eulerAngles.y, eulerAnglesY, ref reference,_character.GetSmoothTimeRotation());
+            _character.GetTransform().rotation = Quaternion.Euler(0f, smoothDampAngle, 0);
+            Debug.Log(smoothDampAngle);
         }
     }
 }
