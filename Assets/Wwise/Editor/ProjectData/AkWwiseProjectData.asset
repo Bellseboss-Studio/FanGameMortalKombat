@@ -66,7 +66,7 @@ MonoBehaviour:
     ParentPath: SoundBanks\Default Work Unit
     guid: 143f7cda20cbd6429f396e8f9e3e5a56
     GuidInternal: 
-    m_lastTime: -8585693405034496267
+    m_lastTime: -8585683970639160011
     List:
     - name: GUI_SoundBank
       guid: 21a086f6c0da3f4a9ac67bbe6dec2145
@@ -140,6 +140,36 @@ MonoBehaviour:
       maxAttenuation: 0
       maxDuration: 0.627591
       minDuration: 0.627591
+  - PhysicalPath: Events\MainCharacterSounds.wwu
+    PathAndIcons:
+    - ElementName: Events
+      ObjectType: 5
+      guid: 00000000000000000000000000000000
+    - ElementName: MainCharacterSounds
+      ObjectType: 12
+      guid: fdd71a14f2f2804482858eee7db23950
+    ParentPath: Events\MainCharacterSounds
+    guid: fdd71a14f2f2804482858eee7db23950
+    GuidInternal: 
+    m_lastTime: -8585683970639999956
+    List:
+    - name: PlayFootstep
+      guid: 5345d1b868c77048b87971032551d3e0
+      id: 1712852617
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: MainCharacterSounds
+        ObjectType: 12
+        guid: fdd71a14f2f2804482858eee7db23950
+      - ElementName: PlayFootstep
+        ObjectType: 3
+        guid: 5345d1b868c77048b87971032551d3e0
+      Path: Events\MainCharacterSounds\PlayFootstep
+      maxAttenuation: 0
+      maxDuration: 0.256086
+      minDuration: 0.143831
   RtpcWwu:
   - PhysicalPath: Game Parameters\Default Work Unit.wwu
     PathAndIcons:
