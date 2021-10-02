@@ -10,10 +10,8 @@ public class ImageComponentExtra : IExtra
     {
         name = extra.name;
         source = extra.source;
-        source = "caritaFeliz";
         type = extra.type;
         icon = extra.icon;
-        icon = "ConDatos";
     }
 
     public void ShowContent()

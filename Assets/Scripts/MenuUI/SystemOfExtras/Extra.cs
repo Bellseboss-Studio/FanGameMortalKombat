@@ -11,6 +11,10 @@ public class Extra
 
   public Extra()
   {
+    name = "texto para el ejemplo";
+    source = "Aquellos que no lidian con si mismos, serán usados por otros a su propio favor... y estos últimos lograrán la iluminación a costa de los primeros desafortunados";
+    type = "text";
+    icon = "Text";
   }
 
   public Extra(IExtra extra)

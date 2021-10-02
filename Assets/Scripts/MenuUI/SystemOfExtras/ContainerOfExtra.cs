@@ -1,5 +1,6 @@
 ﻿using System;
 using MenuUI.SystemOfExtras;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,32 +11,45 @@ public class ContainerOfExtra : MonoBehaviour
     [SerializeField] private Button buttonToAction;
     [SerializeField] private Animator animator;
     [SerializeField] private Image imageOfResource;
+    [SerializeField] private TextMeshProUGUI text;
     
     private void Call()
     {
         animator.SetBool("show", true);
-        var spriteToPixel = Resources.Load<Sprite>(_extra.GetSource());
-        imageOfResource.sprite = spriteToPixel;
+        imageOfResource.enabled = false;
+        text.enabled = false;
+        switch (_extra.GetTypeExtra())
+        {
+            case "text":
+                text.text = _extra.GetSource();
+                text.enabled = true;
+                break;
+            case "image":
+                var spriteToPixel = Resources.Load<Sprite>(_extra.GetSource());
+                imageOfResource.sprite = spriteToPixel;
+                imageOfResource.enabled = true;
+                break;
+            case "video":
+                break;
+            case "audio":
+                break;
+        }
     }
 
     public void Add(IExtra extra)
     {
         _extra = extra;
-        Debug.Log("Agregado un extra");
     }
 
     public void Configure()
     {
         if (_extra == null)
         {
-            //no tiene contenido
-            Debug.Log("sin configuracion");
             var spriteToPixel = Resources.Load<Sprite>("SinDatos");
             imageToShow.sprite = spriteToPixel;
         }
         else
         {
-            Debug.Log("con configuracion");
             var spriteToPixel = Resources.Load<Sprite>(_extra.GetIcon());
             imageToShow.sprite = spriteToPixel;
         }
