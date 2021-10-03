@@ -16,5 +16,75 @@
 			<ShortName>Init</ShortName>
 			<Path>Init.bnk</Path>
 		</SoundBank>
+		<SoundBank Id="1615758161" Language="SFX" Hash="2589165978">
+			<ObjectPath>\SoundBanks\Default Work Unit\MainWorldSoundbank</ObjectPath>
+			<ShortName>MainWorldSoundbank</ShortName>
+			<Path>MainWorldSoundbank.bnk</Path>
+			<IncludedEvents>
+				<Event Id="2385628198" Name="Footsteps" ObjectPath="\Events\MainCharacterEvents\Footsteps" DurationType="OneShot" DurationMin="0.131080" DurationMax="0.646833">
+					<IncludedMemoryFiles>
+						<File Id="39946139" Language="SFX">
+							<ShortName>Footsteps_Gravel_M_004.wav</ShortName>
+							<Path>SFX/Footsteps_Gravel_M_004_C3DC9F41.wem</Path>
+						</File>
+						<File Id="54966914" Language="SFX">
+							<ShortName>Footsteps_Gravel_M_001.wav</ShortName>
+							<Path>SFX/Footsteps_Gravel_M_001_C3DC9F41.wem</Path>
+						</File>
+						<File Id="93354915" Language="SFX">
+							<ShortName>Footsteps_Grass_M_003.wav</ShortName>
+							<Path>SFX/Footsteps_Grass_M_003_138726D9.wem</Path>
+						</File>
+						<File Id="262855682" Language="SFX">
+							<ShortName>Footsteps_Gravel_M_003.wav</ShortName>
+							<Path>SFX/Footsteps_Gravel_M_003_C3DC9F41.wem</Path>
+						</File>
+						<File Id="369210003" Language="SFX">
+							<ShortName>Footsteps_Grass_M_004.wav</ShortName>
+							<Path>SFX/Footsteps_Grass_M_004_5FFF8991.wem</Path>
+						</File>
+						<File Id="389446310" Language="SFX">
+							<ShortName>Footsteps_Grass_M_001.wav</ShortName>
+							<Path>SFX/Footsteps_Grass_M_001_49265F53.wem</Path>
+						</File>
+						<File Id="541791125" Language="SFX">
+							<ShortName>Footsteps_Gravel_M_002.wav</ShortName>
+							<Path>SFX/Footsteps_Gravel_M_002_C3DC9F41.wem</Path>
+						</File>
+						<File Id="806352642" Language="SFX">
+							<ShortName>Footsteps_Grass_M_002.wav</ShortName>
+							<Path>SFX/Footsteps_Grass_M_002_F8D10DF4.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+					<DefaultSwitchValue>{85EB8698-E13E-48E1-BF9B-9CD2665ED5AB}</DefaultSwitchValue>
+					<SwitchContainers>
+						<SwitchContainer SwitchValue="{85EB8698-E13E-48E1-BF9B-9CD2665ED5AB}">
+							<Media>
+								<File Id="93354915"/>
+								<File Id="369210003"/>
+								<File Id="389446310"/>
+								<File Id="806352642"/>
+							</Media>
+						</SwitchContainer>
+						<SwitchContainer SwitchValue="{8516E5C2-0D2D-464B-9552-9C6F24A2807A}">
+							<Media>
+								<File Id="39946139"/>
+								<File Id="54966914"/>
+								<File Id="262855682"/>
+								<File Id="541791125"/>
+							</Media>
+						</SwitchContainer>
+					</SwitchContainers>
+				</Event>
+			</IncludedEvents>
+			<SwitchGroups>
+				<SwitchGroup Id="982447677" Name="FootstepsMaterial" ObjectPath="\Switches\Default Work Unit\FootstepsMaterial" GUID="{C7F23648-7EBD-42C8-A531-B526E3A4B6C3}">
+					<Switches>
+						<Switch Id="4248645337" Name="Grass" ObjectPath="\Switches\Default Work Unit\FootstepsMaterial\Grass" GUID="{85EB8698-E13E-48E1-BF9B-9CD2665ED5AB}"/>
+						<Switch Id="2185786256" Name="Gravel" ObjectPath="\Switches\Default Work Unit\FootstepsMaterial\Gravel" GUID="{8516E5C2-0D2D-464B-9552-9C6F24A2807A}"/>
+					</Switches>
+				</SwitchGroup>
+			</SwitchGroups>
+		</SoundBank>
 	</SoundBanks>
 </SoundBanksInfo>
