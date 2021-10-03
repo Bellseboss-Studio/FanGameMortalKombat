@@ -13,14 +13,13 @@ namespace AK
 {
     namespace EVENTS
     {
-        static const AkUniqueID HOVERMOUSE = 3546218942U;
+        static const AkUniqueID FOOTSTEPS = 2385628198U;
     } // namespace EVENTS
 
     namespace BANKS
     {
         static const AkUniqueID INIT = 1355168291U;
-        static const AkUniqueID GUI_SOUNDBANK = 3805144928U;
-        static const AkUniqueID WORLD_SOUNDBANK = 1128635677U;
+        static const AkUniqueID MAINWORLDSOUNDBANK = 1615758161U;
     } // namespace BANKS
 
     namespace BUSSES
