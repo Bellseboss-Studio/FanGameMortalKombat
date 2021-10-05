@@ -49,4 +49,9 @@ public class PlayerPrefDataContainer : ISaveData
         Debug.Log(stringJson);
         PlayerPrefs.SetString(NAME_OF_DATA_SAVES, stringJson);
     }
+
+    public void SaveData()
+    {
+        throw new System.NotImplementedException();
+    }
 }

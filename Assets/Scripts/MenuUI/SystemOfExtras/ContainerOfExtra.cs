@@ -61,4 +61,9 @@ public class ContainerOfExtra : MonoBehaviour
     {
         buttonToAction.onClick.AddListener(Call);
     }
+
+    public void Clean()
+    {
+        _extra = null;
+    }
 }

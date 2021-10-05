@@ -6,6 +6,7 @@ using MenuUI.SystemOfExtras;
 using PlayFab;
 using PlayFab.ClientModels;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace ServiceLocatorPath
 {
@@ -18,10 +19,10 @@ namespace ServiceLocatorPath
 
         public PlayFabCustom()
         {
-            Login();
+            Login(OnLoginSuccess, OnLoginFailure);
         }
 
-        private void Login()
+        private void Login(Action<LoginResult> resultCallback, Action<PlayFabError> errorCallback)
         {
             if (string.IsNullOrEmpty(PlayFabSettings.staticSettings.TitleId)){
                 /*
@@ -31,7 +32,7 @@ namespace ServiceLocatorPath
                 PlayFabSettings.staticSettings.TitleId = "42";
             }
             var request = new LoginWithCustomIDRequest { CustomId = "GettingStartedGuide", CreateAccount = true};
-            PlayFabClientAPI.LoginWithCustomID(request, OnLoginSuccess, OnLoginFailure);
+            PlayFabClientAPI.LoginWithCustomID(request, resultCallback, errorCallback);
         }
 
         private void CreatedPlayer()
@@ -60,7 +61,12 @@ namespace ServiceLocatorPath
                     }
                 }, requestCreate =>
                 {
-                
+                    AddUserVirtualCurrencyRequest reqCurrenci = new AddUserVirtualCurrencyRequest()
+                    {
+                        Amount = 0,
+                        VirtualCurrency = "MK"
+                    };
+                    PlayFabClientAPI.AddUserVirtualCurrency(reqCurrenci, result =>{},OnLoginFailure);
                 },OnLoginFailure);
             },OnLoginFailure);
         }
@@ -93,55 +99,63 @@ namespace ServiceLocatorPath
         public async Task<bool> HasData()
         {
             var isRequestOk = false;
-            if (string.IsNullOrEmpty(PlayFabSettings.staticSettings.TitleId)){
-                /*
-                Please change the titleId below to your own titleId from PlayFab Game Manager.
-                If you have already set the value in the Editor Extensions, this can be skipped.
-                */
-                PlayFabSettings.staticSettings.TitleId = "42";
-            }
-            var requestL = new LoginWithCustomIDRequest { CustomId = "GettingStartedGuide", CreateAccount = true};
-            PlayFabClientAPI.LoginWithCustomID(requestL, result =>
+            var request = new GetUserInventoryRequest();
+            PlayFabClientAPI.GetUserInventory(request, result =>
             {
-                var request = new GetUserInventoryRequest();
-                PlayFabClientAPI.GetUserInventory(request, result =>
+                inventary = new List<IExtra>();
+                GetInventory(itemsResult =>
                 {
-                    Debug.Log($"Its items");
-                    inventary = new List<IExtra>();
+                    Extra extra = null;
                     foreach (var instance in result.Inventory)
                     {
-                        Debug.Log(instance.BundleParent);
-                        GetCatalogItemsRequest catalog = new GetCatalogItemsRequest()
+                        foreach (var item in itemsResult.Catalog.Where(item => item.ItemId == instance.ItemId))
                         {
-                            CatalogVersion = "Extras"
-                        };
-                        PlayFabClientAPI.GetCatalogItems(catalog, itemsResult =>
+                            extra = JsonUtility.FromJson<Extra>(item.CustomData);
+                        }
+                        switch (extra.type)
                         {
-                            Extra extra = (from item in itemsResult.Catalog where item.ItemId == instance.ItemId select JsonUtility.FromJson<Extra>(item.CustomData)).FirstOrDefault();
-
-                            switch (extra.type)
-                            {
-                                case "text":
-                                    inventary.Add(new ImageComponentExtra(extra));
-                                    break;
-                                case "image":
-                                    inventary.Add(new ImageComponentExtra(extra));
-                                    break;
-                            }
-                            Debug.Log($"{instance.CustomData}");
-                            isRequestOk = true;
-                        },OnLoginFailure);
+                            case "text":
+                                inventary.Add(new ImageComponentExtra(extra));
+                                break;
+                            case "image":
+                                inventary.Add(new ImageComponentExtra(extra));
+                                break;
+                        }
                     }
-                }, error =>
-                {
                     isRequestOk = true;
                 });
-            }, OnLoginFailure);
+                
+            }, error =>
+            {
+                isRequestOk = true;
+            });
             while (!isRequestOk)
             {
                 await Task.Delay(TimeSpan.FromSeconds(.3f));
             }
             return inventary.Count > 0;
+        }
+
+        public async void GetInventory(Action<GetCatalogItemsResult> resultCallback)
+        {
+            var resultPlayfab = false;
+            var catalog = new GetCatalogItemsRequest()
+            {
+                CatalogVersion = "Extras"
+            };
+            PlayFabClientAPI.GetCatalogItems(catalog, itemsResult =>
+            {
+                resultCallback?.Invoke(itemsResult);
+                resultPlayfab = true;
+            }, error =>
+            {
+                OnLoginFailure(error);
+                resultPlayfab = true;
+            });
+            while (!resultPlayfab)
+            {
+                await Task.Delay(TimeSpan.FromSeconds(.3f));
+            }
         }
 
         public List<IExtra> CreateData()
@@ -156,12 +170,28 @@ namespace ServiceLocatorPath
 
         public void SaveData(List<IExtra> listOfExtras)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
-        public string GetPlayerId()
+        public void SaveData()
         {
-            return _playerId;
+            CreatedItem();
+        }
+
+        public void CreatedItem()
+        {
+            GetInventory(result =>
+            {
+                var catalogItem = result.Catalog[Random.Range(0, result.Catalog.Capacity)];
+                PurchaseItemRequest purchase = new PurchaseItemRequest()
+                {
+                    CatalogVersion = catalogItem.CatalogVersion,
+                    ItemId = catalogItem.ItemId,
+                    Price = 0,
+                    VirtualCurrency = "MK"
+                };
+                PlayFabClientAPI.PurchaseItem(purchase, result =>{},OnLoginFailure);
+            });
         }
     }
 }
