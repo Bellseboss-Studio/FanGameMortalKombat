@@ -14,8 +14,13 @@ namespace MenuUI.SystemOfExtras
         public Catalog(ISaveData saveData)
         {
             _saveData = saveData;
-            var respuesta = saveData.HasData();
-            listOfExtras = !respuesta.Result ? saveData.CreateData() : saveData.LoadData();
+            FunctionVoid();
+        }
+
+        private async void FunctionVoid()
+        {
+            var respuesta = await _saveData.HasData();
+            listOfExtras = !respuesta ? _saveData.CreateData() : _saveData.LoadData();
         }
 
         public List<IExtra> GetListOfExtras => listOfExtras;

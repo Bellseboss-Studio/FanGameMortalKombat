@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using MenuUI.SystemOfExtras;
 using PlayFab;
@@ -109,26 +110,28 @@ namespace ServiceLocatorPath
                     inventary = new List<IExtra>();
                     foreach (var instance in result.Inventory)
                     {
-                        var extra = new Extra()
+                        Debug.Log(instance.BundleParent);
+                        GetCatalogItemsRequest catalog = new GetCatalogItemsRequest()
                         {
-                            icon = instance.CustomData["icon"],
-                            name = instance.CustomData["name"],
-                            source = instance.CustomData["source"],
-                            type = instance.CustomData["type"]
+                            CatalogVersion = "Extras"
                         };
-                        switch (extra.type)
+                        PlayFabClientAPI.GetCatalogItems(catalog, itemsResult =>
                         {
-                            case "text":
-                                inventary.Add(new ImageComponentExtra(extra));
-                                break;
-                            case "image":
-                                inventary.Add(new ImageComponentExtra(extra));
-                                break;
-                        }
-                        Debug.Log($"{instance.CustomData}");
-                    }
+                            Extra extra = (from item in itemsResult.Catalog where item.ItemId == instance.ItemId select JsonUtility.FromJson<Extra>(item.CustomData)).FirstOrDefault();
 
-                    isRequestOk = true;
+                            switch (extra.type)
+                            {
+                                case "text":
+                                    inventary.Add(new ImageComponentExtra(extra));
+                                    break;
+                                case "image":
+                                    inventary.Add(new ImageComponentExtra(extra));
+                                    break;
+                            }
+                            Debug.Log($"{instance.CustomData}");
+                            isRequestOk = true;
+                        },OnLoginFailure);
+                    }
                 }, error =>
                 {
                     isRequestOk = true;
