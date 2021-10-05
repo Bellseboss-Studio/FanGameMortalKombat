@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using MenuUI.SystemOfExtras;
 using UnityEngine;
 
@@ -8,7 +9,7 @@ public class PlayerPrefDataContainer : ISaveData
     private string data;
     private Extra[] extraParse;
 
-    public bool HasData()
+    public async Task<bool> HasData()
     {
         data = PlayerPrefs.GetString(NAME_OF_DATA_SAVES);
         if (data == "")

@@ -1,19 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using MenuUI.SystemOfExtras;
+using ServiceLocatorPath;
 using UnityEngine;
 
 public class ControllerOfUiForExtras : MonoBehaviour
 {
-    private Catalog catalogOfExtras;
     [SerializeField] private List<ContainerOfExtra> containers;
 
-    private void Start()
+    public void LoadData()
     {
-        catalogOfExtras = new Catalog(new PlayerPrefDataContainer());
-
+        
         var index = 0;
-        foreach (var extra in catalogOfExtras.GetListOfExtras)
+        foreach (var extra in ServiceLocator.Instance.GetService<ICatalog>().GetListOfExtras)
         {
             containers[index].Add(extra);
             index++;
@@ -24,11 +23,10 @@ public class ControllerOfUiForExtras : MonoBehaviour
             container.Configure();
         }
     }
-
     public void SaveData()
     {
-        catalogOfExtras.AddExtra(new Extra());
-        catalogOfExtras.SaveData();
+        ServiceLocator.Instance.GetService<ICatalog>().AddExtra(new Extra());
+        ServiceLocator.Instance.GetService<ICatalog>().SaveData();
     }
 
     public void HideExtra()
