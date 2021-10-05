@@ -10,6 +10,7 @@ public class ControllerOfUiForExtras : MonoBehaviour
 
     private void Start()
     {
+        /*
         catalogOfExtras = new Catalog(new PlayerPrefDataContainer());
 
         var index = 0;
@@ -23,6 +24,7 @@ public class ControllerOfUiForExtras : MonoBehaviour
         {
             container.Configure();
         }
+        */
     }
 
     public void SaveData()
