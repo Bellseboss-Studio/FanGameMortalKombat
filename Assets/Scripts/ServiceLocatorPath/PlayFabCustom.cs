@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using MenuUI.SystemOfExtras;
 using PlayFab;
 using PlayFab.ClientModels;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 using Random = UnityEngine.Random;
 
 namespace ServiceLocatorPath
@@ -31,7 +33,8 @@ namespace ServiceLocatorPath
                 */
                 PlayFabSettings.staticSettings.TitleId = "42";
             }
-            var request = new LoginWithCustomIDRequest { CustomId = "GettingStartedGuide", CreateAccount = true};
+            Debug.Log($"SystemInfo.deviceUniqueIdentifier {SystemInfo.deviceUniqueIdentifier}");
+            var request = new LoginWithCustomIDRequest { CustomId = SystemInfo.deviceUniqueIdentifier, CreateAccount = true};
             PlayFabClientAPI.LoginWithCustomID(request, resultCallback, errorCallback);
         }
 
