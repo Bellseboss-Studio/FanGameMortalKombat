@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using ServiceLocatorPath;
 
 namespace MenuUI.SystemOfExtras
@@ -14,10 +15,10 @@ namespace MenuUI.SystemOfExtras
         public Catalog(ISaveData saveData)
         {
             _saveData = saveData;
-            FunctionVoid();
+            LoadDataCatalog();
         }
 
-        private async void FunctionVoid()
+        public async Task LoadDataCatalog()
         {
             var respuesta = await _saveData.HasData();
             listOfExtras = !respuesta ? _saveData.CreateData() : _saveData.LoadData();
@@ -27,7 +28,12 @@ namespace MenuUI.SystemOfExtras
 
         public void SaveData()
         {
-            _saveData.SaveData(listOfExtras);
+            _saveData.SaveData();
+        }
+
+        public async void LoadCatalog()
+        {
+            await _saveData.HasData();
         }
 
         public void AddExtra(Extra extra)

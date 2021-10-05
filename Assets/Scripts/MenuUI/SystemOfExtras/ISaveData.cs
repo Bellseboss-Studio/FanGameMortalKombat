@@ -9,5 +9,6 @@ namespace MenuUI.SystemOfExtras
         List<IExtra> CreateData();
         List<IExtra> LoadData();
         void SaveData(List<IExtra> listOfExtras);
+        void SaveData();
     }
 }

@@ -2,6 +2,6 @@
 {
     public interface IPlayFabCustom
     {
-        string GetPlayerId();
+        void CreatedItem();
     }
 }

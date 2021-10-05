@@ -8,9 +8,13 @@ public class ControllerOfUiForExtras : MonoBehaviour
 {
     [SerializeField] private List<ContainerOfExtra> containers;
 
-    public void LoadData()
+    public async void LoadData()
     {
-        
+        await ServiceLocator.Instance.GetService<ICatalog>().LoadDataCatalog();
+        foreach (var container in containers)
+        {
+            container.Clean();
+        }
         var index = 0;
         foreach (var extra in ServiceLocator.Instance.GetService<ICatalog>().GetListOfExtras)
         {
@@ -32,6 +36,11 @@ public class ControllerOfUiForExtras : MonoBehaviour
     public void HideExtra()
     {
         GetComponent<Animator>().SetBool("show", false);
+    }
+
+    public void CreateItem()
+    {
+        ServiceLocator.Instance.GetService<ICatalog>().SaveData();
     }
 }
 
