@@ -34,6 +34,7 @@ public class ContainerOfExtra : MonoBehaviour
                     spriteToPixel = Sprite.Create(textureFromUrl,rec,new Vector2(0,0),.01f);
                 }
                 imageOfResource.sprite = spriteToPixel;
+                imageOfResource.preserveAspect = true;
                 imageOfResource.enabled = true;
                 break;
             case "video":
