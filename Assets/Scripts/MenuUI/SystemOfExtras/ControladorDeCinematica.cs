@@ -15,6 +15,7 @@ public class ControladorDeCinematica : MonoBehaviour
 
     public void LoadVideo(string urlVideo)
     {
+        canvas.SetActive(true);
         video.source = VideoSource.Url;
         video.url = urlVideo;
         video.prepareCompleted += source =>
@@ -27,7 +28,6 @@ public class ControladorDeCinematica : MonoBehaviour
     public void StartVideo()
     {
         video.Play();
-        canvas.SetActive(true);
     }
 
     public bool IsPrepared => isPreparedVideo;
@@ -35,8 +35,7 @@ public class ControladorDeCinematica : MonoBehaviour
     public void StopVideo()
     {
         video.Stop();
-        video.source = VideoSource.VideoClip;
-        video.url = "";
+        isPreparedVideo = false;
         canvas.SetActive(false);
     }
 }

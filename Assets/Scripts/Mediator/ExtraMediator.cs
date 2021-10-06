@@ -32,6 +32,7 @@ public class ExtraMediator : MonoBehaviour
         animator.SetBool("show", true);
         imageOfResource.enabled = false;
         text.enabled = false;
+        cinematic.StopVideo();
         cinematic.gameObject.SetActive(false);
     }
 
@@ -86,8 +87,8 @@ public class ExtraMediator : MonoBehaviour
     public async void SetExtraVideo(IExtra extra)
     {
         PreConditions();
-        cinematic.LoadVideo(extra.GetSource());
         cinematic.gameObject.SetActive(true);
+        cinematic.LoadVideo(extra.GetSource());
         while (!cinematic.IsPrepared)
         {
             await Task.Delay(TimeSpan.FromSeconds(.2f));
