@@ -123,6 +123,9 @@ namespace ServiceLocatorPath
                             case "image":
                                 inventary.Add(new ImageComponentExtra(extra));
                                 break;
+                            case "video":
+                                inventary.Add(new ImageComponentExtra(extra));
+                                break;
                         }
                     }
                     isRequestOk = true;
