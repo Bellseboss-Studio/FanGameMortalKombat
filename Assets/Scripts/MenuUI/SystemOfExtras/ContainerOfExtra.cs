@@ -15,6 +15,7 @@ public class ContainerOfExtra : MonoBehaviour
     
     private async void Call()
     {
+        if (_extra == null) return;
         switch (_extra.GetTypeExtra())
         {
             case "text":
