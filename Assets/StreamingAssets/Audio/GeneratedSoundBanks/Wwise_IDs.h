@@ -13,7 +13,9 @@ namespace AK
 {
     namespace EVENTS
     {
-        static const AkUniqueID FOOTSTEPS = 2385628198U;
+        static const AkUniqueID FOOTSTEPSGRASS = 515596832U;
+        static const AkUniqueID FOOTSTEPSGRAVEL = 2198063655U;
+        static const AkUniqueID SETFSTOGRAVEL = 1565383132U;
     } // namespace EVENTS
 
     namespace SWITCHES
