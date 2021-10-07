@@ -19,6 +19,7 @@ namespace ServiceLocatorPath
             ServiceLocator.Instance.RegisterService<IPlayFabCustom>(playFab);
             var catalog = new Catalog(playFab);
             ServiceLocator.Instance.RegisterService<ICatalog>(catalog);
+            //Comentario para ejemplo
         }
     }
 }
