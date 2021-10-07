@@ -13,14 +13,30 @@ namespace AK
 {
     namespace EVENTS
     {
-        static const AkUniqueID HOVERMOUSE = 3546218942U;
+        static const AkUniqueID FOOTSTEPSGRASS = 515596832U;
+        static const AkUniqueID FOOTSTEPSGRAVEL = 2198063655U;
+        static const AkUniqueID SETFSTOGRAVEL = 1565383132U;
     } // namespace EVENTS
+
+    namespace SWITCHES
+    {
+        namespace FOOTSTEPSMATERIAL
+        {
+            static const AkUniqueID GROUP = 982447677U;
+
+            namespace SWITCH
+            {
+                static const AkUniqueID GRASS = 4248645337U;
+                static const AkUniqueID GRAVEL = 2185786256U;
+            } // namespace SWITCH
+        } // namespace FOOTSTEPSMATERIAL
+
+    } // namespace SWITCHES
 
     namespace BANKS
     {
         static const AkUniqueID INIT = 1355168291U;
-        static const AkUniqueID GUI_SOUNDBANK = 3805144928U;
-        static const AkUniqueID WORLD_SOUNDBANK = 1128635677U;
+        static const AkUniqueID MAINWORLDSOUNDBANK = 1615758161U;
     } // namespace BANKS
 
     namespace BUSSES
