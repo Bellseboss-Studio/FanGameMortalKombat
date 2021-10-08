@@ -19,6 +19,8 @@ namespace View.Characters
         public bool CanMove;
         public bool CanReadInputs;
 
+        private Vector2 movementinputValue;
+        
         protected override void Start()
         {
             base.Start();
@@ -35,6 +37,7 @@ namespace View.Characters
         {
             CanMove = true;
             CanReadInputs = true;
+            OnInputChangedExtend(movementinputValue);
         }
 
         private void OnKickEventInPlayer()
@@ -45,6 +48,7 @@ namespace View.Characters
             CanMove = false;
             CanReadInputs = false;
             Move(Vector3.zero);
+            OnInputChangedExtend(movementinputValue);
         }
 
         private void OnPunchEventInPlayer()
@@ -55,6 +59,7 @@ namespace View.Characters
             CanMove = false;
             CanReadInputs = false;
             Move(Vector3.zero);
+            OnInputChangedExtend(Vector2.zero);
         }
 
         protected override void UpdateLegacy()
@@ -93,7 +98,8 @@ namespace View.Characters
 
         private void OnMovementControllers(InputValue value)
         {
-            OnInputChangedExtend(value.Get<Vector2>());
+            movementinputValue = value.Get <Vector2>();
+            OnInputChangedExtend(movementinputValue);
         }
 
         private void OnCameraMovement(InputValue value)
