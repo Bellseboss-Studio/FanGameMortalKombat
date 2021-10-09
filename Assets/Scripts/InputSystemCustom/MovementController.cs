@@ -1,6 +1,5 @@
 ﻿using CharacterCustom;
 using UnityEngine;
-using UnityEngine.iOS;
 using View.Characters;
 
 namespace InputSystemCustom
