@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using View.Characters;
 
 namespace TargetingSystem
 {
@@ -30,21 +29,10 @@ namespace TargetingSystem
             return enemies;
         }
         
-        
-        
-        /*
-         private Vector3 VerifyEnemyToPlayerAttackDistance(List<EnemyDefaultCharacter> enemies, Vector3 playerPosition)
-        {
-            float attackDistance = 2;
-            return VerifyDistanceBetweenPlayerAndEnemies(attackDistance, enemies, playerPosition);
-        }
-        */
-
         public void SetAutomaticTarget(float distance, List<GameObject> enemies, GameObject player, float attackAngle)
         {
             for (int i = 0; i < enemies.Count; i++)
             {
-                Debug.Log(Vector3.Distance(enemies[i].gameObject.transform.position, player.transform.position));
                 if (Vector3.Distance(enemies[i].gameObject.transform.position, player.transform.position) <= distance)
                 {
                     if (VerifyAttackAngle(enemies[i].gameObject.transform.position, player) < attackAngle)
@@ -64,7 +52,6 @@ namespace TargetingSystem
         {
             Vector3 playerPosition = player.transform.position;
             float angle = Vector3.Angle(enemyPosition - playerPosition, player.transform.forward);
-            Debug.Log(angle);
             return angle;
         }
         
