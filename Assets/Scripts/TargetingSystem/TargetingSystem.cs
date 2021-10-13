@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace TargetingSystem
 {
@@ -8,21 +9,15 @@ namespace TargetingSystem
         
         public List<GameObject> SetEnemiesOrder(List<GameObject> enemies, Vector3 playerPosition)
         {
-            GameObject temp;
-            float distance1;
-            float distance2;
-
             for (int i = 0;i < enemies.Count; i++){
                 for (int j = 0; j< enemies.Count -1; j++)
                 {
-                    distance1 = Vector3.Distance(enemies[j].gameObject.transform.position, playerPosition);
-                    distance2 = Vector3.Distance(enemies[j+1].gameObject.transform.position, playerPosition);
+                    var distance1 = Vector3.Distance(enemies[j].gameObject.transform.position, playerPosition);
+                    var distance2 = Vector3.Distance(enemies[j+1].gameObject.transform.position, playerPosition);
                     
                     if (distance1 > distance2)
                     {
-                        temp = enemies[j]; 
-                        enemies[j] = enemies[j+1]; 
-                        enemies[j+1] = temp;
+                        (enemies[j], enemies[j+1]) = (enemies[j+1], enemies[j]);
                     }
                 }
             }
@@ -38,20 +33,22 @@ namespace TargetingSystem
                     if (VerifyAttackAngle(enemies[i].gameObject.transform.position, player) < attackAngle)
                     {
                         player.transform.rotation = Quaternion.LookRotation(enemies[i].transform.position - player.transform.position, Vector3.up);
+                        break;
                     }
                 }
             }
         }
         
-        public void SetManualTarget(GameObject enemie, GameObject player)
+        public void SetManualTarget(GameObject enemy, GameObject player)
         {
-            player.transform.rotation = Quaternion.LookRotation(enemie.transform.position - player.transform.position, Vector3.up);
+            player.transform.rotation = Quaternion.LookRotation(enemy.transform.position - player.transform.position, Vector3.up);
         }
         
-        public float VerifyAttackAngle(Vector3 enemyPosition, GameObject player)
+        private float VerifyAttackAngle(Vector3 enemyPosition, GameObject player)
         {
-            Vector3 playerPosition = player.transform.position;
-            float angle = Vector3.Angle(enemyPosition - playerPosition, player.transform.forward);
+            var playerPosition = player.transform.position;
+            var angle = Vector3.Angle(enemyPosition - playerPosition, player.transform.forward);
+            Debug.Log(angle);
             return angle;
         }
         
