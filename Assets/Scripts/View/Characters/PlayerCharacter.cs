@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using System.Diagnostics;
 using CharacterCustom;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Debug = UnityEngine.Debug;
+using Random = UnityEngine.Random;
 
 namespace View.Characters
 {
