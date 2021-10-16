@@ -33,4 +33,9 @@ public class Amulets : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         }
     }
 
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
+
 }
