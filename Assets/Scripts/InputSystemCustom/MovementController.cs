@@ -45,11 +45,16 @@ namespace InputSystemCustom
 
         private void OnInputChangedExtend(Vector2 input)
         {
-            inputToMovement = input;//adelante (0,0,1)
             if (_playerCharacter.CanMove)
             {
-                TransformDirectionalForForce(input);
+                inputToMovement = input;//adelante (0,0,1)
                 lastPosition = inputToMovement;
+                TransformDirectionalForForce(input);
+            }
+            
+            else
+            {
+                lastPosition = Vector2.zero;
             }
         }
 
