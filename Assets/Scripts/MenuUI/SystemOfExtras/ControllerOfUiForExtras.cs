@@ -7,6 +7,7 @@ using UnityEngine;
 public class ControllerOfUiForExtras : MonoBehaviour
 {
     [SerializeField] private List<ContainerOfExtra> containers;
+    [SerializeField] private Animator animator;
 
     public async void LoadData()
     {
@@ -31,11 +32,6 @@ public class ControllerOfUiForExtras : MonoBehaviour
     {
         ServiceLocator.Instance.GetService<ICatalog>().AddExtra(new Extra());
         ServiceLocator.Instance.GetService<ICatalog>().SaveData();
-    }
-
-    public void HideExtra()
-    {
-        GetComponent<Animator>().SetBool("show", false);
     }
 
     public void CreateItem()
