@@ -19,6 +19,7 @@ public class ExtraMediator : MonoBehaviour
     {
         PreConditions();
         text.text = extra.GetSource();
+        text.transform.parent.gameObject.SetActive(true);
         text.enabled = true;
         PostConditions(text.gameObject);
     }
@@ -31,7 +32,7 @@ public class ExtraMediator : MonoBehaviour
     {
         animator.SetBool("show", true);
         imageOfResource.enabled = false;
-        text.enabled = false;
+        text.transform.parent.gameObject.SetActive(false);
         cinematic.StopVideo();
         cinematic.gameObject.SetActive(false);
     }
