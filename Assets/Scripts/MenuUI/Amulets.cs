@@ -1,9 +1,7 @@
 ﻿namespace MenuUI
 {
-    using System;
     using System.Collections;
     using System.Collections.Generic;
-    using MenuUI;
     using UnityEngine;
     using UnityEngine.EventSystems;
     using UnityEngine.UI;
