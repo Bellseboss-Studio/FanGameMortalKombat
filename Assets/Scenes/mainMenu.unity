@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.05680915, g: 0.03986635, b: 0.036308393, a: 1}
+  m_IndirectSpecularColor: {r: 0.056790292, g: 0.039847918, b: 0.036290668, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -12757,11 +12757,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 563d439fb3f84258bf2aa4186fd027ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playButton: {fileID: 874135461}
-  optionsButton: {fileID: 722739991}
-  extrasButton: {fileID: 1224897221}
-  creditsButton: {fileID: 1931831818}
-  quitButton: {fileID: 363329085}
+  amuletsList:
+  - {fileID: 874135461}
+  - {fileID: 722739991}
+  - {fileID: 1224897221}
+  - {fileID: 1931831818}
+  - {fileID: 363329085}
 --- !u!1 &1314313423
 GameObject:
   m_ObjectHideFlags: 0
