@@ -1,4 +1,6 @@
-﻿namespace MenuUI
+﻿using System;
+
+namespace MenuUI
 {
     using System.Collections;
     using System.Collections.Generic;
@@ -10,7 +12,7 @@
     {
         public bool isOver = false;
         public Image amulet;
-        private float velocity = 10;
+        private float velocity = 12;
         private IAmuletPositioner _amuletPositioner;
         public bool amuletIsMoving;
         private AmuletsMediator _amuletsMediator;
@@ -18,7 +20,7 @@
         private void Awake()
         {
             amuletIsMoving = false;
-            amulet.enabled = false;
+            amulet.enabled = true;
             _amuletPositioner = new MoveTowardsAdapter();
         }
 
