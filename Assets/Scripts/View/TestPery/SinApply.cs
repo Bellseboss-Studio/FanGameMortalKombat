@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class SinApply : MonoBehaviour
 {
-    [SerializeField] private float deltaTimeLocal, forward, deltaTimeLocalAux;
-    [SerializeField] private float distance;
+    [SerializeField] private float deltaTimeLocal, high;
+    [SerializeField] private float velocity;
     [SerializeField] private GameObject target;
+    [SerializeField] private float increment;
 
     private Vector3 positionLocal;
     private Vector3 positionLocalOriginal;
-    private Vector3 positionLocalAux;
     public bool stay;
 
     // Start is called before the first frame update
@@ -23,8 +23,11 @@ public class SinApply : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        positionLocalAux = positionLocal;
-        positionLocal.y = Mathf.Sin((deltaTimeLocal*Mathf.PI) / Vector3.Distance(target.transform.position, transform.position)) + positionLocalOriginal.y;
+        velocity += increment;
+        positionLocal.z = Vector3.MoveTowards(transform.position, target.transform.position, velocity).z;
+        positionLocal.x = Vector3.MoveTowards(transform.position, target.transform.position, velocity).x;
+
+        positionLocal.y = (Mathf.Sin((deltaTimeLocal*Mathf.PI) / Vector3.Distance(target.transform.position, positionLocalOriginal)) * high) + positionLocalOriginal.y;
         if (!stay)
         {
             deltaTimeLocal -= Time.deltaTime;
@@ -43,9 +46,7 @@ public class SinApply : MonoBehaviour
                 deltaTimeLocal = Mathf.PI;
             }
         }
-
-        positionLocal.z = Vector3.MoveTowards(transform.position, target.transform.position, forward).z;
-        transform.position = positionLocal;
+        transform.localPosition = positionLocal;
         Debug.Log(deltaTimeLocal);
     }
 }
