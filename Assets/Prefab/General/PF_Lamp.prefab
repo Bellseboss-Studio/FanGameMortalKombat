@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 898740552461986762}
   - component: {fileID: 5342087658928774331}
+  - component: {fileID: 5419835958515078741}
   m_Layer: 0
   m_Name: PF_Lamp
   m_TagString: Untagged
@@ -62,6 +63,20 @@ LODGroup:
     renderers:
     - renderer: {fileID: 1383624713489326067}
   m_Enabled: 1
+--- !u!136 &5419835958515078741
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 518801717560373616}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.22370094
+  m_Height: 3.5303178
+  m_Direction: 1
+  m_Center: {x: -0.0072710514, y: 1.592355, z: 0}
 --- !u!1 &5339406062397176221
 GameObject:
   m_ObjectHideFlags: 0
@@ -158,7 +173,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &3325908267936578128
 Transform:
