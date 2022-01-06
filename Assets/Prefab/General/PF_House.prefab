@@ -262,6 +262,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1069353692004625962}
   - component: {fileID: 1257722798188538003}
+  - component: {fileID: 926756220835766286}
+  - component: {fileID: 7653249392725526555}
   m_Layer: 0
   m_Name: House
   m_TagString: Untagged
@@ -295,7 +297,7 @@ LODGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4671899366215121183}
   serializedVersion: 2
-  m_LocalReferencePoint: {x: -0.0000019073486, y: 3.6294024, z: -0.20430279}
+  m_LocalReferencePoint: {x: -0.0000019073486, y: 0.000330925, z: 0}
   m_Size: 10.016653
   m_FadeMode: 0
   m_AnimateCrossFading: 0
@@ -318,6 +320,32 @@ LODGroup:
     renderers:
     - renderer: {fileID: 3143702452406320240}
   m_Enabled: 1
+--- !u!65 &926756220835766286
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4671899366215121183}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 6.708461, y: 4.122823, z: 8.776035}
+  m_Center: {x: -0.022474289, y: -1.5614111, z: -0.020680428}
+--- !u!65 &7653249392725526555
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4671899366215121183}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 9.747125, y: 4.343889, z: 9.115048}
+  m_Center: {x: 0.010195255, y: 1.4884381, z: -0.02038908}
 --- !u!1 &7205838846794414073
 GameObject:
   m_ObjectHideFlags: 0
