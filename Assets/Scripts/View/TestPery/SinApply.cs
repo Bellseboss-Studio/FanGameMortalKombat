@@ -22,7 +22,7 @@ public class SinApply : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
+    { 
         velocity += increment;
         positionLocal.z = Vector3.MoveTowards(transform.position, target.transform.position, velocity).z;
         positionLocal.x = Vector3.MoveTowards(transform.position, target.transform.position, velocity).x;
