@@ -1,13 +1,9 @@
-﻿using System;
+﻿using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
-namespace MenuUI
+namespace View.UI
 {
-    using System.Collections;
-    using System.Collections.Generic;
-    using UnityEngine;
-    using UnityEngine.EventSystems;
-    using UnityEngine.UI;
-    using View.UI;
     public class Amulets : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         public bool isOver = false;
