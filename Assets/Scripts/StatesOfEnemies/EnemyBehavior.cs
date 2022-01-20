@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using CharacterCustom;
 using UnityEngine;
 using View.Characters;
@@ -14,6 +13,7 @@ namespace StatesOfEnemies
         private IEnemyCharacter _enemyCharacter;
         private GameObject targer;
         private bool playerIsInRedZone;
+        private bool iAmDeath;
 
         public IEnemyState Configuration(IEnemyCharacter enemyCharacter)
         {
@@ -24,6 +24,7 @@ namespace StatesOfEnemies
             _enemyStatesConfiguration.AddState(EnemyStatesConfiguration.FollowTarget, new FollowTarget());
             _enemyStatesConfiguration.AddState(EnemyStatesConfiguration.LookPlayer, new WaitState());
             _enemyStatesConfiguration.AddState(EnemyStatesConfiguration.AttackPlayer, new AttackPlayerState());
+            _enemyStatesConfiguration.AddState(EnemyStatesConfiguration.Death, new Death());
             _nextState = 0;
             _enemyCharacter.SubscribeOnPlayerEnterTrigger((player) =>
             {
@@ -109,6 +110,16 @@ namespace StatesOfEnemies
             Debug.Log("Target dont save");
         }
 
+        public bool GetIAmDeath()
+        {
+            return iAmDeath;
+        }
+
+        public void SetIAmDeath(bool value)
+        {
+            iAmDeath = value;
+        }
+
         public void SetNextState(int nextStateFromState)
         {
             _nextState = nextStateFromState;
@@ -128,5 +139,9 @@ namespace StatesOfEnemies
         {
             return _enemyCharacter.IsEnemyArrived(concurrentPoint);
         }
+        
+        
+        
+        
     }
 }

@@ -18,5 +18,9 @@ namespace StatesOfEnemies
         void StopMovementForAttack();
         float GetEnemyVelocity();
         void Attack();
+        bool GetIAmDeath();
+        void SetIAmDeath(bool value);
+
+
     }
 }

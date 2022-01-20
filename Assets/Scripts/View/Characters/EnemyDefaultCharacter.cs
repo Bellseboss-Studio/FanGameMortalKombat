@@ -51,6 +51,14 @@ namespace View.Characters
             return power * 1;
         }
 
+        protected override void Muerte()
+        {
+            {
+                behaviorEnemy.SetIAmDeath(true);
+                animator.SetTrigger("Muerte");
+            }
+        }
+
         public void SetBehavior(AreaZoneController yellowZone, AreaZoneController greenZone)
         {
             this.yellowZone = yellowZone;
@@ -147,6 +155,7 @@ namespace View.Characters
         {
             return _toPoint;
         }
+
     }
 }
 
