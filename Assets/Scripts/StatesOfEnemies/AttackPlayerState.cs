@@ -12,8 +12,10 @@ namespace StatesOfEnemies
         public IEnumerator DoAction(IBehavior behavior)
         {
             Debug.Log("Range of attack");
+            if(behavior.GetIAmDeath()) behavior.SetNextState(EnemyStatesConfiguration.Death);
             while (behavior.IsPlayerInRangeOfAttack())
             {
+                if(behavior.GetIAmDeath()) behavior.SetNextState(EnemyStatesConfiguration.Death);
                 behavior.StopMovementForAttack();
                 yield return new WaitForSeconds(behavior.GetEnemyVelocity());
                 if (behavior.IsPlayerInRangeOfAttack())

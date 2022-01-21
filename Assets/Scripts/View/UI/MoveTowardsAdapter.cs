@@ -11,8 +11,10 @@ namespace View.UI
             if (isOver != true && isMoving != true) return false;
             var amuletPosition = amulet.transform.position;
             var buttonPosition = button.transform.position;
-            var step = velocity * Time.deltaTime * Vector3.Distance(amuletPosition, new Vector3(amuletPosition.x, buttonPosition.y, 0));
-            amuletPosition = Vector3.MoveTowards(amuletPosition, new Vector3(amuletPosition.x, buttonPosition.y, 0), step);
+            var step = velocity * Time.deltaTime *
+                       Vector3.Distance(amuletPosition, new Vector3(amuletPosition.x, buttonPosition.y, 0));
+            amuletPosition =
+                Vector3.MoveTowards(amuletPosition, new Vector3(amuletPosition.x, buttonPosition.y, 0), step);
             amulet.transform.position = amuletPosition;
             return !(Vector3.Distance(amuletPosition, new Vector3(amuletPosition.x, buttonPosition.y, 0)) < 1);
         }

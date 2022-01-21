@@ -163,6 +163,7 @@ namespace CharacterCustom
         public void ApplyDamage(float damage)
         {
             life -= damage;
+            VerifyLife();
             AnimateDamage();
             OnEnterDamageEvent?.Invoke(damage);
             
@@ -189,5 +190,16 @@ namespace CharacterCustom
         {
             return smoodTimeRotation;
         }
+        
+        protected void VerifyLife()
+        {
+            if (life<= 0)
+            {
+                Muerte();
+            }
+        }
+
+        protected abstract void Muerte();
+
     }
 }

@@ -98,6 +98,14 @@ namespace View.Characters
             return power * 2;
         }
 
+        protected override void Muerte()
+        {
+            {
+                animator.SetTrigger("Muerte");
+                
+            }
+        }
+
         private void OnMovementControllers(InputValue value)
         {
             movementInputValue = value.Get <Vector2>();
