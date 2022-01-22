@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections;
+using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace StatesOfEnemies
 {
@@ -7,7 +9,9 @@ namespace StatesOfEnemies
     {
         public IEnumerator DoAction(IBehavior behavior)
         {
-            throw new NotImplementedException();
+            behavior.SetExitStatesSystem(true);
+            yield return new WaitForSeconds(10);
+            behavior.CleanAndDestroy();
         }
     }
 }
