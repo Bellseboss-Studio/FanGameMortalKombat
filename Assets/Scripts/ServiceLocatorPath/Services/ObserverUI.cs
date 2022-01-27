@@ -1,4 +1,4 @@
-﻿using CharacterCustom;
+﻿using View;
 using View.Characters;
 using View.Installers;
 using View.UI;

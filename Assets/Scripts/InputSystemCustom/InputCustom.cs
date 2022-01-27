@@ -1,6 +1,6 @@
-﻿using CharacterCustom;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
+using View;
 
 namespace InputSystemCustom
 {

@@ -4,7 +4,7 @@ using InputSystemCustom;
 using UnityEngine;
 using View.Characters;
 
-namespace CharacterCustom
+namespace View
 {
     public abstract class Character: MonoBehaviour
     {
@@ -32,6 +32,7 @@ namespace CharacterCustom
         public OnInputButton OnLeftShitOff;
         public OnInputButton OnPunchEvent;
         public OnInputButton OnKickEvent;
+        public OnInputButton OnAimEvent;
         public OnInputButton OnFinishedAnimatorFight;
         public OnInputButton OnFinishedAnimatorDamage;
         private Vector2 _inputValue;
@@ -60,6 +61,12 @@ namespace CharacterCustom
         private void OnFinishedAnimatorDamageCharacter()
         {
             CanAnimateDamage = true;
+            FinishedAnimatorDamage();
+        }
+
+        protected virtual void FinishedAnimatorDamage()
+        {
+            
         }
 
         protected abstract void UpdateLegacy();
@@ -193,6 +200,7 @@ namespace CharacterCustom
         
         protected void VerifyLife()
         {
+            Debug.Log("a ver tu vida");
             if (life<= 0)
             {
                 Muerte();

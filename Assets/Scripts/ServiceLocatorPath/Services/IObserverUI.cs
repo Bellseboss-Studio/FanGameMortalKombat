@@ -1,5 +1,4 @@
-﻿using CharacterCustom;
-using View.Characters;
+﻿using View.Characters;
 
 namespace View.Installers
 {

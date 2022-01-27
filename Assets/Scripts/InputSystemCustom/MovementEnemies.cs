@@ -1,5 +1,5 @@
-﻿using CharacterCustom;
-using UnityEngine;
+﻿using UnityEngine;
+using View;
 using View.Characters;
 
 namespace InputSystemCustom

@@ -10,7 +10,7 @@ namespace TargetingSystem
     {
         private TargetingSystem _targetingSystem;
         [SerializeField] private List<GameObject> enemiesInCombat;
-        [SerializeField] private PlayerInput playerInput;
+        //[SerializeField] private PlayerInput playerInput;
         [SerializeField] private float angleAttack = 60;
         
         

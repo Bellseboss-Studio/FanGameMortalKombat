@@ -1,5 +1,4 @@
-﻿using CharacterCustom;
-using UnityEngine.InputSystem;
+﻿using UnityEngine.InputSystem;
 using UnityEngine;
 
 namespace View.Characters

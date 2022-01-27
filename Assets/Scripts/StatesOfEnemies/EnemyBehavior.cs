@@ -1,6 +1,6 @@
 ﻿using System.Collections;
-using CharacterCustom;
 using UnityEngine;
+using View;
 using View.Characters;
 using Random = UnityEngine.Random;
 

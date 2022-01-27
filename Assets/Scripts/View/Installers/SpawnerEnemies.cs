@@ -30,12 +30,20 @@ namespace View.Installers
         {
             yield return new WaitForSeconds(5f);
             var characterEnemy = (EnemyDefaultCharacter) _charactersFactory.Create(idCharacter).WithInput(TypeOfInputs.EnemyIa).InPosition(transform.position).Build();
+            characterEnemy.OnDeathDelegate += DeathDelegate;
             characterEnemy.SetPoints(points);
             var yellowZone = ServiceLocator.Instance.GetService<IGodObserver>().GetZone(zoneOur.NameZone, Zones.YELLOW);
             var greenZone = ServiceLocator.Instance.GetService<IGodObserver>().GetZone(zoneOur.NameZone, Zones.GREEN);
             characterEnemy.SetBehavior(yellowZone, greenZone);
             characterEnemy.SetRootCamera(camera);
+            zoneOur.AddEnemyToList(characterEnemy.gameObject);
+        }
 
+        private void DeathDelegate(GameObject gameobjectt)
+        {
+            Debug.Log("seMurio");
+            zoneOur.RemoveEnemyToPlayerList(gameobjectt);
+            StartCoroutine(SpawnEnemy());
         }
     }
 }
