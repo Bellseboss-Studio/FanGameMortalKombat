@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using CharacterCustom;
 using UnityEngine;
+using View;
 
 namespace FactoryCharacterFiles
 {

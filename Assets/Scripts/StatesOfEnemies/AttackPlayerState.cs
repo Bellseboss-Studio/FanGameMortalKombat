@@ -15,8 +15,8 @@ namespace StatesOfEnemies
             if(behavior.GetIAmDeath()) behavior.SetNextState(EnemyStatesConfiguration.Death);
             while (behavior.IsPlayerInRangeOfAttack())
             {
-                if(behavior.GetIAmDeath()) behavior.SetNextState(EnemyStatesConfiguration.Death);
-                behavior.StopMovementForAttack();
+                if (behavior.GetIAmDeath()) break;
+                    behavior.StopMovementForAttack();
                 yield return new WaitForSeconds(behavior.GetEnemyVelocity());
                 if (behavior.IsPlayerInRangeOfAttack())
                 {
@@ -24,7 +24,10 @@ namespace StatesOfEnemies
                 }
                 yield return new WaitForSeconds(0.1f);
             }
-            behavior.SetNextState(EnemyStatesConfiguration.FollowTarget);
+
+            behavior.SetNextState(behavior.GetIAmDeath()
+                ? EnemyStatesConfiguration.Death
+                : EnemyStatesConfiguration.FollowTarget);
         }
     }
 }

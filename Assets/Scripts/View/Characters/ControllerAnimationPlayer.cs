@@ -1,4 +1,3 @@
-using CharacterCustom;
 using UnityEngine;
 
 namespace View.Characters

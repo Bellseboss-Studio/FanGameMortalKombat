@@ -1,5 +1,4 @@
 using System;
-using CharacterCustom;
 using ServiceLocatorPath;
 using UnityEngine;
 using View.UI;
@@ -17,7 +16,7 @@ namespace View.Characters
         }
         private void OnTriggerEnter(Collider other)
         {
-            Debug.Log("Trigger");
+            //Debug.Log("Trigger");
             if(other.TryGetComponent<EnemyDefaultCharacter>(out var enemy))
             {
                 var damange = 0f;

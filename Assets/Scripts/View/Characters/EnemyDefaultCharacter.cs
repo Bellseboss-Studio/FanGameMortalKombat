@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using CharacterCustom;
 using JetBrains.Annotations;
 using ServiceLocatorPath;
 using StatesOfEnemies;
@@ -29,6 +28,9 @@ namespace View.Characters
         public TypesEnemy TypeEnemy => type;
         public delegate void OnPlayerTrigger(GameObject player);
 
+        public delegate void OnDeath(GameObject gameObject);
+
+        public OnDeath OnDeathDelegate;
         protected override void UpdateLegacy()
         {
             
@@ -54,6 +56,7 @@ namespace View.Characters
         protected override void Muerte()
         {
             {
+                OnDeathDelegate?.Invoke(gameObject);
                 behaviorEnemy.SetIAmDeath(true);
                 animator.SetTrigger("Muerte");
             }

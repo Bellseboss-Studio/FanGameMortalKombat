@@ -17,7 +17,7 @@ namespace StatesOfEnemies
         public IEnumerator DoAction(IBehavior behavior)
         {
             if(behavior.GetIAmDeath()) behavior.SetNextState(EnemyStatesConfiguration.Death);
-            Debug.Log("PatrolState");
+            //Debug.Log("PatrolState");
             concurrentPoint = _points[behavior.GetRandom(0, _points.Count)];
             while (true)
             {

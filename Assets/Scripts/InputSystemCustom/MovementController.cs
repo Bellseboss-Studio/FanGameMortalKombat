@@ -1,5 +1,5 @@
-﻿using CharacterCustom;
-using UnityEngine;
+﻿using UnityEngine;
+using View;
 using View.Characters;
 
 namespace InputSystemCustom
@@ -91,6 +91,7 @@ namespace InputSystemCustom
 
         private void RotatingCharacterObject3D(Vector2 input)
         {
+            if (!_playerCharacter.CanRotate()) return;
             var eulerAnglesY = Mathf.Atan2(input.x, input.y) * Mathf.Rad2Deg + _playerCharacter.GetTransform().eulerAngles.y;
             float reference = 0;
             var smoothDampAngle = Mathf.SmoothDampAngle(_playerCharacter.GetTransformProtagonist().eulerAngles.y, eulerAnglesY, ref reference,_character.GetSmoothTimeRotation());

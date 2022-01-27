@@ -1,7 +1,8 @@
 ﻿using System;
-using CharacterCustom;
+using Cinemachine;
 using InputSystemCustom;
 using UnityEngine;
+using View;
 using Object = UnityEngine.Object;
 
 namespace Builder
@@ -10,8 +11,10 @@ namespace Builder
     {
         private Character _character;
         private TypeOfInputs _input;
-        private GameObject camera;
+        private GameObject mainCamera;
         private Vector3 position;
+        private CinemachineTargetGroup _targetGroup;
+        private CinemachineFreeLook _secondCamera;
 
         public CharacterBuilder()
         {
@@ -24,9 +27,9 @@ namespace Builder
             return this;
         }
 
-        public CharacterBuilder WithCamera(GameObject cameraExternal)
+        public CharacterBuilder WithMainCamera(GameObject cameraExternal)
         {
-            camera = cameraExternal;
+            mainCamera = cameraExternal;
             return this;
         }
 
@@ -41,6 +44,18 @@ namespace Builder
             this.position = position;
             return this;
         }
+
+        public CharacterBuilder WithTargetGroup(CinemachineTargetGroup targetGroup)
+        {
+            _targetGroup = targetGroup;
+            return this;
+        }
+
+        public CharacterBuilder WithSecondCamera(CinemachineFreeLook secondCamera)
+        {
+            _secondCamera = secondCamera;
+            return this;
+        }
         
         public Character Build()
         {
@@ -51,7 +66,7 @@ namespace Builder
             switch (_input)
             {
                 case TypeOfInputs.PlayerControl:
-                    valueOfInput = new MovementController(characterInstantiate, camera);
+                    valueOfInput = new MovementController(characterInstantiate, mainCamera);
                     break;
                 case TypeOfInputs.EnemyIa:
                     valueOfInput = new MovementEnemies(characterInstantiate);
