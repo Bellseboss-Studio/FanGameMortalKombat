@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Cinemachine;
+using InputSystemCustom;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Debug = UnityEngine.Debug;
@@ -17,6 +18,7 @@ namespace View.Characters
         [SerializeField] private string punch, kick;
         [SerializeField] private float angleAttack = 90;
         [SerializeField] private List<GameObject> _enemiesInCombat;
+        public List<GameObject> EnemiesInCombat => _enemiesInCombat;
         [SerializeField] private CameraChange cameraChange;
         private bool changeIdle;
         private EventsOfFightPlayerInput playerInputFight;
@@ -26,7 +28,10 @@ namespace View.Characters
         public bool CanReadInputs;
 
         private bool isAiming;
-        
+        private bool _isOn = true;
+        private CinemachineFreeLook _secondCamera;
+        private CinemachineTargetGroup _group;
+        private bool _powerOn;
 
         private Vector2 movementInputValue;
         
@@ -122,7 +127,7 @@ namespace View.Characters
             }
             if (isAiming)
             {
-                if (_enemiesInCombat.Count > 0) _targetingSystem.SetManualTarget(_enemiesInCombat[0],instantiate);
+                if (_enemiesInCombat.Count > 0) _targetingSystem.SetManualTarget(_enemiesInCombat[0],instantiate, transform);
             }
         }
 
@@ -155,6 +160,18 @@ namespace View.Characters
             }
         }
 
+        public override Vector3 GetDirectionWithObjective()
+        {
+            if (_enemiesInCombat[0] != null)
+            {
+                var direction = transform.position - _enemiesInCombat[0].transform.position;
+                direction.Normalize();
+                return direction;
+            }
+            
+            return transform.forward;
+        }
+
         private void OnMovementControllers(InputValue value)
         {
             movementInputValue = value.Get <Vector2>();
@@ -176,10 +193,6 @@ namespace View.Characters
         {
             return pointFarToCamera.transform;
         }
-
-        private bool _isOn = true;
-        private CinemachineFreeLook _secondCamera;
-        private CinemachineTargetGroup _group;
 
         private void OnButtonsToAction(InputValue value)
         {
@@ -208,6 +221,20 @@ namespace View.Characters
             _isOn = true;
         }
         
+        private void OnPowersButton()
+        {
+            if (_powerOn)
+            {
+                Debug.Log("no poderes");
+                _powerOn = false;
+            }
+            else
+            {
+                Debug.Log("si poderes");
+                _powerOn = true;
+            }
+        }
+
         public void OnPunch()
         {
             OnPunchEvent?.Invoke();
@@ -235,6 +262,10 @@ namespace View.Characters
             foreach (var enemy in enemies)
             {
                 _enemiesInCombat.Remove(enemy);
+                if (_enemiesInCombat.Count <= 0)
+                {
+                    cameraChange.FreeLookCamera();
+                }
             }
         }
 
@@ -243,6 +274,10 @@ namespace View.Characters
             if (_enemiesInCombat.Contains(gameObjectt))
             {
                 _enemiesInCombat.Remove(gameObjectt);
+                if (_enemiesInCombat.Count <= 0)
+                {
+                    cameraChange.FreeLookCamera();
+                }
             }
         }
 
@@ -256,11 +291,24 @@ namespace View.Characters
             return !isAiming;
         }
 
-        public void ConfigureCameras(CinemachineFreeLook secondCamera, CinemachineTargetGroup group)
+        public void ConfigureCameras(CinemachineFreeLook camaraLibre, CinemachineFreeLook camaraGrupal, CinemachineTargetGroup group)
         {
-            _secondCamera = secondCamera;
+            _secondCamera = camaraLibre;
             _group = group;
-            cameraChange.Configure(group, secondCamera, pointToCamera.transform, this);
+            cameraChange.Configure(group, camaraLibre, camaraGrupal,pointToCamera.transform, this);
+        }
+
+        public void ChangeInputCustom(bool b)
+        {
+            _inputCustom.ChangeInputCustom();
+            if (b)
+            {
+                _inputCustom = new MovementControllerTargeting(this, _mainCamera);
+            }
+            else
+            {
+                _inputCustom = new MovementController(this, _mainCamera);
+            }
         }
     }
 }

@@ -34,7 +34,7 @@ namespace TargetingSystem
         {
             if (Keyboard.current.sKey.isPressed)
             {
-                _targetingSystem.SetManualTarget(enemiesInCombat[0],gameObject);
+                //_targetingSystem.SetManualTarget(enemiesInCombat[0],gameObject);
             }
         }
     }

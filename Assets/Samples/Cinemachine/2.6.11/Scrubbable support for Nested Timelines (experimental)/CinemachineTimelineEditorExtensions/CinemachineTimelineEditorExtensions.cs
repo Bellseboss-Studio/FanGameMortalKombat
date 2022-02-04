@@ -1,3 +1,4 @@
+/*
 using UnityEditor;
 
 /// <summary>
@@ -14,3 +15,4 @@ class CinemachineTimelineEditorExtensions
         CinemachineShotClipEditor.TimelineGlobalToLocalTime = TimelineEditorExtensions.ToLocalTime; 
     } 
 }
+*/

@@ -62,6 +62,11 @@ namespace View.Characters
             }
         }
 
+        public override Vector3 GetDirectionWithObjective()
+        {
+            return transform.forward;
+        }
+
         public void SetBehavior(AreaZoneController yellowZone, AreaZoneController greenZone)
         {
             this.yellowZone = yellowZone;

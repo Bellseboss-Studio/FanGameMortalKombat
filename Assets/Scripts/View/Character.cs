@@ -40,6 +40,7 @@ namespace View
         private Transform cameraForward;
         public bool CanAnimateDamage;
         protected GameObject instantiate;
+        protected GameObject _mainCamera;
 
         public delegate void OnEnterDamage(float damage);
         public event OnEnterDamage OnEnterDamageEvent;
@@ -93,8 +94,9 @@ namespace View
             transform.rotation = targetRotation;
         }
 
-        public void Configure(InputCustom inputCustom)
+        public void Configure(InputCustom inputCustom, GameObject cameraParameter)
         {
+            _mainCamera = cameraParameter;
             _inputCustom = inputCustom;
             cameraForward = transform;
             ValidationsCritical();
@@ -209,5 +211,6 @@ namespace View
 
         protected abstract void Muerte();
 
+        public abstract Vector3 GetDirectionWithObjective();
     }
 }
