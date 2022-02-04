@@ -1,17 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class LoadScene : MonoBehaviour
+namespace View.UI
 {
-    public void loadScene()
+    public class LoadScene : MonoBehaviour
     {
-        SceneManager.LoadScene(1);
-    }
+        public void LoadSceneMethod()
+        {
+            SceneManager.LoadScene(1);
+        }
 
-    public void QuitGame()
-    {
-        Application.Quit();
+        public void QuitGame()
+        {
+            Application.Quit();
+        }
     }
 }
