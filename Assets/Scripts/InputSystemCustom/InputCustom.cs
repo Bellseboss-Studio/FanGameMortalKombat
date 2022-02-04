@@ -8,7 +8,8 @@ namespace InputSystemCustom
     {
         public PlayerInput playerInput;
         protected Character _character;
-        protected Transform cameraTransform;
+        protected Transform mainCameraTransform;
+        protected Transform grupalCameraTransform;
         public abstract Vector2 GetDirection();
         public abstract bool IsFireActionPressed();
         public abstract Vector2 GetLasPosition();
@@ -32,6 +33,8 @@ namespace InputSystemCustom
             //_character.GetTransformProtagonist().eulerAngles = targetRotation;
         }
 
+        public abstract void ChangeInputCustom();
+        
         protected abstract void RotatingCharacter();
     }
 }

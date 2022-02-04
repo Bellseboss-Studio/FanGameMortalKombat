@@ -28,7 +28,7 @@ namespace View.Installers
                 .WithInput(TypeOfInputs.PlayerControl).InPosition(transform.position)
                 .WithMainCamera(cameraMainFreeLook.gameObject)
                 .Build();
-            character.ConfigureCameras(cameraMainFreeLook, group);
+            character.ConfigureCameras(cameraMainFreeLook, secondCamera, group);
             cameraMainFreeLook.Follow = character.GetPointToCamera();
             cameraMainFreeLook.LookAt = character.GetPointToCamera();
             ServiceLocator.Instance.GetService<IObserverUI>().Observer(character);

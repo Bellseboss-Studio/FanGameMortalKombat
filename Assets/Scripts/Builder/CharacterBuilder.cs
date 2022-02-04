@@ -74,7 +74,7 @@ namespace Builder
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-            characterInstantiate.Configure(valueOfInput);
+            characterInstantiate.Configure(valueOfInput, mainCamera);
             valueOfInput.ConfigureInputWithCharacter();
             return characterInstantiate;
         }

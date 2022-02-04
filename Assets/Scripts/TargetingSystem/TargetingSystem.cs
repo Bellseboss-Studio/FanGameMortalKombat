@@ -45,11 +45,12 @@ namespace TargetingSystem
             }
         }
         
-        public void SetManualTarget(GameObject enemy, GameObject player)
+        public void SetManualTarget(GameObject enemy, GameObject player, Transform playerController)
         {
             //var xAngle = player.transform.rotation.x;
             var position = enemy.transform.position;
             player.transform.LookAt(new Vector3(position.x, player.transform.position.y, position.z));
+            playerController.LookAt(new Vector3(position.x, playerController.position.y, position.z));
             //var transformRotation = player.transform.rotation;
             //transformRotation.y = rotationAngle.y;
             //Debug.Log(rotationAngle.y);

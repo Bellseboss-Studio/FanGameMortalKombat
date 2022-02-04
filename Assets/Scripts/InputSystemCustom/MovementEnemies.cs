@@ -40,6 +40,10 @@ namespace InputSystemCustom
             return diff.normalized;
         }
 
+        public override void ChangeInputCustom()
+        {
+        }
+
         protected override void RotatingCharacter()
         {
             var targetDir = Vector3.forward;

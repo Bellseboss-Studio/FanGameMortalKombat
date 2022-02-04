@@ -62,7 +62,6 @@ MonoBehaviour:
   power: 10
   nameOfAnimationTriggerForApplyDamage: damage
   smoodTimeRotation: 0.06
-  cameraChange: {fileID: 1498332832886426744}
   CanAnimateDamage: 0
   playerInput: {fileID: 1664086341}
   pointToCamera: {fileID: 7421841982931828701}
@@ -71,6 +70,7 @@ MonoBehaviour:
   kick: kick
   angleAttack: 90
   _enemiesInCombat: []
+  cameraChange: {fileID: 1498332832886426744}
   CanMove: 0
   CanReadInputs: 0
 --- !u!114 &1664086341
@@ -158,9 +158,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4beec7e172c141518ff8af9673548e46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointToCamera: {fileID: 4409929494369958385}
-  targetGroup: {fileID: 0}
-  virtualCamera: {fileID: 0}
+  posicionDeCamara: {fileID: 0}
+  distancia: -8
+  camy: 2
 --- !u!1 &2149289635134946612
 GameObject:
   m_ObjectHideFlags: 0
