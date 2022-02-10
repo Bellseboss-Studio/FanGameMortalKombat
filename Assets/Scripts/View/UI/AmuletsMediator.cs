@@ -24,6 +24,5 @@ namespace View.UI
                 amulet.amuletIsMoving = false;
             }
         }
-        
     }
 }

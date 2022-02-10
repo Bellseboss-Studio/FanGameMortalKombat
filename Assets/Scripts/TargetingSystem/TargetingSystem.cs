@@ -32,16 +32,29 @@ namespace TargetingSystem
                 {
                     if (VerifyAttackAngle(enemies[i].gameObject.transform.position, player) < attackAngle)
                     {
-                        player.transform.rotation = Quaternion.LookRotation(enemies[i].transform.position - player.transform.position, Vector3.up);
+                        //var xAngle = player.transform.rotation.x;
+                        //player.transform.rotation = 
+                        var position = enemies[i].transform.position;
+                        player.transform.LookAt(new Vector3(position.x, player.transform.position.y, position.z));
+                        //var transformRotation = player.transform.rotation;
+                        //transformRotation.y = rotationAngle.y;
+                        //player.transform.rotation = transformRotation;
                         break;
                     }
                 }
             }
         }
         
-        public void SetManualTarget(GameObject enemy, GameObject player)
+        public void SetManualTarget(GameObject enemy, GameObject player, Transform playerController)
         {
-            player.transform.rotation = Quaternion.LookRotation(enemy.transform.position - player.transform.position, Vector3.up);
+            //var xAngle = player.transform.rotation.x;
+            var position = enemy.transform.position;
+            player.transform.LookAt(new Vector3(position.x, player.transform.position.y, position.z));
+            playerController.LookAt(new Vector3(position.x, playerController.position.y, position.z));
+            //var transformRotation = player.transform.rotation;
+            //transformRotation.y = rotationAngle.y;
+            //Debug.Log(rotationAngle.y);
+            //player.transform.rotation = transformRotation;
         }
         
         private float VerifyAttackAngle(Vector3 enemyPosition, GameObject player)

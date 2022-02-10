@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5361025647053283558}
   - component: {fileID: 5662092353288176250}
   - component: {fileID: 8212016888867309627}
+  - component: {fileID: 1498332832886426744}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -50,7 +51,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: player
-  model3D: {fileID: 3055888929202094615, guid: cf9482671030d144e81b6c58bbe4ff9c, type: 3}
+  model3D: {fileID: 8286717531267237684, guid: 5f48135c34b35ec42974c66eda2b9e48, type: 3}
   rb: {fileID: 5361025647053283558}
   speedGlobal: 600
   velocityOfAttack: 0
@@ -67,6 +68,9 @@ MonoBehaviour:
   pointFarToCamera: {fileID: 2149289635134946612}
   punch: punch
   kick: kick
+  angleAttack: 90
+  _enemiesInCombat: []
+  cameraChange: {fileID: 1498332832886426744}
   CanMove: 0
   CanReadInputs: 0
 --- !u!114 &1664086341
@@ -141,7 +145,22 @@ CapsuleCollider:
   m_Radius: 0.5
   m_Height: 1
   m_Direction: 1
-  m_Center: {x: 0, y: 0.6, z: 0}
+  m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!114 &1498332832886426744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1988818508267669303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4beec7e172c141518ff8af9673548e46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  posicionDeCamara: {fileID: 0}
+  distancia: -8
+  camy: 2
 --- !u!1 &2149289635134946612
 GameObject:
   m_ObjectHideFlags: 0

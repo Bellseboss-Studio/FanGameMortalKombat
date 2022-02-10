@@ -12,7 +12,7 @@ namespace View.Installers
         [SerializeField] private CharactersConfiguration charactersConfiguration;
         [SerializeField] private string idCharacter;
         [SerializeField] private CinemachineVirtualCamera cameraMain;
-        [SerializeField] private CinemachineFreeLook cameraMainFreeLook;
+        [SerializeField] private CinemachineFreeLook cameraMainFreeLook, secondCamera;
         [SerializeField] private CinemachineTargetGroup group;
         private GameObject player, pointFar;
 
@@ -24,9 +24,11 @@ namespace View.Installers
         private void Start()
         {
             var charactersFactory = new CharactersFactory(Instantiate(charactersConfiguration));
-            var character = (PlayerCharacter) charactersFactory.Create(idCharacter).WithInput(TypeOfInputs.PlayerControl).InPosition(transform.position).WithCamera(cameraMainFreeLook.gameObject)
-            .Build();
-
+            var character = (PlayerCharacter) charactersFactory.Create(idCharacter)
+                .WithInput(TypeOfInputs.PlayerControl).InPosition(transform.position)
+                .WithMainCamera(cameraMainFreeLook.gameObject)
+                .Build();
+            character.ConfigureCameras(cameraMainFreeLook, secondCamera, group);
             cameraMainFreeLook.Follow = character.GetPointToCamera();
             cameraMainFreeLook.LookAt = character.GetPointToCamera();
             ServiceLocator.Instance.GetService<IObserverUI>().Observer(character);

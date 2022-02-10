@@ -12,9 +12,11 @@ namespace StatesOfEnemies
         public IEnumerator DoAction(IBehavior behavior)
         {
             Debug.Log("Range of attack");
+            if(behavior.GetIAmDeath()) behavior.SetNextState(EnemyStatesConfiguration.Death);
             while (behavior.IsPlayerInRangeOfAttack())
             {
-                behavior.StopMovementForAttack();
+                if (behavior.GetIAmDeath()) break;
+                    behavior.StopMovementForAttack();
                 yield return new WaitForSeconds(behavior.GetEnemyVelocity());
                 if (behavior.IsPlayerInRangeOfAttack())
                 {
@@ -22,7 +24,10 @@ namespace StatesOfEnemies
                 }
                 yield return new WaitForSeconds(0.1f);
             }
-            behavior.SetNextState(EnemyStatesConfiguration.FollowTarget);
+
+            behavior.SetNextState(behavior.GetIAmDeath()
+                ? EnemyStatesConfiguration.Death
+                : EnemyStatesConfiguration.FollowTarget);
         }
     }
 }

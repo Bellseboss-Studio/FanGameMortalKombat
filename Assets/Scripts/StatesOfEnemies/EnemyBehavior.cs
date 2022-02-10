@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections;
-using CharacterCustom;
+﻿using System.Collections;
 using UnityEngine;
+using View;
 using View.Characters;
 using Random = UnityEngine.Random;
 
@@ -14,6 +13,9 @@ namespace StatesOfEnemies
         private IEnemyCharacter _enemyCharacter;
         private GameObject targer;
         private bool playerIsInRedZone;
+        private bool iAmDeath;
+        private bool exitStatesSystem = false;
+        private IBehavior _behaviorImplementation;
 
         public IEnemyState Configuration(IEnemyCharacter enemyCharacter)
         {
@@ -24,6 +26,7 @@ namespace StatesOfEnemies
             _enemyStatesConfiguration.AddState(EnemyStatesConfiguration.FollowTarget, new FollowTarget());
             _enemyStatesConfiguration.AddState(EnemyStatesConfiguration.LookPlayer, new WaitState());
             _enemyStatesConfiguration.AddState(EnemyStatesConfiguration.AttackPlayer, new AttackPlayerState());
+            _enemyStatesConfiguration.AddState(EnemyStatesConfiguration.Death, new Death());
             _nextState = 0;
             _enemyCharacter.SubscribeOnPlayerEnterTrigger((player) =>
             {
@@ -39,6 +42,7 @@ namespace StatesOfEnemies
 
         public IEnumerator StartState(IEnemyState state)
         {
+            if (exitStatesSystem) yield break;
             StartCoroutine(state.DoAction(this));
             while (GetNextState() == 0)
             {
@@ -109,6 +113,31 @@ namespace StatesOfEnemies
             Debug.Log("Target dont save");
         }
 
+        public bool GetIAmDeath()
+        {
+            return iAmDeath;
+        }
+
+        public void SetIAmDeath(bool value)
+        {
+            iAmDeath = value;
+        }
+
+        public void CleanAndDestroy()
+        {
+            Destroy(gameObject);
+        }
+
+        public bool GetExitStatesSystem()
+        {
+            return exitStatesSystem;
+        }
+
+        public void SetExitStatesSystem(bool value)
+        {
+            exitStatesSystem = value;
+        }
+
         public void SetNextState(int nextStateFromState)
         {
             _nextState = nextStateFromState;
@@ -128,5 +157,7 @@ namespace StatesOfEnemies
         {
             return _enemyCharacter.IsEnemyArrived(concurrentPoint);
         }
+
+
     }
 }

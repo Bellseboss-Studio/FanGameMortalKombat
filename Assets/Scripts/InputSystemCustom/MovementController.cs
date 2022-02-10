@@ -1,5 +1,5 @@
-﻿using CharacterCustom;
-using UnityEngine;
+﻿using UnityEngine;
+using View;
 using View.Characters;
 
 namespace InputSystemCustom
@@ -18,13 +18,22 @@ namespace InputSystemCustom
             character.OnCameraMovementExtend += OnCameraMovementExtend;
             character.OnLeftShitOn += OnLeftShitOn;
             character.OnLeftShitOff += OnLeftShitOff;
-            cameraTransform = camera.transform;
+            mainCameraTransform = camera.transform;
         }
 
+        public override void ChangeInputCustom()
+        {
+            Debug.Log("desuscribe");
+            _playerCharacter.OnInputChangedExtend -= OnInputChangedExtend;
+            _playerCharacter.OnCameraMovementExtend -= OnCameraMovementExtend;
+            _playerCharacter.OnLeftShitOn -= OnLeftShitOn;
+            _playerCharacter.OnLeftShitOff -= OnLeftShitOff;
+        }
+        
         public override void ConfigureInputWithCharacter()
         {
             base.ConfigureInputWithCharacter();
-            _character.SetCameraForward(cameraTransform);
+            _character.SetCameraForward(mainCameraTransform);
         }
 
         private void OnLeftShitOff()
@@ -62,7 +71,7 @@ namespace InputSystemCustom
         {
             var transformForward = InputCalculateForTheMovement(input);
 
-            _character.Move(transformForward);
+            //_character.Move(transformForward);
         }
         public override Vector2 GetDirection()
         {
@@ -91,6 +100,7 @@ namespace InputSystemCustom
 
         private void RotatingCharacterObject3D(Vector2 input)
         {
+            if (!_playerCharacter.CanRotate()) return;
             var eulerAnglesY = Mathf.Atan2(input.x, input.y) * Mathf.Rad2Deg + _playerCharacter.GetTransform().eulerAngles.y;
             float reference = 0;
             var smoothDampAngle = Mathf.SmoothDampAngle(_playerCharacter.GetTransformProtagonist().eulerAngles.y, eulerAnglesY, ref reference,_character.GetSmoothTimeRotation());
@@ -99,8 +109,8 @@ namespace InputSystemCustom
 
         protected override void RotatingCharacter()
         {
-            var targetDir = _playerCharacter.GetPointToCamera().position - cameraTransform.position;
-            var forward = cameraTransform.forward;
+            var targetDir = _playerCharacter.GetPointToCamera().position - mainCameraTransform.position;
+            var forward = mainCameraTransform.forward;
             //var forward = _playerCharacter.GetTransformProtagonist().forward;
             var angleBetween = Vector3.Angle(forward, targetDir);
             var anglr = Vector3.Cross(forward, targetDir);
@@ -108,12 +118,11 @@ namespace InputSystemCustom
             {
                 angleBetween *= -1;
             }
-
             Rotating(angleBetween);
         }
         protected void RotatingCharacterNew()
         {
-            var targetDir = _playerCharacter.GetPointToCamera().position - cameraTransform.position;
+            var targetDir = _playerCharacter.GetPointToCamera().position - mainCameraTransform.position;
             var eulerAnglesY = Mathf.Atan2(targetDir.x, targetDir.z) * Mathf.Rad2Deg + _character.GetTransform().eulerAngles.y;
             float reference = 0;
             var smoothDampAngle = Mathf.SmoothDampAngle(_character.GetTransform().eulerAngles.y, eulerAnglesY, ref reference,_character.GetSmoothTimeRotation());

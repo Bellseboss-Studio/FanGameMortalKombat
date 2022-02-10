@@ -16,15 +16,19 @@ namespace StatesOfEnemies
 
         public IEnumerator DoAction(IBehavior behavior)
         {
-            Debug.Log("PatrolState");
+            if(behavior.GetIAmDeath()) behavior.SetNextState(EnemyStatesConfiguration.Death);
+            //Debug.Log("PatrolState");
             concurrentPoint = _points[behavior.GetRandom(0, _points.Count)];
             while (true)
             {
+                if(behavior.GetIAmDeath()) behavior.SetNextState(EnemyStatesConfiguration.Death);
                 while (!behavior.IsEnemyArrived(concurrentPoint))
                 {
+                    if(behavior.GetIAmDeath()) behavior.SetNextState(EnemyStatesConfiguration.Death);
                     behavior.WalkToPoint(concurrentPoint);
                     if (behavior.IsPlayerInRedZone())
                     {
+                        if(behavior.GetIAmDeath()) behavior.SetNextState(EnemyStatesConfiguration.Death);
                         behavior.SetNextState(EnemyStatesConfiguration.FollowTarget);
                         break;
                     }

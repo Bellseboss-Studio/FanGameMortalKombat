@@ -1,5 +1,5 @@
-﻿using CharacterCustom;
-using UnityEngine;
+﻿using UnityEngine;
+using View;
 using View.Characters;
 
 namespace InputSystemCustom
@@ -38,6 +38,10 @@ namespace InputSystemCustom
                 //RotatingCharacter();
             }
             return diff.normalized;
+        }
+
+        public override void ChangeInputCustom()
+        {
         }
 
         protected override void RotatingCharacter()

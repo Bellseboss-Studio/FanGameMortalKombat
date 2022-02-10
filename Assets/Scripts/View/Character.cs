@@ -4,7 +4,7 @@ using InputSystemCustom;
 using UnityEngine;
 using View.Characters;
 
-namespace CharacterCustom
+namespace View
 {
     public abstract class Character: MonoBehaviour
     {
@@ -32,6 +32,7 @@ namespace CharacterCustom
         public OnInputButton OnLeftShitOff;
         public OnInputButton OnPunchEvent;
         public OnInputButton OnKickEvent;
+        public OnInputButton OnAimEvent;
         public OnInputButton OnFinishedAnimatorFight;
         public OnInputButton OnFinishedAnimatorDamage;
         private Vector2 _inputValue;
@@ -39,6 +40,7 @@ namespace CharacterCustom
         private Transform cameraForward;
         public bool CanAnimateDamage;
         protected GameObject instantiate;
+        protected GameObject _mainCamera;
 
         public delegate void OnEnterDamage(float damage);
         public event OnEnterDamage OnEnterDamageEvent;
@@ -60,6 +62,12 @@ namespace CharacterCustom
         private void OnFinishedAnimatorDamageCharacter()
         {
             CanAnimateDamage = true;
+            FinishedAnimatorDamage();
+        }
+
+        protected virtual void FinishedAnimatorDamage()
+        {
+            
         }
 
         protected abstract void UpdateLegacy();
@@ -86,8 +94,9 @@ namespace CharacterCustom
             transform.rotation = targetRotation;
         }
 
-        public void Configure(InputCustom inputCustom)
+        public void Configure(InputCustom inputCustom, GameObject cameraParameter)
         {
+            _mainCamera = cameraParameter;
             _inputCustom = inputCustom;
             cameraForward = transform;
             ValidationsCritical();
@@ -163,6 +172,7 @@ namespace CharacterCustom
         public void ApplyDamage(float damage)
         {
             life -= damage;
+            VerifyLife();
             AnimateDamage();
             OnEnterDamageEvent?.Invoke(damage);
             
@@ -189,5 +199,18 @@ namespace CharacterCustom
         {
             return smoodTimeRotation;
         }
+        
+        protected void VerifyLife()
+        {
+            Debug.Log("a ver tu vida");
+            if (life<= 0)
+            {
+                Muerte();
+            }
+        }
+
+        protected abstract void Muerte();
+
+        public abstract Vector3 GetDirectionWithObjective();
     }
 }

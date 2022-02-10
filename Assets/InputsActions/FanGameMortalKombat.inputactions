@@ -11,7 +11,8 @@
                     "id": "6aefe311-c9cc-44ae-90ab-859cc9ed2c58",
                     "expectedControlType": "Vector2",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "CameraMovement",
@@ -19,7 +20,8 @@
                     "id": "530395bd-3399-4ea5-a78f-d28de2dd1d88",
                     "expectedControlType": "Vector2",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "ButtonsToAction",
@@ -27,7 +29,8 @@
                     "id": "496749ed-d84d-45dd-a865-dd726c2f6704",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Press(behavior=2)"
+                    "interactions": "Press(behavior=2)",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Punch",
@@ -35,7 +38,8 @@
                     "id": "6e9ba08c-0e5b-4931-b100-78729d4c354c",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Press"
+                    "interactions": "Press",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Kick",
@@ -43,7 +47,26 @@
                     "id": "2f72d503-737a-4b34-8a92-a0b77b5eefc0",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Press"
+                    "interactions": "Press",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Aim",
+                    "type": "Button",
+                    "id": "21ed6e89-e8fe-4f3f-af05-4912391d387d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press(behavior=2)",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "PowersButton",
+                    "type": "Button",
+                    "id": "aca98b09-5e27-415c-821a-026afe4b15c9",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press(behavior=2)",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -429,6 +452,39 @@
                     "processors": "",
                     "groups": "Joystick",
                     "action": "Kick",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "290a5904-0d8b-46d7-9dbd-f303654509ba",
+                    "path": "<Keyboard>/leftShift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Aim",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bf488089-5820-4edd-9fa9-0b049e5bab7d",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Aim",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6a28d54d-3a45-4e83-944c-6d877c984358",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "PowersButton",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

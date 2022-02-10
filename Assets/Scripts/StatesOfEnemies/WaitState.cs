@@ -8,7 +8,7 @@ namespace StatesOfEnemies
     {
         public IEnumerator DoAction(IBehavior behavior)
         {
-            Debug.Log("waitState");
+            //Debug.Log("waitState");
             while (!behavior.IsPlayerInYellowZone() && behavior.IsPlayerInGreenZone())
             {
                 behavior.LookPlayer(behavior.GetTarget());

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.05680915, g: 0.03986635, b: 0.036308393, a: 1}
+  m_IndirectSpecularColor: {r: 0.056790292, g: 0.039847918, b: 0.036290668, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -7903,6 +7903,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_MoveRepeatDelay: 0.5
   m_MoveRepeatRate: 0.1
+  m_XRTrackingOrigin: {fileID: 0}
   m_ActionsAsset: {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
   m_PointAction: {fileID: 1054132383583890850, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
   m_MoveAction: {fileID: 3710738434707379630, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
@@ -7943,7 +7944,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &853956314
 GameObject:
@@ -8322,7 +8323,6 @@ GameObject:
   - component: {fileID: 874135464}
   - component: {fileID: 874135463}
   - component: {fileID: 874135462}
-  - component: {fileID: 874135460}
   - component: {fileID: 874135461}
   m_Layer: 5
   m_Name: Play
@@ -8350,18 +8350,6 @@ RectTransform:
   m_AnchoredPosition: {x: -294.84, y: -57.436363}
   m_SizeDelta: {x: 39.0993, y: 19.7553}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &874135460
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 874135458}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77fc0ea3878538c41bd787d3c7455778, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &874135461
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8420,7 +8408,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 874135463}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1073408775}
+        m_TargetAssemblyTypeName: LoadScene, Assembly-CSharp
+        m_MethodName: LoadSceneMethod
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &874135463
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10396,7 +10396,7 @@ RectTransform:
   - {fileID: 1068415487}
   - {fileID: 1998453690}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -14137,7 +14137,7 @@ Transform:
   - {fileID: 485770024}
   - {fileID: 1293287826}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1473895266
 GameObject:
@@ -14527,7 +14527,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 121.81, y: 0.21099854, z: 0}
 --- !u!1 &1509632890
 GameObject:
@@ -15134,7 +15134,7 @@ Transform:
   m_Children:
   - {fileID: 1829606853}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 6.53, y: -173.1, z: -0.236}
 --- !u!1 &1602109199
 GameObject:
@@ -18449,63 +18449,6 @@ MonoBehaviour:
   - {fileID: 1083459277}
   - {fileID: 799800442}
   animator: {fileID: 0}
---- !u!1001 &2009064175
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 9015140644088761060, guid: 4478184115fe91843a1b6e3263fecc41, type: 3}
-      propertyPath: m_RootOrder
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 9015140644088761060, guid: 4478184115fe91843a1b6e3263fecc41, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -111.69806
-      objectReference: {fileID: 0}
-    - target: {fileID: 9015140644088761060, guid: 4478184115fe91843a1b6e3263fecc41, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 2.4115548
-      objectReference: {fileID: 0}
-    - target: {fileID: 9015140644088761060, guid: 4478184115fe91843a1b6e3263fecc41, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 20.910976
-      objectReference: {fileID: 0}
-    - target: {fileID: 9015140644088761060, guid: 4478184115fe91843a1b6e3263fecc41, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9015140644088761060, guid: 4478184115fe91843a1b6e3263fecc41, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9015140644088761060, guid: 4478184115fe91843a1b6e3263fecc41, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9015140644088761060, guid: 4478184115fe91843a1b6e3263fecc41, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9015140644088761060, guid: 4478184115fe91843a1b6e3263fecc41, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9015140644088761060, guid: 4478184115fe91843a1b6e3263fecc41, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9015140644088761060, guid: 4478184115fe91843a1b6e3263fecc41, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9015140644088761061, guid: 4478184115fe91843a1b6e3263fecc41, type: 3}
-      propertyPath: m_Name
-      value: ServiceLocator
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 4478184115fe91843a1b6e3263fecc41, type: 3}
 --- !u!1 &2020972303
 GameObject:
   m_ObjectHideFlags: 0

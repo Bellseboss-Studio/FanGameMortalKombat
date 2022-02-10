@@ -18,5 +18,10 @@ namespace StatesOfEnemies
         void StopMovementForAttack();
         float GetEnemyVelocity();
         void Attack();
+        bool GetIAmDeath();
+        void SetIAmDeath(bool value);
+        void CleanAndDestroy();
+        bool GetExitStatesSystem();
+        void SetExitStatesSystem(bool value);
     }
 }

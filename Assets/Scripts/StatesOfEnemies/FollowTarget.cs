@@ -7,7 +7,7 @@ namespace StatesOfEnemies
     {
         public IEnumerator DoAction(IBehavior behavior)
         {
-            Debug.Log("Follow the player");
+            //Debug.Log("Follow the player");
             yield return new WaitForSeconds(0.1f);
             while (behavior.IsPlayerInRedZone())
             {
@@ -21,7 +21,7 @@ namespace StatesOfEnemies
                     behavior.SetNextState(EnemyStatesConfiguration.LookPlayer);
                     break;
                 }
-                behavior.WalkToPoint(behavior.GetTarget());
+                //behavior.WalkToPoint(behavior.GetTarget());
                 yield return new WaitForSeconds(0.1f);
             }
 
