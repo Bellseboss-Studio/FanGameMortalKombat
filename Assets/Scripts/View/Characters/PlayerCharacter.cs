@@ -67,25 +67,40 @@ namespace View.Characters
         private void OnKickEventInPlayer()
         {
             if (!CanReadInputs) return;
-            _enemiesInCombat = new List<GameObject>(_targetingSystem.SetEnemiesOrder(_enemiesInCombat, transform.position));
-            if (_enemiesInCombat.Count > 0) _targetingSystem.SetAutomaticTarget(5, _enemiesInCombat, instantiate, angleAttack);
-            animator.SetTrigger(kick);
-            CanMove = false;
-            CanReadInputs = false;
-            Move(Vector3.zero);
-            OnInputChangedExtend(movementInputValue);
+            if (_powerOn)
+            {
+                Debug.Log("poder 2");
+            }
+            else
+            {
+                _enemiesInCombat = new List<GameObject>(_targetingSystem.SetEnemiesOrder(_enemiesInCombat, transform.position));
+                if (_enemiesInCombat.Count > 0) _targetingSystem.SetAutomaticTarget(5, _enemiesInCombat, instantiate, angleAttack);
+                animator.SetTrigger(kick);
+                CanMove = false;
+                CanReadInputs = false;
+                Move(Vector3.zero);
+                OnInputChangedExtend(movementInputValue);
+            }
         }
 
         private void OnPunchEventInPlayer()
         {
+            if (_powerOn)
+            {
+                Debug.Log("poder 1");
+            }
+            else
+            {
+                _enemiesInCombat = new List<GameObject>(_targetingSystem.SetEnemiesOrder(_enemiesInCombat, transform.position));
+                if (_enemiesInCombat.Count > 0) _targetingSystem.SetAutomaticTarget(5, _enemiesInCombat, instantiate, angleAttack);
+                animator.SetTrigger(punch);
+                CanMove = false;
+                CanReadInputs = false;
+                Move(Vector3.zero);
+                OnInputChangedExtend(Vector2.zero);
+            }
             if (!CanReadInputs) return;
-            _enemiesInCombat = new List<GameObject>(_targetingSystem.SetEnemiesOrder(_enemiesInCombat, transform.position));
-            if (_enemiesInCombat.Count > 0) _targetingSystem.SetAutomaticTarget(5, _enemiesInCombat, instantiate, angleAttack);
-            animator.SetTrigger(punch);
-            CanMove = false;
-            CanReadInputs = false;
-            Move(Vector3.zero);
-            OnInputChangedExtend(Vector2.zero);
+            
         }
 
         private void OnAimEventInPlayer()
@@ -225,12 +240,10 @@ namespace View.Characters
         {
             if (_powerOn)
             {
-                Debug.Log("no poderes");
                 _powerOn = false;
             }
             else
             {
-                Debug.Log("si poderes");
                 _powerOn = true;
             }
         }
