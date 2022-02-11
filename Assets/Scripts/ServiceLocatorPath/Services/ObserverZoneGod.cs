@@ -40,5 +40,10 @@ namespace ServiceLocatorPath
             }
             return areaZoneControllers[zone];
         }
+
+        public void UnObserve()
+        {
+            allZones = new Dictionary<string, Dictionary<Zones, AreaZoneController>>();           
+        }
     }
 }

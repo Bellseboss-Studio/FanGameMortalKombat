@@ -1,6 +1,7 @@
 ﻿using System;
 using Cinemachine;
 using InputSystemCustom;
+using ServiceLocatorPath;
 using UnityEngine;
 using View.Characters;
 
@@ -41,6 +42,7 @@ namespace View
         public bool CanAnimateDamage;
         protected GameObject instantiate;
         protected GameObject _mainCamera;
+        public bool IsInPause { get; private set; }
 
         public delegate void OnEnterDamage(float damage);
         public event OnEnterDamage OnEnterDamageEvent;
@@ -57,6 +59,14 @@ namespace View
             CanAnimateDamage = true;
             animatorControllerPlayer = animator.gameObject.GetComponent<ControllerAnimationPlayer>();
             animatorControllerPlayer.Configurate(this);
+            
+            ServiceLocator.Instance.GetService<IPauseMainMenu>().onPause += OnPause;
+        }
+
+        private void OnPause(bool ispause)
+        {
+            animator?.SetFloat("speedGeneral", ispause ? 0 : 1);
+            IsInPause = ispause;
         }
 
         private void OnFinishedAnimatorDamageCharacter()
@@ -73,6 +83,12 @@ namespace View
         protected abstract void UpdateLegacy();
         protected void Update()
         {
+            if (IsInPause)
+            {
+                rb.velocity = Vector3.zero;    
+                return;
+            }
+
             var rbVelocity = _inputCustom.InputCalculateForTheMovement(_inputCustom.GetLasPosition()) * (Time.deltaTime * speedGlobal);
             animator.SetFloat(speedAnim,rbVelocity.sqrMagnitude);
             rbVelocity.y = rb.velocity.y;
@@ -205,6 +221,7 @@ namespace View
             Debug.Log("a ver tu vida");
             if (life<= 0)
             {
+                ServiceLocator.Instance.GetService<IPauseMainMenu>().onPause -= OnPause;
                 Muerte();
             }
         }
