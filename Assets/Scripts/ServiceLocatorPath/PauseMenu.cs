@@ -27,6 +27,7 @@ namespace ServiceLocatorPath
         public void Exit()
         {
             SceneManager.LoadScene(0);
+            Pause();
         }
 
     }

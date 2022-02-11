@@ -65,7 +65,7 @@ namespace View
 
         private void OnPause(bool ispause)
         {
-            animator.SetFloat("speedGeneral", ispause ? 0 : 1);
+            animator?.SetFloat("speedGeneral", ispause ? 0 : 1);
             IsInPause = ispause;
         }
 
@@ -221,6 +221,7 @@ namespace View
             Debug.Log("a ver tu vida");
             if (life<= 0)
             {
+                ServiceLocator.Instance.GetService<IPauseMainMenu>().onPause -= OnPause;
                 Muerte();
             }
         }
