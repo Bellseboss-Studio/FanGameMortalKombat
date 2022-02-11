@@ -2,7 +2,9 @@ using System;
 using Cinemachine;
 using FactoryCharacterFiles;
 using InputSystemCustom;
+using ServiceLocatorPath;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using View.Characters;
 
 namespace View.Installers
@@ -13,8 +15,11 @@ namespace View.Installers
         [SerializeField] private string idCharacter;
         [SerializeField] private CinemachineVirtualCamera cameraMain;
         [SerializeField] private CinemachineFreeLook cameraMainFreeLook, secondCamera;
+        [SerializeField] private CinemachineInputProvider _cinemachineInputProvider;
         [SerializeField] private CinemachineTargetGroup group;
         private GameObject player, pointFar;
+        private InputActionReference inputCamera;
+        private bool isInPause;
 
         private void Awake()
         {
@@ -32,6 +37,13 @@ namespace View.Installers
             cameraMainFreeLook.Follow = character.GetPointToCamera();
             cameraMainFreeLook.LookAt = character.GetPointToCamera();
             ServiceLocator.Instance.GetService<IObserverUI>().Observer(character);
+            ServiceLocator.Instance.GetService<IPauseMainMenu>().onPause += OnPause;
+            inputCamera = _cinemachineInputProvider.XYAxis;
+        }
+
+        private void OnPause(bool ispause)
+        {
+            _cinemachineInputProvider.XYAxis = ispause ? null : inputCamera;
         }
     }
 }

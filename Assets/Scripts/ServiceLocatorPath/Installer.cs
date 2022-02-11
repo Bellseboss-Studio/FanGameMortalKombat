@@ -8,18 +8,22 @@ namespace ServiceLocatorPath
     public class Installer : MonoBehaviour
     {
         [SerializeField] private UiController ui;
+        [SerializeField] private PauseMenu pause;
         private void Awake()
         {
+            if (FindObjectsOfType<Installer>().Length > 1)
+            {
+                Destroy(gameObject);
+                return;
+            }
+            pause.Configuracion();
             var observerZonesGod = new ObserverZoneGod();
             ServiceLocator.Instance.RegisterService<IGodObserver>(observerZonesGod);
             var observer = new ObserverUI(ui);
             ServiceLocator.Instance.RegisterService<IObserverUI>(observer);
-            var playFab = new PlayFabCustom();
-            ServiceLocator.Instance.RegisterService<ISaveData>(playFab);
-            ServiceLocator.Instance.RegisterService<IPlayFabCustom>(playFab);
-            var catalog = new Catalog(playFab);
-            ServiceLocator.Instance.RegisterService<ICatalog>(catalog);
+            ServiceLocator.Instance.RegisterService<IPauseMainMenu>(pause);
             //Comentario para ejemplo
+            DontDestroyOnLoad(gameObject);
         }
     }
 }

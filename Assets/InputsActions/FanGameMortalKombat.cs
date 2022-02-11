@@ -89,6 +89,15 @@ public partial class @FanGameMortalKombat : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": ""Press(behavior=2)"",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""StartButton"",
+                    ""type"": ""Button"",
+                    ""id"": ""e2f00e99-6612-431c-878f-d94db52cee07"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -509,6 +518,28 @@ public partial class @FanGameMortalKombat : IInputActionCollection2, IDisposable
                     ""action"": ""PowersButton"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3ecca99a-decd-439d-8054-1f750981d4f8"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""StartButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8e9fc79a-9171-40e1-ab2c-7828b901669f"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""StartButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -585,6 +616,7 @@ public partial class @FanGameMortalKombat : IInputActionCollection2, IDisposable
         m_PlayerMovement_Kick = m_PlayerMovement.FindAction("Kick", throwIfNotFound: true);
         m_PlayerMovement_Aim = m_PlayerMovement.FindAction("Aim", throwIfNotFound: true);
         m_PlayerMovement_PowersButton = m_PlayerMovement.FindAction("PowersButton", throwIfNotFound: true);
+        m_PlayerMovement_StartButton = m_PlayerMovement.FindAction("StartButton", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -651,6 +683,7 @@ public partial class @FanGameMortalKombat : IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerMovement_Kick;
     private readonly InputAction m_PlayerMovement_Aim;
     private readonly InputAction m_PlayerMovement_PowersButton;
+    private readonly InputAction m_PlayerMovement_StartButton;
     public struct PlayerMovementActions
     {
         private @FanGameMortalKombat m_Wrapper;
@@ -662,6 +695,7 @@ public partial class @FanGameMortalKombat : IInputActionCollection2, IDisposable
         public InputAction @Kick => m_Wrapper.m_PlayerMovement_Kick;
         public InputAction @Aim => m_Wrapper.m_PlayerMovement_Aim;
         public InputAction @PowersButton => m_Wrapper.m_PlayerMovement_PowersButton;
+        public InputAction @StartButton => m_Wrapper.m_PlayerMovement_StartButton;
         public InputActionMap Get() { return m_Wrapper.m_PlayerMovement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -692,6 +726,9 @@ public partial class @FanGameMortalKombat : IInputActionCollection2, IDisposable
                 @PowersButton.started -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnPowersButton;
                 @PowersButton.performed -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnPowersButton;
                 @PowersButton.canceled -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnPowersButton;
+                @StartButton.started -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnStartButton;
+                @StartButton.performed -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnStartButton;
+                @StartButton.canceled -= m_Wrapper.m_PlayerMovementActionsCallbackInterface.OnStartButton;
             }
             m_Wrapper.m_PlayerMovementActionsCallbackInterface = instance;
             if (instance != null)
@@ -717,6 +754,9 @@ public partial class @FanGameMortalKombat : IInputActionCollection2, IDisposable
                 @PowersButton.started += instance.OnPowersButton;
                 @PowersButton.performed += instance.OnPowersButton;
                 @PowersButton.canceled += instance.OnPowersButton;
+                @StartButton.started += instance.OnStartButton;
+                @StartButton.performed += instance.OnStartButton;
+                @StartButton.canceled += instance.OnStartButton;
             }
         }
     }
@@ -775,5 +815,6 @@ public partial class @FanGameMortalKombat : IInputActionCollection2, IDisposable
         void OnKick(InputAction.CallbackContext context);
         void OnAim(InputAction.CallbackContext context);
         void OnPowersButton(InputAction.CallbackContext context);
+        void OnStartButton(InputAction.CallbackContext context);
     }
 }
