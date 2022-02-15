@@ -67,7 +67,10 @@ namespace View
         {
             animator?.SetFloat("speedGeneral", ispause ? 0 : 1);
             IsInPause = ispause;
+            OnAimEventInPlayer();
         }
+
+        protected virtual void OnAimEventInPlayer() {}
 
         private void OnFinishedAnimatorDamageCharacter()
         {

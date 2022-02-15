@@ -104,7 +104,7 @@ namespace View.Characters
             
         }
 
-        private void OnAimEventInPlayer()
+        protected override void OnAimEventInPlayer()
         {
             if (isAiming)
             {
@@ -262,6 +262,11 @@ namespace View.Characters
 
         public void OnAim()
         {
+            if (IsInPause)
+            {
+                isAiming = !isAiming;
+                return;
+            }
             OnAimEvent?.Invoke();
         }
         
