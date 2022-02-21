@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-//Try this every step instead of update. 
 public class TerrainChecker : MonoBehaviour
 {
     public int surfaceIndex = 0;
@@ -19,28 +17,19 @@ public class TerrainChecker : MonoBehaviour
         terrainPos = terrain.transform.position;
     }
 
-    void Update()
-    {
-        
-    }
-
     public string CheckTerrainNow()
     {
         surfaceIndex = GetMainTexture(transform.position);
-        Debug.Log(DebugTerrainToConsole());
         return (terrainData.terrainLayers[surfaceIndex].name.ToString());
     }
 
     public string DebugTerrainToConsole()
     {
-        
         return terrainData.terrainLayers[surfaceIndex].name.ToString();
-
     }
 
     private float[] GetTextureIndx(Vector3 WorldPos)
     {
-        
         int mapX = (int)(((WorldPos.x - terrainPos.x) / terrainData.size.x) * terrainData.alphamapWidth);
         int mapZ = (int)(((WorldPos.z - terrainPos.z) / terrainData.size.z) * terrainData.alphamapHeight);
 
