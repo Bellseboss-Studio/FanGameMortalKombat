@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.05680915, g: 0.03986635, b: 0.036308393, a: 1}
+  m_IndirectSpecularColor: {r: 0.0567899, g: 0.03984805, b: 0.036290836, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -20075,9 +20075,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2036038625, guid: 64ff98eb21cc88d418b8be09af5016d5, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 157500797381244189, guid: 64ff98eb21cc88d418b8be09af5016d5, type: 3}
       propertyPath: m_Name
       value: Florencia Rig Texturizada
+      objectReference: {fileID: 0}
+    - target: {fileID: 237721784736009435, guid: 64ff98eb21cc88d418b8be09af5016d5, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 477336062408027696, guid: 64ff98eb21cc88d418b8be09af5016d5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -20146,6 +20154,10 @@ PrefabInstance:
     - target: {fileID: 863017216195336227, guid: 64ff98eb21cc88d418b8be09af5016d5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -3.5131147
+      objectReference: {fileID: 0}
+    - target: {fileID: 986386419658330165, guid: 64ff98eb21cc88d418b8be09af5016d5, type: 3}
+      propertyPath: m_RootOrder
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1683021622574397316, guid: 64ff98eb21cc88d418b8be09af5016d5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -20242,6 +20254,10 @@ PrefabInstance:
     - target: {fileID: 3420675928228579512, guid: 64ff98eb21cc88d418b8be09af5016d5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -179.71838
+      objectReference: {fileID: 0}
+    - target: {fileID: 4170319737072624694, guid: 64ff98eb21cc88d418b8be09af5016d5, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4395865452608909383, guid: 64ff98eb21cc88d418b8be09af5016d5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -20434,6 +20450,18 @@ PrefabInstance:
     - target: {fileID: 7912900896587148945, guid: 64ff98eb21cc88d418b8be09af5016d5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -5.4789104
+      objectReference: {fileID: 0}
+    - target: {fileID: 8568268947169555420, guid: 64ff98eb21cc88d418b8be09af5016d5, type: 3}
+      propertyPath: m_Name
+      value: rock
+      objectReference: {fileID: 0}
+    - target: {fileID: 9030412375922206217, guid: 64ff98eb21cc88d418b8be09af5016d5, type: 3}
+      propertyPath: m_Name
+      value: dirt
+      objectReference: {fileID: 0}
+    - target: {fileID: 9030412376120762918, guid: 64ff98eb21cc88d418b8be09af5016d5, type: 3}
+      propertyPath: m_Name
+      value: grass
       objectReference: {fileID: 0}
     - target: {fileID: 9201308800368408588, guid: 64ff98eb21cc88d418b8be09af5016d5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

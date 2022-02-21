@@ -12,14 +12,14 @@ public class PlayActorSounds : MonoBehaviour
     {
         foreach(GameObject go in footstepsSfx)
         {
-            footstepsGameObjects.Add(go.name.ToString(), go);
+            footstepsGameObjects.Add(go.name.ToString().ToLower(), go);
         }
     }
 
 
     public void PlayFootstepsSfx()
     {
-        string nameOfGo = GetComponent<TerrainChecker>().CheckTerrainNow();
+        string nameOfGo = GetComponent<TerrainChecker>().CheckTerrainNow().ToLower();
         if (footstepsGameObjects.ContainsKey(nameOfGo))
             StartCoroutine(ActivateGO(footstepsGameObjects[nameOfGo]));
         else
