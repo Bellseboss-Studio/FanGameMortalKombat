@@ -54,6 +54,8 @@ namespace InputSystemCustom
 
         private void OnInputChangedExtend(Vector2 input)
         {
+            lastPosition = Vector2.zero;
+            if (_character.IsInPause) return;
             if (_playerCharacter.CanMove)
             {
                 inputToMovement = input;//adelante (0,0,1)

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using ServiceLocatorPath;
 using UnityEngine;
@@ -17,6 +18,16 @@ namespace View.Zone
             _enemies = new List<GameObject>();
             ServiceLocator.Instance.GetService<IGodObserver>().Observe(nameOfZone, Zones.GREEN, greenZone);
             ServiceLocator.Instance.GetService<IGodObserver>().Observe(nameOfZone, Zones.YELLOW, yellowZone);
+        }
+
+        private void OnDisable()
+        {
+            ServiceLocator.Instance.GetService<IGodObserver>().UnObserve();
+        }
+
+        private void OnDestroy()
+        {
+            ServiceLocator.Instance.GetService<IGodObserver>().UnObserve();
         }
 
         public void AddEnemyToList(GameObject characterEnemy)

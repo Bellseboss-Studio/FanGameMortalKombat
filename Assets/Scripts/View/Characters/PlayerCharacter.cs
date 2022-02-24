@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Cinemachine;
 using InputSystemCustom;
+using ServiceLocatorPath;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Debug = UnityEngine.Debug;
@@ -103,7 +104,7 @@ namespace View.Characters
             
         }
 
-        private void OnAimEventInPlayer()
+        protected override void OnAimEventInPlayer()
         {
             if (isAiming)
             {
@@ -195,6 +196,7 @@ namespace View.Characters
 
         private void OnCameraMovement(InputValue value)
         {
+            if (IsInPause) return;
             var vector2 = value.Get<Vector2>();
             OnCameraMovementExtend(vector2);
         }
@@ -260,6 +262,11 @@ namespace View.Characters
 
         public void OnAim()
         {
+            if (IsInPause)
+            {
+                isAiming = !isAiming;
+                return;
+            }
             OnAimEvent?.Invoke();
         }
         
@@ -322,6 +329,11 @@ namespace View.Characters
             {
                 _inputCustom = new MovementController(this, _mainCamera);
             }
+        }
+        
+        private void OnStartButton(InputValue value)
+        {
+            ServiceLocator.Instance.GetService<IPauseMainMenu>().Pause();
         }
     }
 }
