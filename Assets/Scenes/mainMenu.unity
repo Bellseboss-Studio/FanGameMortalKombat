@@ -1940,6 +1940,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 40597777}
+  - {fileID: 1435003357}
   m_Father: {fileID: 1879754024}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -13126,7 +13127,7 @@ MonoBehaviour:
   m_Slider: {fileID: 1371726927}
   m_FaderToControl: MasterVol
   m_StartingValue: 1
-  m_CurrentValue: 0
+  m_CurrentValue: 1
   m_Mixer: {fileID: 24100000, guid: 06bcc6ae4aba94669942571f8fba03be, type: 2}
 --- !u!114 &1371726927
 MonoBehaviour:
@@ -13175,7 +13176,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -13493,7 +13494,7 @@ MonoBehaviour:
   m_Slider: {fileID: 1398615113}
   m_FaderToControl: MxVol
   m_StartingValue: 1
-  m_CurrentValue: 0
+  m_CurrentValue: 1
   m_Mixer: {fileID: 24100000, guid: 06bcc6ae4aba94669942571f8fba03be, type: 2}
 --- !u!114 &1398615113
 MonoBehaviour:
@@ -13946,7 +13947,7 @@ GameObject:
   - component: {fileID: 1435003357}
   - component: {fileID: 1435003356}
   m_Layer: 0
-  m_Name: AudioManager
+  m_Name: AudioMixManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13964,7 +13965,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c716b854295d14d50ae335c0071010a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  test: 0
 --- !u!4 &1435003357
 Transform:
   m_ObjectHideFlags: 0
@@ -13972,12 +13972,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1435003355}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -505.17728, y: -339.7693, z: 0}
+  m_LocalScale: {x: 0.48959607, y: 0.48959607, z: 0.48959607}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_Father: {fileID: 359073319}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1459032716
 GameObject:
