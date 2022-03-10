@@ -1225,6 +1225,7 @@ GameObject:
   - component: {fileID: 311709560}
   - component: {fileID: 311709559}
   - component: {fileID: 311709558}
+  - component: {fileID: 311709561}
   m_Layer: 5
   m_Name: Music
   m_TagString: Untagged
@@ -1392,6 +1393,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 311709556}
   m_CullTransparentMesh: 1
+--- !u!114 &311709561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 311709556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12cd91da0abe84c03918838717c834de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnHoverTargetAudioObject: 01000000
+  OnClickTargetAudioObject: 03000000
 --- !u!1 &320526808
 GameObject:
   m_ObjectHideFlags: 0
@@ -1921,6 +1936,7 @@ GameObject:
   - component: {fileID: 359073322}
   - component: {fileID: 359073321}
   - component: {fileID: 359073320}
+  - component: {fileID: 359073323}
   m_Layer: 5
   m_Name: Audio
   m_TagString: Untagged
@@ -2067,6 +2083,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 359073318}
   m_CullTransparentMesh: 1
+--- !u!114 &359073323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 359073318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12cd91da0abe84c03918838717c834de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnHoverTargetAudioObject: 01000000
+  OnClickTargetAudioObject: 03000000
 --- !u!1 &362800885
 GameObject:
   m_ObjectHideFlags: 0
@@ -5102,6 +5132,7 @@ GameObject:
   - component: {fileID: 621425703}
   - component: {fileID: 621425702}
   - component: {fileID: 621425701}
+  - component: {fileID: 621425704}
   m_Layer: 5
   m_Name: Controls
   m_TagString: Untagged
@@ -5247,6 +5278,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 621425699}
   m_CullTransparentMesh: 1
+--- !u!114 &621425704
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 621425699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12cd91da0abe84c03918838717c834de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnHoverTargetAudioObject: 01000000
+  OnClickTargetAudioObject: 03000000
 --- !u!1 &642996029
 GameObject:
   m_ObjectHideFlags: 0
@@ -5610,6 +5655,7 @@ GameObject:
   - component: {fileID: 685682152}
   - component: {fileID: 685682151}
   - component: {fileID: 685682150}
+  - component: {fileID: 685682153}
   m_Layer: 5
   m_Name: Master
   m_TagString: Untagged
@@ -5777,6 +5823,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 685682148}
   m_CullTransparentMesh: 1
+--- !u!114 &685682153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 685682148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12cd91da0abe84c03918838717c834de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnHoverTargetAudioObject: 01000000
+  OnClickTargetAudioObject: 03000000
 --- !u!1 &690438662
 GameObject:
   m_ObjectHideFlags: 0
@@ -10828,6 +10888,7 @@ GameObject:
   - component: {fileID: 1162895926}
   - component: {fileID: 1162895925}
   - component: {fileID: 1162895924}
+  - component: {fileID: 1162895927}
   m_Layer: 5
   m_Name: Video
   m_TagString: Untagged
@@ -10973,6 +11034,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1162895922}
   m_CullTransparentMesh: 1
+--- !u!114 &1162895927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1162895922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12cd91da0abe84c03918838717c834de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnHoverTargetAudioObject: 01000000
+  OnClickTargetAudioObject: 03000000
 --- !u!1 &1170302886
 GameObject:
   m_ObjectHideFlags: 0
@@ -12797,6 +12872,7 @@ GameObject:
   - component: {fileID: 1323494674}
   - component: {fileID: 1323494673}
   - component: {fileID: 1323494672}
+  - component: {fileID: 1323494675}
   m_Layer: 5
   m_Name: Back
   m_TagString: Untagged
@@ -12917,6 +12993,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1323494670}
   m_CullTransparentMesh: 1
+--- !u!114 &1323494675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1323494670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12cd91da0abe84c03918838717c834de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnHoverTargetAudioObject: 0000000001000000
+  OnClickTargetAudioObject: 03000000
 --- !u!1 &1335231095
 GameObject:
   m_ObjectHideFlags: 0
@@ -14958,6 +15048,7 @@ GameObject:
   - component: {fileID: 1561442057}
   - component: {fileID: 1561442056}
   - component: {fileID: 1561442055}
+  - component: {fileID: 1561442058}
   m_Layer: 5
   m_Name: Effects
   m_TagString: Untagged
@@ -15125,6 +15216,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1561442053}
   m_CullTransparentMesh: 1
+--- !u!114 &1561442058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1561442053}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12cd91da0abe84c03918838717c834de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnHoverTargetAudioObject: 01000000
+  OnClickTargetAudioObject: 03000000
 --- !u!1 &1565188783
 GameObject:
   m_ObjectHideFlags: 0
