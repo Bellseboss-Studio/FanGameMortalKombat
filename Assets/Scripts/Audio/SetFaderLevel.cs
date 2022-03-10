@@ -15,9 +15,8 @@ public abstract class SetFaderLevel : MonoBehaviour, ICheckDependencies
 
     private void Awake()
     {
-        CheckDependencies();
-
         m_Slider.minValue = 0.0001f;
+        CheckDependencies();
         DontDestroyOnLoad(this.gameObject);
     }
 
