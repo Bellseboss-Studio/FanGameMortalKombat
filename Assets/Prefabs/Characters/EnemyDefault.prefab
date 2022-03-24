@@ -288,7 +288,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: enemyDefault
-  model3D: {fileID: 3309777174153397784, guid: ed3b97ddaa80e0f4a927a51d83969e9b, type: 3}
+  model3D: {fileID: 4173407519766695789, guid: 53b8dcdfd0b7cab4596892ab54931a7a, type: 3}
   rb: {fileID: 3238535905166707717}
   speedGlobal: 300
   velocityOfAttack: 3
@@ -616,6 +616,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   radius: 2
+  zoneController: {fileID: 0}
 --- !u!135 &6166564974259543259
 SphereCollider:
   m_ObjectHideFlags: 0
