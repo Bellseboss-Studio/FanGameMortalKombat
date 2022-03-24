@@ -1,4 +1,5 @@
-﻿using View;
+﻿using ServiceLocatorPath;
+using View;
 using View.Characters;
 using View.Installers;
 using View.UI;
@@ -7,10 +8,10 @@ namespace ServiceLocatorPath
 {
     public class ObserverUI : IObserverUI
     {
-        private readonly UiController _ui;
+        private readonly IUIController _ui;
         private float totalLife;
 
-        public ObserverUI(UiController ui)
+        public ObserverUI(IUIController ui)
         {
             _ui = ui;
         }
@@ -18,8 +19,14 @@ namespace ServiceLocatorPath
         public void Observer(Character character)
         {
             character.OnEnterDamageEvent += CharacterOnEnterDamageEvent;
+            character.OnAddingEnergy += AddingEnergy;
             totalLife = character.GetLife();
             _ui.DefaultValue();
+        }
+
+        private void AddingEnergy(float energy)
+        {
+            _ui.SetEnergyValue(energy);
         }
 
         private void CharacterOnEnterDamageEvent(float damage)

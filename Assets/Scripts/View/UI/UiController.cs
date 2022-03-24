@@ -3,9 +3,14 @@ using UnityEngine.UI;
 
 namespace View.UI
 {
-    public class UiController : MonoBehaviour
+    public class UiController : MonoBehaviour, IUIController
     {
         [SerializeField] private Slider sliderLife;
+
+        public virtual void SetEnergyValue(float energy)
+        {
+            
+        }
 
         public float GetSliderValue()
         {
@@ -17,9 +22,10 @@ namespace View.UI
             sliderLife.value = totalLife;
         }
 
-        public void DefaultValue()
+        public virtual void DefaultValue()
         {
             sliderLife.value = 1;
         }
+        
     }
 }

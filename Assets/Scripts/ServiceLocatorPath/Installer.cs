@@ -7,7 +7,7 @@ namespace ServiceLocatorPath
 {
     public class Installer : MonoBehaviour
     {
-        [SerializeField] private UiController ui;
+        [SerializeField] private ObserverUIPlayer ui;
         [SerializeField] private PauseMenu pause;
         private void Awake()
         {
