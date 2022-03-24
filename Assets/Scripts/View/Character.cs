@@ -18,14 +18,15 @@ namespace View
         [SerializeField] private string speedAnim;
         [SerializeField] protected Animator animator;
         [SerializeField] protected RuntimeAnimatorController controller;
-        protected ControllerAnimationPlayer animatorControllerPlayer;
         [SerializeField] protected float power;
         [SerializeField] private string nameOfAnimationTriggerForApplyDamage;
         [SerializeField] protected float smoodTimeRotation;
+        protected ControllerAnimationPlayer animatorControllerPlayer;
         protected float speed;
         protected float forceRotation;
         protected InputCustom _inputCustom;
         public delegate void OnInputChanged(Vector2 input);
+        public delegate void OnAddingEnergyEvent(float energy);
         public delegate void OnInputButton();
         public OnInputChanged OnInputChangedExtend;
         public OnInputChanged OnCameraMovementExtend;
@@ -36,6 +37,7 @@ namespace View
         public OnInputButton OnAimEvent;
         public OnInputButton OnFinishedAnimatorFight;
         public OnInputButton OnFinishedAnimatorDamage;
+        public OnAddingEnergyEvent OnAddingEnergy;
         private Vector2 _inputValue;
         protected Vector3 movementPlayer;
         private Transform cameraForward;
@@ -232,5 +234,10 @@ namespace View
         protected abstract void Muerte();
 
         public abstract Vector3 GetDirectionWithObjective();
+
+        public virtual void AddEnergy()
+        {
+            
+        }
     }
 }

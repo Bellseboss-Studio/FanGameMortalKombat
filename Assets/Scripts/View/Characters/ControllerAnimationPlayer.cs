@@ -12,6 +12,8 @@ namespace View.Characters
             _character = character;
             punch.Configuration(character);
             kick.Configuration(character);
+            punch.OnAddingEnergyToCharacter += _character.AddEnergy;
+            kick.OnAddingEnergyToCharacter += _character.AddEnergy;
         }
 
         private void FinishedAnimator()

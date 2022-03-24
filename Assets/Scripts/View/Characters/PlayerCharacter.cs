@@ -19,6 +19,8 @@ namespace View.Characters
         [SerializeField] private string punch, kick;
         [SerializeField] private float angleAttack = 90;
         [SerializeField] private List<GameObject> _enemiesInCombat;
+        [SerializeField] private float deltaAddingEnergy;
+        [SerializeField] private float energy;// de 0 a 1
         public List<GameObject> EnemiesInCombat => _enemiesInCombat;
         [SerializeField] private CameraChange cameraChange;
         private bool changeIdle;
@@ -334,6 +336,16 @@ namespace View.Characters
         private void OnStartButton(InputValue value)
         {
             ServiceLocator.Instance.GetService<IPauseMainMenu>().Pause();
+        }
+        
+        public override void AddEnergy()
+        {
+            energy += deltaAddingEnergy;
+            if (energy >= 1)
+            {
+                energy = 1;
+            }
+            OnAddingEnergy?.Invoke(energy);
         }
     }
 }

@@ -9,6 +9,7 @@ namespace View.Characters
     {
         [SerializeField] private string type;
         private Character _playerCharacter;
+        public Character.OnInputButton OnAddingEnergyToCharacter;
 
         public void Configuration(Character playerCharacter)
         {
@@ -30,6 +31,7 @@ namespace View.Characters
                         break;
                 }
                 enemy.ApplyDamage(damange);
+                OnAddingEnergyToCharacter?.Invoke();
             }
         }
     }
