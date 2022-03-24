@@ -8,6 +8,7 @@ namespace View.UI
         public void LoadSceneMethod()
         {
             SceneManager.LoadScene(1);
+            MxManager.Instance.PlayMusicState();
         }
 
         public void QuitGame()
