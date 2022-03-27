@@ -22,7 +22,7 @@ jobs:
           - 2020.3.27f1
         targetPlatform:
           - StandaloneWindows64 
-          - StandaloneOSX
+          #- StandaloneOSX
           #- iOS
     steps:
       - uses: actions/checkout@v2
