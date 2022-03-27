@@ -78,7 +78,8 @@ namespace Audio
         {
             int audioClipIndx = Random.Range(0, m_Sfx.Count);
             m_As.clip = m_Sfx[audioClipIndx];
-            UnityEditor.EditorGUIUtility.PingObject(m_As.clip);
+            
+           // UnityEditor.EditorGUIUtility.PingObject(m_As.clip);
        
             if (m_HasWaitingTime) 
             { 

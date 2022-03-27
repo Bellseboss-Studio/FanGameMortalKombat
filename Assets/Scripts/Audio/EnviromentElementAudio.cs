@@ -9,6 +9,7 @@ namespace Audio
         protected override void OnEnable()
         {
             CheckMixerGroup(m_Output);
+            m_As.outputAudioMixerGroup = m_Output;
         }
 
         private void OnTriggerEnter(Collider other)
