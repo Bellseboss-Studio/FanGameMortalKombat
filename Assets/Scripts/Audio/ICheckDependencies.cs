@@ -1,4 +1,7 @@
-﻿internal interface ICheckDependencies
+﻿namespace Audio
 {
-    public void CheckDependencies();
+    internal interface ICheckDependencies
+    {
+        public void CheckDependencies();
+    }
 }

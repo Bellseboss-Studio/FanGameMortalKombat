@@ -1,11 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public enum UIAudioObjects 
+namespace Audio
 {
-    HoverMouseSound,
-    HoverMouseTicSound,
-    ClickPlayButtonSound,
-    GenericClickButtonSound
+    public enum UIAudioObjects 
+    {
+        HoverMouseSound,
+        HoverMouseTicSound,
+        ClickPlayButtonSound,
+        GenericClickButtonSound,
+        ShowOptionsMenu,
+        HideOptionsMenu
+    }
 }

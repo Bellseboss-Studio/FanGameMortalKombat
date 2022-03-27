@@ -1,56 +1,58 @@
 using System.Collections;
 using System.Collections.Generic;
+using AudioStatePattern;
+using Singleton;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 
-public class MxManager : Singleton<MxManager>
+namespace Audio.Managers
 {
+    public class MxManager : Singleton<MxManager>
+    {
     
-    [SerializeField] [Range (0.1f, 1f)] private float m_TransitionTime = 0.5f;
-    [SerializeField] private List<GameObject> m_MusicTracks = new List<GameObject>();
-    [SerializeField] private List<AudioMixerSnapshot> m_MixesSnapshots;
-    [SerializeField] private AudioMixer mixer;
-    private Dictionary<string, GameObject> m_MxTracks = new Dictionary<string, GameObject>(); //might be useful later
-    Transform[] transforms;
-    [SerializeField] private int m_CurrentState;
+        
+        [SerializeField] private List<GameObject> m_MusicTracks = new List<GameObject>();
+        private Dictionary<string, GameObject> m_MxTracks = new Dictionary<string, GameObject>(); //might be useful later
+        private Transform[] m_Transforms;
 
 
-    private void Start()
-    {
-        CollectAllGameObjects();
-        m_CurrentState = SceneManager.GetActiveScene().buildIndex;
-        PlayMusicState(); 
-    }
 
-    private void CollectAllGameObjects()
-    {
-        transforms = GetComponentsInChildren<Transform>(gameObject);
-        foreach (Transform child in transform)
+        private void Start()
         {
-            child.gameObject.SetActive(false);
-            if (child.gameObject.CompareTag("MxPlayer"))
+            CollectAllGameObjects();
+            ChangeSceneMx(GameStates.MainMenu); 
+        }
+
+        private void CollectAllGameObjects()
+        {
+            m_Transforms = GetComponentsInChildren<Transform>(gameObject);
+            foreach (Transform child in transform)
             {
-                m_MusicTracks.Add(child.gameObject);
-                m_MxTracks.Add(child.gameObject.name, child.gameObject);
+                child.gameObject.SetActive(false);
+                if (child.gameObject.CompareTag("MxPlayer"))
+                {
+                    m_MusicTracks.Add(child.gameObject);
+                    m_MxTracks.Add(child.gameObject.name, child.gameObject);
+                }
             }
         }
-    }
 
-    public void PlayMusicState()
-    {
-        foreach (var gO in m_MusicTracks)
+        public void ChangeSceneMx(GameStates gameState)
         {
-            gO.SetActive(false);
+            foreach (var gO in m_MusicTracks)
+            {
+                gO.SetActive(false);
+            }
+            StartCoroutine(MakeMxGoActive(gameState));
         }
-        StartCoroutine(MakeMxGoActive());
-    }
+        
 
-    IEnumerator MakeMxGoActive()
-    {
-        yield return new WaitForSeconds(0.1f);
-        int sceneBuildIndex = SceneManager.GetActiveScene().buildIndex;
-        m_MusicTracks[sceneBuildIndex].SetActive(true);
-        m_MixesSnapshots[sceneBuildIndex].TransitionTo(m_TransitionTime);
+        IEnumerator MakeMxGoActive(GameStates gameState)
+        {
+            yield return new WaitForSeconds(0.1f);
+            int objectToActivate = (int)gameState;
+            m_MusicTracks[objectToActivate].SetActive(true);
+        }
     }
 }
