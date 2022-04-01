@@ -1,42 +1,69 @@
 using System.Collections;
 using System.Collections.Generic;
+using AudioStatePattern;
+using Singleton;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class SfxManager : Singleton<SfxManager>
+namespace Audio.Managers
 {
-    
-    [SerializeField] Transform[] AudioObjects;
-    public Dictionary<string, GameObject> AudioObjectsDic = new Dictionary<string, GameObject>();
-    
-    private void Start()
+    public class SfxManager : Singleton<SfxManager>
     {
-        AudioObjects = new Transform[transform.childCount];
-        
-        for (int i = 0; i < transform.childCount; i++)
+    
+        [SerializeField] Transform[] AudioObjects;
+        private string m_CurrentState;
+        private Dictionary<string, GameObject> m_AudioObjectsDic = new Dictionary<string, GameObject>();
+    
+
+        private void Start()
         {
-            AudioObjects[i] = transform.GetChild(i);
+            AddItemsToDictionary();
+            ChangeSceneAmbient(GameStates.MainMenu);
+        }
+        //TODO deactivate go on scene change. Implement State Pattern???
+        public void ChangeSceneAmbient(GameStates gameStates)
+        {
+            foreach (var audioObject in m_AudioObjectsDic)
+            {
+                m_AudioObjectsDic[audioObject.Key].SetActive(false);
+            }
+
+            
+            string nameOfAudioObject = gameStates.ToString() + "Ambience";
+            Debug.Log($"The current state is:{nameOfAudioObject}");
+            m_AudioObjectsDic[nameOfAudioObject].SetActive(true);
         }
 
-
-        foreach(Transform t in AudioObjects)
+        void AddItemsToDictionary()
         {
-            AudioObjectsDic.Add(t.gameObject.name, t.gameObject);
+            AudioObjects = new Transform[transform.childCount];
+
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                AudioObjects[i] = transform.GetChild(i);
+            }
+
+
+            foreach (Transform t in AudioObjects)
+            {
+                m_AudioObjectsDic.Add(t.gameObject.name, t.gameObject);
+            }
         }
-    }
 
-
-    public void PlaySound(string goName)
-    {
-        StartCoroutine(ActivateGameObject(goName));
-    }
-
-    IEnumerator ActivateGameObject(string goName)
-    {
-        if(!AudioObjectsDic[goName].activeInHierarchy)
+        public void PlaySound(string goName)
         {
-            AudioObjectsDic[goName].SetActive(true);
-            yield return new WaitForSeconds(AudioObjectsDic[goName].GetComponentInChildren<AudioSource>().clip.length);
-            AudioObjectsDic[goName].SetActive(false);
-        } 
+            StartCoroutine(ActivateNonLoopableGameObject(goName));
+        }
+
+        IEnumerator ActivateNonLoopableGameObject(string goName)
+        {
+            if(!m_AudioObjectsDic[goName].activeInHierarchy)
+            {
+                m_AudioObjectsDic[goName].SetActive(true);
+                yield return new WaitForSeconds(m_AudioObjectsDic[goName].GetComponentInChildren<AudioSource>().clip.length);
+                m_AudioObjectsDic[goName].SetActive(false);
+            }
+        }
     }
 }
+
