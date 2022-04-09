@@ -4,16 +4,16 @@ namespace FactoryCharacterFiles
 {
     public class CharactersFactory
     {
-        private readonly CharactersConfiguration powerUpsConfiguration;
+        private readonly CharactersConfiguration charactersConfiguration;
 
-        public CharactersFactory(CharactersConfiguration powerUpsConfiguration)
+        public CharactersFactory(CharactersConfiguration charactersConfiguration)
         {
-            this.powerUpsConfiguration = powerUpsConfiguration;
+            this.charactersConfiguration = charactersConfiguration;
         }
         
         public CharacterBuilder Create(string id)
         {
-            var prefab = powerUpsConfiguration.GetCharacterPrefabById(id);
+            var prefab = charactersConfiguration.GetCharacterPrefabById(id);
             return new CharacterBuilder().WithCharacter(prefab);
         }
     }
