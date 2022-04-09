@@ -70,6 +70,7 @@ namespace View.Characters
         private void OnKickEventInPlayer()
         {
             if (!CanReadInputs) return;
+            Debug.Log($"kick");
             if (_powerOn)
             {
                 Debug.Log("poder 2");
@@ -88,6 +89,8 @@ namespace View.Characters
 
         private void OnPunchEventInPlayer()
         {
+            if (!CanReadInputs) return;
+            Debug.Log($"punch");
             if (_powerOn)
             {
                 Debug.Log("poder 1");
