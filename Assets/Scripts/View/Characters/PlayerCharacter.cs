@@ -16,13 +16,14 @@ namespace View.Characters
     {
         [SerializeField] private PlayerInput playerInput;
         [SerializeField] protected GameObject pointToCamera, pointFarToCamera;
-        [SerializeField] private string punch, kick;
+        [SerializeField] private string punch1, punch2, kick1, kickCombo1;
         [SerializeField] private float angleAttack = 90;
         [SerializeField] private List<GameObject> _enemiesInCombat;
         [SerializeField] private float deltaAddingEnergy;
         [SerializeField] private float energy;// de 0 a 1
         public List<GameObject> EnemiesInCombat => _enemiesInCombat;
         [SerializeField] private CameraChange cameraChange;
+        [SerializeField] private float comboRetardTime;
         private bool changeIdle;
         private EventsOfFightPlayerInput playerInputFight;
 
@@ -35,12 +36,14 @@ namespace View.Characters
         private CinemachineFreeLook _secondCamera;
         private CinemachineTargetGroup _group;
         private bool _powerOn;
+        private ICombosSystem _combosSystem;
 
         private Vector2 movementInputValue;
         
         private TargetingSystem.TargetingSystem _targetingSystem;
         protected override void Start()
         {
+            _combosSystem = new CombosSystem(punch1, punch2, kick1, kickCombo1);
             _enemiesInCombat = new List<GameObject>();
             _targetingSystem = new TargetingSystem.TargetingSystem();
             base.Start();
@@ -58,6 +61,7 @@ namespace View.Characters
         {
             CanMove = true;
             CanReadInputs = true;
+            _combosSystem.ResetCombo();
             OnInputChangedExtend(movementInputValue);
         }
         
@@ -69,43 +73,70 @@ namespace View.Characters
         
         private void OnKickEventInPlayer()
         {
-            if (!CanReadInputs) return;
+            /*if (!CanReadInputs) return;*/
             if (_powerOn)
             {
                 Debug.Log("poder 2");
             }
             else
             {
+                _combosSystem.ExecuteKick(this);
+                Debug.Log("kick");
                 _enemiesInCombat = new List<GameObject>(_targetingSystem.SetEnemiesOrder(_enemiesInCombat, transform.position));
                 if (_enemiesInCombat.Count > 0) _targetingSystem.SetAutomaticTarget(5, _enemiesInCombat, instantiate, angleAttack);
-                animator.SetTrigger(kick);
-                CanMove = false;
-                CanReadInputs = false;
-                Move(Vector3.zero);
-                OnInputChangedExtend(movementInputValue);
+                
             }
         }
 
+        public void ExecuteKickCombo(string kick)
+        {
+            StartCoroutine(ExecuteKickCombo(kick, comboRetardTime));
+        }
+        
+        private IEnumerator ExecuteKickCombo(string kick, float time)
+        {
+            animator.SetBool(kick, true);
+            CanMove = false;
+            CanReadInputs = false;
+            Move(Vector3.zero);
+            OnInputChangedExtend(movementInputValue);
+            yield return new WaitForSeconds(time);
+            animator.SetBool(kick, false);
+        }
+        
         private void OnPunchEventInPlayer()
         {
+            /*if (!CanReadInputs) return;*/
             if (_powerOn)
             {
                 Debug.Log("poder 1");
             }
             else
             {
+                _combosSystem.ExecutePunch(this);
+                Debug.Log("punch");
                 _enemiesInCombat = new List<GameObject>(_targetingSystem.SetEnemiesOrder(_enemiesInCombat, transform.position));
                 if (_enemiesInCombat.Count > 0) _targetingSystem.SetAutomaticTarget(5, _enemiesInCombat, instantiate, angleAttack);
-                animator.SetTrigger(punch);
-                CanMove = false;
-                CanReadInputs = false;
-                Move(Vector3.zero);
-                OnInputChangedExtend(Vector2.zero);
+                
             }
-            if (!CanReadInputs) return;
-            
         }
 
+        public void ExecutePunchCombo(string kick)
+        {
+            StartCoroutine(ExecutePunchCombo(kick, comboRetardTime));
+        }
+        
+        private IEnumerator ExecutePunchCombo(string punch, float time)
+        {
+            animator.SetBool(punch, true);
+            CanMove = false;
+            CanReadInputs = false;
+            Move(Vector3.zero);
+            OnInputChangedExtend(movementInputValue);
+            yield return new WaitForSeconds(time);
+            animator.SetBool(punch, false);
+        }
+        
         protected override void OnAimEventInPlayer()
         {
             if (isAiming)
