@@ -22,6 +22,9 @@ namespace View.Characters
         [SerializeField] private float deltaAddingEnergy;
         [SerializeField] private float energy;// de 0 a 1
         public List<GameObject> EnemiesInCombat => _enemiesInCombat;
+        public Action patada, punio, fatality;
+        public Action<Vector2> movimiento;
+        
         [SerializeField] private CameraChange cameraChange;
         private bool changeIdle;
         private EventsOfFightPlayerInput playerInputFight;
@@ -349,6 +352,16 @@ namespace View.Characters
                 energy = 1;
             }
             OnAddingEnergy?.Invoke(energy);
+        }
+
+        public bool CanPlayFatality()
+        {
+            return Math.Abs(energy - 1) < 0.01f;
+        }
+
+        public void ResetEnergy()
+        {
+            energy = 0;
         }
     }
 }

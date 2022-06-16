@@ -1,11 +1,56 @@
+using System;
 using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Timeline;
 
 namespace View.Characters
 {
-    public class FatalitiesController
+    public class FatalitiesController : MonoBehaviour
     {
-        public Dictionary<string, Queue<string>> ListadoDeSecuencias { get; private set; }
-    
+        [SerializeField] private PlayerCharacter player;
+        [SerializeField] private PlayableTrack track;
+
+        private Dictionary<string, Queue<string>> ListadoDeSecuencias { get; set; }
+
+        private void Start()
+        {
+            player.fatality += Fatality;
+            player.punio += Punio;
+            player.patada += Patada;
+            player.movimiento += Movimiento;
+            //TimelineAsset.GetOutputTracks();
+        }
+
+        private void FixedUpdate()
+        {
+            //Aqui vamos a validar los movimientos
+        }
+
+        private void Movimiento(Vector2 vect)
+        {
+            
+        }
+
+        private void Patada()
+        {
+            
+        }
+
+        private void Punio()
+        {
+            
+        }
+
+        private void Fatality()
+        {
+            //si tiene enrgia o no para la fatality
+            if (player.CanPlayFatality())
+            {
+                player.ResetEnergy();
+                //ejecutar cinematica con Timeline
+            }
+        }
+
         public FatalitiesController()
         {
             //agregamos la secuencia de fireball
