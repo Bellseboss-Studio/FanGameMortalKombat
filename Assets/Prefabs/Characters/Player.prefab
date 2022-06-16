@@ -185,14 +185,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: player
-  model3D: {fileID: 157500797381244189, guid: 64ff98eb21cc88d418b8be09af5016d5, type: 3}
+  model3D: {fileID: 9111417689237180980, guid: a4d89720c65319546b7645aad420c512, type: 3}
   rb: {fileID: 5361025647053283558}
   speedGlobal: 600
   velocityOfAttack: 0
   life: 100
   speedAnim: speed
   animator: {fileID: 0}
-  controller: {fileID: 9100000, guid: eda7a823a612d2348b2fcb80d0538a59, type: 2}
+  controller: {fileID: 9100000, guid: a3d9e6cbc23dab449b63a25e88e74e76, type: 2}
   power: 10
   nameOfAnimationTriggerForApplyDamage: damage
   smoodTimeRotation: 0.06
@@ -201,13 +201,16 @@ MonoBehaviour:
   playerInput: {fileID: 1664086341}
   pointToCamera: {fileID: 7421841982931828701}
   pointFarToCamera: {fileID: 2149289635134946612}
-  punch: punch
-  kick: kick
+  punch1: punch1
+  punch2: punch2
+  kick1: kick
+  kickCombo1: kick1
   angleAttack: 90
   _enemiesInCombat: []
   deltaAddingEnergy: 0.1
   energy: 0
   cameraChange: {fileID: 1498332832886426744}
+  comboRetardTime: 0.5
   CanMove: 0
   CanReadInputs: 0
 --- !u!114 &1664086341
