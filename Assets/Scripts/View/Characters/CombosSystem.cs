@@ -23,15 +23,24 @@ namespace View.Characters
             if (_currentComboPosition == 0)
             {
                 playerCharacter.ExecuteKickCombo(_kick);
-                _currentComboPosition++;
+                AddConcurrentComboPosition();
             }
             else
             {
                 if (_combo1[_currentComboPosition] == "kick")
                 {
                     playerCharacter.ExecuteKickCombo(_kick1);
-                    _currentComboPosition++;
+                    AddConcurrentComboPosition();
                 }
+            }
+        }
+
+        private void AddConcurrentComboPosition()
+        {
+            _currentComboPosition++;
+            if (_currentComboPosition > _combo1.Count)
+            {
+                _currentComboPosition = _combo1.Count;
             }
         }
 
@@ -40,14 +49,14 @@ namespace View.Characters
             if (_currentComboPosition == 0)
             {
                 playerCharacter.ExecutePunchCombo(_punch1);
-                _currentComboPosition++;
+                AddConcurrentComboPosition();
             }
             else
             {
                 if (_combo1[_currentComboPosition] == "punch")
                 {
                     playerCharacter.ExecutePunchCombo(_punch2);
-                    _currentComboPosition++;
+                    AddConcurrentComboPosition();
                 }
             }
         }

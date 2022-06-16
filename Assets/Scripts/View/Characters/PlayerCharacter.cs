@@ -58,6 +58,7 @@ namespace View.Characters
             CanReadInputs = true;
             playerInputFight = new EventsOfFightPlayerInput(this, playerInput);
             OnFinishedAnimatorFight += OnFinishedAnimatorPlayer;
+            AddEnergy();
         }
 
         private void OnFinishedAnimatorPlayer()
@@ -113,6 +114,7 @@ namespace View.Characters
             if (_powerOn)
             {
                 Debug.Log("poder 1");
+                animator.SetTrigger("fatality");
             }
             else
             {
@@ -201,6 +203,12 @@ namespace View.Characters
 
         public override float GetDamageForPunch()
         {
+            if (_powerOn)
+            {
+                Debug.Log($"execute fatality");
+                fatality?.Invoke();
+                return 0;
+            }
             return power * 2;
         }
 

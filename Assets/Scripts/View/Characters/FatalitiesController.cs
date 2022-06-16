@@ -46,9 +46,12 @@ namespace View.Characters
             //si tiene enrgia o no para la fatality
             if (player.CanPlayFatality())
             {
+                Debug.Log("Fatality");
                 player.ResetEnergy();
+                return;
                 //ejecutar cinematica con Timeline
             }
+            Debug.Log("no hay Fatality");
         }
 
         public FatalitiesController()
