@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 8212016888867309627}
   - component: {fileID: 1498332832886426744}
   - component: {fileID: 6254981374133548492}
+  - component: {fileID: 6453625281663319245}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -63,6 +64,7 @@ MonoBehaviour:
   power: 10
   nameOfAnimationTriggerForApplyDamage: damage
   smoodTimeRotation: 0.06
+  forceRotation: 0
   CanAnimateDamage: 0
   playerInput: {fileID: 1664086341}
   pointToCamera: {fileID: 7421841982931828701}
@@ -262,6 +264,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &6453625281663319245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1988818508267669303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1027a92bce3ef74b88495a55c236977, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2149289635134946612
 GameObject:
   m_ObjectHideFlags: 0

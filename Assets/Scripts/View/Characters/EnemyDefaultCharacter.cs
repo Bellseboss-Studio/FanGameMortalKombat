@@ -33,7 +33,7 @@ namespace View.Characters
         public OnDeath OnDeathDelegate;
         protected override void UpdateLegacy()
         {
-            
+            instantiate.transform.rotation = RotatingLocal(rb.velocity);
         }
 
         protected override void ConfigureExplicit()
@@ -55,11 +55,9 @@ namespace View.Characters
 
         protected override void Muerte()
         {
-            {
-                OnDeathDelegate?.Invoke(gameObject);
-                behaviorEnemy.SetIAmDeath(true);
-                animator.SetTrigger("Muerte");
-            }
+            OnDeathDelegate?.Invoke(gameObject);
+            behaviorEnemy.SetIAmDeath(true);
+            animator.SetTrigger("Muerte");
         }
 
         public override Vector3 GetDirectionWithObjective()

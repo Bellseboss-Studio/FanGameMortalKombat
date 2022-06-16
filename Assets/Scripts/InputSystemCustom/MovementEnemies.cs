@@ -57,5 +57,7 @@ namespace InputSystemCustom
 
             Rotating(angleBetween);
         }
+
+        public override void TransformDirectionalForForce(Vector2 input){}
     }
 }
