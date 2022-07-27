@@ -23,7 +23,7 @@ namespace View
         [SerializeField] protected float smoodTimeRotation;
         protected ControllerAnimationPlayer animatorControllerPlayer;
         protected float speed;
-        protected float forceRotation;
+        [SerializeField] protected float forceRotation;
         protected InputCustom _inputCustom;
         public delegate void OnInputChanged(Vector2 input);
         public delegate void OnAddingEnergyEvent(float energy);
@@ -107,6 +107,15 @@ namespace View
             var targetRotation = Quaternion.LookRotation(targetDirection, Vector3.up);
             var newRotation = Quaternion.Lerp(rb.rotation, targetRotation, forceRotation * Time.deltaTime);
             rb.MoveRotation(newRotation);
+        }
+        
+        protected Quaternion RotatingLocal (Vector3 targetDirection)
+        {
+            //var targetDirection = new Vector3(horizontal, 0f, vertical);
+            var targetRotation = Quaternion.LookRotation(targetDirection, Vector3.up);
+            var newRotation = Quaternion.Lerp(rb.rotation, targetRotation, forceRotation * Time.deltaTime);
+            //rb.MoveRotation(newRotation);
+            return newRotation;
         }
         
         private void Rotating (float angle)

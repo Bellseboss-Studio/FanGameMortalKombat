@@ -521,6 +521,17 @@ public partial class @FanGameMortalKombat : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""b58d86ef-a543-42ce-b720-2dcd630f7dfd"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""PowersButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""3ecca99a-decd-439d-8054-1f750981d4f8"",
                     ""path"": ""<Gamepad>/start"",
                     ""interactions"": """",

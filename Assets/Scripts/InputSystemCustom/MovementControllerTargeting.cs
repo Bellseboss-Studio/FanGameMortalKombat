@@ -6,10 +6,6 @@ namespace InputSystemCustom
 {
     public class MovementControllerTargeting : InputCustom
     {
-        private Vector2 inputToMovement;
-        private Vector2 lastPosition;
-        private PlayerCharacter _playerCharacter;
-
         public MovementControllerTargeting(Character character, GameObject camera)
         {
             _playerCharacter = (PlayerCharacter)character;
@@ -52,22 +48,7 @@ namespace InputSystemCustom
             _character.CameraMovement(input);
         }
 
-        private void OnInputChangedExtend(Vector2 input)
-        {
-            if (_playerCharacter.CanMove)
-            {
-                inputToMovement = input;//adelante (0,0,1)
-                lastPosition = inputToMovement;
-                TransformDirectionalForForce(input);
-            }
-            
-            else
-            {
-                lastPosition = Vector2.zero;
-            }
-        }
-
-        public void TransformDirectionalForForce(Vector2 input)
+        public override void TransformDirectionalForForce(Vector2 input)
         {
             var transformForward = InputCalculateForTheMovement(input);
 
