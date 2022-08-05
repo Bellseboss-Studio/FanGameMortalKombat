@@ -61,7 +61,6 @@ namespace View
             CanAnimateDamage = true;
             animatorControllerPlayer = animator.gameObject.GetComponent<ControllerAnimationPlayer>();
             animatorControllerPlayer.Configurate(this);
-            
             ServiceLocator.Instance.GetService<IPauseMainMenu>().onPause += OnPause;
         }
 
