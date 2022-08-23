@@ -7,7 +7,7 @@ using View.Characters;
 
 namespace View
 {
-    public abstract class Character: MonoBehaviour
+    public abstract class  Character: MonoBehaviour
     {
         [SerializeField] protected string id;
         [SerializeField] protected GameObject model3D;
