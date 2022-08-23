@@ -99,7 +99,7 @@ namespace View.Characters
             CanReadInputs = false;
             Move(Vector3.zero);
             OnInputChangedExtend(movementInputValue);
-            Debug.Log(animator.GetCurrentAnimatorClipInfo(1).Length);
+            Debug.Log(animator.GetCurrentAnimatorClipInfo(0)[0].clip.length);
             yield return new WaitForSeconds(time);
             CanMove = true;
             CanReadInputs = true;
@@ -133,6 +133,7 @@ namespace View.Characters
             animator.SetBool(punch, true);
             CanMove = false;
             CanReadInputs = false;
+            Debug.Log(animator.GetCurrentAnimatorClipInfo(0)[0].clip.length);
             Move(Vector3.zero);
             OnInputChangedExtend(movementInputValue);
             yield return new WaitForSeconds(time);
