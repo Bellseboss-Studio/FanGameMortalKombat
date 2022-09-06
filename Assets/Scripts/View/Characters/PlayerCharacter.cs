@@ -84,7 +84,6 @@ namespace View.Characters
                 Debug.Log("kick");
                 _enemiesInCombat = new List<GameObject>(_targetingSystem.SetEnemiesOrder(_enemiesInCombat, transform.position));
                 if (_enemiesInCombat.Count > 0) _targetingSystem.SetAutomaticTarget(5, _enemiesInCombat, instantiate, angleAttack);
-                
             }
         }
 
@@ -100,7 +99,10 @@ namespace View.Characters
             CanReadInputs = false;
             Move(Vector3.zero);
             OnInputChangedExtend(movementInputValue);
+            Debug.Log(animator.GetCurrentAnimatorClipInfo(0)[0].clip.length);
             yield return new WaitForSeconds(time);
+            CanMove = true;
+            CanReadInputs = true;
             animator.SetBool(kick, false);
         }
         
@@ -131,9 +133,12 @@ namespace View.Characters
             animator.SetBool(punch, true);
             CanMove = false;
             CanReadInputs = false;
+            Debug.Log(animator.GetCurrentAnimatorClipInfo(0)[0].clip.length);
             Move(Vector3.zero);
             OnInputChangedExtend(movementInputValue);
             yield return new WaitForSeconds(time);
+            CanMove = true;
+            CanReadInputs = true;
             animator.SetBool(punch, false);
         }
         
