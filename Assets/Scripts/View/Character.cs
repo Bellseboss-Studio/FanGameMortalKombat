@@ -7,7 +7,7 @@ using View.Characters;
 
 namespace View
 {
-    public abstract class Character: MonoBehaviour
+    public abstract class  Character: MonoBehaviour
     {
         [SerializeField] protected string id;
         [SerializeField] protected GameObject model3D;
@@ -61,7 +61,6 @@ namespace View
             CanAnimateDamage = true;
             animatorControllerPlayer = animator.gameObject.GetComponent<ControllerAnimationPlayer>();
             animatorControllerPlayer.Configurate(this);
-            
             ServiceLocator.Instance.GetService<IPauseMainMenu>().onPause += OnPause;
         }
 
