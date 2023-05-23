@@ -11,7 +11,7 @@ namespace StatesOfEnemies
         private int _nextState;
         private EnemyStatesConfiguration _enemyStatesConfiguration;
         private IEnemyCharacter _enemyCharacter;
-        private GameObject targer;
+        private GameObject target;
         private bool playerIsInRedZone;
         private bool iAmDeath;
         private bool exitStatesSystem = false;
@@ -30,7 +30,7 @@ namespace StatesOfEnemies
             _nextState = 0;
             _enemyCharacter.SubscribeOnPlayerEnterTrigger((player) =>
             {
-                targer = player;
+                target = player;
                 playerIsInRedZone = true;
             });
             _enemyCharacter.SubscribeOnPlayerExitTrigger((player) =>
@@ -71,7 +71,7 @@ namespace StatesOfEnemies
 
         public Vector3 GetTarget()
         {
-            return targer.transform.position;
+            return target.transform.position;
         }
 
         public bool IsPlayerInYellowZone()
@@ -106,11 +106,10 @@ namespace StatesOfEnemies
 
         public void Attack()
         {
-            if (targer.TryGetComponent<Character>(out var character))
+            if (target.TryGetComponent<Character>(out var character))
             {
                 _enemyCharacter.Attack(character, 3);   
             }
-            Debug.Log("Target dont save");
         }
 
         public bool GetIAmDeath()
@@ -138,8 +137,15 @@ namespace StatesOfEnemies
             exitStatesSystem = value;
         }
 
+        public void WalkToPlayer()
+        {
+            var point = _enemyCharacter.GetPointAccordingPlayer(gameObject);
+            WalkToPoint(new Vector3(point.x, target.transform.position.y, point.z));
+        }
+
         public void SetNextState(int nextStateFromState)
         {
+            /*Debug.Log(nextStateFromState);*/
             _nextState = nextStateFromState;
         }
 

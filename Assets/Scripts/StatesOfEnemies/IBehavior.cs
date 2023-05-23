@@ -23,5 +23,6 @@ namespace StatesOfEnemies
         void CleanAndDestroy();
         bool GetExitStatesSystem();
         void SetExitStatesSystem(bool value);
+        void WalkToPlayer();
     }
 }

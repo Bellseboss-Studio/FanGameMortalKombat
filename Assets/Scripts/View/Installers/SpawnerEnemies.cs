@@ -18,7 +18,9 @@ namespace View.Installers
         [SerializeField] private List<GameObject> points;
         [SerializeField] private ZoneController zoneOur;
         [SerializeField] private GameObject camera;
+        [Range(1, 20)] [SerializeField] private int enemiesToSpawn = 5, delayTime = 5;
         private CharactersFactory _charactersFactory;
+        private float _enemiesSpawned;
 
         private void Start()
         {
@@ -28,7 +30,7 @@ namespace View.Installers
 
         private IEnumerator SpawnEnemy()
         {
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSeconds(delayTime);
             var characterEnemy = (EnemyDefaultCharacter) _charactersFactory.Create(idCharacter).WithInput(TypeOfInputs.EnemyIa).InPosition(transform.position).Build();
             characterEnemy.OnDeathDelegate += DeathDelegate;
             characterEnemy.SetPoints(points);
@@ -37,6 +39,11 @@ namespace View.Installers
             characterEnemy.SetBehavior(yellowZone, greenZone);
             characterEnemy.SetRootCamera(camera);
             zoneOur.AddEnemyToList(characterEnemy.gameObject);
+            _enemiesSpawned++;
+            if (_enemiesSpawned < enemiesToSpawn)
+            {
+                StartCoroutine(SpawnEnemy());
+            }
         }
 
         private void DeathDelegate(GameObject gameobjectt)

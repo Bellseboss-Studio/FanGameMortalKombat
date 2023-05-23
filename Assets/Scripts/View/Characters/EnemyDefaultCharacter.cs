@@ -31,8 +31,15 @@ namespace View.Characters
         public delegate void OnDeath(GameObject gameObject);
 
         public OnDeath OnDeathDelegate;
+        private bool _canMove;
+
         protected override void UpdateLegacy()
         {
+            /*if (target != null)
+            {
+                instantiate.transform.rotation = RotatingLocal(target.transform.position - transform.position);
+            }*/
+            if (rb.velocity == Vector3.zero) return;
             instantiate.transform.rotation = RotatingLocal(rb.velocity);
         }
 
@@ -84,6 +91,7 @@ namespace View.Characters
 
         public void MoveToPoint(Vector3 toPoint)
         {
+            _canMove = true;
             _toPoint = toPoint;
         }
 
@@ -121,17 +129,17 @@ namespace View.Characters
         public void LookTarget(Vector3 target)
         {
             movementPlayer = Vector3.zero;
-            transform.LookAt(target);
+            instantiate.transform.LookAt(target);
         }
 
         public bool IsPlayerInRangeOfAttack()
         {
-            return rangeOfAttack.IsPlayerInThisZone();
+            return /*rangeOfAttack.IsPlayerInThisZone() && */behaviorEnemy.IsEnemyArrived(GetPointAccordingPlayer(gameObject));
         }
 
         public void StopMovement()
         {
-            movementPlayer = Vector3.zero;
+            _canMove = false;
         }
 
         public float GetVelocity()
@@ -142,6 +150,11 @@ namespace View.Characters
         public void Attack(Character characterToAttack, float damage)
         {
             characterToAttack.ApplyDamage(damage);
+        }
+
+        public Vector3 GetPointAccordingPlayer(GameObject transformPosition)
+        {
+            return yellowZone.GetPointAccordingPlayer(transformPosition);
         }
 
         public void SetPoints(List<GameObject> pointsList)
@@ -162,6 +175,10 @@ namespace View.Characters
             return _toPoint;
         }
 
+        public bool CanMove()
+        {
+            return _canMove;
+        }
     }
 }
 

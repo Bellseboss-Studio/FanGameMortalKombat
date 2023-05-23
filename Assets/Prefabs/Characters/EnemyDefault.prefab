@@ -288,20 +288,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: enemyDefault
-  model3D: {fileID: 4173407519766695789, guid: 53b8dcdfd0b7cab4596892ab54931a7a, type: 3}
+  model3D: {fileID: 3563530517403765954, guid: 65ecefecef65b34499358d81fb663af8, type: 3}
   rb: {fileID: 3238535905166707717}
   speedGlobal: 300
   velocityOfAttack: 3
   life: 100
   speedAnim: speed
   animator: {fileID: 0}
-  controller: {fileID: 9100000, guid: 1204e9d2cbde6414499876295e8c4a2f, type: 2}
+  controller: {fileID: 9100000, guid: 0ab4acc162b93fc41a439da88f2cd9a8, type: 2}
   power: 5
   nameOfAnimationTriggerForApplyDamage: 
   smoodTimeRotation: 0.08
   forceRotation: 100
   CanAnimateDamage: 0
-  toleranceToArrivedPoint: 4
+  toleranceToArrivedPoint: 2
   _redZoneComponent: {fileID: 3473220092598404945}
   rangeOfAttack: {fileID: 3319356424676952964}
   type: 0
@@ -333,10 +333,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
+  m_Radius: 0.7
   m_Height: 1.3803797
   m_Direction: 1
-  m_Center: {x: 0, y: 0.3, z: 0}
+  m_Center: {x: 0, y: 0.69, z: 0}
 --- !u!65 &9038927303828023705
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -348,8 +348,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3, y: 3, z: 3}
-  m_Center: {x: 0, y: 2.72, z: 0}
+  m_Size: {x: 2, y: 1.4, z: 2}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!114 &559253946260047738
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -618,6 +618,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   radius: 2
   zoneController: {fileID: 0}
+  sphereColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!135 &6166564974259543259
 SphereCollider:
   m_ObjectHideFlags: 0

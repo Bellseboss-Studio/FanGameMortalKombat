@@ -31,6 +31,7 @@ namespace InputSystemCustom
         
         public override Vector3 InputCalculateForTheMovement(Vector2 input)
         {
+            if (!_enemyCharacter.CanMove()) return Vector3.zero;
             var diff = _enemyCharacter.GetToPoint() - _character.GetTransform().position;
             var transformForward = _character.GetTransform().TransformDirection(new Vector3(input.x, 0, input.y));
             if (Mathf.Abs(transformForward.sqrMagnitude) > 0)
@@ -42,6 +43,7 @@ namespace InputSystemCustom
 
         public override void ChangeInputCustom()
         {
+            
         }
 
         protected override void RotatingCharacter()

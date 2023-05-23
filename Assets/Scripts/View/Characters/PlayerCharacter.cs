@@ -24,6 +24,7 @@ namespace View.Characters
         public List<GameObject> EnemiesInCombat => _enemiesInCombat;
         [SerializeField] private CameraChange cameraChange;
         [SerializeField] private float comboRetardTime;
+        [SerializeField] private List<AttackType> attackTypes;
         private bool changeIdle;
         private EventsOfFightPlayerInput playerInputFight;
 
@@ -43,7 +44,7 @@ namespace View.Characters
         private TargetingSystem.TargetingSystem _targetingSystem;
         protected override void Start()
         {
-            _combosSystem = new CombosSystem(punch1, punch2, kick1, kickCombo1);
+            _combosSystem = new CombosSystem(punch1, punch2, kick1, kickCombo1, attackTypes);
             _enemiesInCombat = new List<GameObject>();
             _targetingSystem = new TargetingSystem.TargetingSystem();
             base.Start();

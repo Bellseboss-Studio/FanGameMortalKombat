@@ -57,5 +57,10 @@ namespace View.Zone
         {
             _player.AddEnemy(characterEnemy);
         }
+
+        public Vector3 GetPointAccordingPlayer(GameObject transformPosition)
+        {
+            return zoneController.GetPointAccordingPlayer(target, transformPosition);
+        }
     }
 }
