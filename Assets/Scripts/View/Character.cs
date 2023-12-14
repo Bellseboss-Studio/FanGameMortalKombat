@@ -111,6 +111,7 @@ namespace View
         protected Quaternion RotatingLocal (Vector3 targetDirection)
         {
             //var targetDirection = new Vector3(horizontal, 0f, vertical);
+            
             var targetRotation = Quaternion.LookRotation(targetDirection, Vector3.up);
             var newRotation = Quaternion.Lerp(rb.rotation, targetRotation, forceRotation * Time.deltaTime);
             //rb.MoveRotation(newRotation);
@@ -231,7 +232,6 @@ namespace View
         
         protected void VerifyLife()
         {
-            Debug.Log("a ver tu vida");
             if (life<= 0)
             {
                 ServiceLocator.Instance.GetService<IPauseMainMenu>().onPause -= OnPause;

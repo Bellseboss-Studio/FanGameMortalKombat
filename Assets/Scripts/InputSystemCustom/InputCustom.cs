@@ -48,7 +48,6 @@ namespace InputSystemCustom
             if (_playerCharacter.CanMove)
             {
                 //here take skicks from control
-                Debug.Log($"skicks {input}");
                 inputToMovement = input;//adelante (0,0,1)
                 lastPosition = inputToMovement;
                 TransformDirectionalForForce(input);
