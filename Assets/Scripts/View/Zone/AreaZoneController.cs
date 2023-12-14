@@ -1,3 +1,4 @@
+
 using System;
 using UnityEngine;
 using View.Characters;
@@ -8,6 +9,7 @@ namespace View.Zone
     {
         [SerializeField] private float radius;
         [SerializeField] private ZoneController zoneController;
+        [SerializeField] private Color sphereColor;
         public event EnemyDefaultCharacter.OnPlayerTrigger OnPlayerEnter;
         public event EnemyDefaultCharacter.OnPlayerTrigger OnPlayerExit;
         private GameObject target;
@@ -41,7 +43,7 @@ namespace View.Zone
 
         private void OnDrawGizmos()
         {
-            Gizmos.color = new Color(90,90,90,0.5f);
+            Gizmos.color = sphereColor;
             Gizmos.DrawSphere(transform.position, radius);
         }
 
@@ -54,6 +56,11 @@ namespace View.Zone
         public void AddEnemyToPlayerList(GameObject characterEnemy)
         {
             _player.AddEnemy(characterEnemy);
+        }
+
+        public Vector3 GetPointAccordingPlayer(GameObject transformPosition)
+        {
+            return zoneController.GetPointAccordingPlayer(target, transformPosition);
         }
     }
 }

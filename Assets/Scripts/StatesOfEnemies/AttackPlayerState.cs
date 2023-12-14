@@ -13,12 +13,11 @@ namespace StatesOfEnemies
         {
             Debug.Log("Range of attack");
             if(behavior.GetIAmDeath()) behavior.SetNextState(EnemyStatesConfiguration.Death);
-            while (behavior.IsPlayerInRangeOfAttack())
+            while (behavior.IsPlayerInYellowZone() && behavior.IsPlayerInRangeOfAttack())
             {
                 if (behavior.GetIAmDeath()) break;
-                    behavior.StopMovementForAttack();
                 yield return new WaitForSeconds(behavior.GetEnemyVelocity());
-                if (behavior.IsPlayerInRangeOfAttack())
+                if (behavior.IsPlayerInYellowZone() && behavior.IsPlayerInRangeOfAttack())
                 {
                     behavior.Attack();
                 }

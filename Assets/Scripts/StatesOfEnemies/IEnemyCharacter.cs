@@ -17,5 +17,6 @@ namespace View.Characters
         void StopMovement();
         float GetVelocity();
         void Attack(Character characterToAttack, float damage);
+        Vector3 GetPointAccordingPlayer(GameObject transformPosition);
     }
 }
