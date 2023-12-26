@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1988818508267669297}
-  - component: {fileID: 1988818508267669302}
+  - component: {fileID: 7427527066237988094}
   - component: {fileID: 1845845022445789396}
   - component: {fileID: 1664086341}
   - component: {fileID: 5361025647053283558}
@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 6254981374133548492}
   - component: {fileID: 6453625281663319245}
   m_Layer: 0
-  m_Name: Player
+  m_Name: PlayerV2
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -41,7 +41,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1988818508267669302
+--- !u!114 &7427527066237988094
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -50,40 +50,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1988818508267669303}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 832425282453d924cade27e263bad1b7, type: 3}
+  m_Script: {fileID: 11500000, guid: dca7958e76f448ac886fb32221f467f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   id: player
+  life: 100
+  speedGlobal: 1
   model3D: {fileID: 1169827259951796752, guid: dfd0cc49f03647a42bbcfc59dd56ce46, type: 3}
   rb: {fileID: 5361025647053283558}
-  speedGlobal: 600
-  velocityOfAttack: 0
-  life: 100
-  speedAnim: v
   controller: {fileID: 22100000, guid: a3ee96fe005df8f4188d413fbccd2067, type: 2}
   animatorController: {fileID: 1845845022445789396}
-  power: 10
-  nameOfAnimationTriggerForApplyDamage: damage
-  smoodTimeRotation: 0.06
-  speed: 0
-  forceRotation: 0
-  CanAnimateDamage: 0
-  playerInput: {fileID: 1664086341}
-  pointToCamera: {fileID: 7421841982931828701}
-  pointFarToCamera: {fileID: 2149289635134946612}
-  punch1: punch1
-  punch2: punch2
-  kick1: kick
-  kickCombo1: kick1
-  angleAttack: 90
-  _enemiesInCombat: []
-  deltaAddingEnergy: 0.1
-  energy: 0
-  cameraChange: {fileID: 1498332832886426744}
-  comboRetardTime: 0.5
-  attackTypes: 
-  CanMove: 0
-  CanReadInputs: 0
 --- !u!114 &1845845022445789396
 MonoBehaviour:
   m_ObjectHideFlags: 0
