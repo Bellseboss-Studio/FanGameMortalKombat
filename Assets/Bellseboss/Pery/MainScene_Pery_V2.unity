@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.12731715, g: 0.13414735, b: 0.121078536, a: 1}
+  m_IndirectSpecularColor: {r: 0.12731749, g: 0.13414757, b: 0.1210787, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -245,6 +245,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1679917940780070738, guid: 4f4be7ef470f3f74e854ab33222a4f98, type: 3}
   m_PrefabInstance: {fileID: 316432484}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &316432486 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1415760990, guid: 4f4be7ef470f3f74e854ab33222a4f98, type: 3}
+  m_PrefabInstance: {fileID: 316432484}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 823976625cda43239121d9d799d7d386, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &473649663
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -258,7 +269,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5933731106716510704, guid: aa9c696f4756844419a79dc477c70a61, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5933731106716510710, guid: aa9c696f4756844419a79dc477c70a61, type: 3}
       propertyPath: m_RootOrder
@@ -560,6 +571,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Leena_Tpose
       objectReference: {fileID: 0}
+    - target: {fileID: 446167728272960656, guid: a4a3a4c6bce59c347a49a6ed6910a3d2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 971312436428912170, guid: a4a3a4c6bce59c347a49a6ed6910a3d2, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -729,7 +744,7 @@ PrefabInstance:
     - target: {fileID: 9015140644088761063, guid: 4478184115fe91843a1b6e3263fecc41, type: 3}
       propertyPath: ui
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 316432486}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4478184115fe91843a1b6e3263fecc41, type: 3}
 --- !u!1 &1886011242
