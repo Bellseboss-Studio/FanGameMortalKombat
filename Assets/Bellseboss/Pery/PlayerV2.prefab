@@ -318,7 +318,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8585594585941758163}
-  m_LocalRotation: {x: 0.09853762, y: -0.000000004280661, z: 4.238689e-10, w: 0.99513334}
+  m_LocalRotation: {x: 0.098537624, y: 0.0000000042806607, z: -4.238689e-10, w: 0.99513334}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -964,6 +964,22 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: d9190263-7377-43b1-b260-3de29b8df623
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8585594586927423067}
+        m_TargetAssemblyTypeName: Bellseboss.Pery.Scripts.Input.InputPlayerV2, Assembly-CSharp
+        m_MethodName: OnTarget
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 54573443-5b6e-4bda-b1b9-3756109cb12e
+    m_ActionName: Player/ButtonsToAction[/Keyboard/leftShift,/DualSenseGamepadHID/leftShoulder]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -1026,6 +1042,7 @@ MonoBehaviour:
   velocityName: v
   horizontalName: 
   verticalName: 
+  targetName: t
 --- !u!114 &8585594586927423062
 MonoBehaviour:
   m_ObjectHideFlags: 0
