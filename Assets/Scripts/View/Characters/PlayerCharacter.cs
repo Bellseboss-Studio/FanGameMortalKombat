@@ -95,16 +95,13 @@ namespace View.Characters
         
         private IEnumerator ExecuteKickCombo(string kick, float time)
         {
-            animator.SetBool(kick, true);
             CanMove = false;
             CanReadInputs = false;
             Move(Vector3.zero);
             OnInputChangedExtend(movementInputValue);
-            Debug.Log(animator.GetCurrentAnimatorClipInfo(0)[0].clip.length);
             yield return new WaitForSeconds(time);
             CanMove = true;
             CanReadInputs = true;
-            animator.SetBool(kick, false);
         }
         
         private void OnPunchEventInPlayer()
@@ -176,7 +173,6 @@ namespace View.Characters
                 if (Random.Range(0, 100) < 2)
                 {
                     changeIdle = true;
-                    animator.SetTrigger("change_idle");
                     StartCoroutine(DelayToIdle());
                 }
             }
@@ -209,10 +205,7 @@ namespace View.Characters
 
         protected override void Muerte()
         {
-            {
-                animator.SetTrigger("Muerte");
-                
-            }
+            Debug.Log("Muerte");
         }
 
         public override Vector3 GetDirectionWithObjective()

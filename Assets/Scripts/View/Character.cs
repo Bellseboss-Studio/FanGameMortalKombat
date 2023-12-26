@@ -1,5 +1,4 @@
-﻿using System;
-using Cinemachine;
+﻿using Cinemachine;
 using InputSystemCustom;
 using ServiceLocatorPath;
 using UnityEngine;
@@ -7,7 +6,7 @@ using View.Characters;
 
 namespace View
 {
-    public abstract class  Character: MonoBehaviour
+    public abstract class Character : CharacterV1
     {
         [SerializeField] protected string id;
         [SerializeField] protected GameObject model3D;
@@ -15,14 +14,17 @@ namespace View
         [SerializeField] protected float speedGlobal;
         [SerializeField] protected float velocityOfAttack;
         [SerializeField] protected float life;
-        [SerializeField] private string speedAnim;
-        [SerializeField] protected Animator animator;
         [SerializeField] protected RuntimeAnimatorController controller;
+        [SerializeField] protected CharacterAnimatorController animatorController;
         [SerializeField] protected float power;
         [SerializeField] private string nameOfAnimationTriggerForApplyDamage;
         [SerializeField] protected float smoodTimeRotation;
+        protected Animator animator;
+        
+        //Deprecated
         protected ControllerAnimationPlayer animatorControllerPlayer;
-        protected float speed;
+        
+        [SerializeField] protected float speed;
         [SerializeField] protected float forceRotation;
         protected InputCustom _inputCustom;
         public delegate void OnInputChanged(Vector2 input);
@@ -56,17 +58,14 @@ namespace View
         {
             instantiate = Instantiate(model3D, transform);
             animator = instantiate.GetComponent<Animator>();
-            animator.runtimeAnimatorController = controller;
-            OnFinishedAnimatorDamage += OnFinishedAnimatorDamageCharacter;
             CanAnimateDamage = true;
-            animatorControllerPlayer = animator.gameObject.GetComponent<ControllerAnimationPlayer>();
-            animatorControllerPlayer.Configurate(this);
             ServiceLocator.Instance.GetService<IPauseMainMenu>().onPause += OnPause;
+            animatorController.Configurate(this);
         }
 
         private void OnPause(bool ispause)
         {
-            animator?.SetFloat("speedGeneral", ispause ? 0 : 1);
+            animatorController.PauseGame(ispause);
             IsInPause = ispause;
             OnAimEventInPlayer();
         }
@@ -94,9 +93,9 @@ namespace View
             }
 
             var rbVelocity = _inputCustom.InputCalculateForTheMovement(_inputCustom.GetLasPosition()) * (Time.deltaTime * speedGlobal);
-            animator.SetFloat(speedAnim,rbVelocity.sqrMagnitude);
             rbVelocity.y = rb.velocity.y;
             rb.velocity = rbVelocity;
+            animatorController.Movement(rbVelocity.sqrMagnitude, _inputCustom.GetDirection());
             UpdateLegacy();
         }
 
@@ -135,10 +134,6 @@ namespace View
 
         private void ValidationsCritical()
         {
-            if (speedAnim == "")
-            {
-                throw new Exception("Parameter required");
-            }
         }
 
         protected abstract void ConfigureExplicit();
@@ -212,7 +207,7 @@ namespace View
         {
             if (CanAnimateDamage)
             {
-                animator.SetTrigger(nameOfAnimationTriggerForApplyDamage);
+                animatorController.Damage();
                 CanAnimateDamage = false;
             }
         }
@@ -246,6 +241,16 @@ namespace View
         public virtual void AddEnergy()
         {
             
+        }
+
+        public Animator GetAnimator()
+        {
+            return animator;
+        }
+
+        public RuntimeAnimatorController GetController()
+        {
+            return controller;
         }
     }
 }
