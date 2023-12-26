@@ -10,7 +10,7 @@
                     "type": "Value",
                     "id": "6aefe311-c9cc-44ae-90ab-859cc9ed2c58",
                     "expectedControlType": "Vector2",
-                    "processors": "",
+                    "processors": "ScaleVector2(x=10,y=10)",
                     "interactions": "",
                     "initialStateCheck": true
                 },
@@ -192,7 +192,7 @@
                 {
                     "name": "2D Vector Control Play4",
                     "id": "7d979f64-1d94-4918-b686-6835c63e0af8",
-                    "path": "2DVector(mode=1)",
+                    "path": "2DVector",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

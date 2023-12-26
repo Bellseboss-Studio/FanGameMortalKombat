@@ -151,6 +151,7 @@ namespace View.Characters
                     cameraChange.FreeLookCamera();
                 }
                 Debug.Log("DejaDeApuntar");
+                animatorController.IsTarget(false);
             }
             else
             {
@@ -162,7 +163,8 @@ namespace View.Characters
                 }
 
                 isAiming = true;
-                Debug.Log("Apunta");
+                Debug.Log("Apuntar");
+                animatorController.IsTarget(true);
             }
         }
         
@@ -223,6 +225,7 @@ namespace View.Characters
         private void OnMovementControllers(InputValue value)
         {
             movementInputValue = value.Get <Vector2>();
+            Debug.Log($"vec {movementInputValue}");
             OnInputChangedExtend(movementInputValue);
         }
 

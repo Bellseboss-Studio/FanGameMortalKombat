@@ -95,7 +95,7 @@ namespace View
             var rbVelocity = _inputCustom.InputCalculateForTheMovement(_inputCustom.GetLasPosition()) * (Time.deltaTime * speedGlobal);
             rbVelocity.y = rb.velocity.y;
             rb.velocity = rbVelocity;
-            animatorController.Movement(rbVelocity.sqrMagnitude, _inputCustom.GetDirection());
+            animatorController.Movement(_inputCustom.GetVelocity(), _inputCustom.GetDirection());
             UpdateLegacy();
         }
 

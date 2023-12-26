@@ -60,5 +60,10 @@ namespace InputSystemCustom
         }
 
         public abstract void TransformDirectionalForForce(Vector2 input);
+
+        public float GetVelocity()
+        {
+            return Mathf.Abs(inputToMovement.y);
+        }
     }
 }
