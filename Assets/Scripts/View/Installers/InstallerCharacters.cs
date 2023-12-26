@@ -38,7 +38,7 @@ namespace View.Installers
             cameraMainFreeLook.LookAt = character.GetPointToCamera();
             ServiceLocator.Instance.GetService<IObserverUI>().Observer(character);
             ServiceLocator.Instance.GetService<IPauseMainMenu>().onPause += OnPause;
-            inputCamera = _cinemachineInputProvider.XYAxis;
+            //inputCamera = _cinemachineInputProvider.XYAxis;
         }
 
         private void OnPause(bool ispause)
