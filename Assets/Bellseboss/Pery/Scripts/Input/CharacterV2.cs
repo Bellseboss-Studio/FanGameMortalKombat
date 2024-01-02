@@ -33,12 +33,20 @@ namespace Bellseboss.Pery.Scripts.Input
 
         private void OnKickEvent()
         {
-            animationController.Kick();
+            if (combatSystem.CanKick)
+            {
+                animationController.Kick();
+                combatSystem.Kick();
+            }
         }
 
         private void OnPunchEvent()
         {
-            animationController.Punch();
+            if(combatSystem.CanPunch)
+            {
+                animationController.Punch();
+                combatSystem.Punch();
+            }
         }
 
         private void OnTargetEvent(bool isTarget)
@@ -49,7 +57,6 @@ namespace Bellseboss.Pery.Scripts.Input
 
         private void OnMove(Vector2 vector2)
         {
-            Debug.Log($"OnMove {vector2}");
             movementRigidbodyV2.Direction(vector2);
             animationController.Movement(vector2, vector2.y);
             rotationCharacterV2.Direction(vector2);
