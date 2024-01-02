@@ -18,5 +18,10 @@ namespace Bellseboss.Pery.Scripts.Input
         void PowerAttack(float runningDistance, Vector3 runningDirection);
         void QuickAttack(float runningDistance, Vector3 runningDirection);
         void CanMove();
+        Vector3 RotateToTarget(Vector3 originalDirection);
+    }
+    
+    public interface IFocusTarget : ICharacterV2
+    {
     }
 }

@@ -28,13 +28,13 @@ namespace Bellseboss.Pery.Scripts.Input
         public void PowerAttack()
         {
             _canPowerAttack = false;
-            _combatSystemMediator.PowerAttack(runningDistancePowerAttack, runningDirectionPowerAttack);
+            _combatSystemMediator.PowerAttack(runningDistancePowerAttack, _combatSystemMediator.RotateToTarget(runningDirectionPowerAttack));
         }
         
         public void QuickAttack()
         {
             _canQuickAttack = false;
-            _combatSystemMediator.QuickAttack(runningDistanceQuickAttack, runningDirectionQuickAttack);
+            _combatSystemMediator.QuickAttack(runningDistanceQuickAttack, _combatSystemMediator.RotateToTarget(runningDirectionQuickAttack));
         }
 
         private void Update()
