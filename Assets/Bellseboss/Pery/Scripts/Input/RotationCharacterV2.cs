@@ -9,12 +9,14 @@ namespace Bellseboss.Pery.Scripts.Input
         private GameObject _camera;
         private bool _isConfigured;
         private Vector2 _direction;
+        private IRotationCharacterV2 _rotationCharacterV2;
 
-        public void Configure(GameObject camera, GameObject player)
+        public void Configure(GameObject camera, GameObject player, IRotationCharacterV2 rotationCharacterV2)
         {
             _camera = camera;
             _player = player;
             _isConfigured = true;
+            _rotationCharacterV2 = rotationCharacterV2;
         }
 
         private void Rotate()
