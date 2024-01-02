@@ -244,7 +244,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8585594585742007016}
-  m_LocalRotation: {x: 0.075327836, y: 0.000000017157499, z: -0.0000000012961198, w: 0.9971588}
+  m_LocalRotation: {x: 0.075327836, y: -0.000000017157493, z: 0.0000000012961194, w: 0.9971588}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -819,6 +819,7 @@ GameObject:
   - component: {fileID: 8585594586927423066}
   - component: {fileID: 8585594586927423063}
   - component: {fileID: 8585594586927423062}
+  - component: {fileID: 1183017941}
   m_Layer: 0
   m_Name: PlayerV2
   m_TagString: Untagged
@@ -863,6 +864,7 @@ MonoBehaviour:
   animationController: {fileID: 8585594586927423063}
   model3D: {fileID: 8098102725247338297, guid: dfd0cc49f03647a42bbcfc59dd56ce46, type: 3}
   rotationCharacterV2: {fileID: 8585594586927423062}
+  combatSystem: {fileID: 1183017941}
 --- !u!114 &8585594586927423060
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1075,6 +1077,8 @@ MonoBehaviour:
   horizontalName: 
   verticalName: 
   targetName: t
+  punchName: p
+  kickName: k
 --- !u!114 &8585594586927423062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1085,6 +1089,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 62a0056ea7fa44038ae5503148eaf5d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1183017941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8585594586927423071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49b1a5ea8d324d3abbe952ffcb28085a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &8585594587426267891

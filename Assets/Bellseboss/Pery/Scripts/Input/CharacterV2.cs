@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Bellseboss.Pery.Scripts.Input
 {
-    public class CharacterV2 : MonoBehaviour
+    public class CharacterV2 : MonoBehaviour, ICharacterV2, IMovementRigidBodyV2, IAnimationController, IRotationCharacterV2, ICombatSystem
     {
         public string Id => id;
         [SerializeField] private string id;
@@ -16,15 +16,29 @@ namespace Bellseboss.Pery.Scripts.Input
         [SerializeField] private GameObject model3D;
         private GameObject _model3DInstance;
         [SerializeField] private RotationCharacterV2 rotationCharacterV2;
+        [SerializeField] private CombatSystem combatSystem;
 
         private void Start()
         {
             inputPlayerV2.onMoveEvent += OnMove;
             inputPlayerV2.onTargetEvent += OnTargetEvent;
-            movementRigidbodyV2.Configure(rigidbody, speed, cameraFreeLook.gameObject);
+            inputPlayerV2.onPunchEvent += OnPunchEvent;
+            inputPlayerV2.onKickEvent += OnKickEvent;
+            movementRigidbodyV2.Configure(rigidbody, speed, cameraFreeLook.gameObject, this);
             _model3DInstance = Instantiate(model3D, transform);
-            animationController.Configure(_model3DInstance.GetComponent<Animator>());
-            rotationCharacterV2.Configure(cameraFreeLook.gameObject, gameObject);
+            animationController.Configure(_model3DInstance.GetComponent<Animator>(), this);
+            rotationCharacterV2.Configure(cameraFreeLook.gameObject, gameObject, this);
+            combatSystem.Configure(this);
+        }
+
+        private void OnKickEvent()
+        {
+            animationController.Kick();
+        }
+
+        private void OnPunchEvent()
+        {
+            animationController.Punch();
         }
 
         private void OnTargetEvent(bool isTarget)

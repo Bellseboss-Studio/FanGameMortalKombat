@@ -12,14 +12,16 @@ namespace Bellseboss.Pery.Scripts.Input
         private bool _isConfigured;
         private GameObject _camera;
         private bool _isTarget;
+        private IMovementRigidBodyV2 _movementRigidBodyV2;
 
-        public void Configure(Rigidbody rigidbody, float speed, GameObject camera)
+        public void Configure(Rigidbody rigidbody, float speed, GameObject camera, IMovementRigidBodyV2 movementRigidBodyV2)
         {
             _rigidbody = rigidbody;
             _speed = speed;
             _inputMovementCustom = new InputMovementCustomV2();
             _isConfigured = true;
             _camera = camera;
+            _movementRigidBodyV2 = movementRigidBodyV2;
         }
 
         private void Move(Vector2 vector2)
@@ -57,6 +59,11 @@ namespace Bellseboss.Pery.Scripts.Input
         public void IsTarget(bool isTarget)
         {
             _isTarget = isTarget;
+        }
+
+        public float GetVelocity()
+        {
+            return _rigidbody.velocity.magnitude;
         }
     }
 }
