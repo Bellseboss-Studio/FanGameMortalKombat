@@ -10,12 +10,18 @@ namespace Bellseboss.Pery.Scripts.Input
         public Action<bool> onTargetEvent;
         public Action onKickEvent;
         public Action onPunchEvent;
+        public Action onCameraMovementEvet;
         public Vector3 CurrentVector => _currentInputVector;
         private Vector3 _currentInputVector;
         public void OnMove(InputAction.CallbackContext context)
         {
             _currentInputVector = context.ReadValue<Vector2>();
             onMoveEvent?.Invoke(_currentInputVector);
+        }
+        
+        public void OnCameraMovement(InputAction.CallbackContext context)
+        {
+            onCameraMovementEvet?.Invoke();
         }
         
         public void OnTarget(InputAction.CallbackContext context)
@@ -33,7 +39,7 @@ namespace Bellseboss.Pery.Scripts.Input
         {
             if (context.started)
             {
-                Debug.Log("Kick");
+                //Debug.Log("Kick");
                 onKickEvent?.Invoke();
             }
         }
@@ -42,7 +48,7 @@ namespace Bellseboss.Pery.Scripts.Input
         {
             if (context.started)
             {
-                Debug.Log("Punch");
+                //Debug.Log("Punch");
                 onPunchEvent?.Invoke();
             }
         }

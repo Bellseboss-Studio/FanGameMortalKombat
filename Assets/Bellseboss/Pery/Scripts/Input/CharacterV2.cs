@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Bellseboss.Pery.Scripts.Input
 {
-    public class CharacterV2 : MonoBehaviour, ICharacterV2, IMovementRigidBodyV2, IAnimationController, IRotationCharacterV2, ICombatSystem
+    public class CharacterV2 : MonoBehaviour, ICharacterV2, IMovementRigidBodyV2, IAnimationController, IRotationCharacterV2, ICombatSystem, IFocusTarget
     {
         public string Id => id;
         [SerializeField] private string id;
@@ -17,6 +17,8 @@ namespace Bellseboss.Pery.Scripts.Input
         private GameObject _model3DInstance;
         [SerializeField] private RotationCharacterV2 rotationCharacterV2;
         [SerializeField] private CombatSystem combatSystem;
+        [SerializeField] private float forceRotation;
+        [SerializeField] private TargetFocus targetFocus;
 
         private void Start()
         {
@@ -27,25 +29,26 @@ namespace Bellseboss.Pery.Scripts.Input
             movementRigidbodyV2.Configure(rigidbody, speed, cameraFreeLook.gameObject, this);
             _model3DInstance = Instantiate(model3D, transform);
             animationController.Configure(_model3DInstance.GetComponent<Animator>(), this);
-            rotationCharacterV2.Configure(cameraFreeLook.gameObject, gameObject, this);
+            rotationCharacterV2.Configure(cameraFreeLook.gameObject, gameObject, this, forceRotation);
             combatSystem.Configure(this);
+            targetFocus.Configure(this);
         }
 
         private void OnKickEvent()
         {
-            if (combatSystem.CanKick)
+            if (combatSystem.CanPowerAttack)
             {
                 animationController.Kick();
-                combatSystem.Kick();
+                combatSystem.PowerAttack();
             }
         }
 
         private void OnPunchEvent()
         {
-            if(combatSystem.CanPunch)
+            if(combatSystem.CanQuickAttack)
             {
                 animationController.Punch();
-                combatSystem.Punch();
+                combatSystem.QuickAttack();
             }
         }
 
@@ -57,9 +60,37 @@ namespace Bellseboss.Pery.Scripts.Input
 
         private void OnMove(Vector2 vector2)
         {
+            if(rotationCharacterV2.CanRotate())
+            {
+                rotationCharacterV2.Direction(vector2);
+            }
             movementRigidbodyV2.Direction(vector2);
             animationController.Movement(vector2, vector2.y);
-            rotationCharacterV2.Direction(vector2);
+        }
+
+        public void PowerAttack(float runningDistance, Vector3 runningDirection)
+        {
+            rotationCharacterV2.CanRotate(false);
+            rotationCharacterV2.RotateToDirectionToMove(runningDirection);
+            movementRigidbodyV2.AddForce(runningDirection, runningDistance);
+        }
+
+        public void QuickAttack(float runningDistance, Vector3 runningDirection)
+        {
+            rotationCharacterV2.CanRotate(false);
+            rotationCharacterV2.RotateToDirectionToMove(runningDirection);
+            movementRigidbodyV2.AddForce(runningDirection, runningDistance);
+        }
+
+        public void CanMove()
+        {
+            movementRigidbodyV2.CanMove();
+            rotationCharacterV2.CanRotate(true);
+        }
+
+        public Vector3 RotateToTarget(Vector3 originalDirection)
+        {
+            return targetFocus.RotateToTarget(originalDirection);
         }
     }
 }
