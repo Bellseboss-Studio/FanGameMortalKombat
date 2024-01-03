@@ -70,22 +70,16 @@ namespace Bellseboss.Pery.Scripts.Input
 
         public void PowerAttack(float runningDistance, Vector3 runningDirection)
         {
-            if(movementRigidbodyV2.GetVelocity() > 0.1f)
-            {
-                rotationCharacterV2.CanRotate(false);
-                rotationCharacterV2.RotateToDirectionToMove(runningDirection);
-                movementRigidbodyV2.AddForce(runningDirection, runningDistance);
-            }
+            rotationCharacterV2.CanRotate(false);
+            rotationCharacterV2.RotateToDirectionToMove(runningDirection);
+            movementRigidbodyV2.AddForce(runningDirection, runningDistance);
         }
 
         public void QuickAttack(float runningDistance, Vector3 runningDirection)
         {
-            if (movementRigidbodyV2.GetVelocity() > 0.1f)
-            {
-                rotationCharacterV2.CanRotate(false);
-                rotationCharacterV2.RotateToDirectionToMove(runningDirection);
-                movementRigidbodyV2.AddForce(runningDirection, runningDistance);
-            }
+            rotationCharacterV2.CanRotate(false);
+            rotationCharacterV2.RotateToDirectionToMove(runningDirection);
+            movementRigidbodyV2.AddForce(runningDirection, runningDistance);
         }
 
         public void CanMove()
