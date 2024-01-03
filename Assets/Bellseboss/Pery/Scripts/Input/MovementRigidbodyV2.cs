@@ -10,6 +10,7 @@ namespace Bellseboss.Pery.Scripts.Input
         private InputMovementCustomV2 _inputMovementCustom;
         private Vector2 _lastDirection;
         private bool _isConfigured;
+        [SerializeField] private bool _canMove;
         private GameObject _camera;
         private bool _isTarget;
         private IMovementRigidBodyV2 _movementRigidBodyV2;
@@ -22,22 +23,23 @@ namespace Bellseboss.Pery.Scripts.Input
             _isConfigured = true;
             _camera = camera;
             _movementRigidBodyV2 = movementRigidBodyV2;
+            _canMove = true;
         }
 
-        private void Move(Vector2 vector2)
+        private void Move()
         {
             var result = Vector2.zero;
-            if (_isTarget && _lastDirection.y > 0)
+            if (_isTarget && Mathf.Abs(_lastDirection.y) > 0)
             {
-                result.y = 0.49f;
-            }else if (_lastDirection.y > 0 && _lastDirection.y < 0.5f)
+                result.y = _lastDirection.y >= 0 ? 0.49f : -0.49f;
+            }else if (Mathf.Abs(_lastDirection.y) > 0 && Mathf.Abs(_lastDirection.y) < 0.5f)
             {
-                result.y = 0.49f;
-            }else if (_lastDirection.y >= 0.5f)
+                result.y = _lastDirection.y >= 0 ? 0.49f : -0.49f;
+            }else if (Mathf.Abs(_lastDirection.y) >= 0.5f)
             {
-                result.y = 1;
+                result.y = _lastDirection.y >= 0 ? 1f : -1f;
             }
-            result.x = vector2.x;
+            result.x = _lastDirection.x;
             _rigidbody.velocity = _inputMovementCustom.CalculateMovement(result, _speed, _camera, _rigidbody.gameObject);
         }
 
@@ -52,8 +54,8 @@ namespace Bellseboss.Pery.Scripts.Input
 
         private void Update()
         {
-            if (!_isConfigured) return;
-            Move(_lastDirection);   
+            if (!_isConfigured || !_canMove) return;
+            Move();   
         }
 
         public void IsTarget(bool isTarget)
@@ -64,6 +66,24 @@ namespace Bellseboss.Pery.Scripts.Input
         public float GetVelocity()
         {
             return _rigidbody.velocity.magnitude;
+        }
+
+        public void AddForce(Vector3 runningDirection, float runningDistance)
+        {
+            _rigidbody.velocity = Vector3.zero;
+            Vector3 globalDirection = transform.TransformDirection(runningDirection.normalized);
+            _rigidbody.AddForce(globalDirection * runningDistance, ForceMode.Impulse);
+            _canMove = false;
+        }
+
+        public void CanMove()
+        {
+            _canMove = true;
+        }
+
+        public Vector3 GetVelocityV3()
+        {
+            return _rigidbody.velocity;
         }
     }
 }
