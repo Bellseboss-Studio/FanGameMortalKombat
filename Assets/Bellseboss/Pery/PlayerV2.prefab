@@ -459,7 +459,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8585594586511261281}
-  m_LocalRotation: {x: 0.05217727, y: -0.0044079763, z: 0.00023031214, w: 0.9986281}
+  m_LocalRotation: {x: 0.052177273, y: -0.0044069528, z: 0.00023025868, w: 0.9986281}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -659,7 +659,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerIndex: -1
-  XYAxis: {fileID: -6840492501098990892, guid: 8a2b69d01d15d074b848cce050088fad, type: 3}
+  XYAxis: {fileID: -3941009535427224128, guid: 0d6eea66530063541af3d22de808b3ab, type: 3}
   ZAxis: {fileID: 0}
 --- !u!114 &8585594586670930724
 MonoBehaviour:
@@ -820,6 +820,7 @@ GameObject:
   - component: {fileID: 8585594586927423063}
   - component: {fileID: 8585594586927423062}
   - component: {fileID: 1183017941}
+  - component: {fileID: 5702032169309306164}
   m_Layer: 0
   m_Name: PlayerV2
   m_TagString: Untagged
@@ -862,9 +863,11 @@ MonoBehaviour:
   rigidbody: {fileID: 8585594586927423065}
   speed: 10
   animationController: {fileID: 8585594586927423063}
-  model3D: {fileID: 8098102725247338297, guid: dfd0cc49f03647a42bbcfc59dd56ce46, type: 3}
+  model3D: {fileID: 4720931743281656400, guid: 9e4e969e7d8365547a8d3080dd449ed9, type: 3}
   rotationCharacterV2: {fileID: 8585594586927423062}
   combatSystem: {fileID: 1183017941}
+  forceRotation: 20
+  targetFocus: {fileID: 5702032169309306164}
 --- !u!114 &8585594586927423060
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1092,6 +1095,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62a0056ea7fa44038ae5503148eaf5d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _canRotate: 0
 --- !u!114 &1183017941
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1108,10 +1112,28 @@ MonoBehaviour:
   quickAttackTime: 1
   powerAttackTimeDelta: 0
   quickAttackTimeDelta: 0
-  runningDistanceQuickAttack: 10
-  runningDistancePowerAttack: 10
+  runningDistanceQuickAttack: 50
+  runningDistancePowerAttack: 50
   runningDirectionQuickAttack: {x: 0, y: 0, z: 1}
   runningDirectionPowerAttack: {x: 0, y: 0, z: 1}
+--- !u!114 &5702032169309306164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8585594586927423071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 501b69173c8e4b4e85d9d1679d58e127, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coneRadius: 5
+  maxDistance: 10
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 2048
+  directionToTargetLocal: {x: 0, y: 0, z: 5}
 --- !u!1 &8585594587426267891
 GameObject:
   m_ObjectHideFlags: 0
