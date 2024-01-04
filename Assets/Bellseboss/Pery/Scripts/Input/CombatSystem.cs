@@ -1,57 +1,63 @@
-using System;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Bellseboss.Pery.Scripts.Input
 {
     public class CombatSystem : MonoBehaviour
     {
         [SerializeField] private float powerAttackTime;
-        [SerializeField] private float quickTime;
+        [SerializeField] private float quickAttackTime;
         [SerializeField] private float powerAttackTimeDelta;
-        [SerializeField] private float quickTimeDelta;
-        public bool CanPunch => _canPunch;
-        public bool CanKick => _canKick;
+        [SerializeField] private float quickAttackTimeDelta;
+        [SerializeField] private float runningDistanceQuickAttack;
+        [SerializeField] private float runningDistancePowerAttack;
+        [SerializeField] private Vector3 runningDirectionQuickAttack;
+        [SerializeField] private Vector3 runningDirectionPowerAttack;
+        public bool CanQuickAttack => _canQuickAttack;
+        public bool CanPowerAttack => _canPowerAttack;
         
-        private ICombatSystem _combatSystem;
-        private bool _canPunch, _canKick;
+        private ICombatSystem _combatSystemMediator;
+        private bool _canQuickAttack, _canPowerAttack;
 
         public void Configure(ICombatSystem combatSystem)
         {
-            _combatSystem = combatSystem;
-            _canKick = true;
-            _canPunch = true;
+            _combatSystemMediator = combatSystem;
+            _canPowerAttack = true;
+            _canQuickAttack = true;
         }
         
-        public void Kick()
+        public void PowerAttack()
         {
-            _canKick = false;
+            _canPowerAttack = false;
+            _combatSystemMediator.PowerAttack(runningDistancePowerAttack, runningDirectionPowerAttack);
         }
         
-        public void Punch()
+        public void QuickAttack()
         {
-            _canPunch = false;
+            _canQuickAttack = false;
+            _combatSystemMediator.QuickAttack(runningDistanceQuickAttack, runningDirectionQuickAttack);
         }
 
         private void Update()
         {
-            if (_canPunch == false)
+            if (_canQuickAttack == false)
             {
                 powerAttackTimeDelta += Time.deltaTime;
                 if (powerAttackTimeDelta >= powerAttackTime)
                 {
                     powerAttackTimeDelta = 0;
-                    _canPunch = true;
+                    _canQuickAttack = true;
+                    _combatSystemMediator.CanMove();
                 }
             }
             
-            if (_canKick == false)
+            if (_canPowerAttack == false)
             {
-                quickTimeDelta += Time.deltaTime;
-                if (quickTimeDelta >= quickTime)
+                quickAttackTimeDelta += Time.deltaTime;
+                if (quickAttackTimeDelta >= quickAttackTime)
                 {
-                    quickTimeDelta = 0;
-                    _canKick = true;
+                    quickAttackTimeDelta = 0;
+                    _canPowerAttack = true;
+                    _combatSystemMediator.CanMove();
                 }
             }
         }

@@ -244,7 +244,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8585594585742007016}
-  m_LocalRotation: {x: 0.075327836, y: -0.000000017157493, z: 0.0000000012961194, w: 0.9971588}
+  m_LocalRotation: {x: 0.075327836, y: 0.000000017157499, z: -0.0000000012961198, w: 0.9971588}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -318,7 +318,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8585594585941758163}
-  m_LocalRotation: {x: 0.09853762, y: -0.000000004280661, z: 4.238689e-10, w: 0.99513334}
+  m_LocalRotation: {x: 0.098537624, y: 0.0000000042806607, z: -4.238689e-10, w: 0.99513334}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -459,7 +459,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8585594586511261281}
-  m_LocalRotation: {x: 0.05217727, y: -0.004407851, z: 0.00023030561, w: 0.9986281}
+  m_LocalRotation: {x: 0.05217727, y: -0.0044079763, z: 0.00023031214, w: 0.9986281}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -877,6 +877,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c59e4831e8841359a11e2f21df010e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _canMove: 0
 --- !u!114 &8585594586927423064
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1103,6 +1104,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49b1a5ea8d324d3abbe952ffcb28085a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  powerAttackTime: 1
+  quickAttackTime: 1
+  powerAttackTimeDelta: 0
+  quickAttackTimeDelta: 0
+  runningDistanceQuickAttack: 10
+  runningDistancePowerAttack: 10
+  runningDirectionQuickAttack: {x: 0, y: 0, z: 1}
+  runningDirectionPowerAttack: {x: 0, y: 0, z: 1}
 --- !u!1 &8585594587426267891
 GameObject:
   m_ObjectHideFlags: 0

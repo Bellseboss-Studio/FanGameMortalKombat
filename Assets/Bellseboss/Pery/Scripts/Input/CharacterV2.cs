@@ -17,6 +17,9 @@ namespace Bellseboss.Pery.Scripts.Input
         private GameObject _model3DInstance;
         [SerializeField] private RotationCharacterV2 rotationCharacterV2;
         [SerializeField] private CombatSystem combatSystem;
+        [SerializeField] private float forceRotation;
+        private Vector2 _localVector2;
+        private bool _localIsTarget;
 
         private void Start()
         {
@@ -33,19 +36,19 @@ namespace Bellseboss.Pery.Scripts.Input
 
         private void OnKickEvent()
         {
-            if (combatSystem.CanKick)
+            if (combatSystem.CanPowerAttack)
             {
                 animationController.Kick();
-                combatSystem.Kick();
+                combatSystem.PowerAttack();
             }
         }
 
         private void OnPunchEvent()
         {
-            if(combatSystem.CanPunch)
+            if(combatSystem.CanQuickAttack)
             {
                 animationController.Punch();
-                combatSystem.Punch();
+                combatSystem.QuickAttack();
             }
         }
 
@@ -53,13 +56,49 @@ namespace Bellseboss.Pery.Scripts.Input
         {
             animationController.IsTarget(isTarget);
             movementRigidbodyV2.IsTarget(isTarget);
+            _localIsTarget = isTarget;
         }
 
         private void OnMove(Vector2 vector2)
         {
+            rotationCharacterV2.Direction(vector2);
             movementRigidbodyV2.Direction(vector2);
             animationController.Movement(vector2, vector2.y);
-            rotationCharacterV2.Direction(vector2);
+            _localVector2 = vector2;
+            //RotatingCharacterObject3D(vector2);
+        }
+
+        public void PowerAttack(float runningDistance, Vector3 runningDirection)
+        {
+            if(movementRigidbodyV2.GetVelocity() > 0.1f)
+                movementRigidbodyV2.AddForce(runningDirection, runningDistance);
+        }
+
+        public void QuickAttack(float runningDistance, Vector3 runningDirection)
+        {
+            if(movementRigidbodyV2.GetVelocity() > 0.1f)
+                movementRigidbodyV2.AddForce(runningDirection, runningDistance);
+        }
+
+        public void CanMove()
+        {
+            movementRigidbodyV2.CanMove();
+        }
+
+        private void Update()
+        {
+            _model3DInstance.transform.position = transform.position;
+        }
+        
+        private void RotatingCharacterObject3D(Vector2 input)
+        {
+            if (_localIsTarget) return;
+            var transformForward = transform.TransformDirection(new Vector3(input.x, 0, input.y));
+            var eulerAnglesY = Mathf.Atan2(input.x, input.y) * Mathf.Rad2Deg + transform.eulerAngles.y;
+            Debug.Log($"transformForward {transformForward}");
+            float reference = 0;
+            var smoothDampAngle = Mathf.SmoothDampAngle(_model3DInstance.transform.eulerAngles.y, eulerAnglesY, ref reference, forceRotation);
+            _model3DInstance.transform.localRotation = Quaternion.Euler(0f, smoothDampAngle, 0);
         }
     }
 }
