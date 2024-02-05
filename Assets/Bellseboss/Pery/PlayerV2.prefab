@@ -318,7 +318,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8585594585941758163}
-  m_LocalRotation: {x: 0.098537624, y: 0.0000000042806607, z: -4.238689e-10, w: 0.99513334}
+  m_LocalRotation: {x: 0.09853762, y: -0.000000004280661, z: 4.238689e-10, w: 0.99513334}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -459,7 +459,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8585594586511261281}
-  m_LocalRotation: {x: 0.052177273, y: -0.0044069528, z: 0.00023025868, w: 0.9986281}
+  m_LocalRotation: {x: 0.052177273, y: -0.004408846, z: 0.0002303576, w: 0.9986281}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -527,7 +527,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8585594586670930730
 Transform:
   m_ObjectHideFlags: 0
@@ -859,7 +859,7 @@ MonoBehaviour:
   id: player
   inputPlayerV2: {fileID: 8585594586927423067}
   movementRigidbodyV2: {fileID: 8585594586927423060}
-  cameraFreeLook: {fileID: 8585594586670930731}
+  cameraMain: {fileID: 0}
   rigidbody: {fileID: 8585594586927423065}
   speed: 10
   animationController: {fileID: 8585594586927423063}
@@ -1112,8 +1112,8 @@ MonoBehaviour:
   quickAttackTime: 1
   powerAttackTimeDelta: 0
   quickAttackTimeDelta: 0
-  runningDistanceQuickAttack: 50
-  runningDistancePowerAttack: 50
+  runningDistanceQuickAttack: 10
+  runningDistancePowerAttack: 10
   runningDirectionQuickAttack: {x: 0, y: 0, z: 1}
   runningDirectionPowerAttack: {x: 0, y: 0, z: 1}
 --- !u!114 &5702032169309306164

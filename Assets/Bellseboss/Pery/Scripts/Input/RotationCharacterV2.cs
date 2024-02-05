@@ -38,7 +38,7 @@ namespace Bellseboss.Pery.Scripts.Input
             var right = new Vector3(direction.z, 0, -direction.x);
             var result = _vector2.x * right + _vector2.y * direction;
             result.Normalize();
-            Debug.Log($"result: {result}");
+            //Debug.Log($"result: {result}");
             if (result != Vector3.zero)
             {
                 _player.transform.rotation = Quaternion.Lerp(_player.transform.rotation, Quaternion.LookRotation(result), _forceRotation * Time.deltaTime);
