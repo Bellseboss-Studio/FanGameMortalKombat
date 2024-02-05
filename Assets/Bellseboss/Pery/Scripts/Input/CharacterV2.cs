@@ -1,5 +1,6 @@
 ﻿using Cinemachine;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Bellseboss.Pery.Scripts.Input
 {
@@ -9,7 +10,7 @@ namespace Bellseboss.Pery.Scripts.Input
         [SerializeField] private string id;
         [SerializeField] private InputPlayerV2 inputPlayerV2;
         [SerializeField] private MovementRigidbodyV2 movementRigidbodyV2;
-        [SerializeField] private CinemachineFreeLook cameraFreeLook;
+        [SerializeField] private CinemachineVirtualCameraBase cameraMain;
         [SerializeField] private Rigidbody rigidbody;
         [SerializeField] private float speed;
         [SerializeField] private AnimationController animationController;
@@ -26,10 +27,10 @@ namespace Bellseboss.Pery.Scripts.Input
             inputPlayerV2.onTargetEvent += OnTargetEvent;
             inputPlayerV2.onPunchEvent += OnPunchEvent;
             inputPlayerV2.onKickEvent += OnKickEvent;
-            movementRigidbodyV2.Configure(rigidbody, speed, cameraFreeLook.gameObject, this);
+            movementRigidbodyV2.Configure(rigidbody, speed, cameraMain.gameObject, this);
             _model3DInstance = Instantiate(model3D, transform);
             animationController.Configure(_model3DInstance.GetComponent<Animator>(), this);
-            rotationCharacterV2.Configure(cameraFreeLook.gameObject, gameObject, this, forceRotation);
+            rotationCharacterV2.Configure(cameraMain.gameObject, gameObject, this, forceRotation);
             combatSystem.Configure(this);
             targetFocus.Configure(this);
         }
