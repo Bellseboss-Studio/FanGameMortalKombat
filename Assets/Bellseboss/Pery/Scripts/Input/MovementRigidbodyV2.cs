@@ -5,6 +5,7 @@ namespace Bellseboss.Pery.Scripts.Input
 {
     public class MovementRigidbodyV2 : MonoBehaviour
     {
+        [SerializeField] private float force;
         private Rigidbody _rigidbody;
         private float _speed, _lowSpeed;
         private InputMovementCustomV2 _inputMovementCustom;
@@ -14,12 +15,13 @@ namespace Bellseboss.Pery.Scripts.Input
         private GameObject _camera;
         private bool _isTarget;
         private IMovementRigidBodyV2 _movementRigidBodyV2;
+        private bool _jump;
 
         public void Configure(Rigidbody rigidbody, float speed, GameObject camera, IMovementRigidBodyV2 movementRigidBodyV2)
         {
             _rigidbody = rigidbody;
             _speed = speed;
-            _inputMovementCustom = new InputMovementCustomV2();
+            _inputMovementCustom = new InputMovementCustomV2(force);
             _isConfigured = true;
             _camera = camera;
             _movementRigidBodyV2 = movementRigidBodyV2;
@@ -40,7 +42,13 @@ namespace Bellseboss.Pery.Scripts.Input
                 result.y = _lastDirection.y >= 0 ? 1f : -1f;
             }
             result.x = _lastDirection.x;
-            _rigidbody.velocity = _inputMovementCustom.CalculateMovement(result, _speed, _camera, _rigidbody.gameObject);
+            if (_jump)
+            {
+                _rigidbody.AddForce(Vector3.up * force, ForceMode.Impulse);
+                _jump = false;
+            }
+            var resultMovement = _inputMovementCustom.CalculateMovement(result, _speed, _camera, _rigidbody);
+            _rigidbody.velocity = new Vector3(resultMovement.x, _rigidbody.velocity.y, resultMovement.z);
         }
 
         public void Direction(Vector2 vector2)
@@ -84,6 +92,11 @@ namespace Bellseboss.Pery.Scripts.Input
         public Vector3 GetVelocityV3()
         {
             return _rigidbody.velocity;
+        }
+
+        public void Jump()
+        {
+            _jump = true;
         }
     }
 }

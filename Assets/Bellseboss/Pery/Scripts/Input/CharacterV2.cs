@@ -27,12 +27,17 @@ namespace Bellseboss.Pery.Scripts.Input
             inputPlayerV2.onTargetEvent += OnTargetEvent;
             inputPlayerV2.onPunchEvent += OnPunchEvent;
             inputPlayerV2.onKickEvent += OnKickEvent;
-            movementRigidbodyV2.Configure(rigidbody, speed, cameraMain.gameObject, this);
+            inputPlayerV2.onJumpEvent += OnJumpEvent;
+            ConfigCamera(cameraMain);
             _model3DInstance = Instantiate(model3D, transform);
             animationController.Configure(_model3DInstance.GetComponent<Animator>(), this);
-            rotationCharacterV2.Configure(cameraMain.gameObject, gameObject, this, forceRotation);
             combatSystem.Configure(this);
             targetFocus.Configure(this);
+        }
+
+        private void OnJumpEvent()
+        {
+            movementRigidbodyV2.Jump();
         }
 
         private void OnKickEvent()
@@ -92,6 +97,17 @@ namespace Bellseboss.Pery.Scripts.Input
         public Vector3 RotateToTarget(Vector3 originalDirection)
         {
             return targetFocus.RotateToTarget(originalDirection);
+        }
+
+        public void SetCamera(CinemachineVirtualCameraBase currentCamera)
+        {
+            ConfigCamera(currentCamera);
+        }
+
+        private void ConfigCamera(CinemachineVirtualCameraBase currentCamera)
+        {
+            movementRigidbodyV2.Configure(rigidbody, speed, currentCamera.gameObject, this);
+            rotationCharacterV2.Configure(currentCamera.gameObject, gameObject, this, forceRotation);
         }
     }
 }
