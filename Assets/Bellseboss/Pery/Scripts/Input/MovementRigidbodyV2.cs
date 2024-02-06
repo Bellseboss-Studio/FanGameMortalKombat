@@ -6,6 +6,8 @@ namespace Bellseboss.Pery.Scripts.Input
     public class MovementRigidbodyV2 : MonoBehaviour
     {
         [SerializeField] private float force;
+        [SerializeField] private FloorController floorController;
+        [SerializeField] private bool isFall, isUp;
         private Rigidbody _rigidbody;
         private float _speed, _lowSpeed;
         private InputMovementCustomV2 _inputMovementCustom;
@@ -17,15 +19,16 @@ namespace Bellseboss.Pery.Scripts.Input
         private IMovementRigidBodyV2 _movementRigidBodyV2;
         private bool _jump;
 
-        public void Configure(Rigidbody rigidbody, float speed, GameObject camera, IMovementRigidBodyV2 movementRigidBodyV2)
+        public void Configure(Rigidbody rigidBody, float speed, GameObject camera, IMovementRigidBodyV2 movementRigidBodyV2)
         {
-            _rigidbody = rigidbody;
+            _rigidbody = rigidBody;
             _speed = speed;
             _inputMovementCustom = new InputMovementCustomV2(force);
             _isConfigured = true;
             _camera = camera;
             _movementRigidBodyV2 = movementRigidBodyV2;
             _canMove = true;
+            floorController.Configure(this);
         }
 
         private void Move()
@@ -44,11 +47,33 @@ namespace Bellseboss.Pery.Scripts.Input
             result.x = _lastDirection.x;
             if (_jump)
             {
-                _rigidbody.AddForce(Vector3.up * force, ForceMode.Impulse);
-                _jump = false;
+                if (floorController.IsTouchingFloor())
+                {
+                    _rigidbody.AddForce(Vector3.up * force, ForceMode.Impulse);
+                    _jump = false;   
+                }
+            }
+            else
+            {
+                _rigidbody.velocity += Vector3.up * (Physics.gravity.y * (1.5f - 1) * Time.deltaTime);
             }
             var resultMovement = _inputMovementCustom.CalculateMovement(result, _speed, _camera, _rigidbody);
             _rigidbody.velocity = new Vector3(resultMovement.x, _rigidbody.velocity.y, resultMovement.z);
+            if(_rigidbody.velocity.y > 0)
+            {
+                isUp = true;
+                isFall = false;
+            }
+            else if(_rigidbody.velocity.y < 0 && !floorController.IsTouchingFloor())
+            {
+                isFall = true;
+                isUp = false;
+            }
+            else
+            {
+                isFall = false;
+                isUp = false;
+            }
         }
 
         public void Direction(Vector2 vector2)
