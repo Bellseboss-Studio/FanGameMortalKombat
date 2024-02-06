@@ -11,6 +11,7 @@ namespace Bellseboss.Pery.Scripts.Input
         public Action onKickEvent;
         public Action onPunchEvent;
         public Action onJumpEvent;
+        public Action onActionEvent;
         public Action onCameraMovementEvet;
         public Vector3 CurrentVector => _currentInputVector;
         private Vector3 _currentInputVector;
@@ -60,6 +61,15 @@ namespace Bellseboss.Pery.Scripts.Input
             {
                 Debug.Log("Jump");
                 onJumpEvent?.Invoke();
+            }
+        }
+        
+        public void OnAction(InputAction.CallbackContext context)
+        {
+            if (context.started)
+            {
+                Debug.Log("Action");
+                onActionEvent?.Invoke();
             }
         }
     }

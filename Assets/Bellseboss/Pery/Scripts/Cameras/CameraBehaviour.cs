@@ -17,8 +17,10 @@ public class CameraBehaviour : MonoBehaviour, ICameraBehaviour
             var index = i;
             room.Config(this, index);
             room.ChangeCamera += OnChangeCamera;
+            room.Camera.gameObject.SetActive(false);
         }
         _currentRoom = rooms[0];
+        _currentRoom.Camera.gameObject.SetActive(true);
         character.SetCamera(_currentRoom.Camera);
     }
 
