@@ -21,18 +21,18 @@ public class CameraBehaviourWithReel : MonoBehaviour
         {
             var cameraCollider = cameraColliders[i];
             var index = i;
-            cameraCollider.ColliderEnter += () => OnColliderEnter(index);
+            cameraCollider.ColliderEnter += (o) => OnColliderEnter(index);
         }
         roomCollider.ColliderEnter += EntreToRoom;
         roomCollider.ColliderExit += ExitToRoom;
     }
     
-    private void EntreToRoom()
+    private void EntreToRoom(GameObject o)
     {
         ChangeCamera?.Invoke(_index, true, camera);
     }
 
-    private void ExitToRoom()
+    private void ExitToRoom(GameObject o)
     {
         ChangeCamera?.Invoke(_index, false, camera);
     }

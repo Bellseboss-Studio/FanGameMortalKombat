@@ -8,6 +8,7 @@ namespace Bellseboss.Pery.Scripts.Input
         [SerializeField] private float force;
         [SerializeField] private FloorController floorController;
         [SerializeField] private bool isFall, isUp;
+        [SerializeField] private JumpSystem jumpSystem;
         private Rigidbody _rigidbody;
         private float _speed, _lowSpeed;
         private InputMovementCustomV2 _inputMovementCustom;
@@ -29,6 +30,7 @@ namespace Bellseboss.Pery.Scripts.Input
             _movementRigidBodyV2 = movementRigidBodyV2;
             _canMove = true;
             floorController.Configure(this);
+            jumpSystem.Configure(rigidBody, movementRigidBodyV2, floorController);
         }
 
         private void Move()
@@ -49,7 +51,8 @@ namespace Bellseboss.Pery.Scripts.Input
             {
                 if (floorController.IsTouchingFloor())
                 {
-                    _rigidbody.AddForce(Vector3.up * force, ForceMode.Impulse);
+                    Debug.Log("MovementRigidbodyV2: Jump");
+                    jumpSystem.Jump();
                     _jump = false;   
                 }
             }

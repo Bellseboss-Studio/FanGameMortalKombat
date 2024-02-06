@@ -1,4 +1,5 @@
-﻿using Cinemachine;
+﻿using System;
+using Cinemachine;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -7,6 +8,7 @@ namespace Bellseboss.Pery.Scripts.Input
     public class CharacterV2 : MonoBehaviour, ICharacterV2, IMovementRigidBodyV2, IAnimationController, IRotationCharacterV2, ICombatSystem, IFocusTarget
     {
         public string Id => id;
+        public Action OnAction { get; set; }
         [SerializeField] private string id;
         [SerializeField] private InputPlayerV2 inputPlayerV2;
         [SerializeField] private MovementRigidbodyV2 movementRigidbodyV2;
@@ -28,11 +30,18 @@ namespace Bellseboss.Pery.Scripts.Input
             inputPlayerV2.onPunchEvent += OnPunchEvent;
             inputPlayerV2.onKickEvent += OnKickEvent;
             inputPlayerV2.onJumpEvent += OnJumpEvent;
+            inputPlayerV2.onActionEvent += OnActionEvent;
+
             ConfigCamera(cameraMain);
             _model3DInstance = Instantiate(model3D, transform);
             animationController.Configure(_model3DInstance.GetComponent<Animator>(), this);
             combatSystem.Configure(this);
             targetFocus.Configure(this);
+        }
+        
+        void OnActionEvent()
+        {
+            OnAction?.Invoke();
         }
 
         private void OnJumpEvent()
