@@ -126,5 +126,10 @@ namespace Bellseboss.Pery.Scripts.Input
         {
             _jump = true;
         }
+
+        public JumpSystem GetJumpSystem()
+        {
+            return jumpSystem;
+        }
     }
 }

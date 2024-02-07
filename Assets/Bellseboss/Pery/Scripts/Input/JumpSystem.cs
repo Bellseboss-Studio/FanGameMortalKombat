@@ -1,9 +1,10 @@
+using System;
 using Bellseboss.Pery.Scripts.Input;
 using UnityEngine;
 
 public class JumpSystem : MonoBehaviour
 {
-    
+    public Action OnAttack, OnMidAir, OnRelease, OnSustain, OnEndJump;
     [SerializeField] private float timeToAttack, timeToDecreasing, timeToSustain, timeToRelease;
     [SerializeField] private float maxHeighJump, heightDecreasing;
     [SerializeField] private float forceToAttack, forceToDecreasing;
@@ -22,6 +23,9 @@ public class JumpSystem : MonoBehaviour
             _rigidbody.useGravity = false;
             _rigidbody.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX;
             Debug.Log("JumpSystem: Attack");
+        }).Add(() =>
+        {
+            OnAttack?.Invoke();
         }).Loop(loop =>
         {
             //Debug.Log("JumpSystem: Attack Loop");
@@ -37,6 +41,9 @@ public class JumpSystem : MonoBehaviour
             var position = gameObjectToPlayer.transform.position;
             position = Vector3.Lerp(position, position + Vector3.up * (maxHeighJump * heightMultiplier), forceToAttack * loop.deltaTime);
             gameObjectToPlayer.transform.position = position;
+        }).Add(() =>
+        {
+            OnMidAir?.Invoke();
         }).Loop(loop =>
         {
             //Debug.Log("JumpSystem: Decreasing Loop");
@@ -50,8 +57,11 @@ public class JumpSystem : MonoBehaviour
             float heightMultiplier = Mathf.Log(1 + t * 4);
 
             var position = gameObjectToPlayer.transform.position;
-            position = Vector3.Lerp(position, position + Vector3.up * (heightDecreasing * heightMultiplier), forceToDecreasing * loop.deltaTime);
+            position = Vector3.Lerp(position, position - Vector3.up * (heightDecreasing * heightMultiplier), forceToDecreasing * loop.deltaTime);
             gameObjectToPlayer.transform.position = position;
+        }).Add(() =>
+        {
+            OnSustain?.Invoke();
         }).Loop(loop =>
         {
             //Debug.Log("JumpSystem: Sustain Loop");
@@ -60,6 +70,9 @@ public class JumpSystem : MonoBehaviour
             {
                 loop.Break();
             }
+        }).Add(() =>
+        {
+            OnRelease?.Invoke();
         }).Loop(loop=>
         {
             //Debug.Log("JumpSystem: Release Loop");
@@ -81,6 +94,7 @@ public class JumpSystem : MonoBehaviour
             _rigidbody.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX;
             _deltatimeLocal = 0;
             Debug.Log("JumpSystem: Attack End");
+            OnEndJump?.Invoke();
         });
     }
 

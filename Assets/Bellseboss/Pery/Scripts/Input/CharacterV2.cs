@@ -37,8 +37,33 @@ namespace Bellseboss.Pery.Scripts.Input
             animationController.Configure(_model3DInstance.GetComponent<Animator>(), this);
             combatSystem.Configure(this);
             targetFocus.Configure(this);
+            
+            movementRigidbodyV2.GetJumpSystem().OnAttack += JumpOnAttack;
+            movementRigidbodyV2.GetJumpSystem().OnMidAir += JumpOnMidAir;
+            movementRigidbodyV2.GetJumpSystem().OnRelease += JumpOnRelease;
+            movementRigidbodyV2.GetJumpSystem().OnEndJump += JumpOnEndJump;
         }
-        
+
+        private void JumpOnEndJump()
+        {
+            animationController.JumpRecovery();
+        }
+
+        private void JumpOnRelease()
+        {
+            animationController.JumpFall();
+        }
+
+        private void JumpOnMidAir()
+        {
+            animationController.JumpMidAir();
+        }
+
+        private void JumpOnAttack()
+        {
+            animationController.JumpJump();
+        }
+
         void OnActionEvent()
         {
             OnAction?.Invoke();
