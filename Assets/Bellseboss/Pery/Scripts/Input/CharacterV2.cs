@@ -1,4 +1,5 @@
-﻿using Cinemachine;
+﻿using System;
+using Cinemachine;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -7,6 +8,7 @@ namespace Bellseboss.Pery.Scripts.Input
     public class CharacterV2 : MonoBehaviour, ICharacterV2, IMovementRigidBodyV2, IAnimationController, IRotationCharacterV2, ICombatSystem, IFocusTarget
     {
         public string Id => id;
+        public Action OnAction { get; set; }
         [SerializeField] private string id;
         [SerializeField] private InputPlayerV2 inputPlayerV2;
         [SerializeField] private MovementRigidbodyV2 movementRigidbodyV2;
@@ -28,11 +30,43 @@ namespace Bellseboss.Pery.Scripts.Input
             inputPlayerV2.onPunchEvent += OnPunchEvent;
             inputPlayerV2.onKickEvent += OnKickEvent;
             inputPlayerV2.onJumpEvent += OnJumpEvent;
+            inputPlayerV2.onActionEvent += OnActionEvent;
+
             ConfigCamera(cameraMain);
             _model3DInstance = Instantiate(model3D, transform);
             animationController.Configure(_model3DInstance.GetComponent<Animator>(), this);
             combatSystem.Configure(this);
             targetFocus.Configure(this);
+            
+            movementRigidbodyV2.GetJumpSystem().OnAttack += JumpOnAttack;
+            movementRigidbodyV2.GetJumpSystem().OnMidAir += JumpOnMidAir;
+            movementRigidbodyV2.GetJumpSystem().OnRelease += JumpOnRelease;
+            movementRigidbodyV2.GetJumpSystem().OnEndJump += JumpOnEndJump;
+        }
+
+        private void JumpOnEndJump()
+        {
+            animationController.JumpRecovery();
+        }
+
+        private void JumpOnRelease()
+        {
+            animationController.JumpFall();
+        }
+
+        private void JumpOnMidAir()
+        {
+            animationController.JumpMidAir();
+        }
+
+        private void JumpOnAttack()
+        {
+            animationController.JumpJump();
+        }
+
+        void OnActionEvent()
+        {
+            OnAction?.Invoke();
         }
 
         private void OnJumpEvent()

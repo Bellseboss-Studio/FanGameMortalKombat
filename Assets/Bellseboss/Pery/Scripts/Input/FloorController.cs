@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Bellseboss.Pery.Scripts.Input
 {
-    internal class FloorController: MonoBehaviour
+    public class FloorController: MonoBehaviour
     {
         [SerializeField] private float minDistanceToFloor;
         [SerializeField] private bool _isTouchingFloor;

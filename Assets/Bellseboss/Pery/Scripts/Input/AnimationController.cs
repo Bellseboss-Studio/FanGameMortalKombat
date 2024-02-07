@@ -35,5 +35,25 @@ namespace Bellseboss.Pery.Scripts.Input
         {
             _animator.SetTrigger(kickName);
         }
+
+        public void JumpJump()
+        {
+            _animator.SetTrigger("j");
+        }
+
+        public void JumpMidAir()
+        {
+            _animator.SetTrigger("j_mid_air");
+        }
+
+        public void JumpFall()
+        {
+            _animator.SetTrigger("j_fall");
+        }
+
+        public void JumpRecovery()
+        {
+            _animator.SetTrigger("j_recovery");
+        }
     }
 }
