@@ -821,7 +821,9 @@ GameObject:
   - component: {fileID: 8585594586927423062}
   - component: {fileID: 1183017941}
   - component: {fileID: 5702032169309306164}
-  m_Layer: 0
+  - component: {fileID: 790305426}
+  - component: {fileID: 790305427}
+  m_Layer: 10
   m_Name: PlayerV2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -880,6 +882,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c59e4831e8841359a11e2f21df010e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  force: 25
+  floorController: {fileID: 790305426}
+  isFall: 0
+  isUp: 0
+  jumpSystem: {fileID: 790305427}
   _canMove: 0
 --- !u!114 &8585594586927423064
 MonoBehaviour:
@@ -927,7 +934,19 @@ MonoBehaviour:
     m_ActionId: ce5319d5-256f-447e-82ce-d12cad18a1e8
     m_ActionName: Player/Look[/DualSenseGamepadHID/rightStick,/Mouse/delta,/Pen/delta]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8585594586927423067}
+        m_TargetAssemblyTypeName: Bellseboss.Pery.Scripts.Input.InputPlayerV2, Assembly-CSharp
+        m_MethodName: OnJump
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 0e7e99fd-58ad-47c8-9e60-00402a05ff91
     m_ActionName: Player/Fire[/DualSenseGamepadHID/rightTrigger,/Mouse/leftButton]
   - m_PersistentCalls:
@@ -1018,6 +1037,26 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 5c4f3e8b-9666-4083-af15-b04757789e0f
     m_ActionName: Player/Punch[/DualSenseGamepadHID/buttonSouth,/Keyboard/z]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 2a3929ee-9155-4018-a364-f9c10ca9b98d
+    m_ActionName: Player/CameraMovement[/Keyboard/i,/Keyboard/k,/Keyboard/j,/Keyboard/l,/DualSenseGamepadHID/rightStick/up,/DualSenseGamepadHID/rightStick/down,/DualSenseGamepadHID/rightStick/right,/DualSenseGamepadHID/rightStick/left]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8585594586927423067}
+        m_TargetAssemblyTypeName: Bellseboss.Pery.Scripts.Input.InputPlayerV2, Assembly-CSharp
+        m_MethodName: OnAction
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: f5603438-d77e-44c3-a3fc-9ce9ee05a036
+    m_ActionName: Player/Action[/DualSenseGamepadHID/buttonEast]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -1050,7 +1089,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 80
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!136 &8585594586927423066
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1134,6 +1173,43 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2048
   directionToTargetLocal: {x: 0, y: 0, z: 5}
+--- !u!114 &790305426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8585594586927423071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d290cf1669d46838f29de2fa1e8b938, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minDistanceToFloor: 1.5
+  _isTouchingFloor: 0
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 8192
+--- !u!114 &790305427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8585594586927423071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84145a6332b3457395cc4fe89d17cf54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeToAttack: 0.3
+  timeToDecreasing: 0.1
+  timeToSustain: 0.01
+  timeToRelease: 2
+  maxHeighJump: 5
+  heightDecreasing: 1
+  forceToAttack: 3
+  forceToDecreasing: 2
 --- !u!1 &8585594587426267891
 GameObject:
   m_ObjectHideFlags: 0
