@@ -23,6 +23,7 @@ namespace Bellseboss.Pery.Scripts.Input
             //convert to global space to locate the center of the sphere
             var directionToTargetLocall = transform.TransformDirection(directionToTargetLocal);
             RaycastHit[] hits = Physics.SphereCastAll(origin + directionToTargetLocall, coneRadius, direction, maxDistance, layerMask);
+            if(hits.Length == 0) return Vector3.zero;
             foreach (RaycastHit hit in hits)
             {
                 directionToTarget = hit.collider.gameObject.transform.position - transform.position;
