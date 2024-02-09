@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Bellseboss.Pery.Scripts.Input
@@ -10,6 +11,7 @@ namespace Bellseboss.Pery.Scripts.Input
         public LayerMask layerMask;
         public Vector3 directionToTargetLocal;
         private IFocusTarget _focusTarget;
+        private List<GameObject> _enemies = new List<GameObject>();
 
         public void Configure(IFocusTarget focusTarget)
         {
@@ -17,28 +19,63 @@ namespace Bellseboss.Pery.Scripts.Input
         }
         public Vector3 RotateToTarget(Vector3 originalDirection)
         {
-            var directionToTarget = originalDirection;
-            Vector3 origin = transform.position;
-            Vector3 direction = transform.forward;
-            //convert to global space to locate the center of the sphere
-            var directionToTargetLocall = transform.TransformDirection(directionToTargetLocal);
-            RaycastHit[] hits = Physics.SphereCastAll(origin + directionToTargetLocall, coneRadius, direction, maxDistance, layerMask);
-            foreach (RaycastHit hit in hits)
+            var result = originalDirection;
+            if (_enemies.Count > 0)
             {
-                directionToTarget = hit.collider.gameObject.transform.position - transform.position;
-                directionToTarget.y = 0;
-                directionToTarget.Normalize();
-                directionToTarget = transform.InverseTransformDirection(directionToTarget);
-                break;
+                var closestEnemy = GetClosestEnemy();
+                var directionToTarget = closestEnemy.transform.position - transform.position;
+                directionToTargetLocal = transform.InverseTransformDirection(directionToTarget);
+                directionToTargetLocal.y = 0;
+                directionToTargetLocal.Normalize();
+                result = directionToTargetLocal;
+                Debug.Log($"TargetFocus: RotateToTarget: directionToTargetLocal: {directionToTargetLocal}");
             }
-            return directionToTarget;
+            return result;
         }
 
-        private void OnDrawGizmos()
+        private GameObject GetClosestEnemy()
         {
-            Gizmos.color = Color.red;
-            var directionToTargetLocall = transform.TransformDirection(directionToTargetLocal);
-            Gizmos.DrawWireSphere(transform.position + directionToTargetLocall, coneRadius);
+            GameObject closestEnemy = null;
+            var minDistance = float.MaxValue;
+            foreach (var enemy in _enemies)
+            {
+                var distance = Vector3.Distance(transform.position, enemy.transform.position);
+                if (distance < minDistance)
+                {
+                    minDistance = distance;
+                    closestEnemy = enemy;
+                }
+            }
+            return closestEnemy;
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if ((layerMask.value & (1 << other.gameObject.layer)) > 0)
+            {
+                Debug.Log($"TargetFocus: OnTriggerEnter: other: {other.gameObject.name}");
+                _enemies.Add(other.gameObject);
+            }
+        }
+        
+        private void OnTriggerExit(Collider other)
+        {
+            //compare layer
+            if ((layerMask.value & (1 << other.gameObject.layer)) > 0)
+            {
+                Debug.Log($"TargetFocus: OnTriggerExit: other: {other.gameObject.name}");
+                _enemies.Remove(other.gameObject);
+            }
+        }
+
+        public Vector3 GetTarget()
+        {
+            if(_enemies.Count > 0)
+            {
+                var closestEnemy = GetClosestEnemy();
+                return closestEnemy.transform.position;
+            }
+            return Vector3.zero;
         }
     }
 }

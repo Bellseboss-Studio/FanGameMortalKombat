@@ -863,7 +863,8 @@ MonoBehaviour:
   movementRigidbodyV2: {fileID: 8585594586927423060}
   cameraMain: {fileID: 0}
   rigidbody: {fileID: 8585594586927423065}
-  speed: 10
+  speedWalk: 5
+  speedRun: 10
   animationController: {fileID: 8585594586927423063}
   model3D: {fileID: 4720931743281656400, guid: 9e4e969e7d8365547a8d3080dd449ed9, type: 3}
   rotationCharacterV2: {fileID: 8585594586927423062}
@@ -887,6 +888,10 @@ MonoBehaviour:
   isFall: 0
   isUp: 0
   jumpSystem: {fileID: 790305427}
+  inputMin: 0.148
+  inputMax: 0.5
+  minSpeed: 0.25
+  maxSpeed: 1
   _canMove: 0
 --- !u!114 &8585594586927423064
 MonoBehaviour:

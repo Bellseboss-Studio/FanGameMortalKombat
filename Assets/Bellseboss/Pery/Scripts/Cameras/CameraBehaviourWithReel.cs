@@ -39,14 +39,14 @@ public class CameraBehaviourWithReel : MonoBehaviour
 
     private void OnColliderEnter(int i)
     {
-        Debug.Log($"CameraBehaviourWithReel:OnColliderEnter: {i}");
+        //Debug.Log($"CameraBehaviourWithReel:OnColliderEnter: {i}");
         CinemachineTrackedDolly trackedDolly = camera.GetCinemachineComponent<CinemachineTrackedDolly>();
         if (trackedDolly != null)
         {
             trackedDolly.m_PathPosition = i;
         }else
         {
-            Debug.LogError("No CinemachineTrackedDolly component found in camera body.");
+            //Debug.LogError("No CinemachineTrackedDolly component found in camera body.");
         }
     }
 

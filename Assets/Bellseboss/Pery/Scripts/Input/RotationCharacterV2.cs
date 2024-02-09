@@ -9,9 +9,11 @@ namespace Bellseboss.Pery.Scripts.Input
         private GameObject _camera;
         private bool _isConfigured;
         private IRotationCharacterV2 _rotationCharacterV2;
-        private Vector2 _vector2;
+        [SerializeField] private Vector2 _vector2;
         private float _forceRotation;
         [SerializeField] private bool _canRotate;
+        private bool _canRotateWhileAttack = true;
+        private Vector3 _lastDirection;
 
         public void Configure(GameObject camera, GameObject player, IRotationCharacterV2 rotationCharacterV2,
             float forceRotation)
@@ -37,31 +39,41 @@ namespace Bellseboss.Pery.Scripts.Input
             direction.Normalize();
             var right = new Vector3(direction.z, 0, -direction.x);
             var result = _vector2.x * right + _vector2.y * direction;
-            result.Normalize();
-            //Debug.Log($"result: {result}");
-            if (result != Vector3.zero)
+            //result.Normalize();
+            if (result != Vector3.zero && _canRotateWhileAttack)
             {
+                _lastDirection = result;
                 _player.transform.rotation = Quaternion.Lerp(_player.transform.rotation, Quaternion.LookRotation(result), _forceRotation * Time.deltaTime);
             }
             else
             {
-                _player.transform.rotation = Quaternion.Lerp(_player.transform.rotation, Quaternion.LookRotation(direction), _forceRotation * Time.deltaTime);
+                _player.transform.rotation = Quaternion.Lerp(_player.transform.rotation, Quaternion.LookRotation(_lastDirection), _forceRotation * Time.deltaTime);
             }
         }
 
         public void CanRotate(bool canRotate)
         {
-            _canRotate = canRotate;
+            _vector2 = Vector2.zero;
+            _canRotateWhileAttack = canRotate;
         }
 
         public bool CanRotate()
         {
-            return _canRotate;
+            return _canRotateWhileAttack;
         }
 
         public void RotateToDirectionToMove(Vector2 runningDirection)
         {
             _vector2 = runningDirection;
+        }
+
+        public void RotateToLookTheTarget(Vector3 getTarget)
+        {
+            if(getTarget != Vector3.zero)
+            {
+                _lastDirection = getTarget - _player.transform.position;
+                _lastDirection.y = 0;
+            }
         }
     }
 }
