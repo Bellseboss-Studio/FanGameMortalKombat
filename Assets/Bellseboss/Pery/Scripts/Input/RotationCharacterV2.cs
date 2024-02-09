@@ -12,6 +12,7 @@ namespace Bellseboss.Pery.Scripts.Input
         private Vector2 _vector2;
         private float _forceRotation;
         [SerializeField] private bool _canRotate;
+        private Vector3 _lastDirection;
 
         public void Configure(GameObject camera, GameObject player, IRotationCharacterV2 rotationCharacterV2,
             float forceRotation)
@@ -38,14 +39,15 @@ namespace Bellseboss.Pery.Scripts.Input
             var right = new Vector3(direction.z, 0, -direction.x);
             var result = _vector2.x * right + _vector2.y * direction;
             result.Normalize();
-            //Debug.Log($"result: {result}");
+            Debug.Log($"result: {result}");
             if (result != Vector3.zero)
             {
+                _lastDirection = result;
                 _player.transform.rotation = Quaternion.Lerp(_player.transform.rotation, Quaternion.LookRotation(result), _forceRotation * Time.deltaTime);
             }
             else
             {
-                _player.transform.rotation = Quaternion.Lerp(_player.transform.rotation, Quaternion.LookRotation(direction), _forceRotation * Time.deltaTime);
+                _player.transform.rotation = Quaternion.Lerp(_player.transform.rotation, Quaternion.LookRotation(_lastDirection), _forceRotation * Time.deltaTime);
             }
         }
 
