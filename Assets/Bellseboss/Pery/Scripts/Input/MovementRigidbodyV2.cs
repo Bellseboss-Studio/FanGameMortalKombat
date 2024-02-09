@@ -9,8 +9,16 @@ namespace Bellseboss.Pery.Scripts.Input
         [SerializeField] private FloorController floorController;
         [SerializeField] private bool isFall, isUp;
         [SerializeField] private JumpSystem jumpSystem;
+        [Range(0,1)]
+        [SerializeField] private float inputMin;
+        [Range(0,2)]
+        [SerializeField] private float inputMax;
+        [Range(0,1f)]
+        [SerializeField] private float minSpeed;
+        [Range(0.5f,1)]
+        [SerializeField] private float maxSpeed;
         private Rigidbody _rigidbody;
-        private float _speed, _lowSpeed;
+        private float _speedRun, _speedWalk;
         private InputMovementCustomV2 _inputMovementCustom;
         private Vector2 _lastDirection;
         private bool _isConfigured;
@@ -19,11 +27,13 @@ namespace Bellseboss.Pery.Scripts.Input
         private bool _isTarget;
         private IMovementRigidBodyV2 _movementRigidBodyV2;
         private bool _jump;
+        private float _velocityOfAnimation;
 
-        public void Configure(Rigidbody rigidBody, float speed, GameObject camera, IMovementRigidBodyV2 movementRigidBodyV2)
+        public void Configure(Rigidbody rigidBody, float speedWalk, float speedRun, GameObject camera, IMovementRigidBodyV2 movementRigidBodyV2)
         {
             _rigidbody = rigidBody;
-            _speed = speed;
+            _speedWalk = speedWalk;
+            _speedRun = speedRun;
             _inputMovementCustom = new InputMovementCustomV2(force);
             _isConfigured = true;
             _camera = camera;
@@ -33,34 +43,66 @@ namespace Bellseboss.Pery.Scripts.Input
             jumpSystem.Configure(rigidBody, movementRigidBodyV2, floorController);
         }
 
+        
+        private float CalculateDirection(float axis, bool isTarget)
+        {
+            var axisAbs = Mathf.Abs(axis);
+            if (isTarget && axisAbs >= inputMin)
+            {
+                if (axisAbs <= inputMin) return 0;
+                return axis >= 0 ? minSpeed : -minSpeed;
+            }
+
+            if (axisAbs >= inputMin)
+            {
+                if (axisAbs >= inputMin && axisAbs < inputMax)
+                {
+                    if (axisAbs <= inputMin) return 0;
+                    return axis >= 0 ? minSpeed : -minSpeed;
+                }
+                else if (axisAbs >= inputMax)
+                {
+                    if (axisAbs <= inputMin) return 0;
+                    return axis >= 0 ? maxSpeed : -maxSpeed;
+                }
+            }
+            return 0;
+        }
+        
         private void Move()
         {
             var result = Vector2.zero;
-            if (_isTarget && Mathf.Abs(_lastDirection.y) > 0)
+            result.y = CalculateDirection(_lastDirection.y, _isTarget);
+            result.x = CalculateDirection(_lastDirection.x, _isTarget);
+            var absX = Mathf.Abs(result.x);
+            var absY = Mathf.Abs(result.y);
+            var _choiceMax = absX >= maxSpeed || absY >= maxSpeed;
+            if(_lastDirection.x <= inputMin && _lastDirection.y <= inputMin)
             {
-                result.y = _lastDirection.y >= 0 ? 0.49f : -0.49f;
-            }else if (Mathf.Abs(_lastDirection.y) > 0 && Mathf.Abs(_lastDirection.y) < 0.5f)
-            {
-                result.y = _lastDirection.y >= 0 ? 0.49f : -0.49f;
-            }else if (Mathf.Abs(_lastDirection.y) >= 0.5f)
-            {
-                result.y = _lastDirection.y >= 0 ? 1f : -1f;
+                _velocityOfAnimation = 0;
             }
-            result.x = _lastDirection.x;
+            else if(_choiceMax)
+            {
+                _velocityOfAnimation = 1;
+            }
+            else
+            {
+                _velocityOfAnimation = 0.4f;
+            }
+            //Debug.Log($"MovementRigidbodyV2: Move: {absX} - {absY} - {_choiceMax} - {_velocityOfAnimation}");
+
+            var resultMovement = _inputMovementCustom.CalculateMovement(result, _choiceMax ? _speedRun : _speedWalk,
+                _camera, _rigidbody.gameObject);
+            //Debug.Log($"MovementRigidbodyV2: Move: {resultMovement}");
+            
             if (_jump)
             {
                 if (floorController.IsTouchingFloor())
                 {
-                    Debug.Log("MovementRigidbodyV2: Jump");
                     jumpSystem.Jump();
                     _jump = false;   
                 }
             }
-            else
-            {
-                _rigidbody.velocity += Vector3.up * (Physics.gravity.y * (1.5f - 1) * Time.deltaTime);
-            }
-            var resultMovement = _inputMovementCustom.CalculateMovement(result, _speed, _camera, _rigidbody);
             _rigidbody.velocity = new Vector3(resultMovement.x, _rigidbody.velocity.y, resultMovement.z);
             if(_rigidbody.velocity.y > 0)
             {
@@ -91,7 +133,8 @@ namespace Bellseboss.Pery.Scripts.Input
         private void Update()
         {
             if (!_isConfigured || !_canMove) return;
-            Move();   
+            Move();
+            _movementRigidBodyV2.UpdateAnimation();
         }
 
         public void IsTarget(bool isTarget)
@@ -101,7 +144,7 @@ namespace Bellseboss.Pery.Scripts.Input
 
         public float GetVelocity()
         {
-            return _rigidbody.velocity.magnitude;
+            return _rigidbody.velocity.magnitude/10;
         }
 
         public void AddForce(Vector3 runningDirection, float runningDistance)
@@ -130,6 +173,11 @@ namespace Bellseboss.Pery.Scripts.Input
         public JumpSystem GetJumpSystem()
         {
             return jumpSystem;
+        }
+
+        public float GetVelocityFloat()
+        {
+            return _velocityOfAnimation;
         }
     }
 }

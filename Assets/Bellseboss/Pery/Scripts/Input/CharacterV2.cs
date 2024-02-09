@@ -9,12 +9,16 @@ namespace Bellseboss.Pery.Scripts.Input
     {
         public string Id => id;
         public Action OnAction { get; set; }
+
         [SerializeField] private string id;
         [SerializeField] private InputPlayerV2 inputPlayerV2;
         [SerializeField] private MovementRigidbodyV2 movementRigidbodyV2;
         [SerializeField] private CinemachineVirtualCameraBase cameraMain;
         [SerializeField] private Rigidbody rigidbody;
-        [SerializeField] private float speed;
+        [Range(0,10)]
+        [SerializeField] private float speedWalk;
+        [Range(0,20)]
+        [SerializeField] private float speedRun;
         [SerializeField] private AnimationController animationController;
         [SerializeField] private GameObject model3D;
         private GameObject _model3DInstance;
@@ -80,6 +84,7 @@ namespace Bellseboss.Pery.Scripts.Input
             {
                 animationController.Kick();
                 combatSystem.PowerAttack();
+                rotationCharacterV2.RotateToLookTheTarget(targetFocus.GetTarget());
             }
         }
 
@@ -89,6 +94,7 @@ namespace Bellseboss.Pery.Scripts.Input
             {
                 animationController.Punch();
                 combatSystem.QuickAttack();
+                rotationCharacterV2.RotateToLookTheTarget(targetFocus.GetTarget());
             }
         }
 
@@ -105,7 +111,6 @@ namespace Bellseboss.Pery.Scripts.Input
                 rotationCharacterV2.Direction(vector2);
             }
             movementRigidbodyV2.Direction(vector2);
-            animationController.Movement(vector2, vector2.y);
         }
 
         public void PowerAttack(float runningDistance, Vector3 runningDirection)
@@ -140,8 +145,13 @@ namespace Bellseboss.Pery.Scripts.Input
 
         private void ConfigCamera(CinemachineVirtualCameraBase currentCamera)
         {
-            movementRigidbodyV2.Configure(rigidbody, speed, currentCamera.gameObject, this);
+            movementRigidbodyV2.Configure(rigidbody, speedWalk, speedRun, currentCamera.gameObject, this);
             rotationCharacterV2.Configure(currentCamera.gameObject, gameObject, this, forceRotation);
+        }
+        
+        public void UpdateAnimation()
+        {
+            animationController.Movement(movementRigidbodyV2.GetVelocity(), 0);
         }
     }
 }

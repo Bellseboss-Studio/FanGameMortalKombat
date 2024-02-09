@@ -4,6 +4,7 @@ namespace Bellseboss.Pery.Scripts.Input
 {
     public interface IMovementRigidBodyV2 : ICharacterV2
     {
+        void UpdateAnimation();
     }
     
     public interface IAnimationController : ICharacterV2
