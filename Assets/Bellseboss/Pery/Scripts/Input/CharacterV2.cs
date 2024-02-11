@@ -117,14 +117,14 @@ namespace Bellseboss.Pery.Scripts.Input
         {
             rotationCharacterV2.CanRotate(false);
             rotationCharacterV2.RotateToDirectionToMove(runningDirection);
-            movementRigidbodyV2.AddForce(runningDirection, runningDistance);
+            movementRigidbodyV2.AddForce(runningDirection, runningDistance, AttackMovementSystem.TypeOfAttack.Power);
         }
 
         public void QuickAttack(float runningDistance, Vector3 runningDirection)
         {
             rotationCharacterV2.CanRotate(false);
             rotationCharacterV2.RotateToDirectionToMove(runningDirection);
-            movementRigidbodyV2.AddForce(runningDirection, runningDistance);
+            movementRigidbodyV2.AddForce(runningDirection, runningDistance, AttackMovementSystem.TypeOfAttack.Quick);
         }
 
         public void CanMove()
