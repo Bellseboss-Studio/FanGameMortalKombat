@@ -8,6 +8,7 @@ namespace Bellseboss.Pery.Scripts.Input
         [SerializeField] private float force;
         [SerializeField] private FloorController floorController;
         [SerializeField] private bool isFall, isUp;
+        [SerializeField] private AttackMovementSystem attackMovementSystem;
         [SerializeField] private JumpSystem jumpSystem;
         [Range(0,1)]
         [SerializeField] private float inputMin;
@@ -41,6 +42,7 @@ namespace Bellseboss.Pery.Scripts.Input
             _canMove = true;
             floorController.Configure(this);
             jumpSystem.Configure(rigidBody, movementRigidBodyV2, floorController);
+            attackMovementSystem.Configure(rigidBody);
         }
 
         
@@ -147,12 +149,14 @@ namespace Bellseboss.Pery.Scripts.Input
             return _rigidbody.velocity.magnitude/10;
         }
 
-        public void AddForce(Vector3 runningDirection, float runningDistance)
+        public void AddForce(Vector3 runningDirection, float runningDistance, AttackMovementSystem.TypeOfAttack typeOfAttack)
         {
             _rigidbody.velocity = Vector3.zero;
             Vector3 globalDirection = transform.TransformDirection(runningDirection.normalized);
-            _rigidbody.AddForce(globalDirection * runningDistance, ForceMode.Impulse);
+            Debug.Log($"MovementRigidbodyV2: AddForce: {globalDirection} - {runningDistance}");
+            //_rigidbody.AddForce(globalDirection * runningDistance, ForceMode.Impulse);
             _canMove = false;
+            attackMovementSystem.Attack(globalDirection * runningDistance, typeOfAttack);
         }
 
         public void CanMove()
@@ -178,6 +182,11 @@ namespace Bellseboss.Pery.Scripts.Input
         public float GetVelocityFloat()
         {
             return _velocityOfAnimation;
+        }
+
+        public AttackMovementSystem GetAttackSystem()
+        {
+            return attackMovementSystem;
         }
     }
 }
