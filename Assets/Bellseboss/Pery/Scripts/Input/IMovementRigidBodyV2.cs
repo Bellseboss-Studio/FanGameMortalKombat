@@ -20,6 +20,8 @@ namespace Bellseboss.Pery.Scripts.Input
         void QuickAttack(float runningDistance, Vector3 runningDirection);
         void CanMove();
         Vector3 RotateToTarget(Vector3 originalDirection);
+        bool CanAttack();
+        AttackMovementSystem GetAttackSystem();
     }
     
     public interface IFocusTarget : ICharacterV2

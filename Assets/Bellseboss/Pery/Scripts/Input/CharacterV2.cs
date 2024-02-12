@@ -80,7 +80,7 @@ namespace Bellseboss.Pery.Scripts.Input
 
         private void OnKickEvent()
         {
-            if (combatSystem.CanPowerAttack)
+            if (GetAttackSystem().CanAttackAgain() && !GetAttackSystem().FullCombo())
             {
                 animationController.Kick();
                 combatSystem.PowerAttack();
@@ -90,7 +90,7 @@ namespace Bellseboss.Pery.Scripts.Input
 
         private void OnPunchEvent()
         {
-            if(combatSystem.CanQuickAttack)
+            if (GetAttackSystem().CanAttackAgain() && !GetAttackSystem().FullCombo())
             {
                 animationController.Punch();
                 combatSystem.QuickAttack();
@@ -115,16 +115,23 @@ namespace Bellseboss.Pery.Scripts.Input
 
         public void PowerAttack(float runningDistance, Vector3 runningDirection)
         {
-            rotationCharacterV2.CanRotate(false);
-            rotationCharacterV2.RotateToDirectionToMove(runningDirection);
-            movementRigidbodyV2.AddForce(runningDirection, runningDistance, AttackMovementSystem.TypeOfAttack.Power);
+            if (GetAttackSystem().CanAttackAgain() && !GetAttackSystem().FullCombo())
+            {
+                rotationCharacterV2.CanRotate(false);
+                rotationCharacterV2.RotateToDirectionToMove(runningDirection);
+                movementRigidbodyV2.AddForce(runningDirection, runningDistance, AttackMovementSystem.TypeOfAttack.Power);
+            }
         }
 
         public void QuickAttack(float runningDistance, Vector3 runningDirection)
         {
-            rotationCharacterV2.CanRotate(false);
-            rotationCharacterV2.RotateToDirectionToMove(runningDirection);
-            movementRigidbodyV2.AddForce(runningDirection, runningDistance, AttackMovementSystem.TypeOfAttack.Quick);
+            if (GetAttackSystem().CanAttackAgain() && !GetAttackSystem().FullCombo())
+            {
+                rotationCharacterV2.CanRotate(false);
+                rotationCharacterV2.RotateToDirectionToMove(runningDirection);
+                movementRigidbodyV2.AddForce(runningDirection, runningDistance,
+                    AttackMovementSystem.TypeOfAttack.Quick);
+            }
         }
 
         public void CanMove()
@@ -136,6 +143,16 @@ namespace Bellseboss.Pery.Scripts.Input
         public Vector3 RotateToTarget(Vector3 originalDirection)
         {
             return targetFocus.RotateToTarget(originalDirection);
+        }
+
+        public bool CanAttack()
+        {
+            return GetAttackSystem().CanAttackAgain();
+        }
+
+        public AttackMovementSystem GetAttackSystem()
+        {
+            return movementRigidbodyV2.GetAttackSystem();
         }
 
         public void SetCamera(CinemachineVirtualCameraBase currentCamera)

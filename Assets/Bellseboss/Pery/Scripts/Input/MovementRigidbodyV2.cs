@@ -183,5 +183,10 @@ namespace Bellseboss.Pery.Scripts.Input
         {
             return _velocityOfAnimation;
         }
+
+        public AttackMovementSystem GetAttackSystem()
+        {
+            return attackMovementSystem;
+        }
     }
 }
