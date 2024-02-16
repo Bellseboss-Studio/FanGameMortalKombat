@@ -1,36 +1,26 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Bellseboss.Pery.Scripts.Input;
 using UnityEngine;
 
-public class AttackMovementSystem : MonoBehaviour, IFocusTarget
+public class MovementADSR : MonoBehaviour
 {
+    
     public Action OnAttack, OnMidAir, OnRelease, OnSustain, OnEndAttack;
-    [SerializeField] private AttackMovementData attackMovementDataQuick;
-    [SerializeField] private AttackMovementData attackMovementDataPower;
+    [SerializeField] private AttackMovementData movementData;
     [SerializeField] private bool canAttackAgain = true;
     [SerializeField] private bool attacking;
     [SerializeField] private float _deltatimeLocal;
-    [SerializeField] private Vector3 _distance;
-    [SerializeField] private int maxNumberOfCombosQuick;
-    [SerializeField] private int maxNumberOfCombosPower;
-    [SerializeField] private int _numberOfCombosQuick;
-    [SerializeField] private int _numberOfCombosPower;
-    [SerializeField] private TargetFocus targetFocus; 
     private TeaTime _attack, _decresing, _sustain, _release;
     private Rigidbody _rigidbody;
     private RigidbodyConstraints _rigidbodyConstraints;
     private AttackMovementData _attackMovementData;
-    private bool _isQuickAttack;
-    private List<EnemyV2> _enemies = new List<EnemyV2>();
+    private Vector3 _direction;
     private StatisticsOfCharacter _statisticsOfCharacter;
-
 
     public void Configure(Rigidbody rigidbody, StatisticsOfCharacter statisticsOfCharacter)
     {
         _statisticsOfCharacter = statisticsOfCharacter;
-        targetFocus.Configure(this);
         _rigidbody = rigidbody;
         var gameObjectToPlayer = rigidbody.gameObject;
         _rigidbodyConstraints = _rigidbody.constraints;
@@ -39,29 +29,16 @@ public class AttackMovementSystem : MonoBehaviour, IFocusTarget
             _deltatimeLocal = 0;
             //_rigidbody.useGravity = false;
             _rigidbody.constraints = RigidbodyConstraints.FreezeRotationZ |
-                                     RigidbodyConstraints.FreezeRotationX;
+                                     RigidbodyConstraints.FreezeRotationX ;
             if (attacking)
             {
-                if (_isQuickAttack)
-                {
-                    if (_numberOfCombosQuick <= maxNumberOfCombosQuick)
-                    {
-                        _numberOfCombosQuick++;
-                    }
-                }
-                else
-                {
-                    if (_numberOfCombosPower <= maxNumberOfCombosPower)
-                    {
-                        _numberOfCombosPower++;
-                    }
-                }
+                
+                
             }
         }).Add(() =>
         {
             OnAttack?.Invoke();
             //Debug.Log("AttackMovementSystem: Start Attack");
-            targetFocus.EnableCollider();
         }).Loop(loop =>
         {
             _deltatimeLocal += loop.deltaTime;
@@ -74,21 +51,12 @@ public class AttackMovementSystem : MonoBehaviour, IFocusTarget
             float heightMultiplier = Mathf.Cos(t * Mathf.PI * 0.5f);
 
             var position = gameObjectToPlayer.transform.position;
-            position = Vector3.Lerp(position,
-                position + transform.forward * (_attackMovementData.maxDistance * heightMultiplier),
-                _attackMovementData.forceToAttack * loop.deltaTime);
+            position = Vector3.Lerp(position, position + _direction * (_attackMovementData.maxDistance * heightMultiplier), _attackMovementData.forceToAttack * loop.deltaTime);
             gameObjectToPlayer.transform.position = position;
         }).Add(() =>
         {
             //Debug.Log("AttackMovementSystem: Attack End");
             _decresing.Play();
-            foreach (var enemy in targetFocus.GetEnemies<EnemyV2>())
-            {
-                enemy.ReceiveDamage(_statisticsOfCharacter.damage, gameObject.transform.forward);
-                enemy.SetAnimationToHit(_isQuickAttack, _isQuickAttack ? _numberOfCombosQuick : _numberOfCombosPower);
-            }
-            targetFocus.CleanEnemies();
-            targetFocus.DisableCollider();
         });
 
         _decresing = this.tt().Pause().Add(() =>
@@ -109,10 +77,8 @@ public class AttackMovementSystem : MonoBehaviour, IFocusTarget
             float heightMultiplier = Mathf.Log(1 + t * 4);
 
             var position = gameObjectToPlayer.transform.position;
-            position = Vector3.Lerp(position,
-                position - transform.forward * (_attackMovementData.distanceToDecresing * heightMultiplier),
-                _attackMovementData.forceToDecreasing * loop.deltaTime);
-            if (!double.IsNaN(position.x) && !double.IsNaN(position.y) && !double.IsNaN(position.z))
+            position = Vector3.Lerp(position, position - _direction * (_attackMovementData.maxDistance * heightMultiplier), _attackMovementData.forceToDecreasing * loop.deltaTime);
+            if (!double.IsNaN(position.x) && !double.IsNaN(position.y) && !double.IsNaN(position.z) && !double.IsInfinity(position.x) && !double.IsInfinity(position.y) && !double.IsInfinity(position.z))
             {
                 gameObjectToPlayer.transform.position = position;
             }
@@ -156,13 +122,11 @@ public class AttackMovementSystem : MonoBehaviour, IFocusTarget
             var heightMultiplier = Mathf.Log(1 + t * _attackMovementData.forceToDecreasing);
 
             var position = gameObjectToPlayer.transform.position;
-            position = Vector3.Lerp(position, position - transform.forward * (_attackMovementData.maxDistance * heightMultiplier), _attackMovementData.forceToDecreasing * loop.deltaTime);
+            position = Vector3.Lerp(position, position - _direction * (_attackMovementData.maxDistance * heightMultiplier), _attackMovementData.forceToDecreasing * loop.deltaTime);
             gameObjectToPlayer.transform.position = position;
         }).Add(() =>
         {
             canAttackAgain = true;
-            _numberOfCombosQuick = 0;
-            _numberOfCombosPower = 0;
             attacking = false;
             _rigidbody.velocity = Vector3.zero;
             //_rigidbody.useGravity = true;
@@ -172,39 +136,20 @@ public class AttackMovementSystem : MonoBehaviour, IFocusTarget
         });
     }
 
-    public void Attack(Vector3 distance, TypeOfAttack typeOfAttack)
+    public void Attack(Vector3 direction)
     {
         //Debug.Log("AttackMovementSystem: Attack");
         canAttackAgain = false;
         attacking = true;
-        _distance = distance;
-        if(typeOfAttack == TypeOfAttack.Quick)
-        {
-            _isQuickAttack = true;
-            _attackMovementData = attackMovementDataQuick;
-        }
-        else
-        {
-            _isQuickAttack = false;
-            _attackMovementData = attackMovementDataPower;
-        }
-        
+        _attackMovementData = movementData;
+        _direction = direction;
         _decresing.Stop();
         _attack.Stop().Play();
     }
     
-    public enum TypeOfAttack
-    {
-        Quick,
-        Power
-    }
     public bool CanAttackAgain()
     {
         return canAttackAgain;
     }
 
-    public bool FullCombo()
-    {
-        return _numberOfCombosQuick >= maxNumberOfCombosQuick || _numberOfCombosPower >= maxNumberOfCombosPower;
-    }
 }

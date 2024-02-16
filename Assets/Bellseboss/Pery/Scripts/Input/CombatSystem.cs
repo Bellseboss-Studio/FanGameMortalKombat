@@ -16,7 +16,7 @@ namespace Bellseboss.Pery.Scripts.Input
         public void Configure(ICombatSystem combatSystem)
         {
             _combatSystemMediator = combatSystem;
-            _combatSystemMediator.GetAttackSystem().OnEndJump += OnEndJump;
+            _combatSystemMediator.GetAttackSystem().OnEndAttack += OnEndJump;
         }
 
         private void OnEndJump()

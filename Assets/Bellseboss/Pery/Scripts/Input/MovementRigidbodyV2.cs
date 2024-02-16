@@ -30,7 +30,7 @@ namespace Bellseboss.Pery.Scripts.Input
         private bool _jump;
         private float _velocityOfAnimation;
 
-        public void Configure(Rigidbody rigidBody, float speedWalk, float speedRun, GameObject camera, IMovementRigidBodyV2 movementRigidBodyV2)
+        public void Configure(Rigidbody rigidBody, float speedWalk, float speedRun, GameObject camera, IMovementRigidBodyV2 movementRigidBodyV2, StatisticsOfCharacter statisticsOfCharacter)
         {
             _rigidbody = rigidBody;
             _speedWalk = speedWalk;
@@ -42,7 +42,7 @@ namespace Bellseboss.Pery.Scripts.Input
             _canMove = true;
             floorController.Configure(this);
             jumpSystem.Configure(rigidBody, movementRigidBodyV2, floorController);
-            attackMovementSystem.Configure(rigidBody);
+            attackMovementSystem.Configure(rigidBody, statisticsOfCharacter);
         }
 
         
@@ -153,7 +153,7 @@ namespace Bellseboss.Pery.Scripts.Input
         {
             _rigidbody.velocity = Vector3.zero;
             Vector3 globalDirection = transform.TransformDirection(runningDirection.normalized);
-            Debug.Log($"MovementRigidbodyV2: AddForce: {globalDirection} - {runningDistance}");
+            //Debug.Log($"MovementRigidbodyV2: AddForce: {globalDirection} - {runningDistance}");
             //_rigidbody.AddForce(globalDirection * runningDistance, ForceMode.Impulse);
             _canMove = false;
             attackMovementSystem.Attack(globalDirection * runningDistance, typeOfAttack);

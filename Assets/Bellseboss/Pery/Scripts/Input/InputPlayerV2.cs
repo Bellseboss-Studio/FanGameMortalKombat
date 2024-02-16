@@ -59,7 +59,7 @@ namespace Bellseboss.Pery.Scripts.Input
         {
             if (context.started)
             {
-                Debug.Log("Jump");
+                //Debug.Log("Jump");
                 onJumpEvent?.Invoke();
             }
         }
@@ -68,7 +68,7 @@ namespace Bellseboss.Pery.Scripts.Input
         {
             if (context.started)
             {
-                Debug.Log("Action");
+                //Debug.Log("Action");
                 onActionEvent?.Invoke();
             }
         }
