@@ -9,14 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9b6c41411904566bd5891cf7143d333, type: 3}
-  m_Name: AttackMovementDataQuick
+  m_Script: {fileID: 11500000, guid: 7e3cbbf293124f70ae5bd3669bd59f2c, type: 3}
+  m_Name: StatisticsOfCharacter_Player
   m_EditorClassIdentifier: 
-  timeToAttack: 0.3
-  timeToDecreasing: 0.3
-  timeToSustain: 0
-  timeToRelease: 0.2
-  maxDistance: 1
-  distanceToDecresing: 0.1
-  forceToAttack: 5
-  forceToDecreasing: 1
+  life: 100
+  damage: 1
+  speedToMove: 10

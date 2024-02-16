@@ -53,6 +53,7 @@ namespace Bellseboss.Pery.Scripts.Input
 
         public void CanRotate(bool canRotate)
         {
+            //Debug.Log("Can Rotate: " + canRotate);
             _vector2 = Vector2.zero;
             _canRotateWhileAttack = canRotate;
         }

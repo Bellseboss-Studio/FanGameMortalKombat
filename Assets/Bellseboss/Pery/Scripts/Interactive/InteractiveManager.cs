@@ -37,7 +37,7 @@ public class InteractiveManager : MonoBehaviour
 
     private void OnAction()
     {
-        Debug.Log("InteractiveManager: OnAction");
+        //Debug.Log("InteractiveManager: OnAction");
         activable.Activate();
     }
 }

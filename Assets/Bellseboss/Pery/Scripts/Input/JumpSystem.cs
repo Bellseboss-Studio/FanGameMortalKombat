@@ -22,7 +22,7 @@ public class JumpSystem : MonoBehaviour
         {
             _rigidbody.useGravity = false;
             _rigidbody.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX;
-            Debug.Log("JumpSystem: Attack");
+            //Debug.Log("JumpSystem: Attack");
         }).Add(() =>
         {
             OnAttack?.Invoke();
@@ -93,14 +93,14 @@ public class JumpSystem : MonoBehaviour
             _rigidbody.useGravity = true;
             _rigidbody.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX;
             _deltatimeLocal = 0;
-            Debug.Log("JumpSystem: Attack End");
+            //Debug.Log("JumpSystem: Attack End");
             OnEndJump?.Invoke();
         });
     }
 
     public void Jump()
     {
-        Debug.Log("JumpSystem: Jump");
+        //Debug.Log("JumpSystem: Jump");
         _attack.Play();
     }
 }

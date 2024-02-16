@@ -6,16 +6,18 @@ namespace Bellseboss.Pery.Scripts.Input
 {
     internal class TargetFocus : MonoBehaviour
     {
-        public float coneRadius = 1.0f;
-        public float maxDistance = 10.0f;
+        public Action<GameObject> CollisionEnter;
+        public Action<GameObject> CollisionExit;
         public LayerMask layerMask;
-        public Vector3 directionToTargetLocal;
         private IFocusTarget _focusTarget;
         private List<GameObject> _enemies = new List<GameObject>();
+        private Collider _collider;
 
         public void Configure(IFocusTarget focusTarget)
         {
             _focusTarget = focusTarget;
+            _collider = GetComponent<Collider>();
+            DisableCollider();
         }
         public Vector3 RotateToTarget(Vector3 originalDirection)
         {
@@ -24,11 +26,10 @@ namespace Bellseboss.Pery.Scripts.Input
             {
                 var closestEnemy = GetClosestEnemy();
                 var directionToTarget = closestEnemy.transform.position - transform.position;
-                directionToTargetLocal = transform.InverseTransformDirection(directionToTarget);
+                var directionToTargetLocal = transform.InverseTransformDirection(directionToTarget);
                 directionToTargetLocal.y = 0;
                 directionToTargetLocal.Normalize();
                 result = directionToTargetLocal;
-                Debug.Log($"TargetFocus: RotateToTarget: directionToTargetLocal: {directionToTargetLocal}");
             }
             return result;
         }
@@ -53,8 +54,9 @@ namespace Bellseboss.Pery.Scripts.Input
         {
             if ((layerMask.value & (1 << other.gameObject.layer)) > 0)
             {
-                Debug.Log($"TargetFocus: OnTriggerEnter: other: {other.gameObject.name}");
+                //Debug.Log($"TargetFocus: OnTriggerEnter: other: {other.gameObject.name}");
                 _enemies.Add(other.gameObject);
+                CollisionEnter?.Invoke(other.gameObject);
             }
         }
         
@@ -63,8 +65,9 @@ namespace Bellseboss.Pery.Scripts.Input
             //compare layer
             if ((layerMask.value & (1 << other.gameObject.layer)) > 0)
             {
-                Debug.Log($"TargetFocus: OnTriggerExit: other: {other.gameObject.name}");
+                //Debug.Log($"TargetFocus: OnTriggerExit: other: {other.gameObject.name}");
                 _enemies.Remove(other.gameObject);
+                CollisionExit?.Invoke(other.gameObject);
             }
         }
 
@@ -76,6 +79,35 @@ namespace Bellseboss.Pery.Scripts.Input
                 return closestEnemy.transform.position;
             }
             return Vector3.zero;
+        }
+
+        public void EnableCollider()
+        {
+            _collider.enabled = true;
+        }
+
+        public void DisableCollider()
+        {
+            _collider.enabled = false;
+        }
+
+        public List<T> GetEnemies<T>()
+        {
+            var list = new List<T>();
+            //Debug.Log($"TargetFocus: GetEnemies: _enemies: {_enemies.Count}");
+            foreach (var o in _enemies)
+            {
+                if (o.TryGetComponent(out T t))
+                {
+                    list.Add(t);
+                }
+            }
+            return list;
+        }
+
+        public void CleanEnemies()
+        {
+            _enemies = new List<GameObject>();
         }
     }
 }

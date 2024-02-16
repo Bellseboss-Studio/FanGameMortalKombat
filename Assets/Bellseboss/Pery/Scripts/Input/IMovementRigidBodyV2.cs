@@ -24,7 +24,7 @@ namespace Bellseboss.Pery.Scripts.Input
         AttackMovementSystem GetAttackSystem();
     }
     
-    public interface IFocusTarget : ICharacterV2
+    public interface IFocusTarget
     {
     }
 }
