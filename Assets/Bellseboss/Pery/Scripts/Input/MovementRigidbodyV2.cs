@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Bellseboss.Pery.Scripts.Input
 {
@@ -18,6 +19,8 @@ namespace Bellseboss.Pery.Scripts.Input
         [SerializeField] private float minSpeed;
         [Range(0.5f,1)]
         [SerializeField] private float maxSpeed;
+        [SerializeField] private bool isScalableWall;
+        [SerializeField] private float forceToGravitate;
         private Rigidbody _rigidbody;
         private float _speedRun, _speedWalk;
         private InputMovementCustomV2 _inputMovementCustom;
@@ -45,6 +48,13 @@ namespace Bellseboss.Pery.Scripts.Input
             attackMovementSystem.Configure(rigidBody, statisticsOfCharacter);
         }
 
+        public void IsScalableWall(bool isScalableWall, float forceToGravitate)
+        {
+            this.forceToGravitate = forceToGravitate;
+            this.isScalableWall = isScalableWall;
+            jumpSystem.IsScalableWall(isScalableWall);
+            _jump = false;
+        }
         
         private float CalculateDirection(float axis, bool isTarget)
         {
@@ -91,19 +101,26 @@ namespace Bellseboss.Pery.Scripts.Input
             {
                 _velocityOfAnimation = 0.4f;
             }
-            //Debug.Log($"MovementRigidbodyV2: Move: {absX} - {absY} - {_choiceMax} - {_velocityOfAnimation}");
 
             var resultMovement = _inputMovementCustom.CalculateMovement(result, _choiceMax ? _speedRun : _speedWalk,
                 _camera, _rigidbody.gameObject);
-            //Debug.Log($"MovementRigidbodyV2: Move: {resultMovement}");
             
             if (_jump)
             {
-                if (floorController.IsTouchingFloor())
+                if (floorController.IsTouchingFloor() || isScalableWall)
                 {
                     jumpSystem.Jump();
                     _jump = false;   
                 }
+            }
+            if(isScalableWall)
+            {
+                Debug.Log($"MovementRigidbodyV2: Move: isScalableWall: {isScalableWall} forceToGravitate: {forceToGravitate} resultMovement: {resultMovement}");
+                _rigidbody.velocity = new Vector3(resultMovement.x, forceToGravitate, resultMovement.z);
+            }
+            else
+            {
+                _rigidbody.velocity = new Vector3(resultMovement.x, _rigidbody.velocity.y, resultMovement.z);
             }
             _rigidbody.velocity = new Vector3(resultMovement.x, _rigidbody.velocity.y, resultMovement.z);
             if(_rigidbody.velocity.y > 0)

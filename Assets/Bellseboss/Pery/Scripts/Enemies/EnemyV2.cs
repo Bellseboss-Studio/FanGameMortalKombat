@@ -1,15 +1,22 @@
+using System;
+using Bellseboss.Pery.Scripts.Input;
 using UnityEngine;
 
-public class EnemyV2 : MonoBehaviour
+public class EnemyV2 : MonoBehaviour, IAnimationController
 {
     [SerializeField] private StatisticsOfCharacter statisticsOfCharacter;
     [SerializeField] private MovementADSR movementADSR;
+    [SerializeField] private AnimationController animationController;
+    [SerializeField] private GameObject model;
+    private GameObject _model;
     private StatisticsOfCharacter _statisticsOfCharacter;
 
     private void Start()
     {
         _statisticsOfCharacter = Instantiate(statisticsOfCharacter);
         movementADSR.Configure(GetComponent<Rigidbody>(), _statisticsOfCharacter);
+        _model = Instantiate(model, transform);
+        animationController.Configure(_model.GetComponent<Animator>(), this);
     }
 
     public void ReceiveDamage(int damage, Vector3 direction)
