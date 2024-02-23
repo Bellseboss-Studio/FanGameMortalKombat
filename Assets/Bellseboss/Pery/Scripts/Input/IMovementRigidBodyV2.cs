@@ -7,7 +7,7 @@ namespace Bellseboss.Pery.Scripts.Input
         void UpdateAnimation();
     }
     
-    public interface IAnimationController : ICharacterV2
+    public interface IAnimationController
     {
     }
     
