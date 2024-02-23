@@ -8,10 +8,11 @@ public class JumpSystem : MonoBehaviour
     [SerializeField] private float timeToAttack, timeToDecreasing, timeToSustain, timeToRelease;
     [SerializeField] private float maxHeighJump, heightDecreasing;
     [SerializeField] private float forceToAttack, forceToDecreasing;
-    private TeaTime _attack, _decresing, _sustain, _release;
+    private TeaTime _attack, _decresing, _sustain, _release, _endJump;
     private Rigidbody _rigidbody;
     private float _deltatimeLocal;
     private RigidbodyConstraints _rigidbodyConstraints;
+    private bool _isScalableWall;
 
     public void Configure(Rigidbody rigidbody, IMovementRigidBodyV2 movementRigidBodyV2, FloorController floorController)
     {
@@ -41,7 +42,11 @@ public class JumpSystem : MonoBehaviour
             var position = gameObjectToPlayer.transform.position;
             position = Vector3.Lerp(position, position + Vector3.up * (maxHeighJump * heightMultiplier), forceToAttack * loop.deltaTime);
             gameObjectToPlayer.transform.position = position;
-        }).Add(() =>
+        }).Add(()=>
+        {
+            _decresing.Play();
+        });
+        _decresing = this.tt().Pause().Add(() =>
         {
             OnMidAir?.Invoke();
         }).Loop(loop =>
@@ -61,6 +66,17 @@ public class JumpSystem : MonoBehaviour
             gameObjectToPlayer.transform.position = position;
         }).Add(() =>
         {
+            if (!_isScalableWall)
+            {
+                _sustain.Play();
+            }
+            else
+            {
+                _endJump.Play();
+            }
+        });
+        _sustain = this.tt().Pause().Add(() =>
+        {
             OnSustain?.Invoke();
         }).Loop(loop =>
         {
@@ -72,8 +88,12 @@ public class JumpSystem : MonoBehaviour
             }
         }).Add(() =>
         {
+            _release.Play();
+        });
+        _release = this.tt().Pause().Add(() =>
+        {
             OnRelease?.Invoke();
-        }).Loop(loop=>
+        }).Loop(loop =>
         {
             //Debug.Log("JumpSystem: Release Loop");
             _deltatimeLocal += loop.deltaTime;
@@ -86,9 +106,14 @@ public class JumpSystem : MonoBehaviour
             var heightMultiplier = Mathf.Log(1 + t * forceToDecreasing);
 
             var position = gameObjectToPlayer.transform.position;
-            position = Vector3.Lerp(position, position - Vector3.up * (maxHeighJump * heightMultiplier), forceToDecreasing * loop.deltaTime);
+            position = Vector3.Lerp(position, position - Vector3.up * (maxHeighJump * heightMultiplier),
+                forceToDecreasing * loop.deltaTime);
             gameObjectToPlayer.transform.position = position;
-        }).Add(() =>
+        }). Add(()=>
+        {
+            _endJump.Play();
+        });
+        _endJump = this.tt().Pause().Add(() =>
         {
             _rigidbody.useGravity = true;
             _rigidbody.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX;
@@ -102,5 +127,10 @@ public class JumpSystem : MonoBehaviour
     {
         //Debug.Log("JumpSystem: Jump");
         _attack.Play();
+    }
+
+    public void IsScalableWall(bool isScalableWall)
+    {
+        _isScalableWall = isScalableWall;
     }
 }
