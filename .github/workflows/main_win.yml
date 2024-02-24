@@ -55,10 +55,8 @@ jobs:
           path: build
 
       - name: Compress build
-        uses: actions/create-zip@v1
-        with:
-          dir: build
-          zipname: mkpoc.zip
+        run: |
+          zip -r mkpoc.zip build
 
       - name: Send to FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
@@ -70,3 +68,4 @@ jobs:
           server-dir: ${{ secrets.FTP_PATH }}
           port: 21
           protocol: ftps
+          timeout: 120000
