@@ -49,10 +49,12 @@ jobs:
           name: build-Windows
           path: build
       - name: Send to FTP
-        uses: SamKirkland/FTP-Deploy-Action@3.1.1
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
-          ftp-server: ${{ secrets.FTP_SERVER }}
-          ftp-username: ${{ secrets.FTP_USERNAME }}
-          ftp-password: ${{ secrets.FTP_PASSWORD }}
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
           local-dir: build
-          git-ftp-args: ${{ secrets.FTP_PATH }}
+          server-dir: ${{ secrets.FTP_PATH }}
+          port: 21
+          protocol: ftps
