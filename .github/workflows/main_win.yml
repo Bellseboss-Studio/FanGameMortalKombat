@@ -56,7 +56,7 @@ jobs:
 
       - name: Compress build
         run: |
-          zip -r files/mkpoc.zip build
+          zip -r files/mkoc.zip build
 
       - uses: appleboy/scp-action@v0.1.7
         with:
@@ -64,5 +64,5 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           port: ${{ secrets.FTP_PORT }}
-          source: files/mkpoc.zip
+          source: files/mkoc.zip
           target: ${{ secrets.FTP_PATH }}
