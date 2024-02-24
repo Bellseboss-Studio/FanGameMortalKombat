@@ -2,9 +2,6 @@ name: Actions Windows 😎
 
 on:
   workflow_dispatch: {}
-  push:
-    branches:
-      - main
   pull_request:
     branches:
       - main
@@ -55,11 +52,11 @@ jobs:
           path: build
 
       - name: Create directory for zip
-        run: mkdir zip_directory
+        run: mkdir files
 
       - name: Compress build
         run: |
-          zip -r zip_directory/mkpoc.zip build
+          zip -r files/mkpoc.zip build
 
       - uses: appleboy/scp-action@v0.1.7
         with:
@@ -67,5 +64,5 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           port: ${{ secrets.FTP_PORT }}
-          source: zip_directory/mkpoc.zip
+          source: files/mkpoc.zip
           target: ${{ secrets.FTP_PATH }}
