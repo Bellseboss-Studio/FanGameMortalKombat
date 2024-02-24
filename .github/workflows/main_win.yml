@@ -2,6 +2,8 @@ name: Actions Windows 😎
 on:
   workflow_dispatch: {}
   push:
+    branches:
+      - main
   pull_request:
     branches:
       - main
@@ -49,7 +51,7 @@ jobs:
       - name: Send to FTP
         uses: SamKirkland/FTP-Deploy-Action@3.1.1
         with:
-          ftp-server: ${{ secrets.FTP_SERVER }}
+          ftp-server: ${{ secrets.FTP_SERVER }}:21
           ftp-username: ${{ secrets.FTP_USERNAME }}
           ftp-password: ${{ secrets.FTP_PASSWORD }}
           local-dir: build
