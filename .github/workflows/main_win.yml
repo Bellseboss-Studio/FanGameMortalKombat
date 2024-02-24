@@ -54,9 +54,12 @@ jobs:
           name: build-Windows
           path: build
 
+      - name: Create directory for zip
+        run: mkdir zip_directory
+
       - name: Compress build
         run: |
-          zip -r mkpoc.zip build
+          zip -r zip_directory/mkpoc.zip build
 
       - name: Send to FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
