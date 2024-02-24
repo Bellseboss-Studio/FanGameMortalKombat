@@ -74,4 +74,4 @@ jobs:
     steps:
       - name: Send a POST request
         run: |
-          curl -X POST -H "Content-Type: application/json" -d '${{ secrets.DOWNLOAD_UPDATE_JSON }}' ${{ secrets.DOWNLOAD_UPDATE_URL }}
+          curl -X POST -H "Content-Type: application/json" -d '{"comment": "${{ steps.last_commit.outputs.message }}", "data": ${{ secrets.DOWNLOAD_UPDATE_JSON }}}' ${{ secrets.DOWNLOAD_UPDATE_URL }}
