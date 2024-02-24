@@ -61,14 +61,11 @@ jobs:
         run: |
           zip -r zip_directory/mkpoc.zip build
 
-      - name: Send to FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      - uses: appleboy/scp-action@v0.1.7
         with:
-          server: ${{ secrets.FTP_SERVER }}
+          host: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: zip_directory/
-          server-dir: ${{ secrets.FTP_PATH }}
-          port: 21
-          protocol: ftps
-          timeout: 120000
+          port: ${{ secrets.FTP_PORT }}
+          source: zip_directory/mkpoc.zip
+          target: ${{ secrets.FTP_PATH }}
