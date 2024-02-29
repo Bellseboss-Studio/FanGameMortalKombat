@@ -75,4 +75,5 @@ jobs:
       - name: Send a POST request
         if: ${{ secrets.CAN_SEND_EMAIL == '1' }}
         run: |
-          curl -X POST -H "Content-Type: application/json" -d '{"comment": "${{ steps.last_commit.outputs.message }}", "data": ${{ secrets.DOWNLOAD_UPDATE_JSON }}}' ${{ secrets.DOWNLOAD_UPDATE_URL }}
+          response=$(curl -X POST -H "Content-Type: application/json" -d '{"comment": "${{ steps.last_commit.outputs.message }}", "data": {"key":"${{ secrets.DOWNLOAD_UPDATE_JSON }}"}}' ${{ secrets.DOWNLOAD_UPDATE_URL }})
+          echo "Response code: $response"
