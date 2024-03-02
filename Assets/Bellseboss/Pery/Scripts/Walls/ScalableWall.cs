@@ -16,14 +16,14 @@ public class ScalableWall : MonoBehaviour,IFocusTarget
 
     private void TargetFocusOnCollisionExit(GameObject obj)
     {
-        Debug.Log($"ScalableWall: TargetFocusOnCollisionExit: obj: {obj.name}");
+        //Debug.Log($"ScalableWall: TargetFocusOnCollisionExit: obj: {obj.name}");
         _characterV2.LeaveGround(false, 0);
         _characterV2 = null;
     }
 
     private void TargetFocusOnCollisionEnter(GameObject obj)
     {
-        Debug.Log($"ScalableWall: TargetFocusOnCollisionEnter: obj: {obj.name}");
+        //Debug.Log($"ScalableWall: TargetFocusOnCollisionEnter: obj: {obj.name}");
         _characterV2 = obj.GetComponent<CharacterV2>();
         //levitate the character
         _characterV2.LeaveGround(true, forceToGravitate);

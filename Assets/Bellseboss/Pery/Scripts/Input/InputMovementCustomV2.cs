@@ -15,10 +15,10 @@ namespace Bellseboss.Pery.Scripts.Input
         {
             //Debug.Log($"InputMovementCustomV2: Input: {input}");
             var direction = player.transform.position - camera.transform.position;
-            //direction.y = 0;
             direction.Normalize();
             var right = new Vector3(direction.z, 0, -direction.x);
             var result = input.x * right + input.y * direction;
+            result.Normalize();
             return result * speed;
         }
     }

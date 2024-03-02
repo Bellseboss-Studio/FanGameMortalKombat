@@ -1,39 +1,40 @@
 name: Actions Windows 😎
+
 on:
   workflow_dispatch: {}
-  push:
-    branches:
-      - main
   pull_request:
     branches:
       - main
+
 jobs:
   build:
     name: Build Project
     runs-on: ubuntu-latest
     steps:
-      # Checkout
       - name: Checkout repository
         uses: actions/checkout@v2
         with:
           lfs: true
-      # Cache
-      - uses: actions/cache@v2
+
+      - name: Cache Library
+        uses: actions/cache@v2
         with:
           path: Library
           key: Library
-      # Build
+
       - name: Build project
         uses: game-ci/unity-builder@v2
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
         with:
           targetPlatform: StandaloneWindows64
-      - uses: actions/upload-artifact@v2
+
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v2
         with:
           name: build-Windows
           path: build
-      
+
   send_to_ftp:
     name: Send to FTP
     runs-on: ubuntu-latest
@@ -43,16 +44,36 @@ jobs:
         uses: actions/checkout@v2
         with:
           lfs: true
+
       - name: Download build
         uses: actions/download-artifact@v2
         with:
           name: build-Windows
           path: build
-      - name: Send to FTP
-        uses: SamKirkland/FTP-Deploy-Action@3.1.1
+
+      - name: Create directory for zip
+        run: mkdir files
+
+      - name: Compress build
+        run: |
+          zip -r files/mkoc.zip build
+
+      - uses: appleboy/scp-action@v0.1.7
         with:
-          ftp-server: ${{ secrets.FTP_SERVER }}
-          ftp-username: ${{ secrets.FTP_USERNAME }}
-          ftp-password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: build
-          git-ftp-args: ${{ secrets.FTP_PATH }}
+          host: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          port: ${{ secrets.FTP_PORT }}
+          source: files/mkoc.zip
+          target: ${{ secrets.FTP_PATH }}
+
+  update_the_downloads:
+    runs-on: ubuntu-latest
+    needs: send_to_ftp
+    name: Update the downloads in server
+    steps:
+      - name: Send a POST request
+        if: ${{ secrets.CAN_SEND_EMAIL == '1' }}
+        run: |
+          response=$(curl -X POST -H "Content-Type: application/json" -d '{"comment": "${{ steps.last_commit.outputs.message }}", "data": {"key":"${{ secrets.DOWNLOAD_UPDATE_JSON }}"}}' ${{ secrets.DOWNLOAD_UPDATE_URL }})
+          echo "Response code: $response"
