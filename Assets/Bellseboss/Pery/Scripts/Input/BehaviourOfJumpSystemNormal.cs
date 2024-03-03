@@ -21,13 +21,14 @@ namespace Bellseboss.Pery.Scripts.Input
 
         public void Configure(Rigidbody _rigidbody)
         {
+            Debug.Log($"Configured BehaviourOfJumpSystemNormal: {_rigidbody.gameObject.name}");
             var gameObjectToPlayer = _rigidbody.gameObject;
             _attack = this.tt().Pause().Add(() =>
             {
                 _rigidbody.useGravity = false;
                 _rigidbody.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotationZ |
                                          RigidbodyConstraints.FreezeRotationX;
-                Debug.Log("JumpSystem: Attack");
+                //Debug.Log("JumpSystem: Attack");
             }).Add(() => { OnAttack?.Invoke(); }).Loop(loop =>
             {
                 //Debug.Log("JumpSystem: Attack Loop");
@@ -47,7 +48,7 @@ namespace Bellseboss.Pery.Scripts.Input
             }).Add(() => { _decresing.Play(); });
             _decresing = this.tt().Pause().Add(() => { OnMidAir?.Invoke(); }).Loop(loop =>
             {
-                Debug.Log("JumpSystem: Decreasing Loop");
+                //Debug.Log("JumpSystem: Decreasing Loop");
                 _deltatimeLocal += loop.deltaTime;
                 if (_deltatimeLocal >= timeToAttack + timeToDecreasing)
                 {
@@ -64,7 +65,7 @@ namespace Bellseboss.Pery.Scripts.Input
             }).Add(() => { _sustain.Play(); });
             _sustain = this.tt().Pause().Add(() => { OnSustain?.Invoke(); }).Loop(loop =>
             {
-                Debug.Log("JumpSystem: Sustain Loop");
+                //Debug.Log("JumpSystem: Sustain Loop");
                 _deltatimeLocal += loop.deltaTime;
                 if (_deltatimeLocal >= timeToAttack + timeToDecreasing + timeToSustain)
                 {
@@ -75,7 +76,7 @@ namespace Bellseboss.Pery.Scripts.Input
             _release = this.tt().Pause().Add(() =>
             {
                 OnRelease?.Invoke();
-                Debug.Log("JumpSystem: Release Loop");
+                //Debug.Log("JumpSystem: Release Loop");
             }).Loop(loop =>
             {
                 _deltatimeLocal += loop.deltaTime;
@@ -98,7 +99,7 @@ namespace Bellseboss.Pery.Scripts.Input
                 _rigidbody.useGravity = true;
                 _rigidbody.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX;
                 _deltatimeLocal = 0;
-                Debug.Log("JumpSystem: Attack End");
+                //Debug.Log("JumpSystem: Attack End");
                 OnEndJump?.Invoke();
             });
         }
@@ -121,6 +122,11 @@ namespace Bellseboss.Pery.Scripts.Input
         public TeaTime GetRelease()
         {
             return _release;
+        }
+
+        public TeaTime GetEndJump()
+        {
+            return _endJump;
         }
 
         public void StopAll()

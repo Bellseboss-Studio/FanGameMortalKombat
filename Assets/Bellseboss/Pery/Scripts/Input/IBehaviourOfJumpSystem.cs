@@ -15,6 +15,7 @@ namespace Bellseboss.Pery.Scripts.Input
         public TeaTime GetDecay();
         public TeaTime GetSustain();
         public TeaTime GetRelease();
+        TeaTime GetEndJump();
         void StopAll();
     }
 }

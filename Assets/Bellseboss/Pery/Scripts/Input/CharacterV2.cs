@@ -176,9 +176,9 @@ namespace Bellseboss.Pery.Scripts.Input
             animationController.Movement(movementRigidbodyV2.GetVelocity(), 0);
         }
 
-        public void LeaveGround(bool leave, float forceToGravitate)
+        public void LeaveGround(bool leave, float forceToGravitate, GameObject wall)
         {
-            movementRigidbodyV2.IsScalableWall(leave, forceToGravitate);
+            movementRigidbodyV2.IsScalableWall(leave, forceToGravitate, wall);
         }
     }
 }

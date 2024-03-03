@@ -48,11 +48,11 @@ namespace Bellseboss.Pery.Scripts.Input
             attackMovementSystem.Configure(rigidBody, statisticsOfCharacter);
         }
 
-        public void IsScalableWall(bool isScalableWall, float forceToGravitate)
+        public void IsScalableWall(bool isScalableWall, float forceToGravitate, GameObject wall)
         {
             this.forceToGravitate = forceToGravitate;
             this.isScalableWall = isScalableWall;
-            jumpSystem.IsScalableWall(isScalableWall);
+            jumpSystem.IsScalableWall(isScalableWall, floorController, wall);
             _jump = false;
         }
         
@@ -115,7 +115,6 @@ namespace Bellseboss.Pery.Scripts.Input
             }
             if(isScalableWall)
             {
-                Debug.Log($"MovementRigidbodyV2: Move: isScalableWall: {isScalableWall} forceToGravitate: {forceToGravitate} resultMovement: {resultMovement}");
                 _rigidbody.velocity = new Vector3(resultMovement.x, forceToGravitate, resultMovement.z);
             }
             else
