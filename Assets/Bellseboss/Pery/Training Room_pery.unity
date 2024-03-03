@@ -7455,6 +7455,7 @@ MonoBehaviour:
   forceToAttack: 1
   forceToDecreasing: 1
   floorController: {fileID: 835371847}
+  player: {fileID: 0}
 --- !u!1 &1596275104
 GameObject:
   m_ObjectHideFlags: 0
@@ -11190,10 +11191,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1538808726, guid: 42c0eb4b6f74ebf408beb13f7cb02f99, type: 3}
-      propertyPath: forceToGravitate
-      value: -1
-      objectReference: {fileID: 0}
     - target: {fileID: 3793837847320017246, guid: 42c0eb4b6f74ebf408beb13f7cb02f99, type: 3}
       propertyPath: m_RootOrder
       value: 28
