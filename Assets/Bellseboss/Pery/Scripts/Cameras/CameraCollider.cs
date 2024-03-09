@@ -10,7 +10,7 @@ public class CameraCollider : MonoBehaviour, IColliderWithLayer
     private void OnTriggerEnter(Collider other)
     {
         var o = other.gameObject;
-        Debug.Log($"CameraCollider:OnTriggerEnter: {o.name} - {o.layer} - {layer}");
+        //Debug.Log($"CameraCollider:OnTriggerEnter: {o.name} - {o.layer} - {layer}");
         //validate if the layer is the same
         if ((layer.value & 1 << o.layer) > 0)
         {
@@ -21,7 +21,7 @@ public class CameraCollider : MonoBehaviour, IColliderWithLayer
     private void OnTriggerExit(Collider other)
     {
         var o = other.gameObject;
-        Debug.Log($"CameraCollider:OnTriggerExit: {o.name} - {o.layer} - {layer}");
+        //Debug.Log($"CameraCollider:OnTriggerExit: {o.name} - {o.layer} - {layer}");
         //validate if the layer is the same
         if ((layer.value & 1 << o.layer) > 0)
         {
