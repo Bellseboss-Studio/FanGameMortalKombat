@@ -113,18 +113,20 @@ namespace Bellseboss.Pery.Scripts.Input
         private void OnMove(Vector2 vector2)
         {
             
-            if(rotationCharacterV2.CanRotate())
+            if(rotationCharacterV2.CanRotate() && !movementRigidbodyV2.IsJump)
             {
                 rotationCharacterV2.Direction(vector2);
             }
+
             movementRigidbodyV2.Direction(vector2);
+
         }
 
         public void PowerAttack(float runningDistance, Vector3 runningDirection)
         {
             if (GetAttackSystem().CanAttackAgain() && !GetAttackSystem().FullCombo())
             {
-                rotationCharacterV2.RotateToDirectionToMove(runningDirection);
+                rotationCharacterV2.Direction(runningDirection);
                 movementRigidbodyV2.AddForce(runningDirection, runningDistance, AttackMovementSystem.TypeOfAttack.Power);
             }
         }
@@ -133,7 +135,7 @@ namespace Bellseboss.Pery.Scripts.Input
         {
             if (GetAttackSystem().CanAttackAgain() && !GetAttackSystem().FullCombo())
             {
-                rotationCharacterV2.RotateToDirectionToMove(runningDirection);
+                rotationCharacterV2.Direction(runningDirection);
                 movementRigidbodyV2.AddForce(runningDirection, runningDistance,
                     AttackMovementSystem.TypeOfAttack.Quick);
             }
@@ -176,9 +178,29 @@ namespace Bellseboss.Pery.Scripts.Input
             animationController.Movement(movementRigidbodyV2.GetVelocity(), 0);
         }
 
-        public void LeaveGround(bool leave, float forceToGravitate, GameObject wall)
+        public void ChangeToNormalJump()
         {
-            movementRigidbodyV2.IsScalableWall(leave, forceToGravitate, wall);
+            movementRigidbodyV2.ChangeToNormalJump();
+        }
+
+        public void ChangeRotation(Vector3 rotation)
+        {
+            rotationCharacterV2.ChangeDirection(rotation);
+        }
+
+        public void RestoreRotation()
+        {
+            rotationCharacterV2.RestoreRotation();
+        }
+
+        public void LeaveGround(bool leave, float forceToGravitate, Vector3 direction)
+        {
+            movementRigidbodyV2.IsScalableWall(leave, forceToGravitate, direction);
+        }
+
+        public void ExitToWall()
+        {
+            movementRigidbodyV2.ExitToWall();
         }
     }
 }

@@ -10,7 +10,7 @@ namespace Bellseboss.Pery.Scripts.Input
         public Action OnSustain { get; set; }
         public Action OnRelease { get; set; }
         public Action OnEndJump { get; set; }
-        public void Configure(Rigidbody _rigidbody);
+        public void Configure(Rigidbody _rigidbody, IJumpSystem jumpSystem);
         public TeaTime GetAttack();
         public TeaTime GetDecay();
         public TeaTime GetSustain();

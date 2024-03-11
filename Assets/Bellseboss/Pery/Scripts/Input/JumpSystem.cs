@@ -3,7 +3,7 @@ using Bellseboss.Pery.Scripts.Input;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-public class JumpSystem : MonoBehaviour
+public class JumpSystem : MonoBehaviour, IJumpSystem
 {
     public Action OnAttack, OnMidAir, OnRelease, OnSustain, OnEndJump;
     [SerializeField, InterfaceType(typeof(IBehaviourOfJumpSystem))]
@@ -17,17 +17,21 @@ public class JumpSystem : MonoBehaviour
     private float _deltatimeLocal;
     private RigidbodyConstraints _rigidbodyConstraints;
     private bool _isScalableWall;
+    private FloorController _floorController;
+    private IMovementRigidBodyV2 _movementRigidBodyV2;
 
     public void Configure(Rigidbody rigidbody, IMovementRigidBodyV2 movementRigidBodyV2, FloorController floorController)
     {
         Debug.Log($"Configured JumpSystem: {rigidbody.gameObject.name}");
-        BehaviourOfJumpSystemWalls.Configure(rigidbody);
-        BehaviourOfJumpSystemNormal.Configure(rigidbody);
+        BehaviourOfJumpSystemWalls.Configure(rigidbody, this);
+        BehaviourOfJumpSystemNormal.Configure(rigidbody, this);
         _rigidbody = rigidbody;
         var gameObjectToPlayer = rigidbody.gameObject;
         _rigidbodyConstraints = _rigidbody.constraints;
+        _floorController = floorController;
+        _movementRigidBodyV2 = movementRigidBodyV2;
         
-        IsScalableWall(false, floorController, gameObject);
+        movementRigidBodyV2.ChangeToNormalJump();
     }
 
     public void Jump()
@@ -35,8 +39,14 @@ public class JumpSystem : MonoBehaviour
         _attack.Play();
     }
 
-    public void IsScalableWall(bool isScalableWall, FloorController floorController, GameObject wall)
+    public void IsScalableWall(bool isScalableWall, FloorController floorController, Vector3 direction)
     {
+        _attack?.Stop();
+        _decresing?.Stop();
+        _sustain?.Stop();
+        _release?.Stop();
+        _endJump?.Stop();
+        
         if(isScalableWall && !floorController.IsTouchingFloor())
         {
             _attack = BehaviourOfJumpSystemWalls.GetAttack();
@@ -66,7 +76,7 @@ public class JumpSystem : MonoBehaviour
             };
             var behaviourOfJumpSystemWallsMono = BehaviourOfJumpSystemWalls as BehaviourOfJumpSystemWalls;
             System.Diagnostics.Debug.Assert(behaviourOfJumpSystemWallsMono != null, nameof(behaviourOfJumpSystemWallsMono) + " != null");
-            behaviourOfJumpSystemWallsMono.ConfigureWall(wall);
+            behaviourOfJumpSystemWallsMono.ConfigureWall(direction);
         }
         else
         {
@@ -96,5 +106,34 @@ public class JumpSystem : MonoBehaviour
                 OnEndJump?.Invoke();
             };
         }
+        
     }
+
+    public void ChangeNormalWall()
+    {
+        _movementRigidBodyV2.ChangeToNormalJump();
+        _release.Play();
+    }
+
+    public void ChangeRotation(Vector3 rotation)
+    {
+        _movementRigidBodyV2.ChangeRotation(rotation);
+    }
+
+    public void RestoreRotation()
+    {
+        _movementRigidBodyV2.RestoreRotation();
+    }
+
+    public void ExitToWall()
+    {
+        //TODO: doing something went exit to wall
+    }
+}
+
+public interface IJumpSystem
+{
+    void ChangeNormalWall();
+    void ChangeRotation(Vector3 rotation);
+    void RestoreRotation();
 }

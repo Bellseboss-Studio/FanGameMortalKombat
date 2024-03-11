@@ -19,7 +19,7 @@ namespace Bellseboss.Pery.Scripts.Input
         [SerializeField] private FloorController floorController;
 
 
-        public void Configure(Rigidbody _rigidbody)
+        public void Configure(Rigidbody _rigidbody, IJumpSystem jumpSystem)
         {
             Debug.Log($"Configured BehaviourOfJumpSystemNormal: {_rigidbody.gameObject.name}");
             var gameObjectToPlayer = _rigidbody.gameObject;
@@ -76,7 +76,7 @@ namespace Bellseboss.Pery.Scripts.Input
             _release = this.tt().Pause().Add(() =>
             {
                 OnRelease?.Invoke();
-                //Debug.Log("JumpSystem: Release Loop");
+                Debug.Log("JumpSystem BehaviourOfJumpSystemNormal: Release");
             }).Loop(loop =>
             {
                 _deltatimeLocal += loop.deltaTime;
