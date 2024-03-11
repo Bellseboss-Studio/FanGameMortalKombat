@@ -54,7 +54,7 @@ namespace Bellseboss.Pery.Scripts.Input
                 float heightMultiplier = Mathf.Cos(t * Mathf.PI * 0.5f);
 
                 var position = gameObjectToPlayer.transform.position;
-                position = Vector3.Lerp(position, position + _direction * (maxHeighJump * heightMultiplier),
+                position = Vector3.Lerp(position, position + _direction + Vector3.up * (maxHeighJump * heightMultiplier),
                     forceToAttack * loop.deltaTime);
                 Debug.Log($"position {gameObjectToPlayer.transform.position} target {position} con direccion {_direction} con time {_deltatimeLocalToJump}");
                 gameObjectToPlayer.transform.position = position;
