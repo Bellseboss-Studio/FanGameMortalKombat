@@ -171,9 +171,9 @@ namespace Bellseboss.Pery.Scripts.Input
             attackMovementSystem.Attack(globalDirection * runningDistance, typeOfAttack);
         }
 
-        public void CanMove()
+        public void CanMove(bool canMove)
         {
-            _canMove = true;
+            _canMove = canMove;
         }
 
         public Vector3 GetVelocityV3()

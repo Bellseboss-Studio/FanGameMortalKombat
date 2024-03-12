@@ -1,7 +1,6 @@
 ﻿using System;
 using Cinemachine;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Bellseboss.Pery.Scripts.Input
 {
@@ -50,6 +49,18 @@ namespace Bellseboss.Pery.Scripts.Input
             movementRigidbodyV2.GetJumpSystem().OnEndJump += JumpOnEndJump;
             
             rotationCharacterV2.CanRotate(true);
+        }
+        
+
+        public void ActivateAnimationTrigger(string animationTrigger)
+        {
+            animationController.ActivateTrigger(animationTrigger);
+        }
+
+        public void SetPositionAndRotation(GameObject refOfPlayer)
+        {
+            transform.position = Vector3.Lerp(transform.position, refOfPlayer.transform.position, 0.5f);
+            transform.rotation = Quaternion.Lerp(transform.rotation, refOfPlayer.transform.rotation, 0.5f);
         }
 
         private void JumpOnEndJump()
@@ -140,10 +151,16 @@ namespace Bellseboss.Pery.Scripts.Input
                     AttackMovementSystem.TypeOfAttack.Quick);
             }
         }
+        
+        public void DisableControls()
+        {
+            rotationCharacterV2.CanRotate(false);
+            movementRigidbodyV2.CanMove(false);
+        }
 
         public void CanMove()
         {
-            movementRigidbodyV2.CanMove();
+            movementRigidbodyV2.CanMove(true);
             rotationCharacterV2.CanRotate(true);
         }
 
