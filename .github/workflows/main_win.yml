@@ -1,0 +1,78 @@
+name: Actions Windows 😎
+
+on:
+  workflow_dispatch: {}
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Build Project
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          lfs: true
+
+      - name: Cache Library
+        uses: actions/cache@v2
+        with:
+          path: Library
+          key: Library
+
+      - name: Build project
+        uses: game-ci/unity-builder@v2
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+        with:
+          targetPlatform: StandaloneWindows64
+
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: build-Windows
+          path: build
+
+  send_to_ftp:
+    name: Send to FTP
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          lfs: true
+
+      - name: Download build
+        uses: actions/download-artifact@v2
+        with:
+          name: build-Windows
+          path: build
+
+      - name: Create directory for zip
+        run: mkdir files
+
+      - name: Compress build
+        run: |
+          zip -r files/mkoc.zip build
+
+      - uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          port: ${{ secrets.FTP_PORT }}
+          source: files/mkoc.zip
+          target: ${{ secrets.FTP_PATH }}
+
+  update_the_downloads:
+    runs-on: ubuntu-latest
+    needs: send_to_ftp
+    name: Update the downloads in server
+    steps:
+      - name: Send a POST request
+        run: |
+          response=$(curl -X POST -H "Content-Type: application/json" -d '{"comment": "${{ steps.last_commit.outputs.message }}", "data": {"key":"${{ secrets.DOWNLOAD_UPDATE_JSON }}"}}' ${{ secrets.DOWNLOAD_UPDATE_URL }})
+          echo "Response code: $response"
