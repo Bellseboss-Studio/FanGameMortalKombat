@@ -47,7 +47,7 @@ public class InteractiveManager : MonoBehaviour
     
     private void Update()
     {
-        if(!canChangePosition) return;
+        if(!canChangePosition || _characterV2 == null) return;
         _characterV2.SetPositionAndRotation(refOfPlayer);
         deltaTimeLocal += Time.deltaTime;
         if (deltaTimeLocal >= playableDirector.duration)
@@ -57,10 +57,14 @@ public class InteractiveManager : MonoBehaviour
         }
     }
 
+    public void SignalAction()
+    {
+        activable.Activate();
+    }
+
     private void OnAction()
     {
         //Debug.Log("InteractiveManager: OnAction");
-        activable.Activate();
         playableDirector.Play();
         animatorInteractiveObject.SetTrigger("activate");
         _characterV2.DisableControls();

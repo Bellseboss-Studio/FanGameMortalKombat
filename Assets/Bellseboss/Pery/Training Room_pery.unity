@@ -1671,6 +1671,7 @@ GameObject:
   - component: {fileID: 249632742}
   - component: {fileID: 249632741}
   - component: {fileID: 249632740}
+  - component: {fileID: 249632743}
   m_Layer: 0
   m_Name: Lever
   m_TagString: Untagged
@@ -1697,6 +1698,8 @@ PlayableDirector:
     value: {fileID: 899097041}
   - key: {fileID: 1996788797604656131, guid: 437988027bcd7c842a8fec211f0f8eab, type: 2}
     value: {fileID: 1223511724}
+  - key: {fileID: -6621276502064386843, guid: 437988027bcd7c842a8fec211f0f8eab, type: 2}
+    value: {fileID: 249632743}
   m_ExposedReferences:
     m_References:
     - 2119b84b0de573a458d506331b297366: {fileID: 899097039}
@@ -1737,6 +1740,36 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &249632743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 249632739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Events:
+    m_Signals:
+    - {fileID: 11400000, guid: 61f1eaacf35be0444ad45db11f9630f9, type: 2}
+    m_Events:
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 249632741}
+          m_TargetAssemblyTypeName: InteractiveManager, Assembly-CSharp
+          m_MethodName: SignalAction
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &337131430
 GameObject:
   m_ObjectHideFlags: 0
@@ -3717,7 +3750,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8585594586927423070, guid: 2d0718da788d9bd4ab93a688c5e0e407, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 93.05
+      value: 6.5
       objectReference: {fileID: 0}
     - target: {fileID: 8585594586927423070, guid: 2d0718da788d9bd4ab93a688c5e0e407, type: 3}
       propertyPath: m_LocalRotation.w
@@ -4225,13 +4258,9 @@ MonoBehaviour:
   m_Waypoints:
   - position: {x: -0.00000040820092, y: -0.00000022205539, z: 3.0410228}
     roll: 0
-  - position: {x: -2.9911284, y: 0.0000002195309, z: 7.214973}
+  - position: {x: -1.8520082, y: 0.00000036216395, z: 1.2898823}
     roll: 0
-  - position: {x: -5.9822564, y: 0.39847964, z: 3.6800354}
-    roll: 0
-  - position: {x: -1.5689548, y: 0.79695904, z: 1.1705394}
-    roll: 0
-  - position: {x: -1.4674352, y: -0.6948156, z: 3.6153235}
+  - position: {x: -3.704017, y: -1.1723869, z: -0.4612587}
     roll: 0
 --- !u!4 &1000188401
 Transform:
@@ -5660,7 +5689,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1223511719}
-  m_LocalRotation: {x: 0.042039547, y: -0.036951393, z: 0.0015558609, w: 0.9984312}
+  m_LocalRotation: {x: 0.32216313, y: -0.41074556, z: 0.15787089, w: 0.83819795}
   m_LocalPosition: {x: 15.856259, y: 8.997849, z: 1.222971}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -8115,7 +8144,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1675724180}
-  m_LocalRotation: {x: 0.042039547, y: -0.036951393, z: 0.0015558609, w: 0.9984312}
+  m_LocalRotation: {x: 0.32216313, y: -0.41074556, z: 0.15787089, w: 0.83819795}
   m_LocalPosition: {x: 10.15626, y: -9.750031, z: 10.022971}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -10876,7 +10905,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3278654553256477002, guid: ac33f347a1d94e2458a269aae2bc91f0, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3290899510019378396, guid: ac33f347a1d94e2458a269aae2bc91f0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -11883,6 +11912,10 @@ PrefabInstance:
     - target: {fileID: 1742719112239104754, guid: 847b029a54df58d4785f3cb0c3741f7c, type: 3}
       propertyPath: m_Name
       value: anim_T.Y.M_V5_accepted
+      objectReference: {fileID: 0}
+    - target: {fileID: 1742719112239104754, guid: 847b029a54df58d4785f3cb0c3741f7c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 847b029a54df58d4785f3cb0c3741f7c, type: 3}
