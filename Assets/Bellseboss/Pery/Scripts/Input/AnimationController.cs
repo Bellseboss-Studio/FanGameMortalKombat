@@ -56,5 +56,10 @@ namespace Bellseboss.Pery.Scripts.Input
         {
             _animator.SetTrigger("j_recovery");
         }
+
+        public void ActivateTrigger(string animationTrigger)
+        {
+            _animator.SetTrigger(animationTrigger);
+        }
     }
 }

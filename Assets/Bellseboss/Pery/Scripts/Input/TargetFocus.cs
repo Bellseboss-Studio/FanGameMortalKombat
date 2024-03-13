@@ -111,3 +111,8 @@ namespace Bellseboss.Pery.Scripts.Input
         }
     }
 }
+
+
+namespace Bellseboss.Pery.Scripts.Input
+{
+}

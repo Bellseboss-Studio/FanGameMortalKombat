@@ -5,6 +5,9 @@ namespace Bellseboss.Pery.Scripts.Input
     public interface IMovementRigidBodyV2 : ICharacterV2
     {
         void UpdateAnimation();
+        void ChangeToNormalJump();
+        void ChangeRotation(Vector3 rotation);
+        void RestoreRotation();
     }
     
     public interface IAnimationController
