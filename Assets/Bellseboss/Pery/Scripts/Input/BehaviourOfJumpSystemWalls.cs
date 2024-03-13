@@ -51,22 +51,98 @@ namespace Bellseboss.Pery.Scripts.Input
                     loop.Break();
                 }
                 float t = _deltatimeLocalToJump / timeToAttack;
-                float heightMultiplier = Mathf.Cos(t * Mathf.PI * 0.5f);
-
+                float heightMultiplier = (Mathf.Cos(t * Mathf.PI * 0.5f) + 1) / 2;
+                
                 var position = gameObjectToPlayer.transform.position;
-                position = Vector3.Lerp(position, position + _direction + Vector3.up * (maxHeighJump * heightMultiplier),
+                position = Vector3.Lerp(position,
+                    position + (_direction + Vector3.up) * (maxHeighJump * heightMultiplier),
                     forceToAttack * loop.deltaTime);
-                Debug.Log($"position {gameObjectToPlayer.transform.position} target {position} con direccion {_direction} con time {_deltatimeLocalToJump}");
+                //Debug.Log($"position {gameObjectToPlayer.transform.position} target {position} con direccion {_direction} con time {_deltatimeLocalToJump}");
                 gameObjectToPlayer.transform.position = position;
             }).Add(() =>
             {
                 //_decresing.Play();
                 Debug.Log("JumpSystem BehaviourOfJumpSystemWall: End Attack");
+            }).Add(() =>
+            {
+                if (isColliding) return;
+                _decresing.Play();
+            });
+            _decresing = this.tt().Pause().Add(() =>
+            {
+                OnMidAir?.Invoke();
+                Debug.Log("JumpSystem BehaviourOfJumpSystemWall: Decreasing");
+            }).Loop(loop =>
+            {
+                _deltatimeLocal += loop.deltaTime;
+                if (_deltatimeLocal >= timeToAttack + timeToDecreasing || isColliding)
+                {
+                    loop.Break();
+                }
+
+                float t = (_deltatimeLocal - timeToAttack) / timeToDecreasing;
+                float heightMultiplier = Mathf.Log(1 + Mathf.Abs(t) * 4);
+
+                var position = gameObjectToPlayer.transform.position;
+                position = Vector3.Lerp(position,
+                    position - Vector3.up * (heightDecreasing * heightMultiplier),
+                    forceToDecreasing * loop.deltaTime);
+                gameObjectToPlayer.transform.position = position;
+            }).Add(() =>
+            {
+                if (isColliding) return;
+                _sustain.Play();
+            });
+            _sustain = this.tt().Pause().Add(() =>
+            {
+                OnSustain?.Invoke();
+                Debug.Log("JumpSystem BehaviourOfJumpSystemWall: Sustain"); 
+            }).Loop(loop =>
+            {
+                //Debug.Log("JumpSystem: Sustain Loop");
+                _deltatimeLocal += loop.deltaTime;
+                if (_deltatimeLocal >= timeToAttack + timeToDecreasing + timeToSustain || isColliding)
+                {
+                    loop.Break();
+                }
+            }).Add(() =>
+            {
+                if (isColliding) return;
+                _release.Play();
+            });
+            
+            _release = this.tt().Pause().Add(() =>
+            {
+                OnRelease?.Invoke();
+                Debug.Log("JumpSystem  BehaviourOfJumpSystemWall: Release");
+            }).Loop(loop =>
+            {
+                _deltatimeLocal += loop.deltaTime;
+                if (floorController.IsTouchingFloor() || isColliding)
+                {
+                    loop.Break();
+                }
+
+                var t = _deltatimeLocal / timeToAttack;
+                var heightMultiplier = Mathf.Log(1 + t * forceToDecreasing);
+
+                var position = gameObjectToPlayer.transform.position;
+                position = Vector3.Lerp(position,
+                    position - Vector3.up * (heightDecreasing * heightMultiplier),
+                    forceToDecreasing * loop.deltaTime);
+                gameObjectToPlayer.transform.position = position;
+            }).Add(() => { _endJump.Play(); });
+            
+            _endJump = this.tt().Pause().Add(() =>
+            {
+                Debug.Log("JumpSystem BehaviourOfJumpSystemWall: End Jump");
                 _rigidbody.useGravity = true;
                 _rigidbody.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX;
+                _deltatimeLocal = 0;
                 jumpSystem.ChangeNormalWall();
                 isJumping = false;
                 jumpSystem.RestoreRotation();
+                OnEndJump?.Invoke();
             });
             _delayToJump = this.tt().Add(() =>
             {
@@ -76,6 +152,7 @@ namespace Bellseboss.Pery.Scripts.Input
                 _rigidbody.constraints = RigidbodyConstraints.FreezeAll;
                 canJump = true;
                 isColliding = true;
+                isJumping = false;
             }).Loop(loop =>
             {
                 _deltatimeLocal += loop.deltaTime;
@@ -93,23 +170,6 @@ namespace Bellseboss.Pery.Scripts.Input
                     _rigidbody.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX;
                     jumpSystem.ChangeNormalWall();
                 }
-            });
-
-            _decresing = this.tt().Pause().Add(() =>
-            {
-                Debug.Log("JumpSystem BehaviourOfJumpSystemWall: Decreasing");
-            });
-            _sustain = this.tt().Pause().Add(() =>
-            {
-                Debug.Log("JumpSystem BehaviourOfJumpSystemWall: Sustain");
-            });
-            _release = this.tt().Pause().Add(() =>
-            {
-                Debug.Log("JumpSystem BehaviourOfJumpSystemWall: Release");
-            });
-            _endJump = this.tt().Pause().Add(() =>
-            {
-                Debug.Log("JumpSystem BehaviourOfJumpSystemWall: End Jump");
             });
             
         }
