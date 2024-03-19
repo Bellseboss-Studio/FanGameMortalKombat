@@ -1,14 +1,22 @@
+using System;
 using UnityEngine;
 
 public class ActivableOpenDoor : Activable
 {
-    [SerializeField] private GameObject door;
-    [SerializeField] private GameObject finalPosition;
+    [SerializeField] private Animator animator;
+    
     private bool _isOpen;
+    private static int OpenDoor;
+    [SerializeField] private string triggerEventString;
+
+    private void Start()
+    {
+        OpenDoor = Animator.StringToHash(triggerEventString);
+    }
+
     public override void Activate()
     {
         if (_isOpen) return;
-        door.transform.position = finalPosition.transform.position;
-        _isOpen = true;
+        animator.SetTrigger(OpenDoor);
     }
 }

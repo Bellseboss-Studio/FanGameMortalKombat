@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1813,8 +1813,6 @@ PlayableDirector:
     value: {fileID: 849312835}
   - key: {fileID: -1932811465209794966, guid: 437988027bcd7c842a8fec211f0f8eab, type: 2}
     value: {fileID: 1763869884}
-  - key: {fileID: 4631031607178079218, guid: 437988027bcd7c842a8fec211f0f8eab, type: 2}
-    value: {fileID: 1719618933}
   m_ExposedReferences:
     m_References:
     - 2119b84b0de573a458d506331b297366: {fileID: 899097039}
@@ -2009,16 +2007,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 269046810}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
+  m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_HorizontalAxis: Horizontal
-  m_VerticalAxis: Vertical
-  m_SubmitButton: Submit
-  m_CancelButton: Cancel
-  m_InputActionsPerSecond: 10
-  m_RepeatDelay: 0.5
-  m_ForceModuleActive: 0
+  m_MoveRepeatDelay: 0.5
+  m_MoveRepeatRate: 0.1
+  m_XRTrackingOrigin: {fileID: 0}
+  m_ActionsAsset: {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_PointAction: {fileID: -1654692200621890270, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_MoveAction: {fileID: -8784545083839296357, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_SubmitAction: {fileID: 392368643174621059, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_CancelAction: {fileID: 7727032971491509709, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_LeftClickAction: {fileID: 3001919216989983466, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_MiddleClickAction: {fileID: -2185481485913320682, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_RightClickAction: {fileID: -4090225696740746782, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_ScrollWheelAction: {fileID: 6240969308177333660, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_TrackedDevicePositionAction: {fileID: 6564999863303420839, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_TrackedDeviceOrientationAction: {fileID: 7970375526676320489, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_DeselectOnBackgroundClick: 1
+  m_PointerBehavior: 0
 --- !u!114 &269046812
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3775,6 +3782,8 @@ MonoBehaviour:
   - {fileID: 1306954762}
   - {fileID: 1815273028}
   roomCollider: {fileID: 1477781120}
+  inRoomsTransition: []
+  betweenRoomsTransitions: []
 --- !u!4 &704650047
 Transform:
   m_ObjectHideFlags: 0
@@ -6323,8 +6332,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1223511719}
-  m_LocalRotation: {x: 0.000080153346, y: 0.9988321, z: -0.048292845, w: 0.0014854372}
-  m_LocalPosition: {x: 8.01814, y: 1.6192143, z: 30.686382}
+  m_LocalRotation: {x: 0.047980487, y: 0.69162554, z: -0.04614204, w: 0.71918213}
+  m_LocalPosition: {x: 5.6997747, y: 0.9073484, z: 13.849724}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -8475,6 +8484,8 @@ MonoBehaviour:
   - {fileID: 744063669}
   - {fileID: 1668611176}
   roomCollider: {fileID: 1573791473}
+  inRoomsTransition: []
+  betweenRoomsTransitions: []
 --- !u!1 &1596275104
 GameObject:
   m_ObjectHideFlags: 0
@@ -8512,6 +8523,8 @@ MonoBehaviour:
   - {fileID: 182984875}
   - {fileID: 429136298}
   roomCollider: {fileID: 1343582266}
+  inRoomsTransition: []
+  betweenRoomsTransitions: []
 --- !u!4 &1596275106
 Transform:
   m_ObjectHideFlags: 0
@@ -9067,8 +9080,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e1bf0b4fce14b8e8f20f35f25455fd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  door: {fileID: 1719618927}
-  finalPosition: {fileID: 391255898}
+  animator: {fileID: 1719618933}
+  triggerEventString: OpenDoor
 --- !u!95 &1719618933
 Animator:
   serializedVersion: 3
@@ -10322,6 +10335,8 @@ MonoBehaviour:
   - {fileID: 939974867}
   - {fileID: 855251101}
   roomCollider: {fileID: 1310425973}
+  inRoomsTransition: []
+  betweenRoomsTransitions: []
 --- !u!4 &1910153111
 Transform:
   m_ObjectHideFlags: 0
