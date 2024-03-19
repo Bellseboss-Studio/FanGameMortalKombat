@@ -3,6 +3,6 @@ using UnityEngine;
 
 public interface IColliderWithLayer
 {
-    Action<GameObject> ColliderEnter { get; set; }
-    Action<GameObject> ColliderExit { get; set; }
+    Action<GameObject, CameraCollider> ColliderEnter { get; set; }
+    Action<GameObject, CameraCollider> ColliderExit { get; set; }
 }
