@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.0567899, g: 0.03984805, b: 0.036290836, a: 1}
+  m_IndirectSpecularColor: {r: 0.056790244, g: 0.039847977, b: 0.036290757, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -20271,6 +20271,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Lina_Rig
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: c4b2775ecc83665468e456c5e03f58b1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1092408308860062549, guid: c4b2775ecc83665468e456c5e03f58b1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 9.94038
@@ -20667,6 +20671,10 @@ PrefabInstance:
     - target: {fileID: 157500797381244189, guid: 64ff98eb21cc88d418b8be09af5016d5, type: 3}
       propertyPath: m_Name
       value: Florencia Rig Texturizada
+      objectReference: {fileID: 0}
+    - target: {fileID: 157500797381244189, guid: 64ff98eb21cc88d418b8be09af5016d5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 676769784856031143, guid: 64ff98eb21cc88d418b8be09af5016d5, type: 3}
       propertyPath: m_RootOrder

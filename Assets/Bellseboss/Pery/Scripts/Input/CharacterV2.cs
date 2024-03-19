@@ -1,7 +1,6 @@
 ﻿using System;
 using Cinemachine;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Bellseboss.Pery.Scripts.Input
 {
@@ -50,6 +49,18 @@ namespace Bellseboss.Pery.Scripts.Input
             movementRigidbodyV2.GetJumpSystem().OnEndJump += JumpOnEndJump;
             
             rotationCharacterV2.CanRotate(true);
+        }
+        
+
+        public void ActivateAnimationTrigger(string animationTrigger)
+        {
+            animationController.ActivateTrigger(animationTrigger);
+        }
+
+        public void SetPositionAndRotation(GameObject refOfPlayer)
+        {
+            transform.position = Vector3.Lerp(transform.position, refOfPlayer.transform.position, 0.5f);
+            transform.rotation = Quaternion.Lerp(transform.rotation, refOfPlayer.transform.rotation, 0.5f);
         }
 
         private void JumpOnEndJump()
@@ -113,18 +124,20 @@ namespace Bellseboss.Pery.Scripts.Input
         private void OnMove(Vector2 vector2)
         {
             
-            if(rotationCharacterV2.CanRotate())
+            if(rotationCharacterV2.CanRotate() && !movementRigidbodyV2.IsJump)
             {
                 rotationCharacterV2.Direction(vector2);
             }
+
             movementRigidbodyV2.Direction(vector2);
+
         }
 
         public void PowerAttack(float runningDistance, Vector3 runningDirection)
         {
             if (GetAttackSystem().CanAttackAgain() && !GetAttackSystem().FullCombo())
             {
-                rotationCharacterV2.RotateToDirectionToMove(runningDirection);
+                rotationCharacterV2.Direction(runningDirection);
                 movementRigidbodyV2.AddForce(runningDirection, runningDistance, AttackMovementSystem.TypeOfAttack.Power);
             }
         }
@@ -133,15 +146,21 @@ namespace Bellseboss.Pery.Scripts.Input
         {
             if (GetAttackSystem().CanAttackAgain() && !GetAttackSystem().FullCombo())
             {
-                rotationCharacterV2.RotateToDirectionToMove(runningDirection);
+                rotationCharacterV2.Direction(runningDirection);
                 movementRigidbodyV2.AddForce(runningDirection, runningDistance,
                     AttackMovementSystem.TypeOfAttack.Quick);
             }
         }
+        
+        public void DisableControls()
+        {
+            rotationCharacterV2.CanRotate(false);
+            movementRigidbodyV2.CanMove(false);
+        }
 
         public void CanMove()
         {
-            movementRigidbodyV2.CanMove();
+            movementRigidbodyV2.CanMove(true);
             rotationCharacterV2.CanRotate(true);
         }
 
@@ -176,9 +195,29 @@ namespace Bellseboss.Pery.Scripts.Input
             animationController.Movement(movementRigidbodyV2.GetVelocity(), 0);
         }
 
-        public void LeaveGround(bool leave, float forceToGravitate)
+        public void ChangeToNormalJump()
         {
-            movementRigidbodyV2.IsScalableWall(leave, forceToGravitate);
+            movementRigidbodyV2.ChangeToNormalJump();
+        }
+
+        public void ChangeRotation(Vector3 rotation)
+        {
+            rotationCharacterV2.ChangeDirection(rotation);
+        }
+
+        public void RestoreRotation()
+        {
+            rotationCharacterV2.RestoreRotation();
+        }
+
+        public void LeaveGround(bool leave, float forceToGravitate, Vector3 direction)
+        {
+            movementRigidbodyV2.IsScalableWall(leave, forceToGravitate, direction);
+        }
+
+        public void ExitToWall()
+        {
+            movementRigidbodyV2.ExitToWall();
         }
     }
 }

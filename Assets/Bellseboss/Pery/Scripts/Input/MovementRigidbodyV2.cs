@@ -31,6 +31,7 @@ namespace Bellseboss.Pery.Scripts.Input
         private bool _isTarget;
         private IMovementRigidBodyV2 _movementRigidBodyV2;
         private bool _jump;
+        public bool IsJump => _jump;
         private float _velocityOfAnimation;
 
         public void Configure(Rigidbody rigidBody, float speedWalk, float speedRun, GameObject camera, IMovementRigidBodyV2 movementRigidBodyV2, StatisticsOfCharacter statisticsOfCharacter)
@@ -48,11 +49,11 @@ namespace Bellseboss.Pery.Scripts.Input
             attackMovementSystem.Configure(rigidBody, statisticsOfCharacter);
         }
 
-        public void IsScalableWall(bool isScalableWall, float forceToGravitate)
+        public void IsScalableWall(bool isScalableWall, float forceToGravitate, Vector3 direction)
         {
             this.forceToGravitate = forceToGravitate;
             this.isScalableWall = isScalableWall;
-            jumpSystem.IsScalableWall(isScalableWall);
+            jumpSystem.IsScalableWall(isScalableWall, floorController, direction);
             _jump = false;
         }
         
@@ -101,7 +102,7 @@ namespace Bellseboss.Pery.Scripts.Input
             {
                 _velocityOfAnimation = 0.4f;
             }
-
+            
             var resultMovement = _inputMovementCustom.CalculateMovement(result, _choiceMax ? _speedRun : _speedWalk,
                 _camera, _rigidbody.gameObject);
             
@@ -113,16 +114,10 @@ namespace Bellseboss.Pery.Scripts.Input
                     _jump = false;   
                 }
             }
-            if(isScalableWall)
+            if (floorController.IsTouchingFloor())
             {
-                Debug.Log($"MovementRigidbodyV2: Move: isScalableWall: {isScalableWall} forceToGravitate: {forceToGravitate} resultMovement: {resultMovement}");
-                _rigidbody.velocity = new Vector3(resultMovement.x, forceToGravitate, resultMovement.z);
+                _rigidbody.velocity = new Vector3(resultMovement.x, _rigidbody.velocity.y, resultMovement.z);   
             }
-            else
-            {
-                _rigidbody.velocity = new Vector3(resultMovement.x, _rigidbody.velocity.y, resultMovement.z);
-            }
-            _rigidbody.velocity = new Vector3(resultMovement.x, _rigidbody.velocity.y, resultMovement.z);
             if(_rigidbody.velocity.y > 0)
             {
                 isUp = true;
@@ -176,9 +171,9 @@ namespace Bellseboss.Pery.Scripts.Input
             attackMovementSystem.Attack(globalDirection * runningDistance, typeOfAttack);
         }
 
-        public void CanMove()
+        public void CanMove(bool canMove)
         {
-            _canMove = true;
+            _canMove = canMove;
         }
 
         public Vector3 GetVelocityV3()
@@ -204,6 +199,16 @@ namespace Bellseboss.Pery.Scripts.Input
         public AttackMovementSystem GetAttackSystem()
         {
             return attackMovementSystem;
+        }
+
+        public void ChangeToNormalJump()
+        {
+            IsScalableWall(false, 0, Vector3.zero);            
+        }
+
+        public void ExitToWall()
+        {
+            jumpSystem.ExitToWall();
         }
     }
 }
