@@ -206,15 +206,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea7b7e4ebf8942c2b56fc4ab062be1f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeToAttack: 2
+  timeToAttack: 0.5
   timeToDecreasing: 0.2
   timeToSustain: 0
   timeToRelease: 0
   timeToWaitToJump: 1
-  maxHeighJump: 10
+  maxHeighJump: 5
   heightDecreasing: 1
-  forceToAttack: 1
-  forceToDecreasing: 1
+  forceToAttack: 2
+  forceToDecreasing: 3
   floorController: {fileID: 790305426}
   lenghtOfArrow: 2
   _direction: {x: 0, y: 0, z: 1}

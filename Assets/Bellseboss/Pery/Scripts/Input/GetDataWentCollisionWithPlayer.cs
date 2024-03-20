@@ -9,12 +9,10 @@ namespace Bellseboss.Pery.Scripts.Input
         public Action<GameObject, Vector3> CollisionEnter;
         public Action<GameObject, Vector3> CollisionExit;
         public LayerMask layerMask;
-        private IFocusTarget _focusTarget;
         private Collider _collider;
 
-        public void Configure(IFocusTarget focusTarget)
+        public void Configure()
         {
-            _focusTarget = focusTarget;
             _collider = GetComponent<Collider>();
             DisableCollider();
         }

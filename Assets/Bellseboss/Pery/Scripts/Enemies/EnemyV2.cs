@@ -1,10 +1,12 @@
 using System;
 using Bellseboss.Pery.Scripts.Input;
 using UnityEngine;
-using View.Characters;
+using Object = UnityEngine.Object;
 
-public class EnemyV2 : MonoBehaviour, IAnimationController, IEnemyV2
+public abstract class EnemyV2 : MonoBehaviour, IAnimationController, IEnemyV2
 {
+    public Action<EnemyV2> OnDead;
+    [SerializeField] private string id;
     [SerializeField] private StatisticsOfCharacter statisticsOfCharacter;
     [SerializeField] private MovementADSR movementADSR;
     [SerializeField] private AnimationController animationController;
@@ -12,6 +14,9 @@ public class EnemyV2 : MonoBehaviour, IAnimationController, IEnemyV2
     [SerializeField] private AiController aiController;
     private GameObject _model;
     private StatisticsOfCharacter _statisticsOfCharacter;
+    
+    public string Id => id;
+    public bool IsDead { get; private set; }
 
     private void Start()
     {
@@ -39,6 +44,8 @@ public class EnemyV2 : MonoBehaviour, IAnimationController, IEnemyV2
     private void Die()
     {
         Debug.Log("EnemyV2: Die");
+        IsDead = true;
+        OnDead?.Invoke(this);
     }
 
     public void SetAnimationToHit(bool isQuickAttack, int numberOfCombos)
@@ -49,4 +56,21 @@ public class EnemyV2 : MonoBehaviour, IAnimationController, IEnemyV2
 
 public interface IEnemyV2
 {
+}
+
+public class EnemiesV2Factory
+{
+    private readonly EnemiesV2Configuration EnemiesConfiguration;
+
+    public EnemiesV2Factory(EnemiesV2Configuration enemiesConfiguration)
+    {
+        EnemiesConfiguration = Object.Instantiate(enemiesConfiguration);
+    }
+        
+    public EnemyV2 Create(string id)
+    {
+        var prefab = EnemiesConfiguration.GetEnemyV2PrefabById(id);
+
+        return Object.Instantiate(prefab);
+    }
 }
