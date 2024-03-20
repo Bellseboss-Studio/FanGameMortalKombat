@@ -1,13 +1,15 @@
 using System;
 using Bellseboss.Pery.Scripts.Input;
 using UnityEngine;
+using View.Characters;
 
-public class EnemyV2 : MonoBehaviour, IAnimationController
+public class EnemyV2 : MonoBehaviour, IAnimationController, IEnemyV2
 {
     [SerializeField] private StatisticsOfCharacter statisticsOfCharacter;
     [SerializeField] private MovementADSR movementADSR;
     [SerializeField] private AnimationController animationController;
     [SerializeField] private GameObject model;
+    [SerializeField] private AiController aiController;
     private GameObject _model;
     private StatisticsOfCharacter _statisticsOfCharacter;
 
@@ -17,6 +19,7 @@ public class EnemyV2 : MonoBehaviour, IAnimationController
         movementADSR.Configure(GetComponent<Rigidbody>(), _statisticsOfCharacter);
         _model = Instantiate(model, transform);
         animationController.Configure(_model.GetComponent<Animator>(), this);
+        aiController.Configure(this);
     }
 
     public void ReceiveDamage(int damage, Vector3 direction)
@@ -42,4 +45,8 @@ public class EnemyV2 : MonoBehaviour, IAnimationController
     {
         Debug.Log($"EnemyV2: SetAnimationToHit isQuickAttack: {isQuickAttack} numberOfCombos: {numberOfCombos}");
     }
+}
+
+public interface IEnemyV2
+{
 }
