@@ -27,7 +27,7 @@ public class InteractiveManager : MonoBehaviour
         
     }
 
-    private void OnColliderExit(GameObject o)
+    private void OnColliderExit(GameObject o, CameraCollider room)
     {
         if(o.TryGetComponent(out ICharacterV2 character))
         {
@@ -36,7 +36,7 @@ public class InteractiveManager : MonoBehaviour
         }
     }
 
-    private void OnColliderEnter(GameObject o)
+    private void OnColliderEnter(GameObject o, CameraCollider room)
     {
         if(o.TryGetComponent(out ICharacterV2 character))
         {

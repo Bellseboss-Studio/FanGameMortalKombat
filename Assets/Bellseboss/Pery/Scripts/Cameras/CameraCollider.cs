@@ -4,8 +4,8 @@ using UnityEngine;
 public class CameraCollider : MonoBehaviour, IColliderWithLayer
 {
     [SerializeField] private LayerMask layer;
-    public Action<GameObject> ColliderEnter { get; set; }
-    public Action<GameObject> ColliderExit { get; set; }
+    public Action<GameObject, CameraCollider> ColliderEnter { get; set; }
+    public Action<GameObject, CameraCollider> ColliderExit { get; set; }
     
     private void OnTriggerEnter(Collider other)
     {
@@ -14,7 +14,7 @@ public class CameraCollider : MonoBehaviour, IColliderWithLayer
         //validate if the layer is the same
         if ((layer.value & 1 << o.layer) > 0)
         {
-            ColliderEnter?.Invoke(o);
+            ColliderEnter?.Invoke(o, this);
         }
     }
     
@@ -25,7 +25,7 @@ public class CameraCollider : MonoBehaviour, IColliderWithLayer
         //validate if the layer is the same
         if ((layer.value & 1 << o.layer) > 0)
         {
-            ColliderExit?.Invoke(o);
+            ColliderExit?.Invoke(o, this);
         }
     }
 }

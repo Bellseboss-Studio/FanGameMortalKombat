@@ -26,7 +26,7 @@ public class CameraTrigger : MonoBehaviour, ICameraTrigger
         cameraCollider.ColliderEnter += OnColliderEnter;
     }
 
-    private void OnColliderEnter(GameObject o)
+    private void OnColliderEnter(GameObject o, CameraCollider room)
     {
         Debug.Log($"CameraTrigger:OnColliderEnter: {_index}");
         ChangeCamera?.Invoke(_index);
