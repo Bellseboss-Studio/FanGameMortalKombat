@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1988818508267669297}
   - component: {fileID: 1988818508267669302}
+  - component: {fileID: 1845845022445789396}
   - component: {fileID: 1664086341}
   - component: {fileID: 5361025647053283558}
   - component: {fileID: 5662092353288176250}
@@ -58,12 +59,12 @@ MonoBehaviour:
   speedGlobal: 600
   velocityOfAttack: 0
   life: 100
-  speedAnim: speed
-  animator: {fileID: 0}
-  controller: {fileID: 9100000, guid: a0beb16580409e5489225758050c2433, type: 2}
+  controller: {fileID: 22100000, guid: a3ee96fe005df8f4188d413fbccd2067, type: 2}
+  animatorController: {fileID: 1845845022445789396}
   power: 10
   nameOfAnimationTriggerForApplyDamage: damage
   smoodTimeRotation: 0.06
+  speed: 0
   forceRotation: 0
   CanAnimateDamage: 0
   playerInput: {fileID: 1664086341}
@@ -79,8 +80,25 @@ MonoBehaviour:
   energy: 0
   cameraChange: {fileID: 1498332832886426744}
   comboRetardTime: 0.5
+  attackTypes: 
   CanMove: 0
   CanReadInputs: 0
+--- !u!114 &1845845022445789396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1988818508267669303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d56bfd6c1d940d2afcb7973d3c989da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speedName: v
+  isTargetName: t
+  horizontalName: 
+  verticalName: 
 --- !u!114 &1664086341
 MonoBehaviour:
   m_ObjectHideFlags: 0
