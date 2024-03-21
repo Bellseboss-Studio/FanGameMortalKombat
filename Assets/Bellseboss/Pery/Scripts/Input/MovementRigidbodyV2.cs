@@ -46,7 +46,7 @@ namespace Bellseboss.Pery.Scripts.Input
             _canMove = true;
             floorController.Configure(this);
             jumpSystem.Configure(rigidBody, movementRigidBodyV2, floorController);
-            attackMovementSystem.Configure(rigidBody, statisticsOfCharacter);
+            attackMovementSystem.Configure(rigidBody, statisticsOfCharacter, movementRigidBodyV2);
         }
 
         public void IsScalableWall(bool isScalableWall, float forceToGravitate, Vector3 direction)

@@ -60,21 +60,35 @@ public class FightZone : MonoBehaviour
 
     private void NearOnCollisionExit(GameObject arg1, Vector3 arg2)
     {
-        
-    }
-
-    private void FarOnCollisionExit(GameObject arg1, Vector3 arg2)
-    {
-        
+        foreach (var factoryMonoV2 in enemiesMonoV2FactoryMono)
+        {
+            factoryMonoV2.IntoToNearZone(false);
+        }
     }
 
     private void NearOnCollisionEnter(GameObject arg1, Vector3 arg2)
     {
-        
+        foreach (var factoryMonoV2 in enemiesMonoV2FactoryMono)
+        {
+            factoryMonoV2.IntoToNearZone(true);
+        }
+    }
+
+    private void FarOnCollisionExit(GameObject arg1, Vector3 arg2)
+    {
+        foreach (var factoryMonoV2 in enemiesMonoV2FactoryMono)
+        {
+            factoryMonoV2.SetPlayer(null);
+            factoryMonoV2.IntoToFarZone(false);
+        }
     }
 
     private void FarOnCollisionEnter(GameObject arg1, Vector3 arg2)
     {
-        
+        foreach (var factoryMonoV2 in enemiesMonoV2FactoryMono)
+        {
+            factoryMonoV2.SetPlayer(arg1.GetComponent<CharacterV2>());
+            factoryMonoV2.IntoToFarZone(true);
+        }
     }
 }

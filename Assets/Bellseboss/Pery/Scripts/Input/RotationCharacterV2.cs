@@ -10,9 +10,10 @@ namespace Bellseboss.Pery.Scripts.Input
         private bool _isConfigured;
         private IRotationCharacterV2 _rotationCharacterV2;
         [SerializeField] private Vector2 _vector2;
+        [SerializeField] private Vector3 rotationWithTarget;
         private float _forceRotation;
         [SerializeField] private bool _canRotate;
-        private bool _canRotateWhileAttack = true;
+        private bool _canRotateWhileAttack;
         private Vector3 _lastDirection;
         private bool _canChangeDirection = true;
 
@@ -31,40 +32,55 @@ namespace Bellseboss.Pery.Scripts.Input
         {
             _vector2 = vector2;
         }
+        
+        public void Direction(Vector3 vector3)
+        {
+            rotationWithTarget = vector3;
+        }
 
         private void Update()
         {
             if (!_isConfigured || !_canRotate) return;
-            var direction = _player.transform.position - _camera.transform.position;
-            direction.y = 0;
-            direction.Normalize();
-            var right = new Vector3(direction.z, 0, -direction.x);
-            var result = _vector2.x * right + _vector2.y * direction;
             if (!_canChangeDirection) return;
-            if (result != Vector3.zero && _canRotateWhileAttack)
+            if (_canRotateWhileAttack)
             {
-                _lastDirection = result;
-                _player.transform.rotation = Quaternion.Lerp(_player.transform.rotation, Quaternion.LookRotation(result), _forceRotation * Time.deltaTime);
+                _player.transform.rotation = Quaternion.Lerp(_player.transform.rotation, Quaternion.LookRotation(rotationWithTarget), _forceRotation * Time.deltaTime);
             }
-            else if (_lastDirection != Vector3.zero)
+            else
             {
-                _player.transform.rotation = Quaternion.Lerp(_player.transform.rotation,
-                    Quaternion.LookRotation(_lastDirection), _forceRotation * Time.deltaTime);
+                var direction = _player.transform.position - _camera.transform.position;
+                direction.y = 0;
+                direction.Normalize();
+                var right = new Vector3(direction.z, 0, -direction.x);
+                var result = _vector2.x * right + _vector2.y * direction;
+                if (result != Vector3.zero && _canRotate)
+                {
+                    _lastDirection = result;
+                    _player.transform.rotation = Quaternion.Lerp(_player.transform.rotation, Quaternion.LookRotation(result), _forceRotation * Time.deltaTime);
+                }
+                else if (_lastDirection != Vector3.zero)
+                {
+                    _player.transform.rotation = Quaternion.Lerp(_player.transform.rotation,
+                        Quaternion.LookRotation(_lastDirection), _forceRotation * Time.deltaTime);
+                }   
             }
-
         }
 
         public void CanRotate(bool canRotate)
         {
             //Debug.Log("Can Rotate: " + canRotate);
             _vector2 = Vector2.zero;
-            _canRotateWhileAttack = canRotate;
             _canRotate = canRotate;
+        }
+        
+        public void CanRotateWhileAttack(bool canRotate)
+        {
+            _canRotateWhileAttack = canRotate;
         }
 
         public bool CanRotate()
         {
-            return _canRotateWhileAttack;
+            return _canRotate;
         }
 
         public void RotateToLookTheTarget(Vector3 getTarget)
