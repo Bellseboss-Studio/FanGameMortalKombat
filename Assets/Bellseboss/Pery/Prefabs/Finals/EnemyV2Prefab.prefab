@@ -29,8 +29,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1206345099777460001}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.5798597, y: 1.5913122, z: 28.044998}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1206345100813594573}
@@ -44,7 +44,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1206345099777460001}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 31b33860be90ee745b5d4871531671e3, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5
@@ -65,7 +65,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &1206345099777460005
 MonoBehaviour:
@@ -83,8 +83,12 @@ MonoBehaviour:
   statisticsOfCharacter: {fileID: 11400000, guid: ebd4f74e1f9442042b7a6a95335c5e54, type: 2}
   movementADSR: {fileID: 1206345099777460004}
   animationController: {fileID: 1206345099777460007}
-  model: {fileID: 6043731150278375887, guid: 4caa65492414c6a40b3d5b20b9a4761d, type: 3}
+  model: {fileID: 3278654553256477002, guid: ac33f347a1d94e2458a269aae2bc91f0, type: 3}
   aiController: {fileID: 1206345099777460006}
+  rigidbody: {fileID: 1206345099777460003}
+  minDistanceToArriveToTarget: 1
+  minDistanceToArriveToEnemy: 0
+  _state: 1
 --- !u!114 &1206345099777460004
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -131,6 +135,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0133cd4f42234890aac6c63442935cf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timeToWaitToChangePath: 2
 --- !u!1 &1206345100813594570
 GameObject:
   m_ObjectHideFlags: 0
