@@ -27,7 +27,8 @@ public class AttackMovementSystem : MonoBehaviour, IFocusTarget
     private StatisticsOfCharacter _statisticsOfCharacter;
 
 
-    public void Configure(Rigidbody rigidbody, StatisticsOfCharacter statisticsOfCharacter)
+    public void Configure(Rigidbody rigidbody, StatisticsOfCharacter statisticsOfCharacter,
+        IMovementRigidBodyV2 movementRigidBodyV2)
     {
         _statisticsOfCharacter = statisticsOfCharacter;
         targetFocus.Configure(this);
@@ -169,6 +170,7 @@ public class AttackMovementSystem : MonoBehaviour, IFocusTarget
             _rigidbody.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX;
             //Debug.Log("AttackMovementSystem: End Attack");
             OnEndAttack?.Invoke();
+            movementRigidBodyV2.EndAttackMovement();
         });
     }
 
