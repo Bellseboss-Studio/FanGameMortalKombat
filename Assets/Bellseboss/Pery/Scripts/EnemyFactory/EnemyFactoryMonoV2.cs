@@ -31,6 +31,7 @@ public class EnemyFactoryMonoV2 : MonoBehaviour
     private void OnEnemyDead(EnemyV2 enemy)
     {
         var allDead = _enemies.TrueForAll(enemy => enemy.IsDead);
+        Debug.Log($"AllEnemiesAreDead {allDead}");
         _enemies.Remove(enemy);
         if (allDead)
         {
