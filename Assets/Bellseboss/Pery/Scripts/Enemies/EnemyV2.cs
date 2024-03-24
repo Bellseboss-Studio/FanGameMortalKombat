@@ -93,7 +93,7 @@ public abstract class EnemyV2 : MonoBehaviour, IAnimationController, IEnemyV2
 
     public void TriggerAnimation(string nameOfAnimation)
     {
-        
+        animationController.ActivateTrigger(nameOfAnimation);
     }
 
     public CharacterV2 GetPlayer()
@@ -117,22 +117,22 @@ public abstract class EnemyV2 : MonoBehaviour, IAnimationController, IEnemyV2
     
     public void ReceiveDamage(int damage, Vector3 direction)
     {
+        if(IsDead) return;
         _statisticsOfCharacter.life -= damage;
         if (_statisticsOfCharacter.life <= 0)
         {
-            Die();
+            IsDead = true;
+            OnDead?.Invoke(this);
         }
-        if (movementADSR.CanAttackAgain())
+        if (movementADSR.CanAttackAgain() && !IsDead)
         {
             movementADSR.Attack(direction);
         }
     }
 
-    private void Die()
+    public void Died()
     {
         Debug.Log("EnemyV2: Die");
-        IsDead = true;
-        OnDead?.Invoke(this);
     }
 
     public void SetAnimationToHit(bool isQuickAttack, int numberOfCombos)
@@ -188,6 +188,7 @@ public interface IEnemyV2
     void TriggerAnimation(string nameOfAnimation);
     CharacterV2 GetPlayer();
     void CanMove(bool b);
+    void Died();
 }
 
 public class EnemiesV2Factory

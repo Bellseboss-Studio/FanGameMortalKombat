@@ -6,7 +6,7 @@ internal class AiController : MonoBehaviour
     [SerializeField] private float timeToWaitToChangePath;
     private IEnemyV2 _enemy;
     private TeaTime _idle, _numberOfPath, _moving, _stayNearOfTarget, _watch;
-    private TeaTime _watchEnemy, _nearOfEnemy;
+    private TeaTime _watchEnemy, _nearOfEnemy, _died;
     private GameObject _target;
     private bool _isNearOfTarget;
     private int _indexOfPath;
@@ -24,7 +24,7 @@ internal class AiController : MonoBehaviour
             throw new Exception("Paths is empty");
         }
         _target = _enemy.Paths()[_indexOfPath];
-        
+        _enemy.OnDead += EnemyOnOnDead;
         _enemy.OnArriveToTarget += () =>
         {
             _isNearOfTarget = true;
@@ -149,7 +149,30 @@ internal class AiController : MonoBehaviour
             _watchEnemy.Play();
         }); 
         
+        _died = this.tt().Pause().Add(() =>
+        {
+            _idle.Stop();
+            _numberOfPath.Stop();
+            _moving.Stop();
+            _stayNearOfTarget.Stop();
+            _watch.Stop();
+            _watchEnemy.Stop();
+            _nearOfEnemy.Stop();
+        }).Add(() =>
+        {
+            _enemy.CanMove(false);
+            _enemy.TriggerAnimation("died");
+        }).Add(() =>
+        {
+            _enemy.Died();
+        });
+        
         _idle.Play();
+    }
+
+    private void EnemyOnOnDead(EnemyV2 obj)
+    {
+        _died.Play();
     }
 }
 
