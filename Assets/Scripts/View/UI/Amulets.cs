@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace View.UI
 {
-    public class Amulets : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+    public class Amulets : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
     {
         public bool isOver = false;
         public Image amulet;
@@ -28,6 +28,11 @@ namespace View.UI
         public void OnPointerEnter(PointerEventData eventData)
         {
             //Debug.Log("Mouse enter");
+            MoveAmulet();
+        }
+
+        public void MoveAmulet()
+        {
             isOver = true;
             if (isOver != true) return;
             amulet.enabled = true;
@@ -37,9 +42,14 @@ namespace View.UI
         public void OnPointerExit(PointerEventData eventData)
         {
             //Debug.Log("Mouse exit");
+            DontMoveAmulet();
+        }
+
+        public void DontMoveAmulet()
+        {
             isOver = false;
         }
-    
+
         private void Update()
         {
             amuletIsMoving = _amuletPositioner.MoveAmulet(amulet, velocity, gameObject, isOver, amuletIsMoving);
@@ -48,6 +58,11 @@ namespace View.UI
         public void ExitGame()
         {
             Application.Quit();
+        }
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            Debug.Log("Mouse click");
         }
     }
 }
