@@ -17,6 +17,7 @@ public class CameraBehaviourAngel : MonoBehaviour
     [Serializable]
     public class Room
     {
+        public string name;
         public CameraCollider roomCollider;
         public List<InRoomsTransition> inRoomsTransitions;
         public List<BetweenRoomsTransition> betweenRoomsTransitions;
