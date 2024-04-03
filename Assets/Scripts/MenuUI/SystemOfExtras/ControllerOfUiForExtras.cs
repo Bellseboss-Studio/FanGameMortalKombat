@@ -1,7 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using MenuUI.SystemOfExtras;
-using ServiceLocatorPath;
 using UnityEngine;
 
 public class ControllerOfUiForExtras : MonoBehaviour

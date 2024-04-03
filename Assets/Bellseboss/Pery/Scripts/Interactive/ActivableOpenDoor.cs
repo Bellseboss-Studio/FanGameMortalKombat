@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class ActivableOpenDoor : Activable
@@ -16,7 +15,7 @@ public class ActivableOpenDoor : Activable
 
     public override void Activate()
     {
-        if (_isOpen) return;
-        animator.SetTrigger(OpenDoor);
+        _isOpen = !_isOpen;
+        animator.SetBool(OpenDoor, _isOpen);
     }
 }

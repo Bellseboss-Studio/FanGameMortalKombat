@@ -8,6 +8,7 @@ namespace Bellseboss.Pery.Scripts.Input
         void ChangeToNormalJump();
         void ChangeRotation(Vector3 rotation);
         void RestoreRotation();
+        void EndAttackMovement();
     }
     
     public interface IAnimationController

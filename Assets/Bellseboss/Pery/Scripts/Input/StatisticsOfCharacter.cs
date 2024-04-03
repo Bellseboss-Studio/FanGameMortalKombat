@@ -5,6 +5,8 @@ public class StatisticsOfCharacter : ScriptableObject
 {
     public int life;
     public int damage;
-    public float speedToMove;
+    public float speedToMoveAngry;
+    public float speedToMoveNormal;
+    public float speedToMoveScared;
     
 }

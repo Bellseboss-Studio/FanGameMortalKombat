@@ -100,7 +100,7 @@ namespace Bellseboss.Pery.Scripts.Input
                 animationController.Kick();
                 combatSystem.PowerAttack();
                 rotationCharacterV2.RotateToLookTheTarget(targetFocus.GetTarget());
-                rotationCharacterV2.CanRotate(false);
+                rotationCharacterV2.CanRotateWhileAttack(true);
             }
         }
 
@@ -111,7 +111,7 @@ namespace Bellseboss.Pery.Scripts.Input
                 animationController.Punch();
                 combatSystem.QuickAttack();
                 rotationCharacterV2.RotateToLookTheTarget(targetFocus.GetTarget());
-                rotationCharacterV2.CanRotate(false);
+                rotationCharacterV2.CanRotateWhileAttack(true);
             }
         }
 
@@ -208,6 +208,12 @@ namespace Bellseboss.Pery.Scripts.Input
         public void RestoreRotation()
         {
             rotationCharacterV2.RestoreRotation();
+        }
+
+        public void EndAttackMovement()
+        {
+            rotationCharacterV2.Direction(Vector3.zero);
+            rotationCharacterV2.CanRotateWhileAttack(false);
         }
 
         public void LeaveGround(bool leave, float forceToGravitate, Vector3 direction)

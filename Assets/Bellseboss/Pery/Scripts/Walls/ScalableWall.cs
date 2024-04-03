@@ -2,7 +2,7 @@ using System;
 using Bellseboss.Pery.Scripts.Input;
 using UnityEngine;
 
-public class ScalableWall : MonoBehaviour,IFocusTarget
+public class ScalableWall : MonoBehaviour
 {
     [SerializeField] private GetDataWentCollisionWithPlayer targetFocus;
     [SerializeField] private float forceToGravitate;
@@ -10,7 +10,7 @@ public class ScalableWall : MonoBehaviour,IFocusTarget
     private CharacterV2 _characterV2;
     void Start()
     {
-        targetFocus.Configure(this);
+        targetFocus.Configure();
         targetFocus.EnableCollider();
         targetFocus.CollisionEnter += TargetFocusOnCollisionEnter;
         targetFocus.CollisionExit += TargetFocusOnCollisionExit;
