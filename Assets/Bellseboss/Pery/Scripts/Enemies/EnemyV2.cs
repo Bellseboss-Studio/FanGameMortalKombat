@@ -41,6 +41,13 @@ public abstract class EnemyV2 : MonoBehaviour, IAnimationController, IEnemyV2
         animationController.Configure(_model.GetComponent<Animator>(), this);
         aiController.Configure(this);
         _state = StatesOfEnemy.NORMAL;
+        
+        animationController.OnFinishAnimationDamage += () =>
+        {
+            Debug.Log("EnemyV2: Finish Animation Damage");
+            _canMove = true;
+            _canRotate = true;
+        };
     }
 
     private void Update()
@@ -137,7 +144,10 @@ public abstract class EnemyV2 : MonoBehaviour, IAnimationController, IEnemyV2
 
     public void SetAnimationToHit(bool isQuickAttack, int numberOfCombos)
     {
+        if(IsDead) return;
         Debug.Log($"EnemyV2: SetAnimationToHit isQuickAttack: {isQuickAttack} numberOfCombos: {numberOfCombos}");
+        //TODO set animation to hit
+        animationController.TakeDamage(isQuickAttack, numberOfCombos);
     }
 
     public void SetPlayer(CharacterV2 characterV2)
