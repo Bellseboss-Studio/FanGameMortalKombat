@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Bellseboss.Pery.Scripts.Input
 {
-    public class CharacterV2 : MonoBehaviour, ICharacterV2, IMovementRigidBodyV2, IAnimationController, IRotationCharacterV2, ICombatSystem, IFocusTarget
+    public class CharacterV2 : PJV2, ICharacterV2, IMovementRigidBodyV2, IAnimationController, IRotationCharacterV2, ICombatSystem, IFocusTarget
     {
         public string Id => id;
         public Action OnAction { get; set; }
@@ -26,6 +26,9 @@ namespace Bellseboss.Pery.Scripts.Input
         [SerializeField] private float forceRotation;
         [SerializeField] private TargetFocus targetFocus;
         [SerializeField] private StatisticsOfCharacter statisticsOfCharacter;
+        [SerializeField] private MovementADSR movementADSR;
+        private StatisticsOfCharacter _statisticsOfCharacter;
+        private bool IsDead;
 
         private void Start()
         {
@@ -49,6 +52,10 @@ namespace Bellseboss.Pery.Scripts.Input
             movementRigidbodyV2.GetJumpSystem().OnEndJump += JumpOnEndJump;
             
             rotationCharacterV2.CanRotate(true);
+            
+            _statisticsOfCharacter = Instantiate(statisticsOfCharacter);
+            
+            movementADSR.Configure(GetComponent<Rigidbody>(), _statisticsOfCharacter, this);
         }
         
 
@@ -224,6 +231,36 @@ namespace Bellseboss.Pery.Scripts.Input
         public void ExitToWall()
         {
             movementRigidbodyV2.ExitToWall();
+        }
+
+        public override void ReceiveDamage(int damage, Vector3 transformForward)
+        {
+            if(IsDead) return;
+            _statisticsOfCharacter.life -= damage;
+            if (_statisticsOfCharacter.life <= 0)
+            {
+                IsDead = true;
+                //OnDead?.Invoke(this);
+                Debug.Log("CharacterV2: Dead");
+            }
+            if (movementADSR.CanAttackAgain() && !IsDead)
+            {
+                movementADSR.Attack(transformForward);
+            }
+            rotationCharacterV2.RotateToDirection(transformForward);
+        }
+
+        public override void SetAnimationToHit(bool isQuickAttack, int numberOfCombosQuick)
+        {
+            if(IsDead) return;
+            Debug.Log($"EnemyV2: SetAnimationToHit isQuickAttack: {isQuickAttack} numberOfCombos: {numberOfCombosQuick}");
+            animationController.TakeDamage(isQuickAttack, numberOfCombosQuick);
+        }
+
+        public override void Stun(bool isStun)
+        {
+            movementRigidbodyV2.CanMove(!isStun);
+            rotationCharacterV2.CanRotate(!isStun);
         }
     }
 }

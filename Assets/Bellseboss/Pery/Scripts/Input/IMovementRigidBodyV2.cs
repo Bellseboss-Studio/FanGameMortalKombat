@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Bellseboss.Pery.Scripts.Input
 {
-    public interface IMovementRigidBodyV2 : ICharacterV2
+    public interface IMovementRigidBodyV2
     {
         void UpdateAnimation();
         void ChangeToNormalJump();

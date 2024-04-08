@@ -63,7 +63,7 @@ namespace Bellseboss.Pery.Scripts.Input
 
         public void ActivateTrigger(string animationTrigger)
         {
-            Die(animationTrigger);
+            _animator.SetTrigger(animationTrigger);
         }
 
         public void TakeDamage(bool isQuickAttack, int numberOfCombos)
@@ -87,11 +87,6 @@ namespace Bellseboss.Pery.Scripts.Input
                 }
             }
             
-        }
-
-        public void Die(string animationTrigger)
-        {
-            _animator.SetTrigger(animationTrigger);
         }
     }
 }

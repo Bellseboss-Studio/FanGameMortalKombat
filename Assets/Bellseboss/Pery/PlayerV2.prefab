@@ -1041,6 +1041,7 @@ GameObject:
   - component: {fileID: 790305426}
   - component: {fileID: 790305427}
   - component: {fileID: 121578746}
+  - component: {fileID: 1309216378850590419}
   m_Layer: 10
   m_Name: PlayerV2
   m_TagString: Untagged
@@ -1094,6 +1095,7 @@ MonoBehaviour:
   forceRotation: 20
   targetFocus: {fileID: 919132148402666361}
   statisticsOfCharacter: {fileID: 11400000, guid: 2c107fda2a30a3a4fb6d83dca49c4ffb, type: 2}
+  movementADSR: {fileID: 1309216378850590419}
 --- !u!114 &8585594586927423060
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1366,6 +1368,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _vector2: {x: 0, y: 0}
+  rotationWithTarget: {x: 0, y: 0, z: 0}
   _canRotate: 0
 --- !u!114 &1183017941
 MonoBehaviour:
@@ -1428,15 +1431,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackMovementDataQuick: {fileID: 11400000, guid: 3ffb5d5d952c90746abc60139b617f3c, type: 2}
   attackMovementDataPower: {fileID: 11400000, guid: 693571b079f01224e85e24659822b71f, type: 2}
+  maxNumberOfCombosQuick: 3
+  maxNumberOfCombosPower: 1
+  targetFocus: {fileID: 434739508}
+--- !u!114 &1309216378850590419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8585594586927423071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd39d6d32e954e76a6eaf058a9925878, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementData: {fileID: 11400000, guid: 5dc11fdcbc0978e4f8d75fca91d90654, type: 2}
   canAttackAgain: 1
   attacking: 0
   _deltatimeLocal: 0
-  _distance: {x: 0, y: 0, z: 0}
-  maxNumberOfCombosQuick: 3
-  maxNumberOfCombosPower: 1
-  _numberOfCombosQuick: 0
-  _numberOfCombosPower: 0
-  targetFocus: {fileID: 434739508}
 --- !u!1 &8585594587426267891
 GameObject:
   m_ObjectHideFlags: 0
