@@ -75,7 +75,7 @@ namespace Bellseboss.Pery.Scripts.Input
             }).Loop(loop =>
             {
                 _deltatimeLocal += loop.deltaTime;
-                if (_deltatimeLocal >= timeToAttack + timeToDecreasing || isColliding)
+                if (_deltatimeLocal >= timeToAttack + timeToDecreasing || isColliding || floorController.IsTouchingFloor())
                 {
                     loop.Break();
                 }
@@ -101,7 +101,7 @@ namespace Bellseboss.Pery.Scripts.Input
             {
                 //Debug.Log("JumpSystem: Sustain Loop");
                 _deltatimeLocal += loop.deltaTime;
-                if (_deltatimeLocal >= timeToAttack + timeToDecreasing + timeToSustain || isColliding)
+                if (_deltatimeLocal >= timeToAttack + timeToDecreasing + timeToSustain || isColliding || floorController.IsTouchingFloor())
                 {
                     loop.Break();
                 }

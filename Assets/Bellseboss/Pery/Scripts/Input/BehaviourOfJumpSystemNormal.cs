@@ -92,7 +92,9 @@ namespace Bellseboss.Pery.Scripts.Input
                 position = Vector3.Lerp(position, position - Vector3.up * (maxHeighJump * heightMultiplier),
                     forceToDecreasing * loop.deltaTime);
                 gameObjectToPlayer.transform.position = position;
-            }).Add(() => { _endJump.Play(); });
+            }).Add(() => { 
+                _endJump.Play();
+            });
             
             _endJump = this.tt().Pause().Add(() =>
             {

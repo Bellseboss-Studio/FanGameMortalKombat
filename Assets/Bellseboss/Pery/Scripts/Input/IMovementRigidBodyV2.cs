@@ -9,6 +9,8 @@ namespace Bellseboss.Pery.Scripts.Input
         void ChangeRotation(Vector3 rotation);
         void RestoreRotation();
         void EndAttackMovement();
+        void PlayerFall();
+        void PlayerRecovery();
     }
     
     public interface IAnimationController

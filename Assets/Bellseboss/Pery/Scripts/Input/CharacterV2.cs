@@ -72,7 +72,9 @@ namespace Bellseboss.Pery.Scripts.Input
 
         private void JumpOnEndJump()
         {
-            animationController.JumpRecovery();
+            //animationController.JumpRecovery();
+            isAnimationWasRun = false;
+            isAnimationRecovered = false;
         }
 
         private void JumpOnRelease()
@@ -221,6 +223,22 @@ namespace Bellseboss.Pery.Scripts.Input
         {
             rotationCharacterV2.Direction(Vector3.zero);
             rotationCharacterV2.CanRotateWhileAttack(false);
+        }
+
+        private bool isAnimationWasRun, isAnimationRecovered;
+        public void PlayerFall()
+        {
+            if (isAnimationWasRun || movementRigidbodyV2.IsJumpingFromADRS()) return;
+            //animationController.JumpFall();
+            animationController.Fall();
+            isAnimationWasRun = true;
+        }
+
+        public void PlayerRecovery()
+        {
+            if (isAnimationRecovered || !isAnimationWasRun) return;
+            animationController.JumpRecovery();
+            isAnimationRecovered = true;
         }
 
         public void LeaveGround(bool leave, float forceToGravitate, Vector3 direction)

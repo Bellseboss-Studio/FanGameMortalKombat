@@ -19,6 +19,7 @@ public class JumpSystem : MonoBehaviour, IJumpSystem
     private bool _isScalableWall;
     private FloorController _floorController;
     private IMovementRigidBodyV2 _movementRigidBodyV2;
+    private bool _isJump;
 
     public void Configure(Rigidbody rigidbody, IMovementRigidBodyV2 movementRigidBodyV2, FloorController floorController)
     {
@@ -46,8 +47,9 @@ public class JumpSystem : MonoBehaviour, IJumpSystem
         _sustain?.Stop();
         _release?.Stop();
         _endJump?.Stop();
+        _isJump = false;
         
-        if(isScalableWall && !floorController.IsTouchingFloor())
+        if(isScalableWall || !floorController.IsTouchingFloor())
         {
             _attack = BehaviourOfJumpSystemWalls.GetAttack();
             _decresing = BehaviourOfJumpSystemWalls.GetDecay();
@@ -57,6 +59,7 @@ public class JumpSystem : MonoBehaviour, IJumpSystem
             BehaviourOfJumpSystemWalls.OnAttack = () =>
             {
                 OnAttack?.Invoke();
+                _isJump = true;
             };
             BehaviourOfJumpSystemWalls.OnMidAir = () =>
             {
@@ -73,6 +76,7 @@ public class JumpSystem : MonoBehaviour, IJumpSystem
             BehaviourOfJumpSystemWalls.OnEndJump = () =>
             {
                 OnEndJump?.Invoke();
+                _isJump = false;
             };
             var behaviourOfJumpSystemWallsMono = BehaviourOfJumpSystemWalls as BehaviourOfJumpSystemWalls;
             System.Diagnostics.Debug.Assert(behaviourOfJumpSystemWallsMono != null, nameof(behaviourOfJumpSystemWallsMono) + " != null");
@@ -88,6 +92,7 @@ public class JumpSystem : MonoBehaviour, IJumpSystem
             BehaviourOfJumpSystemNormal.OnAttack = () =>
             {
                 OnAttack?.Invoke();
+                _isJump = true;
             };
             BehaviourOfJumpSystemNormal.OnMidAir = () =>
             {
@@ -104,6 +109,7 @@ public class JumpSystem : MonoBehaviour, IJumpSystem
             BehaviourOfJumpSystemNormal.OnEndJump = () =>
             {
                 OnEndJump?.Invoke();
+                _isJump = false;
             };
         }
         
@@ -112,7 +118,6 @@ public class JumpSystem : MonoBehaviour, IJumpSystem
     public void ChangeNormalWall()
     {
         _movementRigidBodyV2.ChangeToNormalJump();
-        _release.Play();
     }
 
     public void ChangeRotation(Vector3 rotation)
@@ -128,6 +133,11 @@ public class JumpSystem : MonoBehaviour, IJumpSystem
     public void ExitToWall()
     {
         //TODO: doing something went exit to wall
+    }
+
+    public bool IsJump()
+    {
+        return _isJump;
     }
 }
 

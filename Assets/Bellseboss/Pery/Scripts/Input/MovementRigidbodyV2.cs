@@ -47,6 +47,18 @@ namespace Bellseboss.Pery.Scripts.Input
             floorController.Configure(this);
             jumpSystem.Configure(rigidBody, movementRigidBodyV2, floorController);
             attackMovementSystem.Configure(rigidBody, statisticsOfCharacter, movementRigidBodyV2);
+            floorController.OnFall = Fall;
+            floorController.OnRecovery = Recovery;
+        }
+
+        private void Recovery()
+        {
+            _movementRigidBodyV2.PlayerRecovery();
+        }
+        
+        private void Fall()
+        {
+            _movementRigidBodyV2.PlayerFall();
         }
 
         public void IsScalableWall(bool isScalableWall, float forceToGravitate, Vector3 direction)
@@ -209,6 +221,11 @@ namespace Bellseboss.Pery.Scripts.Input
         public void ExitToWall()
         {
             jumpSystem.ExitToWall();
+        }
+
+        public bool IsJumpingFromADRS()
+        {
+            return jumpSystem.IsJump();
         }
     }
 }

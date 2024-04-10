@@ -288,6 +288,16 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
     {
         
     }
+
+    public void PlayerFall()
+    {
+        
+    }
+
+    public void PlayerRecovery()
+    {
+        
+    }
 }
 
 public interface IEnemyV2
