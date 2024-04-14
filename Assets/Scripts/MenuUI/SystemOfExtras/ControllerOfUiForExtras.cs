@@ -4,6 +4,7 @@ using UnityEngine;
 public class ControllerOfUiForExtras : MonoBehaviour
 {
     [SerializeField] private List<ContainerOfExtra> containers;
+    [SerializeField] private ContainerOfExtra container;
     [SerializeField] private Animator animator;
 
     public async void LoadData()

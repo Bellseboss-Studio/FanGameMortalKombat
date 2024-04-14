@@ -161,7 +161,7 @@ internal class AiController : MonoBehaviour
         }).Add(() =>
         {
             _enemy.CanMove(false);
-            _enemy.TriggerAnimation("died");
+            _enemy.TriggerAnimation("dead");
         }).Add(() =>
         {
             _enemy.Died();
@@ -172,6 +172,7 @@ internal class AiController : MonoBehaviour
 
     private void EnemyOnOnDead(EnemyV2 obj)
     {
+        Debug.Log("AiController: Enemy is dead");
         _died.Play();
     }
 }

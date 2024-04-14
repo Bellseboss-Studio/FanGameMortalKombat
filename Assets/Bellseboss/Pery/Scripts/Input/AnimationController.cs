@@ -1,12 +1,16 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections;
+using UnityEngine;
 
 namespace Bellseboss.Pery.Scripts.Input
 {
     internal class AnimationController : MonoBehaviour
     {
+        public Action OnFinishAnimationDamage;
         [SerializeField] private string velocityName, horizontalName, verticalName, targetName, punchName, kickName;
         private Animator _animator;
         private IAnimationController _animationController;
+        private bool _isFinishAnimation;
 
         public void Configure( Animator animator, IAnimationController animationController)
         {
@@ -58,6 +62,34 @@ namespace Bellseboss.Pery.Scripts.Input
         }
 
         public void ActivateTrigger(string animationTrigger)
+        {
+            Die(animationTrigger);
+        }
+
+        public void TakeDamage(bool isQuickAttack, int numberOfCombos)
+        {
+            var nameOfAnimation = isQuickAttack ? "q" : "p";
+            nameOfAnimation += numberOfCombos;
+            StartCoroutine(FinishTimeAnimation(nameOfAnimation));
+            _animator.Play(nameOfAnimation);
+        }
+
+        private IEnumerator FinishTimeAnimation(string nameOfAnimation)
+        {
+            var animationClip = _animator.runtimeAnimatorController.animationClips;
+            foreach (var clip in animationClip)
+            {
+                if (clip.name == nameOfAnimation)
+                {
+                    yield return new WaitForSeconds(clip.length);
+                    OnFinishAnimationDamage?.Invoke();
+                    break;
+                }
+            }
+            
+        }
+
+        public void Die(string animationTrigger)
         {
             _animator.SetTrigger(animationTrigger);
         }
