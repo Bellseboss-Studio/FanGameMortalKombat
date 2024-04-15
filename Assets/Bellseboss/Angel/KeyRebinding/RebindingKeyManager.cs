@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -6,20 +7,48 @@ namespace Bellseboss.Angel.KeyRebinding
 {
     public class RebindingKeyManager : MonoBehaviour
     {
-        [SerializeField] private InputActionReference moveRef, jumpRef, fireRef;
+        [SerializeField] public InputActionAsset actions;
+        [SerializeField] private List<InputActionReference> moveRef;
+        [SerializeField] private GameObject content;
+        private bool _isOpen = false;
 
-        private void OnEnable()
+        private void Awake()
         {
-            moveRef.action.Disable();
-            jumpRef.action.Disable();
-            fireRef.action.Disable();
+            var rebinds = PlayerPrefs.GetString("rebinds");
+            if (!string.IsNullOrEmpty(rebinds))
+                actions.LoadBindingOverridesFromJson(rebinds);
+            
         }
 
-        private void OnDisable()
+        public void OnOpenCloseKeyBindingMenu(InputAction.CallbackContext ctx)
         {
-            moveRef.action.Enable();
-            jumpRef.action.Enable();
-            fireRef.action.Enable();
+            if (ctx.performed)
+            {
+                OpenCloseKeyBindingMenu();
+            }
+        }
+
+        public void OpenCloseKeyBindingMenu()
+        {
+
+            _isOpen = !_isOpen;
+            content.SetActive(_isOpen);
+            if (_isOpen)
+            {
+                foreach (var reference in moveRef)
+                {
+                    reference.action.Disable();
+                }
+            }
+            else
+            {
+                foreach (var reference in moveRef)
+                {
+                    reference.action.Enable();
+                }
+                var rebinds = actions.SaveBindingOverridesAsJson();
+                PlayerPrefs.SetString("rebinds", rebinds);
+            }
         }
     }
 }
