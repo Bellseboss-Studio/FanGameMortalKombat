@@ -39,7 +39,7 @@ namespace Bellseboss.Pery.Scripts.Input
             return _isTouchingFloor;
         }
 
-        public void Configure(MovementRigidbodyV2 movementRigidBodyV2)
+        public void Configure(GameObject movementRigidBodyV2)
         {
             _player = movementRigidBodyV2.gameObject;
             _isConfigured = true;

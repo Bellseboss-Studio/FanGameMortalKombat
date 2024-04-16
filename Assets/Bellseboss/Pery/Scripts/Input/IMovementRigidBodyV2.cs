@@ -17,7 +17,7 @@ namespace Bellseboss.Pery.Scripts.Input
     {
     }
     
-    public interface IRotationCharacterV2 : ICharacterV2
+    public interface IRotationCharacterV2
     {
     }
     public interface ICombatSystem : ICharacterV2

@@ -20,10 +20,7 @@ namespace Bellseboss.Pery.Scripts.Input
         
         public void Movement(float velocity, float speed)
         {
-            //Debug.Log($"AnimationController: Movement: {velocity}");
             _animator.SetFloat(velocityName, velocity);
-            //_animator.SetFloat(horizontalName, vector2.x);
-            //_animator.SetFloat(velocityName, vector2.y);
         }
 
         public void IsTarget(bool isTarget)

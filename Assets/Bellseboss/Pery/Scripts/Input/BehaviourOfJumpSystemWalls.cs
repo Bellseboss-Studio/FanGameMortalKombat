@@ -87,7 +87,11 @@ namespace Bellseboss.Pery.Scripts.Input
                 position = Vector3.Lerp(position,
                     position - Vector3.up * (heightDecreasing * heightMultiplier),
                     forceToDecreasing * loop.deltaTime);
-                gameObjectToPlayer.transform.position = position;
+                //validate is not NaN
+                if (!double.IsNaN(position.x) && !double.IsNaN(position.y) && !double.IsNaN(position.z))
+                {
+                    gameObjectToPlayer.transform.position = position;
+                }
             }).Add(() =>
             {
                 if (isColliding) return;
@@ -130,7 +134,11 @@ namespace Bellseboss.Pery.Scripts.Input
                 position = Vector3.Lerp(position,
                     position - Vector3.up * (heightDecreasing * heightMultiplier),
                     forceToDecreasing * loop.deltaTime);
-                gameObjectToPlayer.transform.position = position;
+                //validate is not NaN
+                if (!double.IsNaN(position.x) && !double.IsNaN(position.y) && !double.IsNaN(position.z))
+                {
+                    gameObjectToPlayer.transform.position = position;
+                }
             }).Add(() => { _endJump.Play(); });
             
             _endJump = this.tt().Pause().Add(() =>
