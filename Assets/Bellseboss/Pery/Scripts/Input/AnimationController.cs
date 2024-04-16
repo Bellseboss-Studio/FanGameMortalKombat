@@ -93,5 +93,10 @@ namespace Bellseboss.Pery.Scripts.Input
         {
             _animator.SetTrigger(animationTrigger);
         }
+
+        public void SetTrigger(string paramName)
+        {
+            _animator.SetTrigger(paramName);
+        }
     }
 }

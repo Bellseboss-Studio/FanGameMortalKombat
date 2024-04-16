@@ -1,10 +1,11 @@
 ﻿using System;
+using Bellseboss.Angel.CombatSystem;
 using Cinemachine;
 using UnityEngine;
 
 namespace Bellseboss.Pery.Scripts.Input
 {
-    public class CharacterV2 : MonoBehaviour, ICharacterV2, IMovementRigidBodyV2, IAnimationController, IRotationCharacterV2, ICombatSystem, IFocusTarget
+    public class CharacterV2 : MonoBehaviour, ICharacterV2, IMovementRigidBodyV2, IAnimationController, IRotationCharacterV2, ICombatSystem, IFocusTarget, ICombatSystemAngel
     {
         public string Id => id;
         public Action OnAction { get; set; }
@@ -26,6 +27,7 @@ namespace Bellseboss.Pery.Scripts.Input
         [SerializeField] private float forceRotation;
         [SerializeField] private TargetFocus targetFocus;
         [SerializeField] private StatisticsOfCharacter statisticsOfCharacter;
+        [SerializeField] private CombatSystemAngel combatSystemAngel;
 
         private void Start()
         {
@@ -95,24 +97,26 @@ namespace Bellseboss.Pery.Scripts.Input
 
         private void OnKickEvent()
         {
-            if (GetAttackSystem().CanAttackAgain() && !GetAttackSystem().FullCombo())
+            combatSystemAngel.Kick(animationController.SetTrigger);
+            /*if (GetAttackSystem().CanAttackAgain() && !GetAttackSystem().FullCombo())
             {
                 animationController.Kick();
                 combatSystem.PowerAttack();
                 rotationCharacterV2.RotateToLookTheTarget(targetFocus.GetTarget());
                 rotationCharacterV2.CanRotateWhileAttack(true);
-            }
+            }*/
         }
 
         private void OnPunchEvent()
         {
-            if (GetAttackSystem().CanAttackAgain() && !GetAttackSystem().FullCombo())
+            combatSystemAngel.Punch(animationController.SetTrigger);
+            /*if (GetAttackSystem().CanAttackAgain() && !GetAttackSystem().FullCombo())
             {
                 animationController.Punch();
                 combatSystem.QuickAttack();
                 rotationCharacterV2.RotateToLookTheTarget(targetFocus.GetTarget());
                 rotationCharacterV2.CanRotateWhileAttack(true);
-            }
+            }*/
         }
 
         private void OnTargetEvent(bool isTarget)
@@ -123,14 +127,24 @@ namespace Bellseboss.Pery.Scripts.Input
 
         private void OnMove(Vector2 vector2)
         {
-            
-            if(rotationCharacterV2.CanRotate() && !movementRigidbodyV2.IsJump)
+            if (combatSystemAngel.Attacking)
             {
-                rotationCharacterV2.Direction(vector2);
+                combatSystemAngel.oneTimeOnEndAttack += () =>
+                {
+                    if(rotationCharacterV2.CanRotate() && !movementRigidbodyV2.IsJump)
+                    {
+                        rotationCharacterV2.Direction(vector2);
+                    }  
+                };
             }
-
+            else
+            {
+                if(rotationCharacterV2.CanRotate() && !movementRigidbodyV2.IsJump)
+                {
+                    rotationCharacterV2.Direction(vector2);
+                }   
+            }
             movementRigidbodyV2.Direction(vector2);
-
         }
 
         public void PowerAttack(float runningDistance, Vector3 runningDirection)
@@ -162,6 +176,11 @@ namespace Bellseboss.Pery.Scripts.Input
         {
             movementRigidbodyV2.CanMove(true);
             rotationCharacterV2.CanRotate(true);
+        }
+
+        public Vector3 RotateToTargetAngel(Vector3 originalDirection)
+        {
+            return targetFocus.RotateToTarget(originalDirection);
         }
 
         public Vector3 RotateToTarget(Vector3 originalDirection)
