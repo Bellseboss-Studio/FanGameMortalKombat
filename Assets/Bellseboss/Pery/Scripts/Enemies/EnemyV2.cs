@@ -4,7 +4,7 @@ using Bellseboss.Pery.Scripts.Input;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-public abstract class EnemyV2 : MonoBehaviour, IAnimationController, IEnemyV2
+public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementRigidBodyV2
 {
     public event Action OnArriveToTarget;
     public event Action<bool> OnPlayerDetected;
@@ -20,6 +20,7 @@ public abstract class EnemyV2 : MonoBehaviour, IAnimationController, IEnemyV2
     [SerializeField] private Rigidbody rigidbody;
     [SerializeField] private float minDistanceToArriveToTarget;
     [SerializeField] private float minDistanceToArriveToEnemy;
+    [SerializeField] private AttackMovementSystem attackMovementSystem;
     private GameObject _model;
     private StatisticsOfCharacter _statisticsOfCharacter;
     private CharacterV2 _characterV2;
@@ -29,6 +30,7 @@ public abstract class EnemyV2 : MonoBehaviour, IAnimationController, IEnemyV2
     private GameObject _target;
     private bool _canMove, _canRotate, _canRotateToTarget;
     [SerializeField] private StatesOfEnemy _state;
+    [SerializeField] private TargetFocus colliderToDamage;
 
     public string Id => id;
     public bool IsDead { get; private set; }
@@ -36,17 +38,25 @@ public abstract class EnemyV2 : MonoBehaviour, IAnimationController, IEnemyV2
     private void Start()
     {
         _statisticsOfCharacter = Instantiate(statisticsOfCharacter);
-        movementADSR.Configure(GetComponent<Rigidbody>(), _statisticsOfCharacter);
+        movementADSR.Configure(GetComponent<Rigidbody>(), _statisticsOfCharacter, this);
         _model = Instantiate(model, transform);
         animationController.Configure(_model.GetComponent<Animator>(), this);
         aiController.Configure(this);
         _state = StatesOfEnemy.NORMAL;
-        
+
+        var localPosition = new Vector3(0, -0.5f, 0);
+        _model.transform.localPosition = localPosition;
+
         animationController.OnFinishAnimationDamage += () =>
         {
             Debug.Log("EnemyV2: Finish Animation Damage");
             _canMove = true;
             _canRotate = true;
+        };
+        attackMovementSystem.Configure(GetComponent<Rigidbody>(), _statisticsOfCharacter, this);
+        attackMovementSystem.OnEndAttack += () =>
+        {
+            aiController.StartAi();
         };
     }
 
@@ -71,7 +81,7 @@ public abstract class EnemyV2 : MonoBehaviour, IAnimationController, IEnemyV2
             direction.Normalize();
             direction *= GetSpeedToMove();
             rigidbody.velocity = direction * Time.deltaTime;
-            if (Vector3.Distance(transform.position, _target.transform.position) < minDistanceToArriveToTarget)
+            if (Vector3.Distance(transform.position, _target.transform.position) < (GetPlayer() != null ? minDistanceToArriveToEnemy : minDistanceToArriveToTarget))
             {
                 Debug.Log("EnemyV2: Arrive to target");
                 _canMove = false;
@@ -79,6 +89,12 @@ public abstract class EnemyV2 : MonoBehaviour, IAnimationController, IEnemyV2
             }
         }
         animationController.Movement(rigidbody.velocity.magnitude/10, 0);
+    }
+
+    public override void Stun(bool isStun)
+    {
+        _canMove = !isStun;
+        _canRotate = !isStun;
     }
 
     private float GetSpeedToMove()
@@ -122,7 +138,7 @@ public abstract class EnemyV2 : MonoBehaviour, IAnimationController, IEnemyV2
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 5 * Time.deltaTime);
     }
     
-    public void ReceiveDamage(int damage, Vector3 direction)
+    public override void ReceiveDamage(int damage, Vector3 direction)
     {
         if(IsDead) return;
         _statisticsOfCharacter.life -= damage;
@@ -142,7 +158,61 @@ public abstract class EnemyV2 : MonoBehaviour, IAnimationController, IEnemyV2
         Debug.Log("EnemyV2: Die");
     }
 
-    public void SetAnimationToHit(bool isQuickAttack, int numberOfCombos)
+    public float GetTimeToAttack()
+    {
+        return _statisticsOfCharacter.timeToAttack;
+    }
+
+    public string GetAttackAnimationName()
+    {
+        return _statisticsOfCharacter.attackAnimationName;
+    }
+
+    public float GetTimeBetweenAttacks()
+    {
+        return _statisticsOfCharacter.timeBetweenAttacks;
+    }
+
+    public bool CanActivateCollider(float delta)
+    {
+        _statisticsOfCharacter.timeToActivateCollider -= delta;
+        if (_statisticsOfCharacter.timeToActivateCollider <= 0)
+        {
+            _statisticsOfCharacter.timeToActivateCollider = _statisticsOfCharacter.timeToEnableCollider;
+            return true;
+        }
+        return false;
+        
+    }
+
+    public void ColliderToAttack(bool enableCollider)
+    {
+        if (enableCollider)
+        {
+            colliderToDamage.EnableCollider();
+        }
+        else
+        {
+            colliderToDamage.DisableCollider();
+        }
+    }
+
+    public void SendDamage()
+    {
+        _characterV2.ReceiveDamage(_statisticsOfCharacter.damage, transform.forward);
+    }
+
+    public void AttackPlayer()
+    {
+        attackMovementSystem.Attack(transform.forward, _statisticsOfCharacter.attackAnimationType);
+    }
+
+    public void SetState(StatesOfEnemy state)
+    {
+        _state = state;
+    }
+
+    public override void SetAnimationToHit(bool isQuickAttack, int numberOfCombos)
     {
         if(IsDead) return;
         Debug.Log($"EnemyV2: SetAnimationToHit isQuickAttack: {isQuickAttack} numberOfCombos: {numberOfCombos}");
@@ -152,7 +222,12 @@ public abstract class EnemyV2 : MonoBehaviour, IAnimationController, IEnemyV2
 
     public void SetPlayer(CharacterV2 characterV2)
     {
+        Debug.Log($"EnemyV2: SetPlayer {characterV2 != null}"); 
         _characterV2 = characterV2;
+        if(_characterV2 != null)
+        {
+            aiController.SetPlayer(characterV2);
+        }
     }
 
     public void IntoToFarZone(bool b)
@@ -184,6 +259,45 @@ public abstract class EnemyV2 : MonoBehaviour, IAnimationController, IEnemyV2
     {
         _paths = new List<GameObject>(pathToFollow);
     }
+
+    public Action OnAction { get; set; }
+    public void DisableControls()
+    {
+        
+    }
+
+    public void UpdateAnimation()
+    {
+        
+    }
+
+    public void ChangeToNormalJump()
+    {
+        
+    }
+
+    public void ChangeRotation(Vector3 rotation)
+    {
+    }
+
+    public void RestoreRotation()
+    {
+    }
+
+    public void EndAttackMovement()
+    {
+        
+    }
+
+    public void PlayerFall()
+    {
+        
+    }
+
+    public void PlayerRecovery()
+    {
+        
+    }
 }
 
 public interface IEnemyV2
@@ -199,6 +313,14 @@ public interface IEnemyV2
     CharacterV2 GetPlayer();
     void CanMove(bool b);
     void Died();
+    float GetTimeToAttack();
+    string GetAttackAnimationName();
+    float GetTimeBetweenAttacks();
+    bool CanActivateCollider(float delta);
+    void ColliderToAttack(bool enableCollider);
+    void SendDamage();
+    void AttackPlayer();
+    void SetState(StatesOfEnemy state);
 }
 
 public class EnemiesV2Factory

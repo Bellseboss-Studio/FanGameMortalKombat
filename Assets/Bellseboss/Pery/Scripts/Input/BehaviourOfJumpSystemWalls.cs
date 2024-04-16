@@ -75,7 +75,7 @@ namespace Bellseboss.Pery.Scripts.Input
             }).Loop(loop =>
             {
                 _deltatimeLocal += loop.deltaTime;
-                if (_deltatimeLocal >= timeToAttack + timeToDecreasing || isColliding)
+                if (_deltatimeLocal >= timeToAttack + timeToDecreasing || isColliding || floorController.IsTouchingFloor())
                 {
                     loop.Break();
                 }
@@ -87,7 +87,11 @@ namespace Bellseboss.Pery.Scripts.Input
                 position = Vector3.Lerp(position,
                     position - Vector3.up * (heightDecreasing * heightMultiplier),
                     forceToDecreasing * loop.deltaTime);
-                gameObjectToPlayer.transform.position = position;
+                //validate is not NaN
+                if (!double.IsNaN(position.x) && !double.IsNaN(position.y) && !double.IsNaN(position.z))
+                {
+                    gameObjectToPlayer.transform.position = position;
+                }
             }).Add(() =>
             {
                 if (isColliding) return;
@@ -101,7 +105,7 @@ namespace Bellseboss.Pery.Scripts.Input
             {
                 //Debug.Log("JumpSystem: Sustain Loop");
                 _deltatimeLocal += loop.deltaTime;
-                if (_deltatimeLocal >= timeToAttack + timeToDecreasing + timeToSustain || isColliding)
+                if (_deltatimeLocal >= timeToAttack + timeToDecreasing + timeToSustain || isColliding || floorController.IsTouchingFloor())
                 {
                     loop.Break();
                 }
@@ -130,7 +134,11 @@ namespace Bellseboss.Pery.Scripts.Input
                 position = Vector3.Lerp(position,
                     position - Vector3.up * (heightDecreasing * heightMultiplier),
                     forceToDecreasing * loop.deltaTime);
-                gameObjectToPlayer.transform.position = position;
+                //validate is not NaN
+                if (!double.IsNaN(position.x) && !double.IsNaN(position.y) && !double.IsNaN(position.z))
+                {
+                    gameObjectToPlayer.transform.position = position;
+                }
             }).Add(() => { _endJump.Play(); });
             
             _endJump = this.tt().Pause().Add(() =>

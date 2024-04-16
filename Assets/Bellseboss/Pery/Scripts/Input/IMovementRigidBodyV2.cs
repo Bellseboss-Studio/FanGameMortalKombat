@@ -2,20 +2,22 @@ using UnityEngine;
 
 namespace Bellseboss.Pery.Scripts.Input
 {
-    public interface IMovementRigidBodyV2 : ICharacterV2
+    public interface IMovementRigidBodyV2
     {
         void UpdateAnimation();
         void ChangeToNormalJump();
         void ChangeRotation(Vector3 rotation);
         void RestoreRotation();
         void EndAttackMovement();
+        void PlayerFall();
+        void PlayerRecovery();
     }
     
     public interface IAnimationController
     {
     }
     
-    public interface IRotationCharacterV2 : ICharacterV2
+    public interface IRotationCharacterV2
     {
     }
     public interface ICombatSystem : ICharacterV2

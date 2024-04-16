@@ -103,5 +103,14 @@ namespace Bellseboss.Pery.Scripts.Input
         {
             _canChangeDirection = true;
         }
+
+        public void RotateToDirection(Vector3 direction)
+        {
+            //invert direction
+            direction = -direction;
+            //rotate to direction without lerp
+            _player.transform.rotation = Quaternion.LookRotation(direction);
+            _lastDirection = direction;
+        }
     }
 }
