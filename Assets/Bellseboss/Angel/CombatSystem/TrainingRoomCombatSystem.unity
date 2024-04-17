@@ -11991,11 +11991,11 @@ MonoBehaviour:
     timeToAttack: 0.3
     timeToDecreasing: 0.3
     timeToSustain: 0
-    timeToRelease: 0.5
+    timeToRelease: 0.2
     maxDistance: 1
     distanceToDecresing: 0.1
     forceToAttack: 5
-    forceToDecreasing: 0
+    forceToDecreasing: 1
     stunTime: 0
   - comboSequence: 01000000
     transitionParameterName: k
@@ -13693,11 +13693,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3854605625542608716, guid: 2149979b9e405114bb9eb9e3ecfbf0a0, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.3590093
+      value: 0.35900933
       objectReference: {fileID: 0}
     - target: {fileID: 3854605625542608716, guid: 2149979b9e405114bb9eb9e3ecfbf0a0, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.26014587
+      value: 0.26014584
       objectReference: {fileID: 0}
     - target: {fileID: 3854605625542608719, guid: 2149979b9e405114bb9eb9e3ecfbf0a0, type: 3}
       propertyPath: m_Follow
@@ -13713,11 +13713,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3854605626164137075, guid: 2149979b9e405114bb9eb9e3ecfbf0a0, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.3590093
+      value: 0.35900933
       objectReference: {fileID: 0}
     - target: {fileID: 3854605626164137075, guid: 2149979b9e405114bb9eb9e3ecfbf0a0, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.26014587
+      value: 0.26014584
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2149979b9e405114bb9eb9e3ecfbf0a0, type: 3}
