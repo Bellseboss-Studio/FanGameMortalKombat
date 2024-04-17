@@ -12,13 +12,14 @@ public class JumpSystem : MonoBehaviour, IJumpSystem
     [SerializeField, InterfaceType(typeof(IBehaviourOfJumpSystem))]
     private MonoBehaviour behaviourOfJumpSystemWalls;
     private IBehaviourOfJumpSystem BehaviourOfJumpSystemWalls => behaviourOfJumpSystemWalls as IBehaviourOfJumpSystem;
-    private TeaTime _attack, _decresing, _sustain, _release, _endJump;
+    private TeaTime _attack, _decay, _sustain, _release, _endJump;
     private Rigidbody _rigidbody;
     private float _deltatimeLocal;
     private RigidbodyConstraints _rigidbodyConstraints;
     private bool _isScalableWall;
     private FloorController _floorController;
     private IMovementRigidBodyV2 _movementRigidBodyV2;
+    private bool _isJump;
 
     public void Configure(Rigidbody rigidbody, IMovementRigidBodyV2 movementRigidBodyV2, FloorController floorController)
     {
@@ -31,7 +32,7 @@ public class JumpSystem : MonoBehaviour, IJumpSystem
         _floorController = floorController;
         _movementRigidBodyV2 = movementRigidBodyV2;
         
-        movementRigidBodyV2.ChangeToNormalJump();
+        IsScalableWall(false, floorController, Vector3.zero);
     }
 
     public void Jump()
@@ -42,21 +43,23 @@ public class JumpSystem : MonoBehaviour, IJumpSystem
     public void IsScalableWall(bool isScalableWall, FloorController floorController, Vector3 direction)
     {
         _attack?.Stop();
-        _decresing?.Stop();
+        _decay?.Stop();
         _sustain?.Stop();
         _release?.Stop();
         _endJump?.Stop();
+        _isJump = false;
         
-        if(isScalableWall && !floorController.IsTouchingFloor())
+        if(isScalableWall)
         {
             _attack = BehaviourOfJumpSystemWalls.GetAttack();
-            _decresing = BehaviourOfJumpSystemWalls.GetDecay();
+            _decay = BehaviourOfJumpSystemWalls.GetDecay();
             _sustain = BehaviourOfJumpSystemWalls.GetSustain();
             _release = BehaviourOfJumpSystemWalls.GetRelease();
             _endJump = BehaviourOfJumpSystemWalls.GetEndJump();
             BehaviourOfJumpSystemWalls.OnAttack = () =>
             {
                 OnAttack?.Invoke();
+                _isJump = true;
             };
             BehaviourOfJumpSystemWalls.OnMidAir = () =>
             {
@@ -73,6 +76,7 @@ public class JumpSystem : MonoBehaviour, IJumpSystem
             BehaviourOfJumpSystemWalls.OnEndJump = () =>
             {
                 OnEndJump?.Invoke();
+                _isJump = false;
             };
             var behaviourOfJumpSystemWallsMono = BehaviourOfJumpSystemWalls as BehaviourOfJumpSystemWalls;
             System.Diagnostics.Debug.Assert(behaviourOfJumpSystemWallsMono != null, nameof(behaviourOfJumpSystemWallsMono) + " != null");
@@ -81,13 +85,14 @@ public class JumpSystem : MonoBehaviour, IJumpSystem
         else
         {
             _attack = BehaviourOfJumpSystemNormal.GetAttack();
-            _decresing = BehaviourOfJumpSystemNormal.GetDecay();
+            _decay = BehaviourOfJumpSystemNormal.GetDecay();
             _sustain = BehaviourOfJumpSystemNormal.GetSustain();
             _release = BehaviourOfJumpSystemNormal.GetRelease();
             _endJump = BehaviourOfJumpSystemNormal.GetEndJump();
             BehaviourOfJumpSystemNormal.OnAttack = () =>
             {
                 OnAttack?.Invoke();
+                _isJump = true;
             };
             BehaviourOfJumpSystemNormal.OnMidAir = () =>
             {
@@ -104,6 +109,7 @@ public class JumpSystem : MonoBehaviour, IJumpSystem
             BehaviourOfJumpSystemNormal.OnEndJump = () =>
             {
                 OnEndJump?.Invoke();
+                _isJump = false;
             };
         }
         
@@ -112,7 +118,6 @@ public class JumpSystem : MonoBehaviour, IJumpSystem
     public void ChangeNormalWall()
     {
         _movementRigidBodyV2.ChangeToNormalJump();
-        _release.Play();
     }
 
     public void ChangeRotation(Vector3 rotation)
@@ -128,6 +133,11 @@ public class JumpSystem : MonoBehaviour, IJumpSystem
     public void ExitToWall()
     {
         //TODO: doing something went exit to wall
+    }
+
+    public bool IsJump()
+    {
+        return _isJump;
     }
 }
 

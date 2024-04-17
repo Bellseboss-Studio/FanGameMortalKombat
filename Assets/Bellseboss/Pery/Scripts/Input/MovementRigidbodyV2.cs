@@ -12,13 +12,13 @@ namespace Bellseboss.Pery.Scripts.Input
         [SerializeField] private bool isFall, isUp;
         [SerializeField] private AttackMovementSystem attackMovementSystem;
         [SerializeField] private JumpSystem jumpSystem;
-        [Range(0,1)]
+        [Range(0, 1)]
         [SerializeField] private float inputMin;
-        [Range(0,2)]
+        [Range(0, 2)]
         [SerializeField] private float inputMax;
-        [Range(0,1f)]
+        [Range(0, 1f)]
         [SerializeField] private float minSpeed;
-        [Range(0.5f,1)]
+        [Range(0.5f, 1)]
         [SerializeField] private float maxSpeed;
         [SerializeField] private bool isScalableWall;
         [SerializeField] private float forceToGravitate;
@@ -46,10 +46,22 @@ namespace Bellseboss.Pery.Scripts.Input
             _camera = camera;
             _movementRigidBodyV2 = movementRigidBodyV2;
             _canMove = true;
-            floorController.Configure(this);
+            floorController.Configure(this.gameObject);
             jumpSystem.Configure(rigidBody, movementRigidBodyV2, floorController);
             attackMovementSystem.Configure(rigidBody, statisticsOfCharacter, movementRigidBodyV2);
             combatSystemAngel.Configure(rigidBody, statisticsOfCharacter, movementRigidBodyV2);
+            floorController.OnFall = Fall;
+            floorController.OnRecovery = Recovery;
+        }
+
+        private void Recovery()
+        {
+            _movementRigidBodyV2.PlayerRecovery();
+        }
+
+        private void Fall()
+        {
+            _movementRigidBodyV2.PlayerFall();
         }
 
         public void IsScalableWall(bool isScalableWall, float forceToGravitate, Vector3 direction)
@@ -59,32 +71,26 @@ namespace Bellseboss.Pery.Scripts.Input
             jumpSystem.IsScalableWall(isScalableWall, floorController, direction);
             _jump = false;
         }
-        
+
         private float CalculateDirection(float axis, bool isTarget)
         {
             var axisAbs = Mathf.Abs(axis);
-            if (isTarget && axisAbs >= inputMin)
+
+            if (axisAbs < inputMin) return 0;
+
+            if (isTarget)
             {
-                if (axisAbs <= inputMin) return 0;
                 return axis >= 0 ? minSpeed : -minSpeed;
             }
 
-            if (axisAbs >= inputMin)
+            if (axisAbs < inputMax)
             {
-                if (axisAbs >= inputMin && axisAbs < inputMax)
-                {
-                    if (axisAbs <= inputMin) return 0;
-                    return axis >= 0 ? minSpeed : -minSpeed;
-                }
-                else if (axisAbs >= inputMax)
-                {
-                    if (axisAbs <= inputMin) return 0;
-                    return axis >= 0 ? maxSpeed : -maxSpeed;
-                }
+                return axis >= 0 ? minSpeed : -minSpeed;
             }
-            return 0;
+
+            return axis >= 0 ? maxSpeed : -maxSpeed;
         }
-        
+
         private void Move()
         {
             var result = Vector2.zero;
@@ -93,11 +99,11 @@ namespace Bellseboss.Pery.Scripts.Input
             var absX = Mathf.Abs(result.x);
             var absY = Mathf.Abs(result.y);
             var _choiceMax = absX >= maxSpeed || absY >= maxSpeed;
-            if(_lastDirection.x <= inputMin && _lastDirection.y <= inputMin)
+            if (_lastDirection.x <= inputMin && _lastDirection.y <= inputMin)
             {
                 _velocityOfAnimation = 0;
             }
-            else if(_choiceMax)
+            else if (_choiceMax)
             {
                 _velocityOfAnimation = 1;
             }
@@ -105,28 +111,28 @@ namespace Bellseboss.Pery.Scripts.Input
             {
                 _velocityOfAnimation = 0.4f;
             }
-            
+
             var resultMovement = _inputMovementCustom.CalculateMovement(result, _choiceMax ? _speedRun : _speedWalk,
                 _camera, _rigidbody.gameObject);
-            
+
             if (_jump)
             {
                 if (floorController.IsTouchingFloor() || isScalableWall)
                 {
                     jumpSystem.Jump();
-                    _jump = false;   
+                    _jump = false;
                 }
             }
             if (floorController.IsTouchingFloor())
             {
-                _rigidbody.velocity = new Vector3(resultMovement.x, _rigidbody.velocity.y, resultMovement.z);   
+                _rigidbody.velocity = new Vector3(resultMovement.x, _rigidbody.velocity.y, resultMovement.z);
             }
-            if(_rigidbody.velocity.y > 0)
+            if (_rigidbody.velocity.y > 0)
             {
                 isUp = true;
                 isFall = false;
             }
-            else if(_rigidbody.velocity.y < 0 && !floorController.IsTouchingFloor())
+            else if (_rigidbody.velocity.y < 0 && !floorController.IsTouchingFloor())
             {
                 isFall = true;
                 isUp = false;
@@ -161,7 +167,7 @@ namespace Bellseboss.Pery.Scripts.Input
 
         public float GetVelocity()
         {
-            return _rigidbody.velocity.magnitude/10;
+            return _rigidbody.velocity.magnitude / 10;
         }
 
         public void AddForce(Vector3 runningDirection, float runningDistance, AttackMovementSystem.TypeOfAttack typeOfAttack)
@@ -206,12 +212,17 @@ namespace Bellseboss.Pery.Scripts.Input
 
         public void ChangeToNormalJump()
         {
-            IsScalableWall(false, 0, Vector3.zero);            
+            IsScalableWall(false, 0, Vector3.zero);
         }
 
         public void ExitToWall()
         {
             jumpSystem.ExitToWall();
+        }
+
+        public bool IsJumpingFromADRS()
+        {
+            return jumpSystem.IsJump();
         }
     }
 }

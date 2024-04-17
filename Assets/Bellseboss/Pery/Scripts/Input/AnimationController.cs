@@ -20,10 +20,7 @@ namespace Bellseboss.Pery.Scripts.Input
         
         public void Movement(float velocity, float speed)
         {
-            //Debug.Log($"AnimationController: Movement: {velocity}");
             _animator.SetFloat(velocityName, velocity);
-            //_animator.SetFloat(horizontalName, vector2.x);
-            //_animator.SetFloat(velocityName, vector2.y);
         }
 
         public void IsTarget(bool isTarget)
@@ -60,10 +57,14 @@ namespace Bellseboss.Pery.Scripts.Input
         {
             _animator.SetTrigger("j_recovery");
         }
+        public void Fall()
+        {
+            _animator.SetTrigger("fall");
+        }
 
         public void ActivateTrigger(string animationTrigger)
         {
-            Die(animationTrigger);
+            _animator.SetTrigger(animationTrigger);
         }
 
         public void TakeDamage(bool isQuickAttack, int numberOfCombos)
