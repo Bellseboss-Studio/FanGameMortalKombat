@@ -52,7 +52,8 @@ namespace Bellseboss.Angel.CombatSystem
 
             if (!found)
             {
-                currentComboSequence = new List<TypeOfAttack>();
+                /*currentComboSequence = new List<TypeOfAttack>();*/
+                currentComboSequence.Remove(currentComboSequence[currentComboSequence.Count - 1]);
                 return;
             }
             
@@ -73,7 +74,8 @@ namespace Bellseboss.Angel.CombatSystem
 
             if (!found)
             {
-                currentComboSequence = new List<TypeOfAttack>();
+                /*currentComboSequence = new List<TypeOfAttack>();*/
+                currentComboSequence.Remove(currentComboSequence[currentComboSequence.Count - 1]);
                 return;
             }
             
@@ -158,8 +160,7 @@ namespace Bellseboss.Angel.CombatSystem
                 _deltatimeLocal += loop.deltaTime;
                 if (_deltatimeLocal >= _currentAttack.timeToAttack + _currentAttack.timeToDecreasing)
                 {
-                    canAttackAgain = false;
-                    currentComboSequence = new List<TypeOfAttack>();
+                    /*canAttackAgain = false;*/
                     loop.Break();
                 }
 
@@ -221,6 +222,7 @@ namespace Bellseboss.Angel.CombatSystem
                 gameObjectToPlayer.transform.position = position;
             }).Add(() =>
             {
+                currentComboSequence = new List<TypeOfAttack>();
                 canAttackAgain = true;
                 _numberOfCombosQuick = 0;
                 _numberOfCombosPower = 0;
@@ -239,7 +241,7 @@ namespace Bellseboss.Angel.CombatSystem
         public void Attack(CombatMovement currentAttack)
         {
             //Debug.Log("AttackMovementSystem: Attack");
-            canAttackAgain = false;
+            /*canAttackAgain = false;*/
             attacking = true;
             /*if (typeOfAttack == TypeOfAttack.Quick)
             {
@@ -253,6 +255,8 @@ namespace Bellseboss.Angel.CombatSystem
             }*/
 
             _decresing.Stop();
+            _sustain.Stop();
+            _release.Stop();
             _attack.Stop().Play();
         }
 
