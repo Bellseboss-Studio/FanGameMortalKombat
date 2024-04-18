@@ -117,6 +117,11 @@ public class CharacterV3 : MonoBehaviour, IAnimationController, IMovementRigidBo
         
     }
 
+    public bool IsAttacking()
+    {
+        throw new NotImplementedException();
+    }
+
     public void DisableControls()
     {
         movementRigidbodyV2.CanMove(false);

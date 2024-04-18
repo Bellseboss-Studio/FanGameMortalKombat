@@ -11,6 +11,7 @@ namespace Bellseboss.Pery.Scripts.Input
         void EndAttackMovement();
         void PlayerFall();
         void PlayerRecovery();
+        bool IsAttacking();
     }
     
     public interface IAnimationController
