@@ -1,4 +1,5 @@
 ﻿using System;
+using Bellseboss.Angel.CombatSystem;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -33,6 +34,7 @@ namespace Bellseboss.Pery.Scripts.Input
         private bool _jump;
         public bool IsJump => _jump;
         private float _velocityOfAnimation;
+        [SerializeField] private CombatSystemAngel combatSystemAngel;
 
         public void Configure(Rigidbody rigidBody, float speedWalk, float speedRun, GameObject camera, IMovementRigidBodyV2 movementRigidBodyV2, StatisticsOfCharacter statisticsOfCharacter)
         {
@@ -47,6 +49,7 @@ namespace Bellseboss.Pery.Scripts.Input
             floorController.Configure(this.gameObject);
             jumpSystem.Configure(rigidBody, movementRigidBodyV2, floorController);
             attackMovementSystem.Configure(rigidBody, statisticsOfCharacter, movementRigidBodyV2);
+            combatSystemAngel.Configure(rigidBody, statisticsOfCharacter, movementRigidBodyV2);
             floorController.OnFall = Fall;
             floorController.OnRecovery = Recovery;
         }
@@ -152,7 +155,7 @@ namespace Bellseboss.Pery.Scripts.Input
 
         private void Update()
         {
-            if (!_isConfigured || !_canMove) return;
+            if (!_isConfigured || !_canMove || combatSystemAngel.Attacking) return;
             Move();
             _movementRigidBodyV2.UpdateAnimation();
         }
