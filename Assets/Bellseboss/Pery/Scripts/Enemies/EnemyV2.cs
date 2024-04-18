@@ -298,6 +298,11 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
     {
         
     }
+
+    public bool IsAttacking()
+    {
+        throw new NotImplementedException();
+    }
 }
 
 public interface IEnemyV2

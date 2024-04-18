@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using TypeOfAttack = Bellseboss.Angel.CombatSystem.CombatSystemAngel.TypeOfAttack;
 
 namespace Bellseboss.Angel.CombatSystem
 {

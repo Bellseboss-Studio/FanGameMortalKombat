@@ -58,6 +58,7 @@ namespace Bellseboss.Pery.Scripts.Input
             _statisticsOfCharacter = Instantiate(statisticsOfCharacter);
             
             movementADSR.Configure(GetComponent<Rigidbody>(), _statisticsOfCharacter, this);
+            combatSystemAngel.ConfigureFinal(this);
         }
         
 
@@ -106,7 +107,7 @@ namespace Bellseboss.Pery.Scripts.Input
 
         private void OnKickEvent()
         {
-            combatSystemAngel.Kick(animationController.SetTrigger);
+            combatSystemAngel.ExecuteMovement(TypeOfAttack.Power);
             /*if (GetAttackSystem().CanAttackAgain() && !GetAttackSystem().FullCombo())
             {
                 animationController.Kick();
@@ -118,7 +119,7 @@ namespace Bellseboss.Pery.Scripts.Input
 
         private void OnPunchEvent()
         {
-            combatSystemAngel.Punch(animationController.SetTrigger);
+            combatSystemAngel.ExecuteMovement(TypeOfAttack.Quick);
             /*if (GetAttackSystem().CanAttackAgain() && !GetAttackSystem().FullCombo())
             {
                 animationController.Punch();
@@ -187,6 +188,11 @@ namespace Bellseboss.Pery.Scripts.Input
             rotationCharacterV2.CanRotate(true);
         }
 
+        public Action<string> GetActionToAnimate()
+        {
+            return animationController.SetTrigger;
+        }
+
         public Vector3 RotateToTargetAngel(Vector3 originalDirection)
         {
             return targetFocus.RotateToTarget(originalDirection);
@@ -215,6 +221,7 @@ namespace Bellseboss.Pery.Scripts.Input
         private void ConfigCamera(CinemachineVirtualCameraBase currentCamera)
         {
             movementRigidbodyV2.Configure(rigidbody, speedWalk, speedRun, currentCamera.gameObject, this, statisticsOfCharacter);
+            combatSystemAngel.Configure(rigidbody, statisticsOfCharacter, this);
             rotationCharacterV2.Configure(currentCamera.gameObject, gameObject, this, forceRotation);
         }
         
@@ -258,6 +265,11 @@ namespace Bellseboss.Pery.Scripts.Input
             if (isAnimationRecovered || !isAnimationWasRun) return;
             animationController.JumpRecovery();
             isAnimationRecovered = true;
+        }
+
+        public bool IsAttacking()
+        {
+            return combatSystemAngel.Attacking;
         }
 
         public void LeaveGround(bool leave, float forceToGravitate, Vector3 direction)

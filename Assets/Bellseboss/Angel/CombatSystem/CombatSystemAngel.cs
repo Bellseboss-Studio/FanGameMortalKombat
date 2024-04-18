@@ -10,6 +10,8 @@ namespace Bellseboss.Angel.CombatSystem
     {
         [SerializeField] private List<CombatMovement> combatMovements;
         [SerializeField] private List<TypeOfAttack> currentComboSequence;
+        
+        private ICombatSystemAngel _combatSystemAngel;
         /*public MovementRigidbodyV2 movementRigidbodyV2;
         [SerializeField] private float runningDistanceQuickAttack;
         [SerializeField] private float runningDistancePowerAttack;
@@ -36,18 +38,25 @@ namespace Bellseboss.Angel.CombatSystem
         private List<EnemyV2> _enemies = new List<EnemyV2>();
         private StatisticsOfCharacter _statisticsOfCharacter;
         private CombatMovement _currentAttack;
+        private List<CombatMovement> _movementsQueue;
+        private Action<string> _actionToAnimate;
 
         public bool Attacking => attacking;
 
-        public void Kick(Action<string> animationAction)
+        private void Start()
         {
-            if (!canAttackAgain) return;
-            currentComboSequence.Add(TypeOfAttack.Power);
+            _actionToAnimate = _combatSystemAngel.GetActionToAnimate();
+        }
+
+        public void ExecuteMovement(TypeOfAttack typeOfAttack)
+        {
+            currentComboSequence.Add(typeOfAttack);
             bool found = false;
+            CombatMovement combatMovement1 = null;
             foreach (var combatMovement in combatMovements.Where(combatMovement => combatMovement.comboSequence.SequenceEqual(currentComboSequence)))
             {
+                combatMovement1 = combatMovement;
                 found = true;
-                _currentAttack = combatMovement;
             }
 
             if (!found)
@@ -56,12 +65,20 @@ namespace Bellseboss.Angel.CombatSystem
                 currentComboSequence.Remove(currentComboSequence[currentComboSequence.Count - 1]);
                 return;
             }
-            
-            animationAction.Invoke(_currentAttack.transitionParameterName);
-            Attack(_currentAttack);
+
+            if (canAttackAgain)
+            {
+                _currentAttack = combatMovement1;
+                _actionToAnimate.Invoke(_currentAttack.transitionParameterName);
+                Attack(_currentAttack);
+            }
+            else
+            {
+                _movementsQueue.Add(_currentAttack);
+            }
         }
 
-        public void Punch(Action<string> animationAction)
+        /*public void Punch()
         {
             if (!canAttackAgain) return;
             currentComboSequence.Add(TypeOfAttack.Quick);
@@ -74,18 +91,19 @@ namespace Bellseboss.Angel.CombatSystem
 
             if (!found)
             {
-                /*currentComboSequence = new List<TypeOfAttack>();*/
+                /*currentComboSequence = new List<TypeOfAttack>();#1#
                 currentComboSequence.Remove(currentComboSequence[currentComboSequence.Count - 1]);
                 return;
             }
             
-            animationAction.Invoke(_currentAttack.transitionParameterName);
+            _actionToAnimate.Invoke(_currentAttack.transitionParameterName);
             Attack(_currentAttack);
-        }
+        }*/
 
         public void Configure(Rigidbody rigidbody, StatisticsOfCharacter statisticsOfCharacter,
             IMovementRigidBodyV2 movementRigidBodyV2)
         {
+            _movementsQueue = new List<CombatMovement>();
             _statisticsOfCharacter = statisticsOfCharacter;
             targetFocus.Configure(this);
             _rigidbody = rigidbody;
@@ -153,6 +171,13 @@ namespace Bellseboss.Angel.CombatSystem
             _decresing = this.tt().Pause().Add(() =>
             {
                 //Debug.Log("AttackMovementSystem: Decresing Start");
+                if (_movementsQueue.Count > 0)
+                {
+                    _currentAttack = _movementsQueue[0];
+                    _movementsQueue.RemoveAt(0);
+                    _actionToAnimate.Invoke(_currentAttack.transitionParameterName);
+                    Attack(_currentAttack);
+                }
                 canAttackAgain = true;
                 OnMidAir?.Invoke();
             }).Loop(loop =>
@@ -260,11 +285,7 @@ namespace Bellseboss.Angel.CombatSystem
             _attack.Stop().Play();
         }
 
-        public enum TypeOfAttack
-        {
-            Quick,
-            Power
-        }
+        
 
         /*public bool CanAttackAgain()
         {
@@ -275,5 +296,9 @@ namespace Bellseboss.Angel.CombatSystem
         {
             return _numberOfCombosQuick >= maxNumberOfCombosQuick || _numberOfCombosPower >= maxNumberOfCombosPower;
         }*/
+        public void ConfigureFinal(ICombatSystemAngel characterV2)
+        {
+            _combatSystemAngel = characterV2;
+        }
     }
 }
