@@ -58,7 +58,6 @@ namespace Bellseboss.Pery.Scripts.Input
             _statisticsOfCharacter = Instantiate(statisticsOfCharacter);
             
             movementADSR.Configure(GetComponent<Rigidbody>(), _statisticsOfCharacter, this);
-            combatSystemAngel.ConfigureFinal(this);
         }
         
 
@@ -221,7 +220,7 @@ namespace Bellseboss.Pery.Scripts.Input
         private void ConfigCamera(CinemachineVirtualCameraBase currentCamera)
         {
             movementRigidbodyV2.Configure(rigidbody, speedWalk, speedRun, currentCamera.gameObject, this, statisticsOfCharacter);
-            combatSystemAngel.Configure(rigidbody, statisticsOfCharacter, this);
+            combatSystemAngel.Configure(rigidbody, statisticsOfCharacter, this, this);
             rotationCharacterV2.Configure(currentCamera.gameObject, gameObject, this, forceRotation);
         }
         

@@ -12,34 +12,25 @@ namespace Bellseboss.Angel.CombatSystem
         [SerializeField] private List<TypeOfAttack> currentComboSequence;
         
         private ICombatSystemAngel _combatSystemAngel;
-        /*public MovementRigidbodyV2 movementRigidbodyV2;
-        [SerializeField] private float runningDistanceQuickAttack;
-        [SerializeField] private float runningDistancePowerAttack;
-        [SerializeField] private Vector3 runningDirectionQuickAttack;
-        [SerializeField] private Vector3 runningDirectionPowerAttack;*/
 
 
         public Action OnAttack, OnMidAir, OnRelease, OnSustain, OnEndAttack, oneTimeOnEndAttack;
-        /*[SerializeField] private AttackMovementData attackMovementDataQuick;
-        [SerializeField] private AttackMovementData attackMovementDataPower;*/
         [SerializeField] private bool canAttackAgain = true;
         [SerializeField] private bool attacking;
         [SerializeField] private float _deltatimeLocal;
-        /*[SerializeField] private int maxNumberOfCombosQuick;
-        [SerializeField] private int maxNumberOfCombosPower;*/
         [SerializeField] private int _numberOfCombosQuick;
         [SerializeField] private int _numberOfCombosPower;
         [SerializeField] private TargetFocus targetFocus;
         private TeaTime _attack, _decresing, _sustain, _release;
         private Rigidbody _rigidbody;
         private RigidbodyConstraints _rigidbodyConstraints;
-        /*private AttackMovementData _attackMovementData;*/
         private bool _isQuickAttack;
         private List<EnemyV2> _enemies = new List<EnemyV2>();
         private StatisticsOfCharacter _statisticsOfCharacter;
         private CombatMovement _currentAttack;
         private List<CombatMovement> _movementsQueue;
         private Action<string> _actionToAnimate;
+        private MoveAttackingSystem _moveAttackingSystem;
 
         public bool Attacking => attacking;
 
@@ -78,60 +69,21 @@ namespace Bellseboss.Angel.CombatSystem
             }
         }
 
-        /*public void Punch()
-        {
-            if (!canAttackAgain) return;
-            currentComboSequence.Add(TypeOfAttack.Quick);
-            bool found = false;
-            foreach (var combatMovement in combatMovements.Where(combatMovement => combatMovement.comboSequence.SequenceEqual(currentComboSequence)))
-            {
-                found = true;
-                _currentAttack = combatMovement;
-            }
-
-            if (!found)
-            {
-                /*currentComboSequence = new List<TypeOfAttack>();#1#
-                currentComboSequence.Remove(currentComboSequence[currentComboSequence.Count - 1]);
-                return;
-            }
-            
-            _actionToAnimate.Invoke(_currentAttack.transitionParameterName);
-            Attack(_currentAttack);
-        }*/
-
         public void Configure(Rigidbody rigidbody, StatisticsOfCharacter statisticsOfCharacter,
-            IMovementRigidBodyV2 movementRigidBodyV2)
+            IMovementRigidBodyV2 movementRigidBodyV2, ICombatSystemAngel characterV2)
         {
+            var gameObjectToPlayer = rigidbody.gameObject;
+            _moveAttackingSystem = new MoveAttackingSystem(gameObjectToPlayer, transform);
+            _combatSystemAngel = characterV2;
             _movementsQueue = new List<CombatMovement>();
             _statisticsOfCharacter = statisticsOfCharacter;
             targetFocus.Configure(this);
             _rigidbody = rigidbody;
-            var gameObjectToPlayer = rigidbody.gameObject;
             _rigidbodyConstraints = _rigidbody.constraints;
             _attack = this.tt().Pause().Add(() =>
             {
                 _deltatimeLocal = 0;
-                //_rigidbody.useGravity = false;
-                _rigidbody.constraints = RigidbodyConstraints.FreezeRotationZ |
-                                         RigidbodyConstraints.FreezeRotationX;
-                if (attacking)
-                {
-                    /*if (_isQuickAttack)
-                    {
-                        if (_numberOfCombosQuick <= maxNumberOfCombosQuick)
-                        {
-                            _numberOfCombosQuick++;
-                        }
-                    }
-                    else
-                    {
-                        if (_numberOfCombosPower <= maxNumberOfCombosPower)
-                        {
-                            _numberOfCombosPower++;
-                        }
-                    }*/
-                }
+                _rigidbody.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX;
             }).Add(() =>
             {
                 OnAttack?.Invoke();
@@ -148,11 +100,7 @@ namespace Bellseboss.Angel.CombatSystem
                 float t = _deltatimeLocal / _currentAttack.timeToAttack;
                 float heightMultiplier = Mathf.Cos(t * Mathf.PI * 0.5f);
 
-                var position = gameObjectToPlayer.transform.position;
-                position = Vector3.Lerp(position,
-                    position + transform.forward * (_currentAttack.maxDistance * heightMultiplier),
-                    _currentAttack.forceToAttack * loop.deltaTime);
-                gameObjectToPlayer.transform.position = position;
+                _moveAttackingSystem.MovePlayer(gameObjectToPlayer, heightMultiplier, loop, _currentAttack.forceToAttack, _currentAttack.maxDistance);
             }).Add(() =>
             {
                 //Debug.Log("AttackMovementSystem: Attack End");
@@ -185,21 +133,14 @@ namespace Bellseboss.Angel.CombatSystem
                 _deltatimeLocal += loop.deltaTime;
                 if (_deltatimeLocal >= _currentAttack.timeToAttack + _currentAttack.timeToDecreasing)
                 {
-                    /*canAttackAgain = false;*/
                     loop.Break();
                 }
 
                 float t = (_deltatimeLocal - _currentAttack.timeToAttack) / _currentAttack.timeToDecreasing;
                 float heightMultiplier = Mathf.Log(1 + t * 4);
+                
+                _moveAttackingSystem.MovePlayer(gameObjectToPlayer, heightMultiplier, loop, _currentAttack.forceToDecreasing, _currentAttack.distanceToDecresing, true);
 
-                var position = gameObjectToPlayer.transform.position;
-                position = Vector3.Lerp(position,
-                    position - transform.forward * (_currentAttack.distanceToDecresing * heightMultiplier),
-                    _currentAttack.forceToDecreasing * loop.deltaTime);
-                if (!double.IsNaN(position.x) && !double.IsNaN(position.y) && !double.IsNaN(position.z))
-                {
-                    gameObjectToPlayer.transform.position = position;
-                }
             }).Add(() =>
             {
                 //Debug.Log("AttackMovementSystem: Decresing End");
@@ -239,12 +180,9 @@ namespace Bellseboss.Angel.CombatSystem
 
                 var t = _deltatimeLocal / _currentAttack.timeToAttack;
                 var heightMultiplier = Mathf.Log(1 + t * _currentAttack.forceToDecreasing);
+                
+                _moveAttackingSystem.MovePlayer(gameObjectToPlayer, heightMultiplier, loop, _currentAttack.forceToDecreasing, _currentAttack.maxDistance, true);
 
-                var position = gameObjectToPlayer.transform.position;
-                position = Vector3.Lerp(position,
-                    position - transform.forward * (_currentAttack.maxDistance * heightMultiplier),
-                    _currentAttack.forceToDecreasing * loop.deltaTime);
-                gameObjectToPlayer.transform.position = position;
             }).Add(() =>
             {
                 currentComboSequence = new List<TypeOfAttack>();
@@ -253,9 +191,7 @@ namespace Bellseboss.Angel.CombatSystem
                 _numberOfCombosPower = 0;
                 attacking = false;
                 _rigidbody.velocity = Vector3.zero;
-                //_rigidbody.useGravity = true;
                 _rigidbody.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX;
-                //Debug.Log("AttackMovementSystem: End Attack");
                 OnEndAttack?.Invoke();
                 oneTimeOnEndAttack?.Invoke();
                 oneTimeOnEndAttack = null;
@@ -263,42 +199,13 @@ namespace Bellseboss.Angel.CombatSystem
             });
         }
 
-        public void Attack(CombatMovement currentAttack)
+        private void Attack(CombatMovement currentAttack)
         {
-            //Debug.Log("AttackMovementSystem: Attack");
-            /*canAttackAgain = false;*/
             attacking = true;
-            /*if (typeOfAttack == TypeOfAttack.Quick)
-            {
-                _isQuickAttack = true;
-                _attackMovementData = attackMovementDataQuick;
-            }
-            else
-            {
-                _isQuickAttack = false;
-                _attackMovementData = attackMovementDataPower;
-            }*/
-
             _decresing.Stop();
             _sustain.Stop();
             _release.Stop();
             _attack.Stop().Play();
-        }
-
-        
-
-        /*public bool CanAttackAgain()
-        {
-            return canAttackAgain;
-        }
-
-        public bool FullCombo()
-        {
-            return _numberOfCombosQuick >= maxNumberOfCombosQuick || _numberOfCombosPower >= maxNumberOfCombosPower;
-        }*/
-        public void ConfigureFinal(ICombatSystemAngel characterV2)
-        {
-            _combatSystemAngel = characterV2;
         }
     }
 }
