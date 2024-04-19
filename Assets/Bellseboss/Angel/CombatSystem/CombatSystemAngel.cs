@@ -36,7 +36,6 @@ namespace Bellseboss.Angel.CombatSystem
 
         private void Start()
         {
-            _actionToAnimate = _combatSystemAngel.GetActionToAnimate();
         }
 
         public void ExecuteMovement(TypeOfAttack typeOfAttack)
@@ -197,6 +196,8 @@ namespace Bellseboss.Angel.CombatSystem
                 oneTimeOnEndAttack = null;
                 movementRigidBodyV2.EndAttackMovement();
             });
+
+            _actionToAnimate = _combatSystemAngel.GetActionToAnimate();
         }
 
         private void Attack(CombatMovement currentAttack)
