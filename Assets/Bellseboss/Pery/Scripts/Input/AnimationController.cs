@@ -50,6 +50,7 @@ namespace Bellseboss.Pery.Scripts.Input
 
         public void JumpFall()
         {
+            _animator.ResetTrigger("j_recovery");
             _animator.SetTrigger("j_fall");
         }
 
@@ -59,7 +60,7 @@ namespace Bellseboss.Pery.Scripts.Input
         }
         public void Fall()
         {
-            _animator.SetTrigger("fall");
+            _animator.SetTrigger("j_fall");
         }
 
         public void ActivateTrigger(string animationTrigger)

@@ -74,7 +74,7 @@ namespace Bellseboss.Pery.Scripts.Input
 
         private void JumpOnEndJump()
         {
-            //animationController.JumpRecovery();
+            animationController.JumpRecovery();
             isAnimationWasRun = false;
             isAnimationRecovered = false;
         }
@@ -226,7 +226,7 @@ namespace Bellseboss.Pery.Scripts.Input
         
         public void UpdateAnimation()
         {
-            animationController.Movement(movementRigidbodyV2.GetVelocity(), 0);
+            animationController.Movement(movementRigidbodyV2.GetXZVelocity(), 0);
         }
 
         public void ChangeToNormalJump()
@@ -253,30 +253,53 @@ namespace Bellseboss.Pery.Scripts.Input
         private bool isAnimationWasRun, isAnimationRecovered;
         public void PlayerFall()
         {
-            if (isAnimationWasRun || movementRigidbodyV2.IsJumpingFromADRS()) return;
+            /*if (isAnimationWasRun || movementRigidbodyV2.IsJumpingFromADRS()) return;
             //animationController.JumpFall();
             animationController.Fall();
-            isAnimationWasRun = true;
+            isAnimationWasRun = true;*/
         }
 
         public void PlayerRecovery()
         {
-            if (isAnimationRecovered || !isAnimationWasRun) return;
+            /*if (isAnimationRecovered || !isAnimationWasRun) return;
             animationController.JumpRecovery();
-            isAnimationRecovered = true;
+            isAnimationRecovered = true;*/
         }
 
+        public void PlayerFallV2()
+        {
+            Debug.Log("fall");
+            animationController.Fall();
+        }
+
+        public void PlayerRecoveryV2()
+        {
+            Debug.Log("recovery");
+            animationController.JumpRecovery();
+        }        
+        
         public bool IsAttacking()
         {
             return combatSystemAngel.Attacking;
         }
 
-        public void LeaveGround(bool leave, float forceToGravitate, Vector3 direction)
+        /*public void PlayerTouchingFloorChanged(bool isTouching)
+        {
+            if (isTouching)
+            {
+                if ()
+                {
+                    throw new NotImplementedException();
+                }
+            }
+        }*/
+
+        public void TouchedScallableWall(bool leave, float forceToGravitate, Vector3 direction)
         {
             movementRigidbodyV2.IsScalableWall(leave, forceToGravitate, direction);
         }
 
-        public void ExitToWall()
+        public void ExitScalableWall()
         {
             movementRigidbodyV2.ExitToWall();
         }

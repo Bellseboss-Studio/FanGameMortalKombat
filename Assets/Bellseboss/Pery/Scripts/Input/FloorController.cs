@@ -6,6 +6,7 @@ namespace Bellseboss.Pery.Scripts.Input
     public class FloorController: MonoBehaviour
     {
         public Action OnFall, OnRecovery;
+        public Action<bool> OnTouchingFloorChanged;
         [SerializeField] private float minDistanceToFloor;
         [SerializeField] private bool _isTouchingFloor;
         [SerializeField] private LayerMask layerMask;
@@ -26,10 +27,12 @@ namespace Bellseboss.Pery.Scripts.Input
                 {
                     OnFall?.Invoke();
                 }
+                if (isTouchingFloor != _isTouchingFloor) OnTouchingFloorChanged?.Invoke(isTouchingFloor);
                 _isTouchingFloor = isTouchingFloor;
             }
             else
             {
+                if (_isTouchingFloor) OnTouchingFloorChanged?.Invoke(false);
                 _isTouchingFloor = false;
             }
         }
