@@ -268,13 +268,11 @@ namespace Bellseboss.Pery.Scripts.Input
 
         public void PlayerFallV2()
         {
-            Debug.Log("fall");
             animationController.Fall();
         }
 
         public void PlayerRecoveryV2()
         {
-            Debug.Log("recovery");
             animationController.JumpRecovery();
         }        
         

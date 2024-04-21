@@ -94,7 +94,7 @@ namespace Bellseboss.Pery.Scripts.Input
 
         public void ChangeDirection(Vector3 rotation)
         {
-            Debug.Log("Change Direction: " + rotation);
+            /*Debug.Log("Change Direction: " + rotation);*/
             _canChangeDirection = false;
             _vector2 = rotation;
         }
