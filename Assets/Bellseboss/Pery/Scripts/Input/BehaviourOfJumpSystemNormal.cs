@@ -25,6 +25,7 @@ namespace Bellseboss.Pery.Scripts.Input
             var gameObjectToPlayer = _rigidbody.gameObject;
             _attack = this.tt().Pause().Add(() =>
             {
+                _deltatimeLocal = 0;
                 _rigidbody.useGravity = false;
                 _rigidbody.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotationZ |
                                          RigidbodyConstraints.FreezeRotationX;

@@ -79,6 +79,7 @@ namespace Bellseboss.Pery.Scripts.Input
 
         public void IsScalableWall(bool isScalableWall, float forceToGravitate, Vector3 direction)
         {
+            /*Debug.Log(isScalableWall);*/
             this.isScalableWall = true;
             _scalableWallFordWard = direction;
             /*this.forceToGravitate = forceToGravitate;
@@ -223,7 +224,7 @@ namespace Bellseboss.Pery.Scripts.Input
 
         public void ChangeToNormalJump()
         {
-            IsScalableWall(false, 0, Vector3.zero);
+            /*IsScalableWall(false, 0, Vector3.zero);*/
         }
 
         public void ExitToWall()
