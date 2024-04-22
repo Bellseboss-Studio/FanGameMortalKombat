@@ -3933,7 +3933,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8585594586927423070, guid: 2d0718da788d9bd4ab93a688c5e0e407, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 92.47
+      value: 4.4
       objectReference: {fileID: 0}
     - target: {fileID: 8585594586927423070, guid: 2d0718da788d9bd4ab93a688c5e0e407, type: 3}
       propertyPath: m_LocalRotation.w
@@ -5328,7 +5328,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1223511719}
-  m_LocalRotation: {x: 0.042303503, y: -0.03718488, z: 0.0015755536, w: 0.99841136}
+  m_LocalRotation: {x: 0.3293239, y: -0.49450535, z: 0.2097125, w: 0.7765507}
   m_LocalPosition: {x: -3.3288813, y: 3.4146967, z: -47.193176}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -7109,7 +7109,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   camera: {fileID: 1675724182}
   rooms:
-  - roomCollider: {fileID: 1573791473}
+  - name: 
+    roomCollider: {fileID: 1573791473}
     inRoomsTransitions:
     - cameraCollider: {fileID: 1166939100}
       cameraTransform: {fileID: 1599927723}
@@ -7132,7 +7133,8 @@ MonoBehaviour:
       - {fileID: 1414435767}
       transitionTime: 2
       easeType: 6
-  - roomCollider: {fileID: 1343582266}
+  - name: 
+    roomCollider: {fileID: 1343582266}
     inRoomsTransitions:
     - cameraCollider: {fileID: 337131431}
       cameraTransform: {fileID: 1628295997}
@@ -7159,7 +7161,8 @@ MonoBehaviour:
       - {fileID: 476558287}
       transitionTime: 2
       easeType: 6
-  - roomCollider: {fileID: 1477781120}
+  - name: 
+    roomCollider: {fileID: 1477781120}
     inRoomsTransitions:
     - cameraCollider: {fileID: 819333924}
       cameraTransform: {fileID: 483675023}
@@ -7186,7 +7189,8 @@ MonoBehaviour:
       - {fileID: 1753923357}
       transitionTime: 2
       easeType: 6
-  - roomCollider: {fileID: 1310425973}
+  - name: 
+    roomCollider: {fileID: 1310425973}
     inRoomsTransitions:
     - cameraCollider: {fileID: 1535272267}
       cameraTransform: {fileID: 297215734}
@@ -7711,7 +7715,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1675724180}
-  m_LocalRotation: {x: 0.042303503, y: -0.03718488, z: 0.0015755536, w: 0.99841136}
+  m_LocalRotation: {x: 0.3293239, y: -0.49450535, z: 0.2097125, w: 0.7765507}
   m_LocalPosition: {x: 10.15626, y: -9.750031, z: 10.022971}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:

@@ -23,7 +23,6 @@ namespace Bellseboss.Pery.Scripts.Input
         [SerializeField] private GameObject model3D;
         private GameObject _model3DInstance;
         [SerializeField] private RotationCharacterV2 rotationCharacterV2;
-        [SerializeField] private CombatSystem combatSystem;
         [SerializeField] private float forceRotation;
         [SerializeField] private TargetFocus targetFocus;
         [SerializeField] private StatisticsOfCharacter statisticsOfCharacter;
@@ -44,7 +43,6 @@ namespace Bellseboss.Pery.Scripts.Input
             ConfigCamera(cameraMain);
             _model3DInstance = Instantiate(model3D, transform);
             animationController.Configure(_model3DInstance.GetComponent<Animator>(), this);
-            combatSystem.Configure(this);
             targetFocus.Configure(this);
             targetFocus.EnableCollider();
             
@@ -158,21 +156,21 @@ namespace Bellseboss.Pery.Scripts.Input
 
         public void PowerAttack(float runningDistance, Vector3 runningDirection)
         {
-            if (GetAttackSystem().CanAttackAgain() && !GetAttackSystem().FullCombo())
+            /*if (GetAttackSystem().CanAttackAgain() && !GetAttackSystem().FullCombo())
             {
                 rotationCharacterV2.Direction(runningDirection);
                 movementRigidbodyV2.AddForce(runningDirection, runningDistance, AttackMovementSystem.TypeOfAttack.Power);
-            }
+            }*/
         }
 
         public void QuickAttack(float runningDistance, Vector3 runningDirection)
         {
-            if (GetAttackSystem().CanAttackAgain() && !GetAttackSystem().FullCombo())
+            /*if (GetAttackSystem().CanAttackAgain() && !GetAttackSystem().FullCombo())
             {
                 rotationCharacterV2.Direction(runningDirection);
                 movementRigidbodyV2.AddForce(runningDirection, runningDistance,
                     AttackMovementSystem.TypeOfAttack.Quick);
-            }
+            }*/
         }
         
         public void DisableControls()
@@ -202,15 +200,15 @@ namespace Bellseboss.Pery.Scripts.Input
             return targetFocus.RotateToTarget(originalDirection);
         }
 
-        public bool CanAttack()
+        /*public bool CanAttack()
         {
             return GetAttackSystem().CanAttackAgain();
-        }
+        }*/
 
-        public AttackMovementSystem GetAttackSystem()
+        /*public AttackMovementSystem GetAttackSystem()
         {
             return movementRigidbodyV2.GetAttackSystem();
-        }
+        }*/
 
         public void SetCamera(CinemachineVirtualCameraBase currentCamera)
         {
