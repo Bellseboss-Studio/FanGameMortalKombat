@@ -36,7 +36,6 @@ namespace Bellseboss.Angel.CombatSystem
 
         private void Start()
         {
-            _actionToAnimate = _combatSystemAngel.GetActionToAnimate();
         }
 
         public void ExecuteMovement(TypeOfAttack typeOfAttack)
@@ -65,7 +64,7 @@ namespace Bellseboss.Angel.CombatSystem
             }
             else
             {
-                _movementsQueue.Add(_currentAttack);
+                _movementsQueue.Add(combatMovement1);
             }
         }
 
@@ -119,6 +118,8 @@ namespace Bellseboss.Angel.CombatSystem
             _decresing = this.tt().Pause().Add(() =>
             {
                 //Debug.Log("AttackMovementSystem: Decresing Start");
+                canAttackAgain = true;
+                OnMidAir?.Invoke();
                 if (_movementsQueue.Count > 0)
                 {
                     _currentAttack = _movementsQueue[0];
@@ -126,8 +127,6 @@ namespace Bellseboss.Angel.CombatSystem
                     _actionToAnimate.Invoke(_currentAttack.transitionParameterName);
                     Attack(_currentAttack);
                 }
-                canAttackAgain = true;
-                OnMidAir?.Invoke();
             }).Loop(loop =>
             {
                 _deltatimeLocal += loop.deltaTime;
@@ -197,15 +196,18 @@ namespace Bellseboss.Angel.CombatSystem
                 oneTimeOnEndAttack = null;
                 movementRigidBodyV2.EndAttackMovement();
             });
+
+            _actionToAnimate = _combatSystemAngel.GetActionToAnimate();
         }
 
         private void Attack(CombatMovement currentAttack)
         {
-            attacking = true;
             _decresing.Stop();
             _sustain.Stop();
             _release.Stop();
             _attack.Stop().Play();
+            attacking = true;
+            canAttackAgain = false;
         }
     }
 }

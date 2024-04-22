@@ -12,6 +12,8 @@ namespace Bellseboss.Pery.Scripts.Input
         void PlayerFall();
         void PlayerRecovery();
         bool IsAttacking();
+        void PlayerFallV2();
+        void PlayerRecoveryV2();
     }
     
     public interface IAnimationController

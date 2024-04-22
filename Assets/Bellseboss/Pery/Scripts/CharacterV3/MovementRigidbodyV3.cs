@@ -62,7 +62,7 @@ public class MovementRigidbodyV3 : MonoBehaviour
     {
         this.forceToGravitate = forceToGravitate;
         this.isScalableWall = isScalableWall;
-        jumpSystem.IsScalableWall(isScalableWall, floorController, direction);
+        /*jumpSystem.IsScalableWall(isScalableWall, floorController, direction);*/
         _jump = false;
     }
 
@@ -119,7 +119,7 @@ public class MovementRigidbodyV3 : MonoBehaviour
         {
             if (floorController.IsTouchingFloor() || isScalableWall)
             {
-                jumpSystem.Jump();
+                /*jumpSystem.Jump();*/
                 _jump = false;
             }
         }
