@@ -122,6 +122,16 @@ public class CharacterV3 : MonoBehaviour, IAnimationController, IMovementRigidBo
         throw new NotImplementedException();
     }
 
+    public void PlayerFallV2()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void PlayerRecoveryV2()
+    {
+        throw new NotImplementedException();
+    }
+
     public void DisableControls()
     {
         movementRigidbodyV2.CanMove(false);

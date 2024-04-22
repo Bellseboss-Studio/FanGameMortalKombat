@@ -34,6 +34,7 @@ namespace Bellseboss.Pery.Scripts.Input
         private bool _jump;
         public bool IsJump => _jump;
         private float _velocityOfAnimation;
+        private Vector3 _scalableWallFordWard;
 
         public void Configure(Rigidbody rigidBody, float speedWalk, float speedRun, GameObject camera, IMovementRigidBodyV2 movementRigidBodyV2, StatisticsOfCharacter statisticsOfCharacter)
         {
@@ -50,6 +51,7 @@ namespace Bellseboss.Pery.Scripts.Input
             attackMovementSystem.Configure(rigidBody, statisticsOfCharacter, movementRigidBodyV2);
             floorController.OnFall = Fall;
             floorController.OnRecovery = Recovery;
+            floorController.OnTouchingFloorChanged = TouchingFloorChanged;
         }
 
         private void Recovery()
@@ -61,13 +63,28 @@ namespace Bellseboss.Pery.Scripts.Input
         {
             _movementRigidBodyV2.PlayerFall();
         }
+        
+        private void TouchingFloorChanged(bool isTouching)
+        {
+            if (_movementRigidBodyV2.IsAttacking() || jumpSystem.IsJump()) return;
+            if (isTouching)
+            {
+                _movementRigidBodyV2.PlayerRecoveryV2();
+            }
+            else
+            {
+                _movementRigidBodyV2.PlayerFallV2();
+            }
+        }
 
         public void IsScalableWall(bool isScalableWall, float forceToGravitate, Vector3 direction)
         {
-            this.forceToGravitate = forceToGravitate;
+            this.isScalableWall = true;
+            _scalableWallFordWard = direction;
+            /*this.forceToGravitate = forceToGravitate;
             this.isScalableWall = isScalableWall;
             jumpSystem.IsScalableWall(isScalableWall, floorController, direction);
-            _jump = false;
+            _jump = false;*/
         }
 
         private float CalculateDirection(float axis, bool isTarget)
@@ -113,14 +130,14 @@ namespace Bellseboss.Pery.Scripts.Input
             var resultMovement = _inputMovementCustom.CalculateMovement(result, _choiceMax ? _speedRun : _speedWalk,
                 _camera, _rigidbody.gameObject);
 
-            if (_jump)
+            /*if (_jump)
             {
                 if (floorController.IsTouchingFloor() || isScalableWall)
                 {
                     jumpSystem.Jump();
                     _jump = false;
                 }
-            }
+            }*/
             if (floorController.IsTouchingFloor())
             {
                 _rigidbody.velocity = new Vector3(resultMovement.x, _rigidbody.velocity.y, resultMovement.z);
@@ -149,6 +166,7 @@ namespace Bellseboss.Pery.Scripts.Input
 
         private void FixedUpdate()
         {
+            
         }
 
         private void Update()
@@ -183,14 +201,9 @@ namespace Bellseboss.Pery.Scripts.Input
             _canMove = canMove;
         }
 
-        public Vector3 GetVelocityV3()
-        {
-            return _rigidbody.velocity;
-        }
-
         public void Jump()
         {
-            _jump = true;
+            jumpSystem.Jump(floorController.IsTouchingFloor(), isScalableWall, _scalableWallFordWard);
         }
 
         public JumpSystem GetJumpSystem()
@@ -215,12 +228,20 @@ namespace Bellseboss.Pery.Scripts.Input
 
         public void ExitToWall()
         {
-            jumpSystem.ExitToWall();
+            isScalableWall = false;
+            /*jumpSystem.ExitToWall();*/
         }
 
         public bool IsJumpingFromADRS()
         {
             return jumpSystem.IsJump();
+        }
+
+        public float GetXZVelocity()
+        {
+            Vector3 velocidadXZ = new Vector3(_rigidbody.velocity.x, 0f, _rigidbody.velocity.z);
+
+            return velocidadXZ.magnitude / 10;
         }
     }
 }

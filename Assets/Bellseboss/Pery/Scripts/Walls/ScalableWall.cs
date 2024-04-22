@@ -19,14 +19,14 @@ public class ScalableWall : MonoBehaviour
     private void TargetFocusOnCollisionExit(GameObject obj, Vector3 point)
     {
         //Debug.Log($"ScalableWall: TargetFocusOnCollisionExit: obj: {obj.name}");
-        _characterV2.ExitToWall();
+        _characterV2.ExitScalableWall();
         _characterV2 = null;
     }
 
     private void TargetFocusOnCollisionEnter(GameObject obj, Vector3 point)
     {
         _characterV2 = obj.GetComponent<CharacterV2>();
-        _characterV2.LeaveGround(true, forceToGravitate, transform.forward);
+        _characterV2.TouchedScallableWall(true, forceToGravitate, transform.forward);
     }
 
     private void OnDrawGizmos()

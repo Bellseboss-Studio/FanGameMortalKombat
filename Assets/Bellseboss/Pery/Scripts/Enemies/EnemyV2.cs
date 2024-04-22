@@ -303,6 +303,16 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
     {
         throw new NotImplementedException();
     }
+
+    public void PlayerFallV2()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void PlayerRecoveryV2()
+    {
+        throw new NotImplementedException();
+    }
 }
 
 public interface IEnemyV2
