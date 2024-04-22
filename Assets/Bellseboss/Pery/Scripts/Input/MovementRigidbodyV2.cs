@@ -79,7 +79,7 @@ namespace Bellseboss.Pery.Scripts.Input
 
         public void IsScalableWall(bool isScalableWall, float forceToGravitate, Vector3 direction)
         {
-            Debug.Log(isScalableWall);
+            /*Debug.Log(isScalableWall);*/
             this.isScalableWall = true;
             _scalableWallFordWard = direction;
             /*this.forceToGravitate = forceToGravitate;
