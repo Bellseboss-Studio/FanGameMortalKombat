@@ -56,6 +56,11 @@ public class ContainerOfExtra : MonoBehaviour
     private void ConfigureActionsTuButton()
     {
         buttonToAction.onClick.AddListener(Call);
+        buttonToAction.navigation = new Navigation {mode = Navigation.Mode.Explicit};
+        /*var navigation = buttonToAction.navigation;
+        navigation.selectOnDown = buttonToAction;
+        buttonToAction.navigation = navigation;*/
+        
     }
 
     public void Clean()

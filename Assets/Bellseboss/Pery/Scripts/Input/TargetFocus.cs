@@ -25,11 +25,10 @@ namespace Bellseboss.Pery.Scripts.Input
             if (_enemies.Count > 0)
             {
                 var closestEnemy = GetClosestEnemy();
-                var directionToTarget = closestEnemy.transform.position - transform.position;
-                var directionToTargetLocal = transform.InverseTransformDirection(directionToTarget);
-                directionToTargetLocal.y = 0;
-                directionToTargetLocal.Normalize();
-                result = directionToTargetLocal;
+                //Get the direction to the target
+                result = closestEnemy.transform.position - transform.position;
+                result.y = 0;
+                result.Normalize();
             }
             return result;
         }
@@ -110,4 +109,9 @@ namespace Bellseboss.Pery.Scripts.Input
             _enemies = new List<GameObject>();
         }
     }
+}
+
+
+namespace Bellseboss.Pery.Scripts.Input
+{
 }

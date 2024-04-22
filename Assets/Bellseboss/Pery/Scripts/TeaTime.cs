@@ -168,7 +168,7 @@ public static class TeaYield
 
 /// TeaTime is a fast & simple queue for timed callbacks, focused on solving
 /// common coroutines patterns in Unity games.
-public class TeaTime
+public class  TeaTime
 {
     // Queue
     private List<TeaTask> tasks = new List<TeaTask>(); // Tasks list used as a queue

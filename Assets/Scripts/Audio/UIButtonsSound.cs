@@ -33,7 +33,7 @@ namespace Audio
             }
         }
 
-        private void OnMouseClick()
+        public void OnMouseClick()
         {
             foreach (var goName in OnClickTargetAudioObject)
             {
@@ -47,24 +47,37 @@ namespace Audio
         }
         public void OnPointerEnter(PointerEventData eventData)
         {
+            PointEnter();
+        }
+
+        public void PointEnter()
+        {
             OnMouseHover();
             m_MouseOver = true;
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
+            PointExit();
+        }
+
+        public void PointExit()
+        {
             m_MouseOver = false;
         }
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            if (eventData.button == PointerEventData.InputButton.Left)
-            {
-                OnMouseClick();
-            }
-
+            PointClick(eventData);
+            OnMouseClick();
         }
 
+        public void PointClick(PointerEventData eventData)
+        {
+            if (eventData.button == PointerEventData.InputButton.Left)
+            {
+            }
+        }
     }
 }
 

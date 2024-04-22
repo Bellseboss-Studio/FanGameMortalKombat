@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Bellseboss.Pery.Scripts.Input;
 using Cinemachine;
 using UnityEngine;
@@ -28,10 +29,14 @@ public class CameraBehaviour : MonoBehaviour, ICameraBehaviour
     {
         if (isOpen)
         {
+            /*foreach (var transition in _currentRoom.BetweenRoomsTransitions.Where(transition => transition.transitioningCamera == rooms[index]))
+            {
+                /*transition.cinemachineSmoothPath.#1#
+            }
             _currentRoom.Camera.gameObject.SetActive(false);
             _currentRoom = rooms[index];
             _currentRoom.Camera.gameObject.SetActive(true);
-            character.SetCamera(camera);
+            character.SetCamera(camera);*/
         }
     }
 }

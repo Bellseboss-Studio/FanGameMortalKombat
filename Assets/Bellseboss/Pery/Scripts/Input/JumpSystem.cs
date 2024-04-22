@@ -1,136 +1,226 @@
 using System;
 using Bellseboss.Pery.Scripts.Input;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
-public class JumpSystem : MonoBehaviour
+public class JumpSystem : MonoBehaviour, IJumpSystem
 {
     public Action OnAttack, OnMidAir, OnRelease, OnSustain, OnEndJump;
-    [SerializeField] private float timeToAttack, timeToDecreasing, timeToSustain, timeToRelease;
-    [SerializeField] private float maxHeighJump, heightDecreasing;
-    [SerializeField] private float forceToAttack, forceToDecreasing;
-    private TeaTime _attack, _decresing, _sustain, _release, _endJump;
+    [SerializeField, InterfaceType(typeof(IBehaviourOfJumpSystem))]
+    private MonoBehaviour behaviourOfJumpSystemNormal;
+    private IBehaviourOfJumpSystem BehaviourOfJumpSystemNormal => behaviourOfJumpSystemNormal as IBehaviourOfJumpSystem;
+    [SerializeField, InterfaceType(typeof(IBehaviourOfJumpSystem))]
+    private MonoBehaviour behaviourOfJumpSystemWalls;
+    private IBehaviourOfJumpSystem BehaviourOfJumpSystemWalls => behaviourOfJumpSystemWalls as IBehaviourOfJumpSystem;
+    private TeaTime _attack, _decay, _sustain, _release, _endJump;
     private Rigidbody _rigidbody;
     private float _deltatimeLocal;
     private RigidbodyConstraints _rigidbodyConstraints;
     private bool _isScalableWall;
+    private FloorController _floorController;
+    private IMovementRigidBodyV2 _movementRigidBodyV2;
+    private bool _isJump;
 
     public void Configure(Rigidbody rigidbody, IMovementRigidBodyV2 movementRigidBodyV2, FloorController floorController)
     {
+        Debug.Log($"Configured JumpSystem: {rigidbody.gameObject.name}");
+        BehaviourOfJumpSystemWalls.Configure(rigidbody, this);
+        BehaviourOfJumpSystemNormal.Configure(rigidbody, this);
         _rigidbody = rigidbody;
         var gameObjectToPlayer = rigidbody.gameObject;
         _rigidbodyConstraints = _rigidbody.constraints;
-        _attack = this.tt().Pause().Add(() =>
-        {
-            _rigidbody.useGravity = false;
-            _rigidbody.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX;
-            //Debug.Log("JumpSystem: Attack");
-        }).Add(() =>
-        {
-            OnAttack?.Invoke();
-        }).Loop(loop =>
-        {
-            //Debug.Log("JumpSystem: Attack Loop");
-            _deltatimeLocal += loop.deltaTime;
-            if (_deltatimeLocal >= timeToAttack)
-            {
-                loop.Break();
-            }
-            
-            float t = _deltatimeLocal / timeToAttack;
-            float heightMultiplier = Mathf.Cos(t * Mathf.PI * 0.5f);
-
-            var position = gameObjectToPlayer.transform.position;
-            position = Vector3.Lerp(position, position + Vector3.up * (maxHeighJump * heightMultiplier), forceToAttack * loop.deltaTime);
-            gameObjectToPlayer.transform.position = position;
-        }).Add(()=>
-        {
-            _decresing.Play();
-        });
-        _decresing = this.tt().Pause().Add(() =>
-        {
-            OnMidAir?.Invoke();
-        }).Loop(loop =>
-        {
-            //Debug.Log("JumpSystem: Decreasing Loop");
-            _deltatimeLocal += loop.deltaTime;
-            if(_deltatimeLocal >= timeToAttack + timeToDecreasing)
-            {
-                loop.Break();
-            }
-
-            float t = (_deltatimeLocal - timeToAttack) / timeToDecreasing;
-            float heightMultiplier = Mathf.Log(1 + t * 4);
-
-            var position = gameObjectToPlayer.transform.position;
-            position = Vector3.Lerp(position, position - Vector3.up * (heightDecreasing * heightMultiplier), forceToDecreasing * loop.deltaTime);
-            gameObjectToPlayer.transform.position = position;
-        }).Add(() =>
-        {
-            if (!_isScalableWall)
-            {
-                _sustain.Play();
-            }
-            else
-            {
-                _endJump.Play();
-            }
-        });
-        _sustain = this.tt().Pause().Add(() =>
-        {
-            OnSustain?.Invoke();
-        }).Loop(loop =>
-        {
-            //Debug.Log("JumpSystem: Sustain Loop");
-            _deltatimeLocal += loop.deltaTime;
-            if (_deltatimeLocal >= timeToAttack + timeToDecreasing + timeToSustain)
-            {
-                loop.Break();
-            }
-        }).Add(() =>
-        {
-            _release.Play();
-        });
-        _release = this.tt().Pause().Add(() =>
-        {
-            OnRelease?.Invoke();
-        }).Loop(loop =>
-        {
-            //Debug.Log("JumpSystem: Release Loop");
-            _deltatimeLocal += loop.deltaTime;
-            if (floorController.IsTouchingFloor())
-            {
-                loop.Break();
-            }
-
-            var t = _deltatimeLocal / timeToAttack;
-            var heightMultiplier = Mathf.Log(1 + t * forceToDecreasing);
-
-            var position = gameObjectToPlayer.transform.position;
-            position = Vector3.Lerp(position, position - Vector3.up * (maxHeighJump * heightMultiplier),
-                forceToDecreasing * loop.deltaTime);
-            gameObjectToPlayer.transform.position = position;
-        }). Add(()=>
-        {
-            _endJump.Play();
-        });
-        _endJump = this.tt().Pause().Add(() =>
-        {
-            _rigidbody.useGravity = true;
-            _rigidbody.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX;
-            _deltatimeLocal = 0;
-            //Debug.Log("JumpSystem: Attack End");
-            OnEndJump?.Invoke();
-        });
+        _floorController = floorController;
+        _movementRigidBodyV2 = movementRigidBodyV2;
+        
+        /*IsScalableWall(false, floorController, Vector3.zero);*/
     }
 
-    public void Jump()
+    public void Jump(bool isTouchingFloor, bool isTouchingScalableWall, Vector3 scalableWallDirection)
     {
-        //Debug.Log("JumpSystem: Jump");
-        _attack.Play();
+        if (isTouchingFloor)
+        {
+            //Execute normal jump
+            _attack?.Stop();
+            _decay?.Stop();
+            _sustain?.Stop();
+            _release?.Stop();
+            _attack = BehaviourOfJumpSystemNormal.GetAttack();
+            _decay = BehaviourOfJumpSystemNormal.GetDecay();
+            _sustain = BehaviourOfJumpSystemNormal.GetSustain();
+            _release = BehaviourOfJumpSystemNormal.GetRelease();
+            _endJump = BehaviourOfJumpSystemNormal.GetEndJump();
+            BehaviourOfJumpSystemNormal.OnAttack = () =>
+            {
+                OnAttack?.Invoke();
+                _isJump = true;
+            };
+            BehaviourOfJumpSystemNormal.OnMidAir = () =>
+            {
+                OnMidAir?.Invoke();
+            };
+            BehaviourOfJumpSystemNormal.OnSustain = () =>
+            {
+                OnSustain?.Invoke();
+            };
+            BehaviourOfJumpSystemNormal.OnRelease = () =>
+            {
+                OnRelease?.Invoke();
+            };
+            BehaviourOfJumpSystemNormal.OnEndJump = () =>
+            {
+                OnEndJump?.Invoke();
+                _isJump = false;
+            };
+            _attack.Play();
+        }
+        else
+        {
+            if (isTouchingScalableWall)
+            {
+                //Execute Scalable Wall Jump
+                _attack?.Stop();
+                _decay?.Stop();
+                _sustain?.Stop();
+                _release?.Stop();
+                _attack = BehaviourOfJumpSystemWalls.GetAttack();
+                _decay = BehaviourOfJumpSystemWalls.GetDecay();
+                _sustain = BehaviourOfJumpSystemWalls.GetSustain();
+                _release = BehaviourOfJumpSystemWalls.GetRelease();
+                _endJump = BehaviourOfJumpSystemWalls.GetEndJump();
+                BehaviourOfJumpSystemWalls.OnAttack = () =>
+                {
+                    OnAttack?.Invoke();
+                    _isJump = true;
+                };
+                BehaviourOfJumpSystemWalls.OnMidAir = () =>
+                {
+                    OnMidAir?.Invoke();
+                };
+                BehaviourOfJumpSystemWalls.OnSustain = () =>
+                {
+                    OnSustain?.Invoke();
+                };
+                BehaviourOfJumpSystemWalls.OnRelease = () =>
+                {
+                    OnRelease?.Invoke();
+                };
+                BehaviourOfJumpSystemWalls.OnEndJump = () =>
+                {
+                    OnEndJump?.Invoke();
+                    _isJump = false;
+                };
+                var behaviourOfJumpSystemWallsMono = BehaviourOfJumpSystemWalls as BehaviourOfJumpSystemWalls;
+                System.Diagnostics.Debug.Assert(behaviourOfJumpSystemWallsMono != null, nameof(behaviourOfJumpSystemWallsMono) + " != null");
+                behaviourOfJumpSystemWallsMono.ConfigureWall(scalableWallDirection);
+                _attack.Play();
+            }
+        }
     }
 
-    public void IsScalableWall(bool isScalableWall)
+    public void IsScalableWall(bool isScalableWall, FloorController floorController, Vector3 direction)
     {
-        _isScalableWall = isScalableWall;
+        _attack?.Stop();
+        _decay?.Stop();
+        _sustain?.Stop();
+        _release?.Stop();
+        _endJump?.Stop();
+        _isJump = false;
+        
+        if(isScalableWall)
+        {
+            _attack = BehaviourOfJumpSystemWalls.GetAttack();
+            _decay = BehaviourOfJumpSystemWalls.GetDecay();
+            _sustain = BehaviourOfJumpSystemWalls.GetSustain();
+            _release = BehaviourOfJumpSystemWalls.GetRelease();
+            _endJump = BehaviourOfJumpSystemWalls.GetEndJump();
+            BehaviourOfJumpSystemWalls.OnAttack = () =>
+            {
+                OnAttack?.Invoke();
+                _isJump = true;
+            };
+            BehaviourOfJumpSystemWalls.OnMidAir = () =>
+            {
+                OnMidAir?.Invoke();
+            };
+            BehaviourOfJumpSystemWalls.OnSustain = () =>
+            {
+                OnSustain?.Invoke();
+            };
+            BehaviourOfJumpSystemWalls.OnRelease = () =>
+            {
+                OnRelease?.Invoke();
+            };
+            BehaviourOfJumpSystemWalls.OnEndJump = () =>
+            {
+                OnEndJump?.Invoke();
+                _isJump = false;
+            };
+            var behaviourOfJumpSystemWallsMono = BehaviourOfJumpSystemWalls as BehaviourOfJumpSystemWalls;
+            System.Diagnostics.Debug.Assert(behaviourOfJumpSystemWallsMono != null, nameof(behaviourOfJumpSystemWallsMono) + " != null");
+            behaviourOfJumpSystemWallsMono.ConfigureWall(direction);
+        }
+        else
+        {
+            _attack = BehaviourOfJumpSystemNormal.GetAttack();
+            _decay = BehaviourOfJumpSystemNormal.GetDecay();
+            _sustain = BehaviourOfJumpSystemNormal.GetSustain();
+            _release = BehaviourOfJumpSystemNormal.GetRelease();
+            _endJump = BehaviourOfJumpSystemNormal.GetEndJump();
+            BehaviourOfJumpSystemNormal.OnAttack = () =>
+            {
+                OnAttack?.Invoke();
+                _isJump = true;
+            };
+            BehaviourOfJumpSystemNormal.OnMidAir = () =>
+            {
+                OnMidAir?.Invoke();
+            };
+            BehaviourOfJumpSystemNormal.OnSustain = () =>
+            {
+                OnSustain?.Invoke();
+            };
+            BehaviourOfJumpSystemNormal.OnRelease = () =>
+            {
+                OnRelease?.Invoke();
+            };
+            BehaviourOfJumpSystemNormal.OnEndJump = () =>
+            {
+                OnEndJump?.Invoke();
+                _isJump = false;
+            };
+        }
+        
     }
+
+    public void ChangeNormalWall()
+    {
+        _movementRigidBodyV2.ChangeToNormalJump();
+    }
+
+    public void ChangeRotation(Vector3 rotation)
+    {
+        _movementRigidBodyV2.ChangeRotation(rotation);
+    }
+
+    public void RestoreRotation()
+    {
+        _movementRigidBodyV2.RestoreRotation();
+    }
+
+    public void ExitToWall()
+    {
+        //TODO: doing something went exit to wall
+    }
+
+    public bool IsJump()
+    {
+        return _isJump;
+    }
+}
+
+public interface IJumpSystem
+{
+    void ChangeNormalWall();
+    void ChangeRotation(Vector3 rotation);
+    void RestoreRotation();
 }
