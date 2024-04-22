@@ -40,6 +40,10 @@ public class JumpSystem : MonoBehaviour, IJumpSystem
         if (isTouchingFloor)
         {
             //Execute normal jump
+            _attack?.Stop();
+            _decay?.Stop();
+            _sustain?.Stop();
+            _release?.Stop();
             _attack = BehaviourOfJumpSystemNormal.GetAttack();
             _decay = BehaviourOfJumpSystemNormal.GetDecay();
             _sustain = BehaviourOfJumpSystemNormal.GetSustain();
@@ -74,6 +78,10 @@ public class JumpSystem : MonoBehaviour, IJumpSystem
             if (isTouchingScalableWall)
             {
                 //Execute Scalable Wall Jump
+                _attack?.Stop();
+                _decay?.Stop();
+                _sustain?.Stop();
+                _release?.Stop();
                 _attack = BehaviourOfJumpSystemWalls.GetAttack();
                 _decay = BehaviourOfJumpSystemWalls.GetDecay();
                 _sustain = BehaviourOfJumpSystemWalls.GetSustain();

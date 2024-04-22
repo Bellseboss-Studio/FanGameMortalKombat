@@ -26,15 +26,15 @@ namespace Bellseboss.Pery.Scripts.Input
 
         public void Configure(Rigidbody _rigidbody, IJumpSystem jumpSystem)
         {
-            Debug.Log($"Configured BehaviourOfJumpSystemWall: {_rigidbody.gameObject.name}");
+            /*Debug.Log($"Configured BehaviourOfJumpSystemWall: {_rigidbody.gameObject.name}");*/
             var gameObjectToPlayer = _rigidbody.gameObject;
             _attack = this.tt().Pause().Add(() =>
             {
                 _rigidbody.useGravity = false;
                 _rigidbody.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotationZ |
                                          RigidbodyConstraints.FreezeRotationX;
-                _deltatimeLocalToJump = 0;
-                Debug.Log("JumpSystem BehaviourOfJumpSystemWall: Attack");
+                _deltatimeLocal = 0;
+                /*Debug.Log("JumpSystem BehaviourOfJumpSystemWall: Attack");*/
                 isJumping = true;
                 isColliding = false;
             }).Add(()=>
@@ -45,12 +45,12 @@ namespace Bellseboss.Pery.Scripts.Input
             }).Add(() => { OnAttack?.Invoke(); }).Loop(loop =>
             {
                 //Debug.Log("JumpSystem BehaviourOfJumpSystemWall: Attack Loop");
-                _deltatimeLocalToJump += loop.deltaTime;
-                if (_deltatimeLocalToJump >= timeToAttack || isColliding)
+                _deltatimeLocal += loop.deltaTime;
+                if (_deltatimeLocal >= timeToAttack || isColliding)
                 {
                     loop.Break();
                 }
-                float t = _deltatimeLocalToJump / timeToAttack;
+                float t = _deltatimeLocal / timeToAttack;
                 float heightMultiplier = (Mathf.Cos(t * Mathf.PI * 0.5f) + 1) / 2;
                 
                 var position = gameObjectToPlayer.transform.position;
@@ -62,7 +62,7 @@ namespace Bellseboss.Pery.Scripts.Input
             }).Add(() =>
             {
                 //_decresing.Play();
-                Debug.Log("JumpSystem BehaviourOfJumpSystemWall: End Attack");
+                /*Debug.Log("JumpSystem BehaviourOfJumpSystemWall: End Attack");*/
             }).Add(() =>
             {
                 if (isColliding) return;
@@ -71,7 +71,7 @@ namespace Bellseboss.Pery.Scripts.Input
             _decresing = this.tt().Pause().Add(() =>
             {
                 OnMidAir?.Invoke();
-                Debug.Log("JumpSystem BehaviourOfJumpSystemWall: Decreasing");
+                /*Debug.Log("JumpSystem BehaviourOfJumpSystemWall: Decreasing");*/
             }).Loop(loop =>
             {
                 _deltatimeLocal += loop.deltaTime;
@@ -100,7 +100,7 @@ namespace Bellseboss.Pery.Scripts.Input
             _sustain = this.tt().Pause().Add(() =>
             {
                 OnSustain?.Invoke();
-                Debug.Log("JumpSystem BehaviourOfJumpSystemWall: Sustain"); 
+                /*Debug.Log("JumpSystem BehaviourOfJumpSystemWall: Sustain"); */
             }).Loop(loop =>
             {
                 //Debug.Log("JumpSystem: Sustain Loop");
@@ -118,7 +118,7 @@ namespace Bellseboss.Pery.Scripts.Input
             _release = this.tt().Pause().Add(() =>
             {
                 OnRelease?.Invoke();
-                Debug.Log("JumpSystem  BehaviourOfJumpSystemWall: Release");
+                /*Debug.Log("JumpSystem  BehaviourOfJumpSystemWall: Release");*/
             }).Loop(loop =>
             {
                 _deltatimeLocal += loop.deltaTime;
@@ -143,18 +143,18 @@ namespace Bellseboss.Pery.Scripts.Input
             
             _endJump = this.tt().Pause().Add(() =>
             {
-                Debug.Log("JumpSystem BehaviourOfJumpSystemWall: End Jump");
+                /*Debug.Log("JumpSystem BehaviourOfJumpSystemWall: End Jump");*/
                 _rigidbody.useGravity = true;
                 _rigidbody.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX;
                 _deltatimeLocal = 0;
-                jumpSystem.ChangeNormalWall();
+                /*jumpSystem.ChangeNormalWall();*/
                 isJumping = false;
                 jumpSystem.RestoreRotation();
                 OnEndJump?.Invoke();
             });
             _delayToJump = this.tt().Add(() =>
             {
-                Debug.Log("JumpSystem: Delay to Jump");
+                /*Debug.Log("JumpSystem: Delay to Jump");*/
                 _deltatimeLocal = 0;
                 _rigidbody.useGravity = false;
                 _rigidbody.constraints = RigidbodyConstraints.FreezeAll;
@@ -173,10 +173,10 @@ namespace Bellseboss.Pery.Scripts.Input
                 canJump = false;
                 if(!isJumping)
                 {
-                    Debug.Log("JumpSystem: Delay to Jump End");
+                    /*Debug.Log("JumpSystem: Delay to Jump End");*/
                     _rigidbody.useGravity = true;
                     _rigidbody.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX;
-                    jumpSystem.ChangeNormalWall();
+                    /*jumpSystem.ChangeNormalWall();*/
                 }
             });
             
@@ -220,7 +220,7 @@ namespace Bellseboss.Pery.Scripts.Input
         {
             _direction = direction;
             _delayToJump.Play();
-            Debug.Log($"JumpSystem BehaviourOfJumpSystemWall: ConfigureWall {direction}");
+            /*Debug.Log($"JumpSystem BehaviourOfJumpSystemWall: ConfigureWall {direction}");*/
         }
         
         
