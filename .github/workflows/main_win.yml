@@ -35,8 +35,8 @@ jobs:
           name: build-Windows
           path: build
 
-  send_to_ftp:
-    name: Send to FTP
+  create_release_and_upload_file:
+    name: Create Release and Upload file
     runs-on: ubuntu-latest
     needs: build
     steps:
@@ -57,23 +57,42 @@ jobs:
       - name: Compress build
         run: |
           zip -r files/mkoc.zip build
-
-      - uses: appleboy/scp-action@v0.1.7
+      
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         with:
-          host: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          port: ${{ secrets.FTP_PORT }}
-          source: files/mkoc.zip
-          target: ${{ secrets.FTP_PATH }}
+          tag_name: release-${{ github.sha }}
+          release_name: Release ${{ github.sha }}
+          draft: false
+          prerelease: false
+      
+      - name: Upload Release Asset
+        id: upload_release_asset 
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+          asset_path: ./files/mkoc.zip
+          asset_name: mkoc.zip
+          asset_content_type: application/zip
+      
+      - name: Set output
+        id: set_output
+        run: echo "::set-output name=download_url::${{ steps.upload_release_asset.outputs.browser_download_url }}"
+
+      - name: Get download URL
+        run: echo "The download URL is ${{ steps.upload_release_asset.outputs.browser_download_url }}"
 
   update_the_downloads:
     runs-on: ubuntu-latest
-    needs: send_to_ftp
+    needs: create_release_and_upload_file
     name: Update the downloads in server
     steps:
       - name: Send a POST request
-        if: ${{ secrets.CAN_SEND_EMAIL == '1' }}
         run: |
-          response=$(curl -X POST -H "Content-Type: application/json" -d '{"comment": "${{ steps.last_commit.outputs.message }}", "data": {"key":"${{ secrets.DOWNLOAD_UPDATE_JSON }}"}}' ${{ secrets.DOWNLOAD_UPDATE_URL }})
+          response=$(curl -X POST -H "Content-Type: application/json" -d '{"comment": "${{ steps.last_commit.outputs.message }}", "data": {"key":"${{ secrets.DOWNLOAD_UPDATE_JSON }}", "URL": "${{ needs.create_release_and_upload_file.outputs.download_url }}"}}' ${{ secrets.DOWNLOAD_UPDATE_URL }})
           echo "Response code: $response"

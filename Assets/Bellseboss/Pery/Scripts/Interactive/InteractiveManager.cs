@@ -24,6 +24,7 @@ public class InteractiveManager : MonoBehaviour
     {
         _collider.ColliderEnter += OnColliderEnter;
         _collider.ColliderExit += OnColliderExit;
+        cinemachineVirtualCamera.gameObject.SetActive(false);
         
     }
 

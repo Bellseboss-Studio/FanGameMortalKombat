@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &322637715658472724
 Transform:
   m_ObjectHideFlags: 0
@@ -222,6 +222,8 @@ PlayableDirector:
     value: {fileID: 322637716640582435}
   - key: {fileID: -7014710343641748475, guid: 437988027bcd7c842a8fec211f0f8eab, type: 2}
     value: {fileID: 322637715658472725}
+  - key: {fileID: -1759110892178731572, guid: 437988027bcd7c842a8fec211f0f8eab, type: 2}
+    value: {fileID: 322637715658472714}
   m_ExposedReferences:
     m_References:
     - 2119b84b0de573a458d506331b297366: {fileID: 322637715658472715}
@@ -473,6 +475,34 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 322637716640582434}
     m_Modifications:
+    - target: {fileID: 88814743230469208, guid: 5f98ed9bd0239cc43aa785df80053ae9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -89.98021
+      objectReference: {fileID: 0}
+    - target: {fileID: 2490217485251812208, guid: 5f98ed9bd0239cc43aa785df80053ae9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 89.98021
+      objectReference: {fileID: 0}
+    - target: {fileID: 2490217485251812208, guid: 5f98ed9bd0239cc43aa785df80053ae9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 3.0332135e-21
+      objectReference: {fileID: 0}
+    - target: {fileID: 2774889154705321399, guid: 5f98ed9bd0239cc43aa785df80053ae9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -89.98021
+      objectReference: {fileID: 0}
+    - target: {fileID: 2774889154705321399, guid: 5f98ed9bd0239cc43aa785df80053ae9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 179.99998
+      objectReference: {fileID: 0}
+    - target: {fileID: 4792005284356987289, guid: 5f98ed9bd0239cc43aa785df80053ae9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -89.98021
+      objectReference: {fileID: 0}
+    - target: {fileID: 4792005284356987289, guid: 5f98ed9bd0239cc43aa785df80053ae9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 179.99998
+      objectReference: {fileID: 0}
     - target: {fileID: 6323591783649782515, guid: 5f98ed9bd0239cc43aa785df80053ae9, type: 3}
       propertyPath: m_Name
       value: lever_final_activeV5
