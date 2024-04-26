@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Bellseboss.Pery.Scripts.Input
 {
-    public class CharacterV2 : PJV2, ICharacterV2, IMovementRigidBodyV2, IAnimationController, IRotationCharacterV2, ICombatSystem, IFocusTarget, ICombatSystemAngel
+    public class CharacterV2 : PJV2, ICharacterV2, IMovementRigidBodyV2, IAnimationController, IRotationCharacterV2, ICombatSystem, IFocusTarget, ICombatSystemAngel, IFatality
     {
         public string Id => id;
         public Action OnAction { get; set; }
@@ -28,6 +28,10 @@ namespace Bellseboss.Pery.Scripts.Input
         [SerializeField] private StatisticsOfCharacter statisticsOfCharacter;
         [SerializeField] private CombatSystemAngel combatSystemAngel;
         [SerializeField] private MovementADSR movementADSR;
+
+        [SerializeField, InterfaceType(typeof(IFatalitySystem))]
+        private MonoBehaviour FatalitySystem;
+        private IFatalitySystem fatalitySystem => FatalitySystem as IFatalitySystem;
         private StatisticsOfCharacter _statisticsOfCharacter;
         private bool IsDead;
 
@@ -44,6 +48,7 @@ namespace Bellseboss.Pery.Scripts.Input
             inputPlayerV2.onKickEvent += OnKickEvent;
             inputPlayerV2.onJumpEvent += OnJumpEvent;
             inputPlayerV2.onActionEvent += OnActionEvent;
+            inputPlayerV2.onFatalityEvent += OnFatalityEvent;
 
             ConfigCamera(cameraMain);
             _model3DInstance = Instantiate(model3D, transform);
@@ -61,8 +66,14 @@ namespace Bellseboss.Pery.Scripts.Input
             _statisticsOfCharacter = Instantiate(statisticsOfCharacter);
 
             movementADSR.Configure(GetComponent<Rigidbody>(), _statisticsOfCharacter, this);
+
+            fatalitySystem.Configure(this);
         }
 
+        private void OnFatalityEvent()
+        {
+            fatalitySystem.Fatality();
+        }
 
         public void ActivateAnimationTrigger(string animationTrigger)
         {
