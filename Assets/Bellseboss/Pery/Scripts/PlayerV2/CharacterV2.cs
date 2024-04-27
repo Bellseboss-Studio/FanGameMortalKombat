@@ -67,7 +67,7 @@ namespace Bellseboss.Pery.Scripts.Input
 
             movementADSR.Configure(GetComponent<Rigidbody>(), _statisticsOfCharacter, this);
 
-            fatalitySystem.Configure(this);
+            fatalitySystem.Configure(this, this);
         }
 
         private void OnFatalityEvent()

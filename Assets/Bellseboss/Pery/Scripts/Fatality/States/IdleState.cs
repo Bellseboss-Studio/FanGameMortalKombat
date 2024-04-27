@@ -8,12 +8,14 @@ public class IdleState : StatePatterFatality
 
     internal override IEnumerator Execute()
     {
-        yield return null;
+        while (!_fatalitySystem.StartFatality())
+        {
+            yield return null;
+        }
     }
 
     public override int NextState()
     {
-        return 1;
+        return STATE_FATALITY.CINEMATIC;
     }
 }
-

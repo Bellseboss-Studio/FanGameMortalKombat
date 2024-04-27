@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1164,6 +1164,7 @@ GameObject:
   m_Component:
   - component: {fileID: 226067545}
   - component: {fileID: 226067546}
+  - component: {fileID: 226067547}
   m_Layer: 10
   m_Name: FatalitySystem
   m_TagString: Untagged
@@ -1195,6 +1196,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: efb4873d321dbd34d8e716b2f96342a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _statePatterFatality: {fileID: 226067547}
+--- !u!114 &226067547
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 226067544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 394a7e078c7b6124aa8e0a007ed9e466, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &230984341

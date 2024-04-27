@@ -36,4 +36,3 @@ public abstract class StatePatterFatality
 
     public abstract int NextState();
 }
-
