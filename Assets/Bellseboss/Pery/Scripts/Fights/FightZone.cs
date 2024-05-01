@@ -35,8 +35,9 @@ public class FightZone : MonoBehaviour
         
         foreach (var enemyFactoryMonoV2 in enemiesMonoV2FactoryMono)
         {
-            enemyFactoryMonoV2.Configure(_factory);
+            
             enemyFactoryMonoV2.AllEnemiesAreDead += EnemyFactoryMonoV2OnAllEnemiesAreDead;
+            enemyFactoryMonoV2.Configure(_factory);
         }
     }
 
