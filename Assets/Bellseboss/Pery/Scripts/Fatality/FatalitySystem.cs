@@ -1,4 +1,5 @@
 using System;
+using Bellseboss.Pery.Scripts.Input;
 using UnityEngine;
 
 public class FatalitySystem : MonoBehaviour, IFatalitySystem
@@ -6,14 +7,23 @@ public class FatalitySystem : MonoBehaviour, IFatalitySystem
     [SerializeField] private StatePatter _statePatterFatality;
     private IFatality _characterV2;
 
+    public void Configure(IFatality characterV2, ICharacterV2 cV2)
+    {
+        
+    }
+
     public void Fatality()
     {
         _statePatterFatality.StartStates();
     }
 
-    void IFatalitySystem.Configure(IFatality characterV2)
+    public bool StartFatality()
     {
-        _characterV2 = characterV2;
-        //_statePatterFatality.Configure(this);
+        return false;
+    }
+
+    public void StartCinematic()
+    {
+        
     }
 }

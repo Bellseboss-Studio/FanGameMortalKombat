@@ -9,11 +9,11 @@ public class StatePatter : MonoBehaviour
     private StatePatterFatality _currentState;
     private bool _isRunning;
 
-    public void Configure(IFatalitySystem fatalitySystem)
+    public void Configure(IFatalitySystem fatalitySystem, int firstState, Dictionary<int, StatePatterFatality> states)
     {
         _fatalitySystem = fatalitySystem;
-        _statePatterFatality = new Dictionary<int, StatePatterFatality>();
-        
+        _statePatterFatality = states;
+        _currentState = _statePatterFatality[firstState];
     }
 
     public void StartStates()
@@ -35,4 +35,13 @@ public class StatePatter : MonoBehaviour
         }
     }
 
+}
+
+public enum STATE_FATALITY{
+    IDLE,
+    CINEMATIC,
+    INPUTS,
+    VALIDATE,
+    FATALITY,
+    NO_FATALITY
 }
