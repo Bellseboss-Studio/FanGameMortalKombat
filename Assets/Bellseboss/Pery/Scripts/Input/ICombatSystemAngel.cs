@@ -12,5 +12,6 @@ namespace Bellseboss.Pery.Scripts.Input
         /*bool CanAttack();
         AttackMovementSystem GetAttackSystem();*/
         public Action<string> GetActionToAnimate();
+        void PlayerTouchEnemy();
     }
 }

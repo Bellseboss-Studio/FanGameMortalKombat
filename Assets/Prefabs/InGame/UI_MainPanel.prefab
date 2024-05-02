@@ -500,9 +500,9 @@ RectTransform:
   m_Father: {fileID: 1679917940780070738}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -820, y: 342}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 100, y: -130}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1679917939628715901
@@ -837,7 +837,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 1
-  m_FillAmount: 0.957
+  m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -1271,9 +1271,9 @@ RectTransform:
   m_Father: {fileID: 1679917940780070738}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -865, y: 470}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 50, y: -53.5}
   m_SizeDelta: {x: 15, y: 107}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1679917940675853284
@@ -1326,6 +1326,7 @@ GameObject:
   - component: {fileID: 1679917940780070736}
   - component: {fileID: 1679917940780070737}
   - component: {fileID: 1415760990}
+  - component: {fileID: 1415209256}
   m_Layer: 5
   m_Name: UI_MainPanel
   m_TagString: Untagged
@@ -1406,6 +1407,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sliderLife: {fileID: 1679917939178358397}
   sliderEnergy: {fileID: 1679917940187021893}
+--- !u!114 &1415209256
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1679917940780070739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb749e2566d077549abdf12d845713ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ui: {fileID: 1415760990}
 --- !u!1 &1679917940816277164
 GameObject:
   m_ObjectHideFlags: 0

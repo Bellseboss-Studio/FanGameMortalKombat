@@ -7,7 +7,7 @@ namespace View.UI
     {
         [SerializeField] private Slider sliderLife;
 
-        public virtual void SetEnergyValue(float energy)
+        public virtual void SetEnergyValue(float energyToAdd)
         {
             
         }

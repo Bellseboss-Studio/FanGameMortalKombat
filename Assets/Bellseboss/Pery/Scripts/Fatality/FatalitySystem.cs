@@ -14,6 +14,6 @@ public class FatalitySystem : MonoBehaviour, IFatalitySystem
     void IFatalitySystem.Configure(IFatality characterV2)
     {
         _characterV2 = characterV2;
-        _statePatterFatality.Configure(this);
+        //_statePatterFatality.Configure(this);
     }
 }

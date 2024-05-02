@@ -111,6 +111,10 @@ namespace Bellseboss.Angel.CombatSystem
                         _isQuickAttack ? _numberOfCombosQuick : _numberOfCombosPower);
                 }
 
+                if (targetFocus.GetEnemies<EnemyV2>().Count > 0)
+                {
+                    _combatSystemAngel.PlayerTouchEnemy();
+                }
                 targetFocus.CleanEnemies();
                 targetFocus.DisableCollider();
             });
