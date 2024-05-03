@@ -11,7 +11,7 @@ namespace Bellseboss.Pery.Scripts.Input
         public Action OnRelease { get; set; }
         public Action OnEndJump { get; set; }
         
-        private TeaTime _attack, _decresing, _sustain, _release, _endJump;
+        private TeaTime _attack, _decay, _sustain, _release, _endJump;
         private float _deltatimeLocal;
         [SerializeField] private float timeToAttack, timeToDecreasing, timeToSustain, timeToRelease;
         [SerializeField] private float maxHeighJump, heightDecreasing;
@@ -25,6 +25,7 @@ namespace Bellseboss.Pery.Scripts.Input
             var gameObjectToPlayer = _rigidbody.gameObject;
             _attack = this.tt().Pause().Add(() =>
             {
+                _deltatimeLocal = 0;
                 _rigidbody.useGravity = false;
                 _rigidbody.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotationZ |
                                          RigidbodyConstraints.FreezeRotationX;
@@ -45,15 +46,11 @@ namespace Bellseboss.Pery.Scripts.Input
                 position = Vector3.Lerp(position, position + Vector3.up * (maxHeighJump * heightMultiplier),
                     forceToAttack * loop.deltaTime);
                 gameObjectToPlayer.transform.position = position;
-            }).Add(() => { _decresing.Play(); });
-            _decresing = this.tt().Pause().Add(() => { OnMidAir?.Invoke(); }).Loop(loop =>
+            }).Add(() => { _decay.Play(); });
+            _decay = this.tt().Pause().Add(() => { OnMidAir?.Invoke(); }).Loop(loop =>
             {
                 //Debug.Log("JumpSystem: Decreasing Loop");
                 _deltatimeLocal += loop.deltaTime;
-                if (_deltatimeLocal >= timeToAttack + timeToDecreasing)
-                {
-                    loop.Break();
-                }
 
                 float t = (_deltatimeLocal - timeToAttack) / timeToDecreasing;
                 float heightMultiplier = Mathf.Log(1 + t * 4);
@@ -61,7 +58,16 @@ namespace Bellseboss.Pery.Scripts.Input
                 var position = gameObjectToPlayer.transform.position;
                 position = Vector3.Lerp(position, position - Vector3.up * (heightDecreasing * heightMultiplier),
                     forceToDecreasing * loop.deltaTime);
-                gameObjectToPlayer.transform.position = position;
+                //Validate NaN value
+                if (!double.IsNaN(position.x) && !double.IsNaN(position.y) && !double.IsNaN(position.z))
+                {
+                    gameObjectToPlayer.transform.position = position;
+                }
+
+                if (_deltatimeLocal >= timeToAttack + timeToDecreasing || floorController.IsTouchingFloor())
+                {
+                    loop.Break();
+                }
             }).Add(() => { _sustain.Play(); });
             _sustain = this.tt().Pause().Add(() => { OnSustain?.Invoke(); }).Loop(loop =>
             {
@@ -92,7 +98,9 @@ namespace Bellseboss.Pery.Scripts.Input
                 position = Vector3.Lerp(position, position - Vector3.up * (maxHeighJump * heightMultiplier),
                     forceToDecreasing * loop.deltaTime);
                 gameObjectToPlayer.transform.position = position;
-            }).Add(() => { _endJump.Play(); });
+            }).Add(() => { 
+                _endJump.Play();
+            });
             
             _endJump = this.tt().Pause().Add(() =>
             {
@@ -111,7 +119,7 @@ namespace Bellseboss.Pery.Scripts.Input
 
         public TeaTime GetDecay()
         {
-            return _decresing;
+            return _decay;
         }
 
         public TeaTime GetSustain()
@@ -132,7 +140,7 @@ namespace Bellseboss.Pery.Scripts.Input
         public void StopAll()
         {
             _attack.Stop();
-            _decresing.Stop();
+            _decay.Stop();
             _sustain.Stop();
             _release.Stop();
             _endJump.Stop();

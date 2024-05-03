@@ -11,12 +11,19 @@ public class EnemyFactoryMonoV2 : MonoBehaviour
     [SerializeField] private GameObject positionToCreate;
     [SerializeField] private GameObject[] pathToFollow;
     private List<EnemyV2> _enemies = new List<EnemyV2>();
-    private bool allEnemiesAreDead;
+    [SerializeField] private bool allEnemiesAreDead;
     
     public bool IsAllEnemiesAreDead => allEnemiesAreDead;
     
     public void Configure(EnemiesV2Factory factory)
     {
+        if(numberOfEnemies == 0)
+        {
+            allEnemiesAreDead = true;
+            AllEnemiesAreDead?.Invoke();
+            return;
+        }
+
         for (int i = 0; i < numberOfEnemies; i++)
         {
             var e = factory.Create(idToCreate);
@@ -31,6 +38,7 @@ public class EnemyFactoryMonoV2 : MonoBehaviour
     private void OnEnemyDead(EnemyV2 enemy)
     {
         var allDead = _enemies.TrueForAll(enemy => enemy.IsDead);
+        Debug.Log($"AllEnemiesAreDead {allDead}");
         _enemies.Remove(enemy);
         if (allDead)
         {

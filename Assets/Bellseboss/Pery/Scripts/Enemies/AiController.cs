@@ -1,4 +1,5 @@
 using System;
+using Bellseboss.Pery.Scripts.Input;
 using UnityEngine;
 
 internal class AiController : MonoBehaviour
@@ -6,12 +7,13 @@ internal class AiController : MonoBehaviour
     [SerializeField] private float timeToWaitToChangePath;
     private IEnemyV2 _enemy;
     private TeaTime _idle, _numberOfPath, _moving, _stayNearOfTarget, _watch;
-    private TeaTime _watchEnemy, _nearOfEnemy;
+    private TeaTime _watchEnemy, _nearOfEnemy, _died;
     private GameObject _target;
     private bool _isNearOfTarget;
     private int _indexOfPath;
     private bool _enemyIsDetected;
     private bool _enemyIsNear;
+    private float _deltaTimeLocal; 
     
     
 
@@ -24,7 +26,7 @@ internal class AiController : MonoBehaviour
             throw new Exception("Paths is empty");
         }
         _target = _enemy.Paths()[_indexOfPath];
-        
+        _enemy.OnDead += EnemyOnOnDead;
         _enemy.OnArriveToTarget += () =>
         {
             _isNearOfTarget = true;
@@ -48,6 +50,7 @@ internal class AiController : MonoBehaviour
             else
             {
                 _idle.Play();
+                _enemy.SetState(StatesOfEnemy.NORMAL);
             }
             _enemyIsDetected = isDetected;
         };
@@ -56,7 +59,7 @@ internal class AiController : MonoBehaviour
         {
             if(isNear)
             {
-                
+                _numberOfPath.Play();
             }
             else
             {
@@ -75,14 +78,26 @@ internal class AiController : MonoBehaviour
         
         _idle = this.tt().Pause().Add(() =>
         {
-            //configure a some things
             _numberOfPath.Play();
         });
         _numberOfPath = this.tt().Pause().Add(() =>
         {
-            if(_enemy.Paths().Count > 0)
+            if(_enemy.Paths().Count > 0 || _enemy.GetPlayer() != null)
             {
+                if (_enemy.GetPlayer() != null)
+                {
+                    _target = _enemy.GetPlayer().gameObject;
+                    _enemy.SetState(StatesOfEnemy.ANGRY);
+                }
+                else
+                {
+                    _target =_enemy.Paths()[_indexOfPath];
+                }
                 _moving.Play();
+            }
+            else
+            {
+                _idle.Play();   
             }
         });
         
@@ -97,12 +112,19 @@ internal class AiController : MonoBehaviour
         {
         }).Wait(()=>_isNearOfTarget).Add(() =>
         {
-            //start animation to watch
-            _enemy.TriggerAnimation("watch");
-            _enemy.RotateToTargetIdle(_target);
-        })
-            .Add(timeToWaitToChangePath)
-            .Add(() =>
+            _isNearOfTarget = false;
+            if(_enemy.GetPlayer() != null)
+            {
+                _target = _enemy.GetPlayer().gameObject;
+                _enemy.AttackPlayer();
+                _stayNearOfTarget.Stop();
+            }
+            else
+            {
+                _enemy.TriggerAnimation("watch");
+                _enemy.RotateToTargetIdle(_target);
+            }
+        }).Add(timeToWaitToChangePath).Add(() =>
         {
             if(_enemy.Paths().Count > 1)
             {
@@ -115,7 +137,6 @@ internal class AiController : MonoBehaviour
                     _indexOfPath = 0;
                 }
                 _target = _enemy.Paths()[_indexOfPath];
-                _isNearOfTarget = false;
                 _moving.Play();
             }
             else
@@ -149,6 +170,40 @@ internal class AiController : MonoBehaviour
             _watchEnemy.Play();
         }); 
         
+        _died = this.tt().Pause().Add(() =>
+        {
+            _idle.Stop();
+            _numberOfPath.Stop();
+            _moving.Stop();
+            _stayNearOfTarget.Stop();
+            _watch.Stop();
+            _watchEnemy.Stop();
+            _nearOfEnemy.Stop();
+        }).Add(() =>
+        {
+            _enemy.CanMove(false);
+            _enemy.TriggerAnimation("dead");
+        }).Add(() =>
+        {
+            _enemy.Died();
+        });
+
+        StartAi();
+    }
+
+    private void EnemyOnOnDead(EnemyV2 obj)
+    {
+        Debug.Log("AiController: Enemy is dead");
+        _died.Play();
+    }
+
+    public void SetPlayer(CharacterV2 characterV2)
+    {
+        
+    }
+
+    public void StartAi()
+    {
         _idle.Play();
     }
 }

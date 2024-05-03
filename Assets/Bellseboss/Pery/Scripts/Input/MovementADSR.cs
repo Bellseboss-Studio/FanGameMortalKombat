@@ -17,13 +17,15 @@ public class MovementADSR : MonoBehaviour
     private AttackMovementData _attackMovementData;
     private Vector3 _direction;
     private StatisticsOfCharacter _statisticsOfCharacter;
+    private PJV2 _pJV2;
 
-    public void Configure(Rigidbody rigidbody, StatisticsOfCharacter statisticsOfCharacter)
+    public void Configure(Rigidbody rigidbody, StatisticsOfCharacter statisticsOfCharacter, PJV2 pj)
     {
         _statisticsOfCharacter = statisticsOfCharacter;
         _rigidbody = rigidbody;
         var gameObjectToPlayer = rigidbody.gameObject;
         _rigidbodyConstraints = _rigidbody.constraints;
+        _pJV2 = pj;
         _attack = this.tt().Pause().Add(() =>
         {
             _deltatimeLocal = 0;
@@ -35,6 +37,8 @@ public class MovementADSR : MonoBehaviour
                 
                 
             }
+
+            _pJV2.Stun(true);
         }).Add(() =>
         {
             OnAttack?.Invoke();
@@ -133,6 +137,7 @@ public class MovementADSR : MonoBehaviour
             _rigidbody.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX;
             //Debug.Log("AttackMovementSystem: End Attack");
             OnEndAttack?.Invoke();
+            _pJV2.Stun(false);
         });
     }
 

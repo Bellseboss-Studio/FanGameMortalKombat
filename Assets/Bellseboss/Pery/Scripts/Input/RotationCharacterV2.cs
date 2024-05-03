@@ -15,7 +15,7 @@ namespace Bellseboss.Pery.Scripts.Input
         [SerializeField] private bool _canRotate;
         private bool _canRotateWhileAttack;
         private Vector3 _lastDirection;
-        private bool _canChangeDirection = true;
+        private bool _canChangeDirection;
 
         public void Configure(GameObject camera, GameObject player, IRotationCharacterV2 rotationCharacterV2,
             float forceRotation)
@@ -41,7 +41,7 @@ namespace Bellseboss.Pery.Scripts.Input
         private void Update()
         {
             if (!_isConfigured || !_canRotate) return;
-            if (!_canChangeDirection) return;
+            /*if (!_canChangeDirection) return;*/
             if (_canRotateWhileAttack)
             {
                 _player.transform.rotation = Quaternion.Lerp(_player.transform.rotation, Quaternion.LookRotation(rotationWithTarget), _forceRotation * Time.deltaTime);
@@ -53,7 +53,7 @@ namespace Bellseboss.Pery.Scripts.Input
                 direction.Normalize();
                 var right = new Vector3(direction.z, 0, -direction.x);
                 var result = _vector2.x * right + _vector2.y * direction;
-                if (result != Vector3.zero && _canRotate)
+                if (result != Vector3.zero && !_canChangeDirection)
                 {
                     _lastDirection = result;
                     _player.transform.rotation = Quaternion.Lerp(_player.transform.rotation, Quaternion.LookRotation(result), _forceRotation * Time.deltaTime);
@@ -94,14 +94,23 @@ namespace Bellseboss.Pery.Scripts.Input
 
         public void ChangeDirection(Vector3 rotation)
         {
-            Debug.Log("Change Direction: " + rotation);
-            _canChangeDirection = false;
-            _vector2 = rotation;
+            /*Debug.Log("Change Direction: " + rotation);*/
+            _canChangeDirection = true;
+            _lastDirection = rotation;
         }
 
         public void RestoreRotation()
         {
-            _canChangeDirection = true;
+            _canChangeDirection = false;
+        }
+
+        public void RotateToDirection(Vector3 direction)
+        {
+            //invert direction
+            direction = -direction;
+            //rotate to direction without lerp
+            _player.transform.rotation = Quaternion.LookRotation(direction);
+            _lastDirection = direction;
         }
     }
 }

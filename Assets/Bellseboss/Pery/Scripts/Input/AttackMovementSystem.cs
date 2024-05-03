@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Bellseboss.Pery.Scripts.Input;
 using UnityEngine;
 
@@ -9,15 +8,15 @@ public class AttackMovementSystem : MonoBehaviour, IFocusTarget
     public Action OnAttack, OnMidAir, OnRelease, OnSustain, OnEndAttack;
     [SerializeField] private AttackMovementData attackMovementDataQuick;
     [SerializeField] private AttackMovementData attackMovementDataPower;
-    [SerializeField] private bool canAttackAgain = true;
-    [SerializeField] private bool attacking;
-    [SerializeField] private float _deltatimeLocal;
-    [SerializeField] private Vector3 _distance;
     [SerializeField] private int maxNumberOfCombosQuick;
     [SerializeField] private int maxNumberOfCombosPower;
-    [SerializeField] private int _numberOfCombosQuick;
-    [SerializeField] private int _numberOfCombosPower;
     [SerializeField] private TargetFocus targetFocus; 
+    private bool canAttackAgain = true;
+    private bool attacking;
+    private float _deltatimeLocal;
+    private Vector3 _distance;
+    private int _numberOfCombosQuick;
+    private int _numberOfCombosPower;
     private TeaTime _attack, _decresing, _sustain, _release;
     private Rigidbody _rigidbody;
     private RigidbodyConstraints _rigidbodyConstraints;
@@ -61,7 +60,6 @@ public class AttackMovementSystem : MonoBehaviour, IFocusTarget
         }).Add(() =>
         {
             OnAttack?.Invoke();
-            //Debug.Log("AttackMovementSystem: Start Attack");
             targetFocus.EnableCollider();
         }).Loop(loop =>
         {
@@ -83,7 +81,7 @@ public class AttackMovementSystem : MonoBehaviour, IFocusTarget
         {
             //Debug.Log("AttackMovementSystem: Attack End");
             _decresing.Play();
-            foreach (var enemy in targetFocus.GetEnemies<EnemyV2>())
+            foreach (var enemy in targetFocus.GetEnemies<PJV2>())
             {
                 enemy.ReceiveDamage(_statisticsOfCharacter.damage, gameObject.transform.forward);
                 enemy.SetAnimationToHit(_isQuickAttack, _isQuickAttack ? _numberOfCombosQuick : _numberOfCombosPower);
@@ -176,7 +174,6 @@ public class AttackMovementSystem : MonoBehaviour, IFocusTarget
 
     public void Attack(Vector3 distance, TypeOfAttack typeOfAttack)
     {
-        //Debug.Log("AttackMovementSystem: Attack");
         canAttackAgain = false;
         attacking = true;
         _distance = distance;
