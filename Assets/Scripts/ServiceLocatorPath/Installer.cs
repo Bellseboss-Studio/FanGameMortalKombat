@@ -7,7 +7,7 @@ namespace ServiceLocatorPath
 {
     public class Installer : MonoBehaviour
     {
-        [SerializeField] private ObserverUIPlayer ui;
+        //[SerializeField] private ObserverUIPlayer ui;
         //[SerializeField] private PauseMenu pause;
         private void Awake()
         {
@@ -19,8 +19,8 @@ namespace ServiceLocatorPath
             //pause.Configuracion();
             //var observerZonesGod = new ObserverZoneGod();
             //ServiceLocator.Instance.RegisterService<IGodObserver>(observerZonesGod);
-            var observer = new ObserverUI(ui);
-            ServiceLocator.Instance.RegisterService<IObserverUI>(observer);
+            //var observer = new ObserverUI(ui);
+            //ServiceLocator.Instance.RegisterService<IObserverUI>(observer);
             //ServiceLocator.Instance.RegisterService<IPauseMainMenu>(pause);
             //Comentario para ejemplo
             DontDestroyOnLoad(gameObject);
