@@ -5,11 +5,11 @@ using UnityEngine;
 public class StatePatter : MonoBehaviour
 {
     private IFatalitySystem _fatalitySystem;
-    private Dictionary<int, StatePatterFatality> _statePatterFatality;
+    private Dictionary<STATE_FATALITY, StatePatterFatality> _statePatterFatality;
     private StatePatterFatality _currentState;
     private bool _isRunning;
 
-    public void Configure(IFatalitySystem fatalitySystem, int firstState, Dictionary<int, StatePatterFatality> states)
+    public void Configure(IFatalitySystem fatalitySystem, STATE_FATALITY firstState, Dictionary<STATE_FATALITY, StatePatterFatality> states)
     {
         _fatalitySystem = fatalitySystem;
         _statePatterFatality = states;
