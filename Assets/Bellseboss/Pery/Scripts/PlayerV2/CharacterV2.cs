@@ -1,11 +1,13 @@
 ﻿using System;
 using Bellseboss.Angel.CombatSystem;
 using Cinemachine;
+using ServiceLocatorPath;
 using UnityEngine;
+using View.Installers;
 
 namespace Bellseboss.Pery.Scripts.Input
 {
-    public class CharacterV2 : PJV2, ICharacterV2, IMovementRigidBodyV2, IAnimationController, IRotationCharacterV2, ICombatSystem, IFocusTarget, ICombatSystemAngel
+    public class CharacterV2 : PJV2, ICharacterV2, IMovementRigidBodyV2, IAnimationController, IRotationCharacterV2, ICombatSystem, IFocusTarget, ICombatSystemAngel, IFatality, ICharacterUi
     {
         public string Id => id;
         public Action OnAction { get; set; }
@@ -28,8 +30,20 @@ namespace Bellseboss.Pery.Scripts.Input
         [SerializeField] private StatisticsOfCharacter statisticsOfCharacter;
         [SerializeField] private CombatSystemAngel combatSystemAngel;
         [SerializeField] private MovementADSR movementADSR;
+
+        [SerializeField, InterfaceType(typeof(IFatalitySystem))]
+        private MonoBehaviour FatalitySystem;
+        private IFatalitySystem fatalitySystem => FatalitySystem as IFatalitySystem;
         private StatisticsOfCharacter _statisticsOfCharacter;
         private bool IsDead;
+        
+        
+        public event Action<float> OnEnterDamageEvent;
+        public event Action<float> OnAddingEnergy;
+        public float GetLife()
+        {
+            return statisticsOfCharacter.life;
+        }
 
         void Start()
         {
@@ -44,6 +58,7 @@ namespace Bellseboss.Pery.Scripts.Input
             inputPlayerV2.onKickEvent += OnKickEvent;
             inputPlayerV2.onJumpEvent += OnJumpEvent;
             inputPlayerV2.onActionEvent += OnActionEvent;
+            inputPlayerV2.onFatalityEvent += OnFatalityEvent;
 
             ConfigCamera(cameraMain);
             _model3DInstance = Instantiate(model3D, transform);
@@ -61,8 +76,21 @@ namespace Bellseboss.Pery.Scripts.Input
             _statisticsOfCharacter = Instantiate(statisticsOfCharacter);
 
             movementADSR.Configure(GetComponent<Rigidbody>(), _statisticsOfCharacter, this);
+
+            //fatalitySystem.Configure(this);
+            
+            ServiceLocator.Instance.GetService<IObserverUI>().Observer(this);
         }
 
+        private void OnFatalityEvent()
+        {
+            //fatalitySystem.Fatality();
+        }
+
+        private void OnPause()
+        {
+            ServiceLocator.Instance.GetService<IPauseMainMenu>().Pause();
+        }
 
         public void ActivateAnimationTrigger(string animationTrigger)
         {
@@ -193,6 +221,11 @@ namespace Bellseboss.Pery.Scripts.Input
         public Action<string> GetActionToAnimate()
         {
             return animationController.SetTrigger;
+        }
+
+        public void PlayerTouchEnemy()
+        {
+            OnAddingEnergy?.Invoke(_statisticsOfCharacter.energyToAdd);
         }
 
         public Vector3 RotateToTargetAngel(Vector3 originalDirection)
@@ -327,6 +360,7 @@ namespace Bellseboss.Pery.Scripts.Input
             if (IsDead) return;
             Debug.Log($"EnemyV2: SetAnimationToHit isQuickAttack: {isQuickAttack} numberOfCombos: {numberOfCombosQuick}");
             animationController.TakeDamage(isQuickAttack, numberOfCombosQuick);
+            OnEnterDamageEvent?.Invoke(10);
         }
 
         public override void Stun(bool isStun)
@@ -334,5 +368,13 @@ namespace Bellseboss.Pery.Scripts.Input
             movementRigidbodyV2.CanMove(!isStun);
             rotationCharacterV2.CanRotate(!isStun);
         }
+
+    }
+
+    public interface ICharacterUi
+    {
+        event Action<float> OnEnterDamageEvent;
+        event Action<float> OnAddingEnergy;
+        float GetLife();
     }
 }

@@ -85,6 +85,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Fatality",
+                    "type": "Button",
+                    "id": "ce16104b-17ff-4d6c-a6fd-6369590e364b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -580,6 +589,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "OpenCloseKeyBindingMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c2486f89-fe4c-4a7d-a5c5-836b992cbd10",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Fatality",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c6aafdad-c94f-43d4-a982-da042cf50619",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Fatality",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

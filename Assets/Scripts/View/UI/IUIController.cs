@@ -3,7 +3,7 @@
     public interface IUIController
     {
         void DefaultValue();
-        void SetEnergyValue(float energy);
+        void SetEnergyValue(float energyToAdd);
         float GetSliderValue();
         void SetSliderValue(float totalLifePercent);
     }

@@ -218,6 +218,50 @@ MonoBehaviour:
   floorController: {fileID: 790305426}
   lenghtOfArrow: 2
   _direction: {x: 0, y: 0, z: 1}
+--- !u!1 &2289398064001770119
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3949808562703367793}
+  - component: {fileID: 4996582286142792170}
+  m_Layer: 10
+  m_Name: FatalitySystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3949808562703367793
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2289398064001770119}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8585594586927423070}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4996582286142792170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2289398064001770119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efb4873d321dbd34d8e716b2f96342a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _statePatterFatality: {fileID: 0}
 --- !u!1 &6729844625648620062
 GameObject:
   m_ObjectHideFlags: 0
@@ -1179,6 +1223,7 @@ Transform:
   - {fileID: 8788049306266036261}
   - {fileID: 1590763361}
   - {fileID: 1546169685}
+  - {fileID: 3949808562703367793}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1204,12 +1249,12 @@ MonoBehaviour:
   animationController: {fileID: 8585594586927423063}
   model3D: {fileID: 3278654553256477002, guid: ac33f347a1d94e2458a269aae2bc91f0, type: 3}
   rotationCharacterV2: {fileID: 8585594586927423062}
-  combatSystem: {fileID: 0}
   forceRotation: 20
   targetFocus: {fileID: 919132148402666361}
   statisticsOfCharacter: {fileID: 11400000, guid: 2c107fda2a30a3a4fb6d83dca49c4ffb, type: 2}
   combatSystemAngel: {fileID: 2074710249}
   movementADSR: {fileID: 1309216378850590419}
+  FatalitySystem: {fileID: 4996582286142792170}
 --- !u!114 &8585594586927423060
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1226,7 +1271,6 @@ MonoBehaviour:
   floorController: {fileID: 790305426}
   isFall: 0
   isUp: 0
-  attackMovementSystem: {fileID: 0}
   jumpSystem: {fileID: 790305427}
   inputMin: 0.148
   inputMax: 0.5
@@ -1421,6 +1465,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 2e49550d-e728-407a-bc1d-e111f9132718
     m_ActionName: Player/OpenCloseKeyBindingMenu[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ce16104b-17ff-4d6c-a6fd-6369590e364b
+    m_ActionName: Player/Fatality[/Keyboard/f]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
