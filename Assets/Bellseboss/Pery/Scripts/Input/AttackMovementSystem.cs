@@ -38,8 +38,8 @@ public class AttackMovementSystem : MonoBehaviour, IFocusTarget
         {
             _deltatimeLocal = 0;
             //_rigidbody.useGravity = false;
-            _rigidbody.constraints = RigidbodyConstraints.FreezeRotationZ |
-                                     RigidbodyConstraints.FreezeRotationX;
+            /*_rigidbody.constraints = RigidbodyConstraints.FreezeRotationZ |
+                                     RigidbodyConstraints.FreezeRotationX;*/
             if (attacking)
             {
                 if (_isQuickAttack)
@@ -165,7 +165,7 @@ public class AttackMovementSystem : MonoBehaviour, IFocusTarget
             attacking = false;
             _rigidbody.velocity = Vector3.zero;
             //_rigidbody.useGravity = true;
-            _rigidbody.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX;
+            /*_rigidbody.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX;*/
             //Debug.Log("AttackMovementSystem: End Attack");
             OnEndAttack?.Invoke();
             movementRigidBodyV2.EndAttackMovement();

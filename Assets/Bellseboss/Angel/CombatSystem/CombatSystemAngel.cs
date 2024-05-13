@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Bellseboss.Pery.Scripts.Input;
+using TargetingSystemPath;
 
 namespace Bellseboss.Angel.CombatSystem
 {
@@ -31,6 +32,15 @@ namespace Bellseboss.Angel.CombatSystem
         private List<CombatMovement> _movementsQueue;
         private Action<string> _actionToAnimate;
         private MoveAttackingSystem _moveAttackingSystem;
+        private TargetingSystem _targetingSystem;
+        [SerializeField] private float angleAttack;
+        [SerializeField] private float autoTargetDistance;
+
+        private List<GameObject> _enemiesInCombat
+        {
+            get => _combatSystemAngel.GetEnemiesInCombat();
+            set => _combatSystemAngel.SetEnemiesInCombat(value);
+        }
 
         public bool Attacking => attacking;
 
@@ -51,7 +61,6 @@ namespace Bellseboss.Angel.CombatSystem
 
             if (!found)
             {
-                /*currentComboSequence = new List<TypeOfAttack>();*/
                 currentComboSequence.Remove(currentComboSequence[currentComboSequence.Count - 1]);
                 return;
             }
@@ -69,8 +78,9 @@ namespace Bellseboss.Angel.CombatSystem
         }
 
         public void Configure(Rigidbody rigidbody, StatisticsOfCharacter statisticsOfCharacter,
-            IMovementRigidBodyV2 movementRigidBodyV2, ICombatSystemAngel characterV2)
+            IMovementRigidBodyV2 movementRigidBodyV2, ICombatSystemAngel characterV2, bool isPlayer = true)
         {
+            _targetingSystem = new TargetingSystem();
             var gameObjectToPlayer = rigidbody.gameObject;
             _moveAttackingSystem = new MoveAttackingSystem(gameObjectToPlayer, transform);
             _combatSystemAngel = characterV2;
@@ -81,12 +91,18 @@ namespace Bellseboss.Angel.CombatSystem
             _rigidbodyConstraints = _rigidbody.constraints;
             _attack = this.tt().Pause().Add(() =>
             {
+                if (isPlayer)
+                {
+                    _enemiesInCombat =
+                        new List<GameObject>(_targetingSystem.SetEnemiesOrder(_enemiesInCombat, transform.position));
+                    if (_enemiesInCombat.Count > 0)
+                        _targetingSystem.SetAutomaticTarget(autoTargetDistance, _enemiesInCombat, gameObject,
+                            angleAttack, _combatSystemAngel);
+                }
                 _deltatimeLocal = 0;
-                _rigidbody.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX;
             }).Add(() =>
             {
                 OnAttack?.Invoke();
-                //Debug.Log("AttackMovementSystem: Start Attack");
                 targetFocus.EnableCollider();
             }).Loop(loop =>
             {
@@ -102,12 +118,11 @@ namespace Bellseboss.Angel.CombatSystem
                 _moveAttackingSystem.MovePlayer(gameObjectToPlayer, heightMultiplier, loop, _currentAttack.forceToAttack, _currentAttack.maxDistance);
             }).Add(() =>
             {
-                //Debug.Log("AttackMovementSystem: Attack End");
                 _decresing.Play();
-                foreach (var enemy in targetFocus.GetEnemies<EnemyV2>())
+                foreach (var enemy in targetFocus.GetEnemies<PJV2>())
                 {
                     enemy.ReceiveDamage(_statisticsOfCharacter.damage, gameObject.transform.forward);
-                    enemy.SetAnimationToHit(_isQuickAttack,
+                    enemy. SetAnimationToHit(_isQuickAttack,
                         _isQuickAttack ? _numberOfCombosQuick : _numberOfCombosPower);
                 }
 
@@ -121,7 +136,6 @@ namespace Bellseboss.Angel.CombatSystem
 
             _decresing = this.tt().Pause().Add(() =>
             {
-                //Debug.Log("AttackMovementSystem: Decresing Start");
                 canAttackAgain = true;
                 OnMidAir?.Invoke();
                 if (_movementsQueue.Count > 0)
@@ -146,13 +160,11 @@ namespace Bellseboss.Angel.CombatSystem
 
             }).Add(() =>
             {
-                //Debug.Log("AttackMovementSystem: Decresing End");
                 _sustain.Play();
             });
 
             _sustain = this.tt().Pause().Add(() =>
             {
-                //Debug.Log("AttackMovementSystem: Sustain Start");
                 OnSustain?.Invoke();
             }).Loop(loop =>
             {
@@ -164,13 +176,11 @@ namespace Bellseboss.Angel.CombatSystem
                 }
             }).Add(() =>
             {
-                //Debug.Log("AttackMovementSystem: Sustain End");
                 _release.Play();
             });
 
             _release = this.tt().Pause().Add(() =>
             {
-                //Debug.Log("AttackMovementSystem: Release Start");
                 OnRelease?.Invoke();
             }).Loop(loop =>
             {
@@ -194,7 +204,6 @@ namespace Bellseboss.Angel.CombatSystem
                 _numberOfCombosPower = 0;
                 attacking = false;
                 _rigidbody.velocity = Vector3.zero;
-                _rigidbody.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX;
                 OnEndAttack?.Invoke();
                 oneTimeOnEndAttack?.Invoke();
                 oneTimeOnEndAttack = null;

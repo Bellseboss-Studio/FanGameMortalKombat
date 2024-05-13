@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
+using Bellseboss.Angel.CombatSystem;
 using Bellseboss.Pery.Scripts.Input;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementRigidBodyV2
+public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementRigidBodyV2, ICombatSystemAngel
 {
     public event Action OnArriveToTarget;
     public event Action<bool> OnPlayerDetected;
@@ -31,6 +32,7 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
     private bool _canMove, _canRotate, _canRotateToTarget;
     [SerializeField] private StatesOfEnemy _state;
     [SerializeField] private TargetFocus colliderToDamage;
+    [SerializeField] private CombatSystemAngel combatSystemAngel;
 
     public string Id => id;
     public bool IsDead { get; private set; }
@@ -55,6 +57,11 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
         };
         attackMovementSystem.Configure(GetComponent<Rigidbody>(), _statisticsOfCharacter, this);
         attackMovementSystem.OnEndAttack += () =>
+        {
+            aiController.StartAi();
+        };
+        combatSystemAngel.Configure(rigidbody, _statisticsOfCharacter, this, this, false);
+        combatSystemAngel.OnEndAttack += () =>
         {
             aiController.StartAi();
         };
@@ -87,6 +94,12 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
                 _canMove = false;
                 OnArriveToTarget?.Invoke();
             }
+        }
+        else
+        {
+            rigidbody.ResetInertiaTensor();
+            rigidbody.velocity = Vector3.zero;
+            rigidbody.angularVelocity = Vector3.zero;
         }
         animationController.Movement(rigidbody.velocity.magnitude/10, 0);
     }
@@ -142,6 +155,7 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
     {
         if(IsDead) return;
         _statisticsOfCharacter.life -= damage;
+        Debug.Log(_statisticsOfCharacter.life);
         if (_statisticsOfCharacter.life <= 0)
         {
             IsDead = true;
@@ -204,7 +218,8 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
 
     public void AttackPlayer()
     {
-        attackMovementSystem.Attack(transform.forward, _statisticsOfCharacter.attackAnimationType);
+        /*attackMovementSystem.Attack(transform.forward, _statisticsOfCharacter.attackAnimationType);*/
+        combatSystemAngel.ExecuteMovement(TypeOfAttack.Quick);
     }
 
     public void SetState(StatesOfEnemy state)
@@ -301,7 +316,7 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
 
     public bool IsAttacking()
     {
-        throw new NotImplementedException();
+        return combatSystemAngel.Attacking;
     }
 
     public void PlayerFallV2()
@@ -310,6 +325,31 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
     }
 
     public void PlayerRecoveryV2()
+    {
+        throw new NotImplementedException();
+    }
+
+    public Action<string> GetActionToAnimate()
+    {
+        return animationController.SetTrigger;
+    }
+
+    public void PlayerTouchEnemy()
+    {
+        /*throw new NotImplementedException();*/
+    }
+
+    public List<GameObject> GetEnemiesInCombat()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void SetEnemiesInCombat(List<GameObject> gameObjects)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void RotateCharacter(Vector3 position)
     {
         throw new NotImplementedException();
     }

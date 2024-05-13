@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Bellseboss.Angel.CombatSystem;
 using Cinemachine;
 using ServiceLocatorPath;
@@ -37,6 +38,8 @@ namespace Bellseboss.Pery.Scripts.Input
         private StatisticsOfCharacter _statisticsOfCharacter;
         private bool IsDead;
         private bool _canUseButtons = true;
+        private bool isAnimationWasRun, isAnimationRecovered;
+        [SerializeField] private List<GameObject> _enemiesInCombat;
         
         
         public event Action<float> OnEnterDamageEvent;
@@ -213,6 +216,22 @@ namespace Bellseboss.Pery.Scripts.Input
             OnAddingEnergy?.Invoke(_statisticsOfCharacter.energyToAdd);
         }
 
+        public List<GameObject> GetEnemiesInCombat()
+        {
+            return _enemiesInCombat;
+        }
+
+        public void SetEnemiesInCombat(List<GameObject> gameObjects)
+        {
+            _enemiesInCombat = gameObjects;
+        }
+
+        public void RotateCharacter(Vector3 position)
+        {
+            rotationCharacterV2.RotateToDirection(position);
+        }
+
+
         public Vector3 RotateToTargetAngel(Vector3 originalDirection)
         {
             return targetFocus.RotateToTarget(originalDirection);
@@ -271,7 +290,7 @@ namespace Bellseboss.Pery.Scripts.Input
             rotationCharacterV2.CanRotateWhileAttack(false);
         }
 
-        private bool isAnimationWasRun, isAnimationRecovered;
+
         public void PlayerFall()
         {
             /*if (isAnimationWasRun || movementRigidbodyV2.IsJumpingFromADRS()) return;
@@ -327,6 +346,7 @@ namespace Bellseboss.Pery.Scripts.Input
         {
             if (IsDead) return;
             _statisticsOfCharacter.life -= damage;
+            /*Debug.Log(_statisticsOfCharacter.life/* + damage#1#);*/
             if (_statisticsOfCharacter.life <= 0)
             {
                 IsDead = true;
@@ -367,6 +387,42 @@ namespace Bellseboss.Pery.Scripts.Input
         public void StartToReadInputs(bool b)
         {
             inputPlayerV2.StartToReadInputs(b);
+        }
+        
+        /*public void AddEnemies(List<GameObject> gameObjectParameter)
+        {
+            foreach (var gameObjectp in gameObjectParameter)
+            {
+                _enemiesInCombat.Add(gameObjectp);
+            }
+        }
+        public void RemoveEnemies(List<GameObject> enemies)
+        {
+            foreach (var enemy in enemies)
+            {
+                _enemiesInCombat.Remove(enemy);
+            }
+        }
+
+        public void RemoveEnemy(GameObject gameObjectt)
+        {
+            if (_enemiesInCombat.Contains(gameObjectt))
+            {
+                _enemiesInCombat.Remove(gameObjectt);
+            }
+        }
+
+        public void AddEnemy(GameObject characterEnemy)
+        {
+            _enemiesInCombat.Add(characterEnemy);
+        }*/
+
+        public void GetIntoEnemyZone(GameObject enemy, bool isNear)
+        {
+            if (isNear)
+                _enemiesInCombat.Add(enemy);
+            else
+                _enemiesInCombat.Remove(enemy);
         }
     }
 

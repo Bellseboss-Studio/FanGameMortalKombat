@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
+using Bellseboss.Pery.Scripts.Input;
 using UnityEngine;
-using UnityEngine.AI;
 
-namespace TargetingSystem
+namespace TargetingSystemPath
 {
     public class TargetingSystem
     {
-        
         public List<GameObject> SetEnemiesOrder(List<GameObject> enemies, Vector3 playerPosition)
         {
             for (int i = 0;i < enemies.Count; i++){
@@ -24,7 +23,8 @@ namespace TargetingSystem
             return enemies;
         }
         
-        public void SetAutomaticTarget(float distance, List<GameObject> enemies, GameObject player, float attackAngle)
+        public void SetAutomaticTarget(float distance, List<GameObject> enemies, GameObject player, float attackAngle,
+            ICombatSystemAngel combatSystemAngel = null)
         {
             for (int i = 0; i < enemies.Count; i++)
             {
@@ -32,13 +32,12 @@ namespace TargetingSystem
                 {
                     if (VerifyAttackAngle(enemies[i].gameObject.transform.position, player) < attackAngle)
                     {
-                        //var xAngle = player.transform.rotation.x;
-                        //player.transform.rotation = 
-                        var position = enemies[i].transform.position;
-                        player.transform.LookAt(new Vector3(position.x, player.transform.position.y, position.z));
-                        //var transformRotation = player.transform.rotation;
-                        //transformRotation.y = rotationAngle.y;
-                        //player.transform.rotation = transformRotation;
+                        var position = player.transform.position - enemies[i].transform.position;
+                        if (combatSystemAngel == null)
+                            player.transform.LookAt(new Vector3(position.x, player.transform.position.y, position.z));
+                        else
+                            combatSystemAngel.RotateCharacter(position);
+
                         break;
                     }
                 }
@@ -47,14 +46,9 @@ namespace TargetingSystem
         
         public void SetManualTarget(GameObject enemy, GameObject player, Transform playerController)
         {
-            //var xAngle = player.transform.rotation.x;
             var position = enemy.transform.position;
             player.transform.LookAt(new Vector3(position.x, player.transform.position.y, position.z));
             playerController.LookAt(new Vector3(position.x, playerController.position.y, position.z));
-            //var transformRotation = player.transform.rotation;
-            //transformRotation.y = rotationAngle.y;
-            //Debug.Log(rotationAngle.y);
-            //player.transform.rotation = transformRotation;
         }
         
         private float VerifyAttackAngle(Vector3 enemyPosition, GameObject player)

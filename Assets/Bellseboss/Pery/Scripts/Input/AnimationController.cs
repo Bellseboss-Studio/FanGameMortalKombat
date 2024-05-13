@@ -70,8 +70,9 @@ namespace Bellseboss.Pery.Scripts.Input
 
         public void TakeDamage(bool isQuickAttack, int numberOfCombos)
         {
-            var nameOfAnimation = isQuickAttack ? "q" : "p";
-            nameOfAnimation += numberOfCombos;
+            var nameOfAnimation = isQuickAttack ? "q1" : "p1";
+            /*nameOfAnimation += numberOfCombos;*/
+            Debug.Log(nameOfAnimation);
             StartCoroutine(FinishTimeAnimation(nameOfAnimation));
             _animator.Play(nameOfAnimation);
         }

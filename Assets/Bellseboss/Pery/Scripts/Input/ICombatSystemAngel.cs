@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Bellseboss.Pery.Scripts.Input
@@ -13,5 +14,8 @@ namespace Bellseboss.Pery.Scripts.Input
         AttackMovementSystem GetAttackSystem();*/
         public Action<string> GetActionToAnimate();
         void PlayerTouchEnemy();
+        List<GameObject> GetEnemiesInCombat();
+        void SetEnemiesInCombat(List<GameObject> gameObjects);
+        void RotateCharacter(Vector3 position);
     }
 }

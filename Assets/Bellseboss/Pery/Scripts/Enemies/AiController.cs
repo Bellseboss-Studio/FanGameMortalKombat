@@ -1,6 +1,7 @@
 using System;
 using Bellseboss.Pery.Scripts.Input;
 using UnityEngine;
+using View;
 
 internal class AiController : MonoBehaviour
 {
@@ -13,9 +14,9 @@ internal class AiController : MonoBehaviour
     private int _indexOfPath;
     private bool _enemyIsDetected;
     private bool _enemyIsNear;
-    private float _deltaTimeLocal; 
-    
-    
+    private float _deltaTimeLocal;
+
+
 
     public void Configure(IEnemyV2 enemy)
     {
@@ -57,6 +58,7 @@ internal class AiController : MonoBehaviour
         
         _enemy.OnPlayerInNearZone += isNear =>
         {
+            enemy.GetPlayer().GetIntoEnemyZone(gameObject, isNear);
             if(isNear)
             {
                 _numberOfPath.Play();
@@ -115,6 +117,8 @@ internal class AiController : MonoBehaviour
             _isNearOfTarget = false;
             if(_enemy.GetPlayer() != null)
             {
+                _enemy.CanMove(false);
+                /*Debug.Log("aqui");*/
                 _target = _enemy.GetPlayer().gameObject;
                 _enemy.AttackPlayer();
                 _stayNearOfTarget.Stop();
@@ -155,8 +159,8 @@ internal class AiController : MonoBehaviour
         
         _watchEnemy = this.tt().Pause().Add(() =>
         {
-            _enemy.MoveTo(_enemy.GetPlayer().gameObject);
             _enemy.CanMove(false);
+            _enemy.MoveTo(_enemy.GetPlayer().gameObject);
         }).Wait(()=>_enemyIsNear).Add(() =>
         {
             _enemy.MoveTo(_enemy.GetPlayer().gameObject);
@@ -206,6 +210,7 @@ internal class AiController : MonoBehaviour
     {
         _idle.Play();
     }
+    
 }
 
 public enum StatesOfEnemy
