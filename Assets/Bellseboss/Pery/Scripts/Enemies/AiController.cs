@@ -15,6 +15,7 @@ internal class AiController : MonoBehaviour
     private bool _enemyIsDetected;
     private bool _enemyIsNear;
     private float _deltaTimeLocal;
+    private bool _isDeath;
 
 
 
@@ -36,6 +37,7 @@ internal class AiController : MonoBehaviour
         
         _enemy.OnPlayerDetected += isDetected =>
         {
+            if (_isDeath) return;
             _idle.Stop();
             _numberOfPath.Stop();
             _moving.Stop();
@@ -59,6 +61,8 @@ internal class AiController : MonoBehaviour
         
         _enemy.OnPlayerInNearZone += isNear =>
         {
+            if (_isDeath) return;
+            Debug.Log("entro is near");
             enemy.GetPlayer().GetIntoEnemyZone(gameObject, isNear);
             if(isNear)
             {
@@ -85,6 +89,7 @@ internal class AiController : MonoBehaviour
         });
         _numberOfPath = this.tt().Pause().Add(() =>
         {
+            if (_isDeath) return;
             if(_enemy.Paths().Count > 0 || _enemy.GetPlayer() != null)
             {
                 if (_enemy.GetPlayer() != null)
@@ -204,6 +209,8 @@ internal class AiController : MonoBehaviour
     private void EnemyOnOnDead(EnemyV2 obj)
     {
         Debug.Log("AiController: Enemy is dead");
+        _isDeath = true;
+        /*_enemy.CanRotate(false);*/
         _died.Play();
     }
 
@@ -214,6 +221,7 @@ internal class AiController : MonoBehaviour
 
     public void StartAi()
     {
+        if (_isDeath) return;
         _idle.Play();
     }
     

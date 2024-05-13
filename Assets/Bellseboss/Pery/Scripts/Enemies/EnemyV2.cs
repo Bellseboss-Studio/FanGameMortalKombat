@@ -70,6 +70,7 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
 
     private void Update()
     {
+        if(IsDead) return;
         if (_canRotate)
         {
             if (_canRotateToTarget)
@@ -227,6 +228,11 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
         _state = state;
     }
 
+    public void CanRotate(bool b)
+    {
+        _canRotate = b;
+    }
+
     public override void SetAnimationToHit(string animationParameterName)
     {
         if(IsDead) return;
@@ -378,6 +384,7 @@ public interface IEnemyV2
     /*void SendDamage();*/
     void AttackPlayer();
     void SetState(StatesOfEnemy state);
+    void CanRotate(bool b);
 }
 
 public class EnemiesV2Factory
