@@ -4029,6 +4029,78 @@ PrefabInstance:
       propertyPath: autoTargetDistance
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 2074710249, guid: 2d0718da788d9bd4ab93a688c5e0e407, type: 3}
+      propertyPath: combatMovements.Array.data[0].stunTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2074710249, guid: 2d0718da788d9bd4ab93a688c5e0e407, type: 3}
+      propertyPath: combatMovements.Array.data[1].stunTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2074710249, guid: 2d0718da788d9bd4ab93a688c5e0e407, type: 3}
+      propertyPath: combatMovements.Array.data[2].stunTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2074710249, guid: 2d0718da788d9bd4ab93a688c5e0e407, type: 3}
+      propertyPath: combatMovements.Array.data[3].stunTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2074710249, guid: 2d0718da788d9bd4ab93a688c5e0e407, type: 3}
+      propertyPath: combatMovements.Array.data[4].stunTime
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2074710249, guid: 2d0718da788d9bd4ab93a688c5e0e407, type: 3}
+      propertyPath: combatMovements.Array.data[5].stunTime
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2074710249, guid: 2d0718da788d9bd4ab93a688c5e0e407, type: 3}
+      propertyPath: combatMovements.Array.data[6].stunTime
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2074710249, guid: 2d0718da788d9bd4ab93a688c5e0e407, type: 3}
+      propertyPath: combatMovements.Array.data[0].timeToAttack
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2074710249, guid: 2d0718da788d9bd4ab93a688c5e0e407, type: 3}
+      propertyPath: combatMovements.Array.data[1].timeToAttack
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2074710249, guid: 2d0718da788d9bd4ab93a688c5e0e407, type: 3}
+      propertyPath: combatMovements.Array.data[2].timeToAttack
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2074710249, guid: 2d0718da788d9bd4ab93a688c5e0e407, type: 3}
+      propertyPath: combatMovements.Array.data[6].timeToAttack
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2074710249, guid: 2d0718da788d9bd4ab93a688c5e0e407, type: 3}
+      propertyPath: combatMovements.Array.data[0].stuntAnimationParameterName
+      value: q1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2074710249, guid: 2d0718da788d9bd4ab93a688c5e0e407, type: 3}
+      propertyPath: combatMovements.Array.data[1].stuntAnimationParameterName
+      value: p1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2074710249, guid: 2d0718da788d9bd4ab93a688c5e0e407, type: 3}
+      propertyPath: combatMovements.Array.data[2].stuntAnimationParameterName
+      value: q2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2074710249, guid: 2d0718da788d9bd4ab93a688c5e0e407, type: 3}
+      propertyPath: combatMovements.Array.data[3].stuntAnimationParameterName
+      value: q3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2074710249, guid: 2d0718da788d9bd4ab93a688c5e0e407, type: 3}
+      propertyPath: combatMovements.Array.data[4].stuntAnimationParameterName
+      value: p1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2074710249, guid: 2d0718da788d9bd4ab93a688c5e0e407, type: 3}
+      propertyPath: combatMovements.Array.data[5].stuntAnimationParameterName
+      value: p1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2074710249, guid: 2d0718da788d9bd4ab93a688c5e0e407, type: 3}
+      propertyPath: combatMovements.Array.data[6].stuntAnimationParameterName
+      value: p1
+      objectReference: {fileID: 0}
     - target: {fileID: 6729844625648620062, guid: 2d0718da788d9bd4ab93a688c5e0e407, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -5525,7 +5597,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1223511719}
-  m_LocalRotation: {x: 0.0727945, y: -0.064394705, z: 0.00470993, w: 0.9952548}
+  m_LocalRotation: {x: 0.072794475, y: -0.06439467, z: 0.004709925, w: 0.9952548}
   m_LocalPosition: {x: -3.3288813, y: 3.4146967, z: -47.193176}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -7912,7 +7984,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1675724180}
-  m_LocalRotation: {x: 0.0727945, y: -0.064394705, z: 0.00470993, w: 0.9952548}
+  m_LocalRotation: {x: 0.072794475, y: -0.06439467, z: 0.004709925, w: 0.9952548}
   m_LocalPosition: {x: 10.15626, y: -9.750031, z: 10.022971}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:

@@ -17,5 +17,6 @@ namespace Bellseboss.Pery.Scripts.Input
         List<GameObject> GetEnemiesInCombat();
         void SetEnemiesInCombat(List<GameObject> gameObjects);
         void RotateCharacter(Vector3 position);
+        void EndAttackMovement();
     }
 }

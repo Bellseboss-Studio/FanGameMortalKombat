@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e3cbbf293124f70ae5bd3669bd59f2c, type: 3}
   m_Name: StatisticsOfCharacter_Enemy
   m_EditorClassIdentifier: 
-  life: 10
+  life: 10000
   damage: 1
   speedToMoveAngry: 600
   speedToMoveNormal: 200
@@ -23,3 +23,5 @@ MonoBehaviour:
   attackAnimationType: 1
   timeToActivateCollider: 0.5
   timeToEnableCollider: 0.5
+  energyToAdd: 0
+  energy: 0

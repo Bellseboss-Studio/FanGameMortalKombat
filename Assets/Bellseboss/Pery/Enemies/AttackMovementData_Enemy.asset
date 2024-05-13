@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9b6c41411904566bd5891cf7143d333, type: 3}
   m_Name: AttackMovementData_Enemy
   m_EditorClassIdentifier: 
-  timeToAttack: 1
+  timeToAttack: 0.5
   timeToDecreasing: 0
-  timeToSustain: 1
+  timeToSustain: 0.5
   timeToRelease: 0
   maxDistance: 3
   distanceToDecresing: 0
-  forceToAttack: 0.2
-  forceToDecreasing: 1
+  forceToAttack: 0.5
+  forceToDecreasing: 0.1

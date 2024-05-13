@@ -18,8 +18,9 @@ internal class AiController : MonoBehaviour
 
 
 
-    public void Configure(IEnemyV2 enemy)
+    public void Configure(IEnemyV2 enemy, ref Action endStunt)
     {
+        endStunt += EndStunt;
         _indexOfPath = 0;
         _enemy = enemy;
         if(_enemy.Paths().Count == 0)
@@ -192,6 +193,11 @@ internal class AiController : MonoBehaviour
             _enemy.Died();
         });
 
+        StartAi();
+    }
+
+    private void EndStunt()
+    {
         StartAi();
     }
 

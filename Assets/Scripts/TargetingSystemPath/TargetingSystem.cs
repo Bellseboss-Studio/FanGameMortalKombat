@@ -55,7 +55,7 @@ namespace TargetingSystemPath
         {
             var playerPosition = player.transform.position;
             var angle = Vector3.Angle(enemyPosition - playerPosition, player.transform.forward);
-            Debug.Log(angle);
+            /*Debug.Log(angle);*/
             return angle;
         }
         

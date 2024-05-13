@@ -10,7 +10,7 @@ public class AttackMovementSystem : MonoBehaviour, IFocusTarget
     [SerializeField] private AttackMovementData attackMovementDataPower;
     [SerializeField] private int maxNumberOfCombosQuick;
     [SerializeField] private int maxNumberOfCombosPower;
-    [SerializeField] private TargetFocus targetFocus; 
+    private TargetFocus targetFocus; 
     private bool canAttackAgain = true;
     private bool attacking;
     private float _deltatimeLocal;
@@ -83,8 +83,8 @@ public class AttackMovementSystem : MonoBehaviour, IFocusTarget
             _decresing.Play();
             foreach (var enemy in targetFocus.GetEnemies<PJV2>())
             {
-                enemy.ReceiveDamage(_statisticsOfCharacter.damage, gameObject.transform.forward);
-                enemy.SetAnimationToHit(_isQuickAttack, _isQuickAttack ? _numberOfCombosQuick : _numberOfCombosPower);
+                /*enemy.ReceiveDamage(_statisticsOfCharacter.damage, gameObject.transform.forward);*/
+                /*enemy.SetAnimationToHit(_isQuickAttack, _isQuickAttack ? _numberOfCombosQuick : _numberOfCombosPower);*/
             }
             targetFocus.CleanEnemies();
             targetFocus.DisableCollider();

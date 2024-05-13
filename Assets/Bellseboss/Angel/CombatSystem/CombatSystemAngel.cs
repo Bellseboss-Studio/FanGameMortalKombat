@@ -15,14 +15,8 @@ namespace Bellseboss.Angel.CombatSystem
         private ICombatSystemAngel _combatSystemAngel;
 
 
-        public Action OnAttack, OnMidAir, OnRelease, OnSustain, OnEndAttack, oneTimeOnEndAttack;
-        [SerializeField] private bool canAttackAgain = true;
-        [SerializeField] private bool attacking;
-        [SerializeField] private float _deltatimeLocal;
-        [SerializeField] private int _numberOfCombosQuick;
-        [SerializeField] private int _numberOfCombosPower;
-        [SerializeField] private TargetFocus targetFocus;
-        private TeaTime _attack, _decresing, _sustain, _release;
+        public Action OnAttack, OnMidAir, OnRelease, OnSustain, OnEndAttack, oneTimeOnEndAttack, OnStunt, OnEndStunt;
+        private TeaTime _attack, _decresing, _sustain, _release, _stunt;
         private Rigidbody _rigidbody;
         private RigidbodyConstraints _rigidbodyConstraints;
         private bool _isQuickAttack;
@@ -35,6 +29,14 @@ namespace Bellseboss.Angel.CombatSystem
         private TargetingSystem _targetingSystem;
         [SerializeField] private float angleAttack;
         [SerializeField] private float autoTargetDistance;
+        [SerializeField] private bool _isStunt;
+        [SerializeField] private bool canAttackAgain = true;
+        [SerializeField] private bool attacking;
+        [SerializeField] private float _deltatimeLocal;
+        [SerializeField] private TargetFocus targetFocus;
+        private float _stuntTime;
+
+        public bool IsStunt => _isStunt;
 
         private List<GameObject> _enemiesInCombat
         {
@@ -46,10 +48,12 @@ namespace Bellseboss.Angel.CombatSystem
 
         private void Start()
         {
+            
         }
 
         public void ExecuteMovement(TypeOfAttack typeOfAttack)
         {
+            if (_isStunt) return;
             currentComboSequence.Add(typeOfAttack);
             bool found = false;
             CombatMovement combatMovement1 = null;
@@ -78,8 +82,9 @@ namespace Bellseboss.Angel.CombatSystem
         }
 
         public void Configure(Rigidbody rigidbody, StatisticsOfCharacter statisticsOfCharacter,
-            IMovementRigidBodyV2 movementRigidBodyV2, ICombatSystemAngel characterV2, bool isPlayer = true)
+            IMovementRigidBodyV2 movementRigidBodyV2, ICombatSystemAngel characterV2, ref Action<float> onReceiveDamage, bool isPlayer = true)
         {
+            onReceiveDamage += GotAttacked;
             _targetingSystem = new TargetingSystem();
             var gameObjectToPlayer = rigidbody.gameObject;
             _moveAttackingSystem = new MoveAttackingSystem(gameObjectToPlayer, transform);
@@ -89,6 +94,7 @@ namespace Bellseboss.Angel.CombatSystem
             targetFocus.Configure(this);
             _rigidbody = rigidbody;
             _rigidbodyConstraints = _rigidbody.constraints;
+            _actionToAnimate = _combatSystemAngel.GetActionToAnimate();
             _attack = this.tt().Pause().Add(() =>
             {
                 if (isPlayer)
@@ -121,9 +127,9 @@ namespace Bellseboss.Angel.CombatSystem
                 _decresing.Play();
                 foreach (var enemy in targetFocus.GetEnemies<PJV2>())
                 {
-                    enemy.ReceiveDamage(_statisticsOfCharacter.damage, gameObject.transform.forward);
-                    enemy. SetAnimationToHit(_isQuickAttack,
-                        _isQuickAttack ? _numberOfCombosQuick : _numberOfCombosPower);
+                    Debug.Log("has da;o");
+                    enemy.ReceiveDamage(_statisticsOfCharacter.damage, gameObject.transform.forward, _currentAttack.stunTime);
+                    enemy.SetAnimationToHit(_currentAttack.stuntAnimationParameterName);
                 }
 
                 if (targetFocus.GetEnemies<EnemyV2>().Count > 0)
@@ -196,21 +202,48 @@ namespace Bellseboss.Angel.CombatSystem
                 
                 _moveAttackingSystem.MovePlayer(gameObjectToPlayer, heightMultiplier, loop, _currentAttack.forceToDecreasing, _currentAttack.maxDistance, true);
 
+            }).Add(EndCombo);
+            
+            _stunt = this.tt().Pause().Add(() =>
+            {
+                _deltatimeLocal = 0;
+                OnStunt?.Invoke();
+            }).Loop(loop =>
+            {
+                _deltatimeLocal += loop.deltaTime;
+                if (_deltatimeLocal >= _stuntTime)
+                {
+                    loop.Break();
+                }
             }).Add(() =>
             {
-                currentComboSequence = new List<TypeOfAttack>();
-                canAttackAgain = true;
-                _numberOfCombosQuick = 0;
-                _numberOfCombosPower = 0;
-                attacking = false;
-                _rigidbody.velocity = Vector3.zero;
-                OnEndAttack?.Invoke();
-                oneTimeOnEndAttack?.Invoke();
-                oneTimeOnEndAttack = null;
-                movementRigidBodyV2.EndAttackMovement();
+                _isStunt = false;
+                OnEndStunt?.Invoke();
             });
+        }
 
-            _actionToAnimate = _combatSystemAngel.GetActionToAnimate();
+        private void EndCombo()
+        {
+            currentComboSequence = new List<TypeOfAttack>();
+            canAttackAgain = true;
+            attacking = false;
+            _rigidbody.velocity = Vector3.zero;
+            OnEndAttack?.Invoke();
+            oneTimeOnEndAttack?.Invoke();
+            oneTimeOnEndAttack = null;
+            _combatSystemAngel.EndAttackMovement();
+        }
+
+        private void GotAttacked(float stuntTime)
+        {
+            _isStunt = true;
+            _stuntTime = stuntTime;
+            EndCombo();
+            _decresing.Stop();
+            _sustain.Stop();
+            _release.Stop();
+            _attack.Stop();
+            _stunt.Stop().Play();
         }
 
         private void Attack(CombatMovement currentAttack)
