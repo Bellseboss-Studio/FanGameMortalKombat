@@ -83,7 +83,7 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
             rigidbody.velocity = direction * Time.deltaTime;
             if (Vector3.Distance(transform.position, _target.transform.position) < (GetPlayer() != null ? minDistanceToArriveToEnemy : minDistanceToArriveToTarget))
             {
-                Debug.Log("EnemyV2: Arrive to target");
+                //Debug.Log("EnemyV2: Arrive to target");
                 _canMove = false;
                 OnArriveToTarget?.Invoke();
             }
@@ -222,7 +222,7 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
 
     public void SetPlayer(CharacterV2 characterV2)
     {
-        Debug.Log($"EnemyV2: SetPlayer {characterV2 != null}"); 
+        //Debug.Log($"EnemyV2: SetPlayer {characterV2 != null}"); 
         _characterV2 = characterV2;
         if(_characterV2 != null)
         {
