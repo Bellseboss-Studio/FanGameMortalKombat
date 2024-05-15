@@ -6,7 +6,8 @@ namespace Bellseboss.Pery.Scripts.Input
 {
     public class InputPlayerV2 : MonoBehaviour
     {
-        public Action<Vector2> onMoveEvent;
+        [SerializeField] private float timeToReadInput;
+        public Action<Vector2, INPUTS> onMoveEvent;
         public Action<bool> onTargetEvent;
         public Action onKickEvent;
         public Action onPunchEvent;
@@ -16,12 +17,24 @@ namespace Bellseboss.Pery.Scripts.Input
         public Action onFatalityEvent;
         public Vector3 CurrentVector => _currentInputVector;
         private Vector3 _currentInputVector;
+        private INPUTS _lastInput;
+        private float _nextReadTime;
+        private bool _isReadingInput;
+        private bool _canReadInput;
+        
         public void OnMove(InputAction.CallbackContext context)
         {
             _currentInputVector = context.ReadValue<Vector2>();
-            onMoveEvent?.Invoke(_currentInputVector);
+            onMoveEvent?.Invoke(_currentInputVector, _lastInput);
+            if (Time.time >= _nextReadTime && _canReadInput)
+            {
+                _lastInput = GetDirectionFromVector(_currentInputVector);
+                _nextReadTime = Time.time + timeToReadInput;
+                _isReadingInput = true;
+                Debug.Log($"Reading input {_lastInput} at {Time.time} next read at {_nextReadTime}");
+            }
         }
-        
+
         public void OnCameraMovement(InputAction.CallbackContext context)
         {
             onCameraMovementEvet?.Invoke();
@@ -42,7 +55,8 @@ namespace Bellseboss.Pery.Scripts.Input
         {
             if (context.started)
             {
-                //Debug.Log("Kick");
+                _lastInput = INPUTS.QUICK;
+                _isReadingInput = true;
                 onKickEvent?.Invoke();
             }
         }
@@ -51,7 +65,8 @@ namespace Bellseboss.Pery.Scripts.Input
         {
             if (context.started)
             {
-                //Debug.Log("Punch");
+                _lastInput = INPUTS.POWER;
+                _isReadingInput = true;
                 onPunchEvent?.Invoke();
             }
         }
@@ -81,6 +96,53 @@ namespace Bellseboss.Pery.Scripts.Input
                 //Debug.Log("Fatality");
                 onFatalityEvent?.Invoke();
             }
+        }
+
+        private INPUTS GetDirectionFromVector(Vector2 vector)
+        {
+            if (Mathf.Abs(vector.x) > Mathf.Abs(vector.y))
+            {
+                if(vector.x > 0 && vector.x > 0.01f)
+                {
+                    Debug.Log("Right");
+                    return INPUTS.RIGHT;
+                }
+                if(vector.x < 0 && vector.x < -0.01f)
+                {
+                    Debug.Log("Left");
+                    return INPUTS.LEFT;
+                }
+            }
+            else
+            {
+                if (vector.y > 0 && vector.y > 0.01f)
+                {
+                    Debug.Log("Up");
+                    return INPUTS.UP;
+                }
+                if(vector.y < 0 && vector.y < -0.01f)
+                {
+                    Debug.Log("Down");
+                    return INPUTS.DOWN;
+                }
+            }
+            return INPUTS.NONE;
+        }
+        public bool ReadInput(out INPUTS input)
+        {
+            var aux = _isReadingInput;
+            input = INPUTS.NONE;
+            if (aux)
+            {
+                input = _lastInput;
+            }
+            _isReadingInput = false;
+            return aux;
+        }
+
+        public void StartToReadInputs(bool b)
+        {
+            _canReadInput = b;
         }
     }
 }

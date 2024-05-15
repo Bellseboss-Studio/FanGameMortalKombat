@@ -62,7 +62,7 @@ namespace Bellseboss.Pery.Scripts.Input
                 {
                     _player.transform.rotation = Quaternion.Lerp(_player.transform.rotation,
                         Quaternion.LookRotation(_lastDirection), _forceRotation * Time.deltaTime);
-                }   
+                }
             }
         }
 

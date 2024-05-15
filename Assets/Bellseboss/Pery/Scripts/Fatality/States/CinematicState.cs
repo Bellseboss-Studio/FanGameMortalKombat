@@ -7,7 +7,7 @@ public class CinematicState : StatePatterFatality
 
     internal override IEnumerator Execute()
     {
-        while (!_fatalitySystem.IsStartFatality())
+        while (!_fatalitySystem.FinishedCinematic())
         {
             yield return null;
         }
@@ -21,6 +21,12 @@ public class CinematicState : StatePatterFatality
     protected override void StartState()
     {
         base.StartState();
-        //_fatalitySystem.FinishCinematic();
+        _fatalitySystem.StartCinematic();
+    }
+
+    protected override void EndState()
+    {
+        base.EndState();
+        _fatalitySystem.HidePanelTitle();
     }
 }
