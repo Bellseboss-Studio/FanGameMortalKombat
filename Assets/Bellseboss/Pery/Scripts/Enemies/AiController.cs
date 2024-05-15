@@ -1,6 +1,7 @@
 using System;
 using Bellseboss.Pery.Scripts.Input;
 using UnityEngine;
+using View;
 
 internal class AiController : MonoBehaviour
 {
@@ -13,12 +14,14 @@ internal class AiController : MonoBehaviour
     private int _indexOfPath;
     private bool _enemyIsDetected;
     private bool _enemyIsNear;
-    private float _deltaTimeLocal; 
-    
-    
+    private float _deltaTimeLocal;
+    private bool _isDeath;
 
-    public void Configure(IEnemyV2 enemy)
+
+
+    public void Configure(IEnemyV2 enemy, ref Action endStunt)
     {
+        endStunt += EndStunt;
         _indexOfPath = 0;
         _enemy = enemy;
         if(_enemy.Paths().Count == 0)
@@ -34,6 +37,7 @@ internal class AiController : MonoBehaviour
         
         _enemy.OnPlayerDetected += isDetected =>
         {
+            if (_isDeath) return;
             _idle.Stop();
             _numberOfPath.Stop();
             _moving.Stop();
@@ -57,6 +61,9 @@ internal class AiController : MonoBehaviour
         
         _enemy.OnPlayerInNearZone += isNear =>
         {
+            if (_isDeath) return;
+            Debug.Log("entro is near");
+            enemy.GetPlayer().GetIntoEnemyZone(gameObject, isNear);
             if(isNear)
             {
                 _numberOfPath.Play();
@@ -82,6 +89,7 @@ internal class AiController : MonoBehaviour
         });
         _numberOfPath = this.tt().Pause().Add(() =>
         {
+            if (_isDeath) return;
             if(_enemy.Paths().Count > 0 || _enemy.GetPlayer() != null)
             {
                 if (_enemy.GetPlayer() != null)
@@ -115,6 +123,8 @@ internal class AiController : MonoBehaviour
             _isNearOfTarget = false;
             if(_enemy.GetPlayer() != null)
             {
+                _enemy.CanMove(false);
+                /*Debug.Log("aqui");*/
                 _target = _enemy.GetPlayer().gameObject;
                 _enemy.AttackPlayer();
                 _stayNearOfTarget.Stop();
@@ -155,8 +165,8 @@ internal class AiController : MonoBehaviour
         
         _watchEnemy = this.tt().Pause().Add(() =>
         {
-            _enemy.MoveTo(_enemy.GetPlayer().gameObject);
             _enemy.CanMove(false);
+            _enemy.MoveTo(_enemy.GetPlayer().gameObject);
         }).Wait(()=>_enemyIsNear).Add(() =>
         {
             _enemy.MoveTo(_enemy.GetPlayer().gameObject);
@@ -191,9 +201,16 @@ internal class AiController : MonoBehaviour
         StartAi();
     }
 
+    private void EndStunt()
+    {
+        StartAi();
+    }
+
     private void EnemyOnOnDead(EnemyV2 obj)
     {
         Debug.Log("AiController: Enemy is dead");
+        _isDeath = true;
+        /*_enemy.CanRotate(false);*/
         _died.Play();
     }
 
@@ -204,8 +221,10 @@ internal class AiController : MonoBehaviour
 
     public void StartAi()
     {
+        if (_isDeath) return;
         _idle.Play();
     }
+    
 }
 
 public enum StatesOfEnemy

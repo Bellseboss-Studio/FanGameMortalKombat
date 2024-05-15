@@ -20,8 +20,10 @@ namespace Bellseboss.Pery.Scripts.Input
         private INPUTS _lastInput;
         private float _nextReadTime;
         private bool _isReadingInput;
-        private bool _canReadInput;
-        
+        private bool _canReadInput = true;
+
+        public bool CanReadInput => _canReadInput;
+
         public void OnMove(InputAction.CallbackContext context)
         {
             _currentInputVector = context.ReadValue<Vector2>();
@@ -31,17 +33,19 @@ namespace Bellseboss.Pery.Scripts.Input
                 _lastInput = GetDirectionFromVector(_currentInputVector);
                 _nextReadTime = Time.time + timeToReadInput;
                 _isReadingInput = true;
-                Debug.Log($"Reading input {_lastInput} at {Time.time} next read at {_nextReadTime}");
+                /*Debug.Log($"Reading input {_lastInput} at {Time.time} next read at {_nextReadTime}");*/
             }
         }
 
         public void OnCameraMovement(InputAction.CallbackContext context)
         {
+            if (!_canReadInput) return;
             onCameraMovementEvet?.Invoke();
         }
         
         public void OnTarget(InputAction.CallbackContext context)
         {
+            if (!_canReadInput) return;
             if (context.started)
             {
                 onTargetEvent?.Invoke(true);
@@ -53,6 +57,7 @@ namespace Bellseboss.Pery.Scripts.Input
         
         public void OnKick(InputAction.CallbackContext context)
         {
+            if (!_canReadInput) return;
             if (context.started)
             {
                 _lastInput = INPUTS.QUICK;
@@ -63,6 +68,7 @@ namespace Bellseboss.Pery.Scripts.Input
         
         public void OnPunch(InputAction.CallbackContext context)
         {
+            if (!_canReadInput) return;
             if (context.started)
             {
                 _lastInput = INPUTS.POWER;
@@ -73,6 +79,7 @@ namespace Bellseboss.Pery.Scripts.Input
         
         public void OnJump(InputAction.CallbackContext context)
         {
+            if (!_canReadInput) return;
             if (context.started)
             {
                 //Debug.Log("Jump");
@@ -82,6 +89,7 @@ namespace Bellseboss.Pery.Scripts.Input
         
         public void OnAction(InputAction.CallbackContext context)
         {
+            if (!_canReadInput) return;
             if (context.started)
             {
                 //Debug.Log("Action");
@@ -91,6 +99,7 @@ namespace Bellseboss.Pery.Scripts.Input
 
         public void OnFatality(InputAction.CallbackContext context)
         {
+            if (!_canReadInput) return;
             if (context.started)
             {
                 //Debug.Log("Fatality");
@@ -104,12 +113,12 @@ namespace Bellseboss.Pery.Scripts.Input
             {
                 if(vector.x > 0 && vector.x > 0.01f)
                 {
-                    Debug.Log("Right");
+                    /*Debug.Log("Right");*/
                     return INPUTS.RIGHT;
                 }
                 if(vector.x < 0 && vector.x < -0.01f)
                 {
-                    Debug.Log("Left");
+                    /*Debug.Log("Left");*/
                     return INPUTS.LEFT;
                 }
             }
@@ -117,12 +126,12 @@ namespace Bellseboss.Pery.Scripts.Input
             {
                 if (vector.y > 0 && vector.y > 0.01f)
                 {
-                    Debug.Log("Up");
+                    /*Debug.Log("Up");*/
                     return INPUTS.UP;
                 }
                 if(vector.y < 0 && vector.y < -0.01f)
                 {
-                    Debug.Log("Down");
+                    /*Debug.Log("Down");*/
                     return INPUTS.DOWN;
                 }
             }
@@ -142,6 +151,7 @@ namespace Bellseboss.Pery.Scripts.Input
 
         public void StartToReadInputs(bool b)
         {
+            Debug.Log(b);
             _canReadInput = b;
         }
     }

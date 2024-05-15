@@ -32,7 +32,7 @@ public abstract class StatePatterFatality
 
     protected virtual void StartState()
     {
-        Debug.Log($"StartState {GetType().Name}");
+        /*Debug.Log($"StartState {GetType().Name}");*/
     }
 
     public abstract STATE_FATALITY NextState();
