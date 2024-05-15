@@ -36,7 +36,7 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
 
     public string Id => id;
     public bool IsDead { get; private set; }
-    private bool IsStunt => combatSystemAngel.IsStunt;
+    private bool canAttack = true;
 
     private void Start()
     {
@@ -219,7 +219,7 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
 
     public void AttackPlayer()
     {
-        if (IsStunt) return;
+        if (!canAttack) return;
         combatSystemAngel.ExecuteMovement(TypeOfAttack.Quick);
     }
 
@@ -306,6 +306,16 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
     public void EndAttackMovement()
     {
         
+    }
+
+    public void SetCanReadInputs(bool b)
+    {
+        canAttack = b;
+    }
+
+    public bool GetCanReadInputs()
+    {
+        return canAttack;
     }
 
     public void PlayerFall()

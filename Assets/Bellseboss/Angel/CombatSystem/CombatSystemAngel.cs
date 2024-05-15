@@ -29,14 +29,12 @@ namespace Bellseboss.Angel.CombatSystem
         private TargetingSystem _targetingSystem;
         [SerializeField] private float angleAttack;
         [SerializeField] private float autoTargetDistance;
-        [SerializeField] private bool _isStunt;
         [SerializeField] private bool canAttackAgain = true;
         [SerializeField] private bool attacking;
         [SerializeField] private float _deltatimeLocal;
         [SerializeField] private TargetFocus targetFocus;
         private float _stuntTime;
 
-        public bool IsStunt => _isStunt;
 
         private List<GameObject> _enemiesInCombat
         {
@@ -53,7 +51,7 @@ namespace Bellseboss.Angel.CombatSystem
 
         public void ExecuteMovement(TypeOfAttack typeOfAttack)
         {
-            if (_isStunt) return;
+            if (!_combatSystemAngel.GetCanReadInputs()) return;
             currentComboSequence.Add(typeOfAttack);
             bool found = false;
             CombatMovement combatMovement1 = null;
@@ -217,7 +215,7 @@ namespace Bellseboss.Angel.CombatSystem
                 }
             }).Add(() =>
             {
-                _isStunt = false;
+                _combatSystemAngel.SetCanReadInputs(true);
                 OnEndStunt?.Invoke();
             });
         }
@@ -236,7 +234,7 @@ namespace Bellseboss.Angel.CombatSystem
 
         private void GotAttacked(float stuntTime)
         {
-            _isStunt = true;
+            _combatSystemAngel.SetCanReadInputs(false);
             _stuntTime = stuntTime;
             EndCombo();
             _decresing.Stop();

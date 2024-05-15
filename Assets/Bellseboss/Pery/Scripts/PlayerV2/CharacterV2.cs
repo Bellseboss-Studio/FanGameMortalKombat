@@ -44,7 +44,12 @@ namespace Bellseboss.Pery.Scripts.Input
         
         public event Action<float> OnEnterDamageEvent;
         public event Action<float> OnAddingEnergy;
-        private bool IsStunt => combatSystemAngel.IsStunt;
+        public bool CanReadInputs
+        {
+            get => inputPlayerV2.CanReadInput;
+            set => inputPlayerV2.StartToReadInputs(value);
+        }
+
         public float GetLife()
         {
             return _statisticsOfCharacter.life;
@@ -142,18 +147,19 @@ namespace Bellseboss.Pery.Scripts.Input
 
         private void OnJumpEvent()
         {
+            if (!CanReadInputs || IsAttacking()) return;
             movementRigidbodyV2.Jump();
         }
 
         private void OnKickEvent()
         {
-            if(!_canUseButtons || IsStunt) return;
+            if(!CanReadInputs) return;
             combatSystemAngel.ExecuteMovement(TypeOfAttack.Power);
         }
 
         private void OnPunchEvent()
         {
-            if(!_canUseButtons || IsStunt) return;
+            if(!CanReadInputs) return;
             combatSystemAngel.ExecuteMovement(TypeOfAttack.Quick);
         }
 
@@ -165,7 +171,7 @@ namespace Bellseboss.Pery.Scripts.Input
 
         private void OnMove(Vector2 vector2, INPUTS inputs)
         {
-            if (combatSystemAngel.Attacking || IsStunt)
+            if (combatSystemAngel.Attacking || !CanReadInputs)
             {
                 combatSystemAngel.oneTimeOnEndAttack += () =>
                 {
@@ -193,13 +199,15 @@ namespace Bellseboss.Pery.Scripts.Input
             _canUseButtons = false;
             rigidbody.velocity = Vector3.zero;
             rigidbody.freezeRotation = true;
+            CanReadInputs = true;
         }
 
-        public void CanMove()
+        public void EnableControls()
         {
             movementRigidbodyV2.CanMove(true);
             rotationCharacterV2.CanRotate(true);
             _canUseButtons = true;
+            CanReadInputs = true;
         }
 
         public Transform GetGameObject()
@@ -287,6 +295,16 @@ namespace Bellseboss.Pery.Scripts.Input
             rotationCharacterV2.CanRotateWhileAttack(false);
         }
 
+        public void SetCanReadInputs(bool b)
+        {
+            CanReadInputs = b;
+        }
+
+        public bool GetCanReadInputs()
+        {
+            return CanReadInputs;
+        }
+
 
         public void PlayerFall()
         {
@@ -364,7 +382,7 @@ namespace Bellseboss.Pery.Scripts.Input
 
         public void StartToReadInputs(bool b)
         {
-            inputPlayerV2.StartToReadInputs(b);
+            CanReadInputs = b;
         }
 
         public void GetIntoEnemyZone(GameObject enemy, bool isNear)
