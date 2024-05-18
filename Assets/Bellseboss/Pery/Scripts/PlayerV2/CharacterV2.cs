@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Bellseboss.Angel.CombatSystem;
 using Cinemachine;
 using ServiceLocatorPath;
@@ -36,13 +37,22 @@ namespace Bellseboss.Pery.Scripts.Input
         private IFatalitySystem fatalitySystem => FatalitySystem as IFatalitySystem;
         private StatisticsOfCharacter _statisticsOfCharacter;
         private bool IsDead;
+        private bool _canUseButtons = true;
+        private bool isAnimationWasRun, isAnimationRecovered;
+        [SerializeField] private List<GameObject> _enemiesInCombat;
         
         
         public event Action<float> OnEnterDamageEvent;
         public event Action<float> OnAddingEnergy;
+        public bool CanReadInputs
+        {
+            get => inputPlayerV2.CanReadInput;
+            set => inputPlayerV2.StartToReadInputs(value);
+        }
+
         public float GetLife()
         {
-            return statisticsOfCharacter.life;
+            return _statisticsOfCharacter.life;
         }
 
         void Start()
@@ -60,7 +70,6 @@ namespace Bellseboss.Pery.Scripts.Input
             inputPlayerV2.onActionEvent += OnActionEvent;
             inputPlayerV2.onFatalityEvent += OnFatalityEvent;
 
-            ConfigCamera(cameraMain);
             _model3DInstance = Instantiate(model3D, transform);
             animationController.Configure(_model3DInstance.GetComponent<Animator>(), this);
             targetFocus.Configure(this);
@@ -75,16 +84,21 @@ namespace Bellseboss.Pery.Scripts.Input
 
             _statisticsOfCharacter = Instantiate(statisticsOfCharacter);
 
-            movementADSR.Configure(GetComponent<Rigidbody>(), _statisticsOfCharacter, this);
+            movementADSR.Configure(rigidbody, _statisticsOfCharacter, this);
 
-            //fatalitySystem.Configure(this);
+            fatalitySystem.Configure(this, this);
             
             ServiceLocator.Instance.GetService<IObserverUI>().Observer(this);
+            
+            ConfigCamera(cameraMain);
         }
 
         private void OnFatalityEvent()
         {
-            //fatalitySystem.Fatality();
+            if(_statisticsOfCharacter.energy >= 100 && targetFocus.IsEnemyTouched())
+            {
+                fatalitySystem.Fatality();
+            }
         }
 
         private void OnPause()
@@ -101,6 +115,7 @@ namespace Bellseboss.Pery.Scripts.Input
         {
             transform.position = Vector3.Lerp(transform.position, refOfPlayer.transform.position, 0.5f);
             transform.rotation = Quaternion.Lerp(transform.rotation, refOfPlayer.transform.rotation, 0.5f);
+            Debug.Log("CharacterV2: SetPositionAndRotation");
         }
 
         private void JumpOnEndJump()
@@ -132,31 +147,20 @@ namespace Bellseboss.Pery.Scripts.Input
 
         private void OnJumpEvent()
         {
+            if (!CanReadInputs || IsAttacking()) return;
             movementRigidbodyV2.Jump();
         }
 
         private void OnKickEvent()
         {
+            if(!CanReadInputs) return;
             combatSystemAngel.ExecuteMovement(TypeOfAttack.Power);
-            /*if (GetAttackSystem().CanAttackAgain() && !GetAttackSystem().FullCombo())
-            {
-                animationController.Kick();
-                combatSystem.PowerAttack();
-                rotationCharacterV2.RotateToLookTheTarget(targetFocus.GetTarget());
-                rotationCharacterV2.CanRotateWhileAttack(true);
-            }*/
         }
 
         private void OnPunchEvent()
         {
+            if(!CanReadInputs) return;
             combatSystemAngel.ExecuteMovement(TypeOfAttack.Quick);
-            /*if (GetAttackSystem().CanAttackAgain() && !GetAttackSystem().FullCombo())
-            {
-                animationController.Punch();
-                combatSystem.QuickAttack();
-                rotationCharacterV2.RotateToLookTheTarget(targetFocus.GetTarget());
-                rotationCharacterV2.CanRotateWhileAttack(true);
-            }*/
         }
 
         private void OnTargetEvent(bool isTarget)
@@ -165,9 +169,9 @@ namespace Bellseboss.Pery.Scripts.Input
             movementRigidbodyV2.IsTarget(isTarget);
         }
 
-        private void OnMove(Vector2 vector2)
+        private void OnMove(Vector2 vector2, INPUTS inputs)
         {
-            if (combatSystemAngel.Attacking)
+            if (combatSystemAngel.Attacking || !CanReadInputs)
             {
                 combatSystemAngel.oneTimeOnEndAttack += () =>
                 {
@@ -187,35 +191,28 @@ namespace Bellseboss.Pery.Scripts.Input
             movementRigidbodyV2.Direction(vector2);
         }
 
-        public void PowerAttack(float runningDistance, Vector3 runningDirection)
-        {
-            /*if (GetAttackSystem().CanAttackAgain() && !GetAttackSystem().FullCombo())
-            {
-                rotationCharacterV2.Direction(runningDirection);
-                movementRigidbodyV2.AddForce(runningDirection, runningDistance, AttackMovementSystem.TypeOfAttack.Power);
-            }*/
-        }
-
-        public void QuickAttack(float runningDistance, Vector3 runningDirection)
-        {
-            /*if (GetAttackSystem().CanAttackAgain() && !GetAttackSystem().FullCombo())
-            {
-                rotationCharacterV2.Direction(runningDirection);
-                movementRigidbodyV2.AddForce(runningDirection, runningDistance,
-                    AttackMovementSystem.TypeOfAttack.Quick);
-            }*/
-        }
 
         public void DisableControls()
         {
             rotationCharacterV2.CanRotate(false);
             movementRigidbodyV2.CanMove(false);
+            _canUseButtons = false;
+            rigidbody.velocity = Vector3.zero;
+            rigidbody.freezeRotation = true;
+            CanReadInputs = true;
         }
 
-        public void CanMove()
+        public void EnableControls()
         {
             movementRigidbodyV2.CanMove(true);
             rotationCharacterV2.CanRotate(true);
+            _canUseButtons = true;
+            CanReadInputs = true;
+        }
+
+        public Transform GetGameObject()
+        {
+            return transform;
         }
 
         public Action<string> GetActionToAnimate()
@@ -225,8 +222,30 @@ namespace Bellseboss.Pery.Scripts.Input
 
         public void PlayerTouchEnemy()
         {
+            _statisticsOfCharacter.energy += _statisticsOfCharacter.energyToAdd;
             OnAddingEnergy?.Invoke(_statisticsOfCharacter.energyToAdd);
         }
+
+        public List<GameObject> GetEnemiesInCombat()
+        {
+            return _enemiesInCombat;
+        }
+
+        public void SetEnemiesInCombat(List<GameObject> gameObjects)
+        {
+            _enemiesInCombat = gameObjects;
+        }
+
+        public void RotateCharacter(Vector3 position)
+        {
+            rotationCharacterV2.RotateToDirection(position);
+        }
+
+        public IMovementRigidBodyV2 GetMovementRigidBody()
+        {
+            return this;
+        }
+
 
         public Vector3 RotateToTargetAngel(Vector3 originalDirection)
         {
@@ -238,16 +257,6 @@ namespace Bellseboss.Pery.Scripts.Input
             return targetFocus.RotateToTarget(originalDirection);
         }
 
-        /*public bool CanAttack()
-        {
-            return GetAttackSystem().CanAttackAgain();
-        }*/
-
-        /*public AttackMovementSystem GetAttackSystem()
-        {
-            return movementRigidbodyV2.GetAttackSystem();
-        }*/
-
         public void SetCamera(CinemachineVirtualCameraBase currentCamera)
         {
             ConfigCamera(currentCamera);
@@ -255,8 +264,8 @@ namespace Bellseboss.Pery.Scripts.Input
 
         private void ConfigCamera(CinemachineVirtualCameraBase currentCamera)
         {
-            movementRigidbodyV2.Configure(rigidbody, speedWalk, speedRun, currentCamera.gameObject, this, statisticsOfCharacter);
-            combatSystemAngel.Configure(rigidbody, statisticsOfCharacter, this, this);
+            movementRigidbodyV2.Configure(rigidbody, speedWalk, speedRun, currentCamera.gameObject, this, _statisticsOfCharacter);
+            combatSystemAngel.Configure(rigidbody, _statisticsOfCharacter, this, this, ref OnReceiveDamage);
             rotationCharacterV2.Configure(currentCamera.gameObject, gameObject, this, forceRotation);
         }
 
@@ -286,20 +295,23 @@ namespace Bellseboss.Pery.Scripts.Input
             rotationCharacterV2.CanRotateWhileAttack(false);
         }
 
-        private bool isAnimationWasRun, isAnimationRecovered;
+        public void SetCanReadInputs(bool b)
+        {
+            CanReadInputs = b;
+        }
+
+        public bool GetCanReadInputs()
+        {
+            return CanReadInputs;
+        }
+
+
         public void PlayerFall()
         {
-            /*if (isAnimationWasRun || movementRigidbodyV2.IsJumpingFromADRS()) return;
-            //animationController.JumpFall();
-            animationController.Fall();
-            isAnimationWasRun = true;*/
         }
 
         public void PlayerRecovery()
         {
-            /*if (isAnimationRecovered || !isAnimationWasRun) return;
-            animationController.JumpRecovery();
-            isAnimationRecovered = true;*/
         }
 
         public void PlayerFallV2()
@@ -317,17 +329,6 @@ namespace Bellseboss.Pery.Scripts.Input
             return combatSystemAngel.Attacking;
         }
 
-        /*public void PlayerTouchingFloorChanged(bool isTouching)
-        {
-            if (isTouching)
-            {
-                if ()
-                {
-                    throw new NotImplementedException();
-                }
-            }
-        }*/
-
         public void TouchedScallableWall(bool leave, float forceToGravitate, Vector3 direction)
         {
             movementRigidbodyV2.IsScalableWall(leave, forceToGravitate, direction);
@@ -338,7 +339,7 @@ namespace Bellseboss.Pery.Scripts.Input
             movementRigidbodyV2.ExitToWall();
         }
 
-        public override void ReceiveDamage(int damage, Vector3 transformForward)
+        public override void ReceiveDamage(int damage, Vector3 transformForward, float currentAttackStunTime)
         {
             if (IsDead) return;
             _statisticsOfCharacter.life -= damage;
@@ -353,13 +354,13 @@ namespace Bellseboss.Pery.Scripts.Input
                 movementADSR.Attack(transformForward);
             }
             rotationCharacterV2.RotateToDirection(transformForward);
+            OnReceiveDamage?.Invoke(currentAttackStunTime);
         }
 
-        public override void SetAnimationToHit(bool isQuickAttack, int numberOfCombosQuick)
+        public override void SetAnimationToHit(string animationParameterName)
         {
             if (IsDead) return;
-            Debug.Log($"EnemyV2: SetAnimationToHit isQuickAttack: {isQuickAttack} numberOfCombos: {numberOfCombosQuick}");
-            animationController.TakeDamage(isQuickAttack, numberOfCombosQuick);
+            animationController.TakeDamage(animationParameterName);
             OnEnterDamageEvent?.Invoke(10);
         }
 
@@ -369,6 +370,28 @@ namespace Bellseboss.Pery.Scripts.Input
             rotationCharacterV2.CanRotate(!isStun);
         }
 
+        public GameObject GetEnemyToKillWithFatality()
+        {
+            return targetFocus.GetClosestEnemy();
+        }
+
+        public bool ReadInput(out INPUTS input)
+        {
+            return inputPlayerV2.ReadInput(out input);
+        }
+
+        public void StartToReadInputs(bool b)
+        {
+            CanReadInputs = b;
+        }
+
+        public void GetIntoEnemyZone(GameObject enemy, bool isNear)
+        {
+            if (isNear)
+                _enemiesInCombat.Add(enemy);
+            else
+                _enemiesInCombat.Remove(enemy);
+        }
     }
 
     public interface ICharacterUi

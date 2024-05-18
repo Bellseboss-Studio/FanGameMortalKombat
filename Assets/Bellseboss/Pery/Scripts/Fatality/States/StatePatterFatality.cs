@@ -1,11 +1,12 @@
 using System;
 using System.Collections;
+using UnityEngine;
 
 public abstract class StatePatterFatality
 {
     protected IFatalitySystem _fatalitySystem;
 
-    public StatePatterFatality(IFatalitySystem fatalitySystem)
+    protected StatePatterFatality(IFatalitySystem fatalitySystem)
     {
         _fatalitySystem = fatalitySystem;
     }
@@ -31,7 +32,7 @@ public abstract class StatePatterFatality
 
     protected virtual void StartState()
     {
-
+        /*Debug.Log($"StartState {GetType().Name}");*/
     }
 
     public abstract STATE_FATALITY NextState();

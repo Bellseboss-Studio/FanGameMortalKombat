@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using TargetingSystemPath;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,7 +8,7 @@ namespace Testing_Angel
     
     public class TestCript : MonoBehaviour
     {
-        private TargetingSystem.TargetingSystem _targetingSystem;
+        private TargetingSystem _targetingSystem;
         [SerializeField] private List<GameObject> enemiesInCombat;
         //[SerializeField] private PlayerInput playerInput;
         [SerializeField] private float angleAttack = 60;
@@ -15,7 +16,7 @@ namespace Testing_Angel
         
         private void Awake()
         {
-            _targetingSystem = new TargetingSystem.TargetingSystem();
+            _targetingSystem = new TargetingSystem();
         }
 
         private void OnTest()

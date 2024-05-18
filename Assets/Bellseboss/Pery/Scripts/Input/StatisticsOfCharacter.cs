@@ -16,4 +16,6 @@ public class StatisticsOfCharacter : ScriptableObject
     public float timeToEnableCollider;
     [Tooltip("Energy to add in percentage each attack.")]
     public float energyToAdd;
+
+    public float energy;
 }
