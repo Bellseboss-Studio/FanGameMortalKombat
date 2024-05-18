@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeToAttack: 0.5
   timeToDecreasing: 0
-  timeToSustain: 1
+  timeToSustain: 0.5
   timeToRelease: 0
-  maxDistance: 1
-  distanceToDecresing: 1
-  forceToAttack: 1
-  forceToDecreasing: 0
+  maxDistance: 3
+  distanceToDecresing: 0
+  forceToAttack: 0.5
+  forceToDecreasing: 0.1

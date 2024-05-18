@@ -54,7 +54,7 @@ public class InteractiveManager : MonoBehaviour
         if (deltaTimeLocal >= playableDirector.duration)
         {
             canChangePosition = false;
-            _characterV2.CanMove();
+            _characterV2.EnableControls();
         }
     }
 

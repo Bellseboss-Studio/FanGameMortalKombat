@@ -96,7 +96,7 @@ public class FatalitySystem : MonoBehaviour, IFatalitySystem
     public void EndOfFatality()
     {
         _isFatality = false;
-        _cV2.CanMove();
+        _cV2.EnableControls();
         cinematicVirtualCameraBase.gameObject.SetActive(false);
         inputsRead.Clear();
     }

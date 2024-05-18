@@ -25,12 +25,7 @@ namespace Bellseboss.Pery.Scripts.Input
     }
     public interface ICombatSystem : ICharacterV2
     {
-        //void PowerAttack(float runningDistance, Vector3 runningDirection);
-        //void QuickAttack(float runningDistance, Vector3 runningDirection);
-        //void CanMove();
-        //Vector3 RotateToTarget(Vector3 originalDirection);
-        //bool CanAttack();
-        //AttackMovementSystem GetAttackSystem();
+        
     }
     
     public interface IFocusTarget

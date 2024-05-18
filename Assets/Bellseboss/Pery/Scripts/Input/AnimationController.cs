@@ -68,12 +68,12 @@ namespace Bellseboss.Pery.Scripts.Input
             _animator.SetTrigger(animationTrigger);
         }
 
-        public void TakeDamage(bool isQuickAttack, int numberOfCombos)
+        public void TakeDamage(string animationParameterName)
         {
-            var nameOfAnimation = isQuickAttack ? "q" : "p";
-            nameOfAnimation += numberOfCombos;
-            StartCoroutine(FinishTimeAnimation(nameOfAnimation));
-            _animator.Play(nameOfAnimation);
+            /*nameOfAnimation += numberOfCombos;*/
+            /*Debug.Log(nameOfAnimation);*/
+            StartCoroutine(FinishTimeAnimation(animationParameterName));
+            _animator.Play(animationParameterName);
         }
 
         private IEnumerator FinishTimeAnimation(string nameOfAnimation)
