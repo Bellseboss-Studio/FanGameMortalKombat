@@ -20,5 +20,6 @@ namespace Bellseboss.Pery.Scripts.Input
         void EndAttackMovement();
         void SetCanReadInputs(bool b);
         bool GetCanReadInputs();
+        Action<float> OnReceiveDamage { get; set; }
     }
 }
