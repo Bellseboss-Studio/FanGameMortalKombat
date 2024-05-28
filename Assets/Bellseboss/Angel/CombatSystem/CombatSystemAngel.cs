@@ -80,13 +80,13 @@ namespace Bellseboss.Angel.CombatSystem
         }
 
         public void Configure(Rigidbody rigidbody, StatisticsOfCharacter statisticsOfCharacter,
-            IMovementRigidBodyV2 movementRigidBodyV2, ICombatSystemAngel characterV2, ref Action<float> onReceiveDamage, bool isPlayer = true)
+            IMovementRigidBodyV2 movementRigidBodyV2, ICombatSystemAngel characterV2, bool isPlayer = true)
         {
-            onReceiveDamage += GotAttacked;
             _targetingSystem = new TargetingSystem();
             var gameObjectToPlayer = rigidbody.gameObject;
             _moveAttackingSystem = new MoveAttackingSystem(gameObjectToPlayer, transform);
             _combatSystemAngel = characterV2;
+            _combatSystemAngel.OnReceiveDamage += GotAttacked;
             _movementsQueue = new List<CombatMovement>();
             _statisticsOfCharacter = statisticsOfCharacter;
             targetFocus.Configure(this);
