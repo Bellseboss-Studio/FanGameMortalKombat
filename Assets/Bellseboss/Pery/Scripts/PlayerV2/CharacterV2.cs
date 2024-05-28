@@ -12,6 +12,7 @@ namespace Bellseboss.Pery.Scripts.Input
     {
         public string Id => id;
         public Action OnAction { get; set; }
+        public Action<float> OnReceiveDamage { get; set; }
 
         [SerializeField] private string id;
         [SerializeField] private InputPlayerV2 inputPlayerV2;
@@ -115,7 +116,6 @@ namespace Bellseboss.Pery.Scripts.Input
         {
             transform.position = Vector3.Lerp(transform.position, refOfPlayer.transform.position, 0.5f);
             transform.rotation = Quaternion.Lerp(transform.rotation, refOfPlayer.transform.rotation, 0.5f);
-            Debug.Log("CharacterV2: SetPositionAndRotation");
         }
 
         private void JumpOnEndJump()
@@ -265,7 +265,7 @@ namespace Bellseboss.Pery.Scripts.Input
         private void ConfigCamera(CinemachineVirtualCameraBase currentCamera)
         {
             movementRigidbodyV2.Configure(rigidbody, speedWalk, speedRun, currentCamera.gameObject, this, _statisticsOfCharacter);
-            combatSystemAngel.Configure(rigidbody, _statisticsOfCharacter, this, this, ref OnReceiveDamage);
+            combatSystemAngel.Configure(rigidbody, _statisticsOfCharacter, this, this);
             rotationCharacterV2.Configure(currentCamera.gameObject, gameObject, this, forceRotation);
         }
 
@@ -354,7 +354,7 @@ namespace Bellseboss.Pery.Scripts.Input
                 movementADSR.Attack(transformForward);
             }
             rotationCharacterV2.RotateToDirection(transformForward);
-            OnReceiveDamage?.Invoke(currentAttackStunTime);
+            this.OnReceiveDamage?.Invoke(currentAttackStunTime);
         }
 
         public override void SetAnimationToHit(string animationParameterName)

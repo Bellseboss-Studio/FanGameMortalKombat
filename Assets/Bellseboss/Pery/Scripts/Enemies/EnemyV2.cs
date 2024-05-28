@@ -11,13 +11,17 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
     public event Action<bool> OnPlayerDetected;
     public event Action<bool> OnPlayerInNearZone;
     public event Action<EnemyV2> OnDead;
+    
+    public Action<float> OnReceiveDamage { get; set; }
 
     [SerializeField] private string id;
     [SerializeField] private StatisticsOfCharacter statisticsOfCharacter;
     [SerializeField] private MovementADSR movementADSR;
     [SerializeField] private AnimationController animationController;
     [SerializeField] private GameObject model;
-    [SerializeField] private AiController aiController;
+
+    [SerializeField, InterfaceType(typeof(IAiController))]
+    private Object ai;
     [SerializeField] private Rigidbody rigidbody;
     [SerializeField] private float minDistanceToArriveToTarget;
     [SerializeField] private float minDistanceToArriveToEnemy;
@@ -33,9 +37,15 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
     [SerializeField] private StatesOfEnemy _state;
     [SerializeField] private TargetFocus colliderToDamage;
     [SerializeField] private CombatSystemAngel combatSystemAngel;
+    private IAiController _aiController => ai as IAiController;
 
     public string Id => id;
     public bool IsDead { get; private set; }
+    public GameObject GetGameObject()
+    {
+        return gameObject;
+    }
+
     private bool canAttack = true;
 
     private void Start()
@@ -44,7 +54,7 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
         movementADSR.Configure(GetComponent<Rigidbody>(), _statisticsOfCharacter, this);
         _model = Instantiate(model, transform);
         animationController.Configure(_model.GetComponent<Animator>(), this);
-        aiController.Configure(this, ref combatSystemAngel.OnEndStunt);
+        _aiController.Configure(this, ref combatSystemAngel.OnEndStunt);
         _state = StatesOfEnemy.NORMAL;
 
         var localPosition = new Vector3(0, -0.5f, 0);
@@ -61,16 +71,13 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
         {
             aiController.StartAi();
         };*/
-        combatSystemAngel.Configure(rigidbody, _statisticsOfCharacter, this, this, ref OnReceiveDamage, false);
-        combatSystemAngel.OnEndAttack += () =>
-        {
-            aiController.StartAi();
-        };
+        combatSystemAngel.Configure(rigidbody, _statisticsOfCharacter, this, this, false);
+        combatSystemAngel.OnEndAttack += () => { _aiController.StartAi(); };
     }
 
     private void Update()
     {
-        if(IsDead) return;
+        if (IsDead) return;
         if (_canRotate)
         {
             if (_canRotateToTarget)
@@ -84,13 +91,15 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
                 RotateToTarget(position);
             }
         }
-        if(_canMove)
+
+        if (_canMove)
         {
             var direction = _target.transform.position - transform.position;
             direction.Normalize();
             direction *= GetSpeedToMove();
             rigidbody.velocity = direction * Time.deltaTime;
-            if (Vector3.Distance(transform.position, _target.transform.position) < (GetPlayer() != null ? minDistanceToArriveToEnemy : minDistanceToArriveToTarget))
+            if (Vector3.Distance(transform.position, _target.transform.position) <
+                (GetPlayer() != null ? minDistanceToArriveToEnemy : minDistanceToArriveToTarget))
             {
                 _canMove = false;
                 OnArriveToTarget?.Invoke();
@@ -102,7 +111,8 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
             rigidbody.velocity = Vector3.zero;
             rigidbody.angularVelocity = Vector3.zero;
         }
-        animationController.Movement(rigidbody.velocity.magnitude/10, 0);
+
+        animationController.Movement(rigidbody.velocity.magnitude / 10, 0);
     }
 
     public override void Stun(bool isStun)
@@ -122,7 +132,7 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
         };
     }
 
-    public void RotateToTargetIdle(GameObject transformForward)
+    public void RotateToTargetIdle(GameObject transformForward, bool b)
     {
         _canRotateToTarget = false;
         _target = transformForward;
@@ -150,10 +160,10 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
         targetRotation.z = 0;
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 5 * Time.deltaTime);
     }
-    
+
     public override void ReceiveDamage(int damage, Vector3 direction, float currentAttackStunTime)
     {
-        if(IsDead) return;
+        if (IsDead) return;
         _statisticsOfCharacter.life -= damage;
         Debug.Log(_statisticsOfCharacter.life);
         if (_statisticsOfCharacter.life <= 0)
@@ -161,10 +171,12 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
             IsDead = true;
             OnDead?.Invoke(this);
         }
+
         if (movementADSR.CanAttackAgain() && !IsDead)
         {
             movementADSR.Attack(direction);
         }
+
         OnReceiveDamage?.Invoke(currentAttackStunTime);
     }
 
@@ -196,8 +208,8 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
             _statisticsOfCharacter.timeToActivateCollider = _statisticsOfCharacter.timeToEnableCollider;
             return true;
         }
+
         return false;
-        
     }
 
     public void ColliderToAttack(bool enableCollider)
@@ -235,7 +247,7 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
 
     public override void SetAnimationToHit(string animationParameterName)
     {
-        if(IsDead) return;
+        if (IsDead) return;
         //TODO set animation to hit
         animationController.TakeDamage(animationParameterName);
     }
@@ -243,9 +255,9 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
     public void SetPlayer(CharacterV2 characterV2)
     {
         _characterV2 = characterV2;
-        if(_characterV2 != null)
+        if (_characterV2 != null)
         {
-            aiController.SetPlayer(characterV2);
+            _aiController.SetPlayer(characterV2);
         }
     }
 
@@ -280,19 +292,17 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
     }
 
     public Action OnAction { get; set; }
+
     public void DisableControls()
     {
-        
     }
 
     public void UpdateAnimation()
     {
-        
     }
 
     public void ChangeToNormalJump()
     {
-        
     }
 
     public void ChangeRotation(Vector3 rotation)
@@ -305,7 +315,6 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
 
     public void EndAttackMovement()
     {
-        
     }
 
     public void SetCanReadInputs(bool b)
@@ -318,14 +327,13 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
         return canAttack;
     }
 
+
     public void PlayerFall()
     {
-        
     }
 
     public void PlayerRecovery()
     {
-        
     }
 
     public bool IsAttacking()
@@ -375,13 +383,14 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
 
 public interface IEnemyV2
 {
+    Action<float> OnReceiveDamage { get; set; }
     List<GameObject> Paths();
     void MoveTo(GameObject target);
     event Action OnArriveToTarget;
     event Action<bool> OnPlayerDetected;
     event Action<bool> OnPlayerInNearZone;
     event Action<EnemyV2> OnDead;
-    void RotateToTargetIdle(GameObject transformForward);
+    void RotateToTargetIdle(GameObject transformForward, bool b);
     void TriggerAnimation(string nameOfAnimation);
     CharacterV2 GetPlayer();
     void CanMove(bool b);
@@ -390,11 +399,15 @@ public interface IEnemyV2
     string GetAttackAnimationName();
     float GetTimeBetweenAttacks();
     bool CanActivateCollider(float delta);
+
     void ColliderToAttack(bool enableCollider);
+
     /*void SendDamage();*/
     void AttackPlayer();
     void SetState(StatesOfEnemy state);
     void CanRotate(bool b);
+    public bool IsDead { get; }
+    GameObject GetGameObject();
 }
 
 public class EnemiesV2Factory
@@ -405,7 +418,7 @@ public class EnemiesV2Factory
     {
         EnemiesConfiguration = Object.Instantiate(enemiesConfiguration);
     }
-        
+
     public EnemyV2 Create(string id)
     {
         var prefab = EnemiesConfiguration.GetEnemyV2PrefabById(id);
