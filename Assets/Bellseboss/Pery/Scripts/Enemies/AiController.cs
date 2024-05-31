@@ -3,7 +3,7 @@ using Bellseboss.Pery.Scripts.Input;
 using UnityEngine;
 using View;
 
-internal class AiController : MonoBehaviour
+internal class AiController : MonoBehaviour, IAiController
 {
     [SerializeField] private float timeToWaitToChangePath;
     private IEnemyV2 _enemy;
@@ -132,7 +132,7 @@ internal class AiController : MonoBehaviour
             else
             {
                 _enemy.TriggerAnimation("watch");
-                _enemy.RotateToTargetIdle(_target);
+                _enemy.RotateToTargetIdle(_target, false);
             }
         }).Add(timeToWaitToChangePath).Add(() =>
         {
@@ -157,7 +157,7 @@ internal class AiController : MonoBehaviour
         
         _watch = this.tt().Pause().Add(() =>
         {
-            _enemy.RotateToTargetIdle(_target);
+            _enemy.RotateToTargetIdle(_target, false);
         }).Wait(()=>_enemyIsDetected).Add(() =>
         {
             _watchEnemy.Play();
