@@ -1189,8 +1189,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12cd91da0abe84c03918838717c834de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnHoverTargetAudioObject: 0000000001000000
-  OnClickTargetAudioObject: 0300000004000000
+  m_SfxToPlayOnClick:
+    Guid:
+      Data1: -1566593556
+      Data2: 1247766832
+      Data3: -66308960
+      Data4: 1932147879
+    Path: event:/UI/UI_GenericClick
+  m_SfxToPlayOnHover:
+    Guid:
+      Data1: 1913370057
+      Data2: 1260338211
+      Data3: 1128232089
+      Data4: -1780341218
+    Path: event:/UI/UI_HoverSoundTickSound
+  m_SfxToPlayOnPointEnter:
+    Guid:
+      Data1: 252530479
+      Data2: 1316510704
+      Data3: 692509875
+      Data4: -793991016
+    Path: event:/UI/UI_MouseHover
 --- !u!114 &7408765517070079534
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1631,8 +1650,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12cd91da0abe84c03918838717c834de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnHoverTargetAudioObject: 01000000
-  OnClickTargetAudioObject: 03000000
+  m_SfxToPlayOnClick:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  m_SfxToPlayOnHover:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  m_SfxToPlayOnPointEnter:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!1 &7408765517102806835
 GameObject:
   m_ObjectHideFlags: 0
@@ -2410,8 +2448,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12cd91da0abe84c03918838717c834de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnHoverTargetAudioObject: 01000000
-  OnClickTargetAudioObject: 03000000
+  m_SfxToPlayOnClick:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  m_SfxToPlayOnHover:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  m_SfxToPlayOnPointEnter:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!114 &7408765517172703516
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5248,8 +5305,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12cd91da0abe84c03918838717c834de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnHoverTargetAudioObject: 0000000001000000
-  OnClickTargetAudioObject: 02000000
+  m_SfxToPlayOnClick:
+    Guid:
+      Data1: -1695129797
+      Data2: 1084570069
+      Data3: 1044358555
+      Data4: -1820044895
+    Path: event:/UI/UI_ClickPlayButton
+  m_SfxToPlayOnHover:
+    Guid:
+      Data1: 1913370057
+      Data2: 1260338211
+      Data3: 1128232089
+      Data4: -1780341218
+    Path: event:/UI/UI_HoverSoundTickSound
+  m_SfxToPlayOnPointEnter:
+    Guid:
+      Data1: 252530479
+      Data2: 1316510704
+      Data3: 692509875
+      Data4: -793991016
+    Path: event:/UI/UI_MouseHover
 --- !u!114 &7408765517423315601
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9307,8 +9383,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12cd91da0abe84c03918838717c834de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnHoverTargetAudioObject: 01000000
-  OnClickTargetAudioObject: 03000000
+  m_SfxToPlayOnClick:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  m_SfxToPlayOnHover:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  m_SfxToPlayOnPointEnter:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!114 &7408765517979398937
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9713,8 +9808,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12cd91da0abe84c03918838717c834de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnHoverTargetAudioObject: 0000000001000000
-  OnClickTargetAudioObject: 03000000
+  m_SfxToPlayOnClick:
+    Guid:
+      Data1: -1566593556
+      Data2: 1247766832
+      Data3: -66308960
+      Data4: 1932147879
+    Path: event:/UI/UI_GenericClick
+  m_SfxToPlayOnHover:
+    Guid:
+      Data1: 1913370057
+      Data2: 1260338211
+      Data3: 1128232089
+      Data4: -1780341218
+    Path: event:/UI/UI_HoverSoundTickSound
+  m_SfxToPlayOnPointEnter:
+    Guid:
+      Data1: 252530479
+      Data2: 1316510704
+      Data3: 692509875
+      Data4: -793991016
+    Path: event:/UI/UI_MouseHover
 --- !u!114 &7408765517983630196
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10064,8 +10178,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12cd91da0abe84c03918838717c834de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnHoverTargetAudioObject: 01000000
-  OnClickTargetAudioObject: 03000000
+  m_SfxToPlayOnClick:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  m_SfxToPlayOnHover:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  m_SfxToPlayOnPointEnter:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!1 &7408765518010576109
 GameObject:
   m_ObjectHideFlags: 0
@@ -14173,8 +14306,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12cd91da0abe84c03918838717c834de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnHoverTargetAudioObject: 0000000001000000
-  OnClickTargetAudioObject: 03000000
+  m_SfxToPlayOnClick:
+    Guid:
+      Data1: -1566593556
+      Data2: 1247766832
+      Data3: -66308960
+      Data4: 1932147879
+    Path: event:/UI/UI_GenericClick
+  m_SfxToPlayOnHover:
+    Guid:
+      Data1: 1913370057
+      Data2: 1260338211
+      Data3: 1128232089
+      Data4: -1780341218
+    Path: event:/UI/UI_HoverSoundTickSound
+  m_SfxToPlayOnPointEnter:
+    Guid:
+      Data1: 252530479
+      Data2: 1316510704
+      Data3: 692509875
+      Data4: -793991016
+    Path: event:/UI/UI_MouseHover
 --- !u!114 &7408765518545510203
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15044,8 +15196,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12cd91da0abe84c03918838717c834de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnHoverTargetAudioObject: 0000000001000000
-  OnClickTargetAudioObject: 0300000005000000
+  m_SfxToPlayOnClick:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  m_SfxToPlayOnHover:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  m_SfxToPlayOnPointEnter:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!114 &7408765518608783393
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16199,8 +16370,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12cd91da0abe84c03918838717c834de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnHoverTargetAudioObject: 0000000001000000
-  OnClickTargetAudioObject: 03000000
+  m_SfxToPlayOnClick:
+    Guid:
+      Data1: -1566593556
+      Data2: 1247766832
+      Data3: -66308960
+      Data4: 1932147879
+    Path: event:/UI/UI_GenericClick
+  m_SfxToPlayOnHover:
+    Guid:
+      Data1: 1913370057
+      Data2: 1260338211
+      Data3: 1128232089
+      Data4: -1780341218
+    Path: event:/UI/UI_HoverSoundTickSound
+  m_SfxToPlayOnPointEnter:
+    Guid:
+      Data1: 252530479
+      Data2: 1316510704
+      Data3: 692509875
+      Data4: -793991016
+    Path: event:/UI/UI_MouseHover
 --- !u!114 &7408765518715701244
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16898,8 +17088,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12cd91da0abe84c03918838717c834de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnHoverTargetAudioObject: 01000000
-  OnClickTargetAudioObject: 03000000
+  m_SfxToPlayOnClick:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  m_SfxToPlayOnHover:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  m_SfxToPlayOnPointEnter:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!114 &7408765518785828621
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17933,8 +18142,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12cd91da0abe84c03918838717c834de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnHoverTargetAudioObject: 01000000
-  OnClickTargetAudioObject: 03000000
+  m_SfxToPlayOnClick:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  m_SfxToPlayOnHover:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  m_SfxToPlayOnPointEnter:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!1 &7408765518921783194
 GameObject:
   m_ObjectHideFlags: 0
