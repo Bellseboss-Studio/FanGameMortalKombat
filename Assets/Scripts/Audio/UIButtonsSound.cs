@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Audio.Managers;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -27,18 +26,12 @@ namespace Audio
 
         private void OnMouseHover()
         {
-            foreach(var goName in OnHoverTargetAudioObject)
-            {
-                SfxManager.Instance.PlaySound(goName.ToString());
-            }
+            
         }
 
         public void OnMouseClick()
         {
-            foreach (var goName in OnClickTargetAudioObject)
-            {
-                SfxManager.Instance.PlaySound(goName.ToString());
-            }
+            
         }
 
         private void OnMouseEnter()
@@ -68,16 +61,7 @@ namespace Audio
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            PointClick(eventData);
             OnMouseClick();
-        }
-
-        public void PointClick(PointerEventData eventData)
-        {
-            if (eventData.button == PointerEventData.InputButton.Left)
-            {
-            }
         }
     }
 }
-

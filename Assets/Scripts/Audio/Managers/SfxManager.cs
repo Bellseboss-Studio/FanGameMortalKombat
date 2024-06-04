@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 namespace Audio.Managers
 {
-    public class SfxManager : Singleton<SfxManager>
+    public class SfxManager : MonoBehaviour
     {
     
         [SerializeField] Transform[] AudioObjects;
