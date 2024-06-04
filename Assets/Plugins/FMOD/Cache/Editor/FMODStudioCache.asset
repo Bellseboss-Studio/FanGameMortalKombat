@@ -1,5 +1,32 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-6366329211887951662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/UI/UI_HoverSoundTickSound
+  m_EditorClassIdentifier: 
+  Path: event:/UI/UI_HoverSoundTickSound
+  Guid:
+    Data1: 1913370057
+    Data2: 1260338211
+    Data3: 1128232089
+    Data4: -1780341218
+  Banks:
+  - {fileID: 574385842088845551}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &-5760980517981328603
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26,7 +53,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 1083
+  Length: 2926
 --- !u!114 &-4679458894826428827
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -54,6 +81,60 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &-3004351267505534595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/UI/UI_ClickPlayButton
+  m_EditorClassIdentifier: 
+  Path: event:/UI/UI_ClickPlayButton
+  Guid:
+    Data1: -1695129797
+    Data2: 1084570069
+    Data3: 1044358555
+    Data4: -1820044895
+  Banks:
+  - {fileID: 574385842088845551}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 2666
+--- !u!114 &-1787370147418265803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/UI/UI_GenericClick
+  m_EditorClassIdentifier: 
+  Path: event:/UI/UI_GenericClick
+  Guid:
+    Data1: -1566593556
+    Data2: 1247766832
+    Data3: -66308960
+    Data4: 1932147879
+  Banks:
+  - {fileID: 574385842088845551}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 833
 --- !u!114 &-1632965871059945763
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -69,10 +150,10 @@ MonoBehaviour:
   Path: FanGameMK_FMOD/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638530520120000000
+  lastModified: 638531252520000000
   FileSizes:
   - Name: Desktop
-    Value: 822
+    Value: 1064
   Exists: 1
 --- !u!114 &11400000
 MonoBehaviour:
@@ -92,12 +173,17 @@ MonoBehaviour:
   EditorEvents:
   - {fileID: -4679458894826428827}
   - {fileID: -5760980517981328603}
+  - {fileID: 2890349358067459249}
+  - {fileID: 7077952000015967259}
+  - {fileID: -3004351267505534595}
+  - {fileID: -6366329211887951662}
+  - {fileID: -1787370147418265803}
   EditorParameters: []
   MasterBanks:
   - {fileID: 574385842088845551}
   StringsBanks:
   - {fileID: -1632965871059945763}
-  cacheTime: 638530520120000000
+  cacheTime: 638531252520000000
   cacheVersion: 131618
 --- !u!114 &574385842088845551
 MonoBehaviour:
@@ -114,8 +200,62 @@ MonoBehaviour:
   Path: FanGameMK_FMOD/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638530520120000000
+  lastModified: 638531252520000000
   FileSizes:
   - Name: Desktop
-    Value: 15584
+    Value: 116896
   Exists: 1
+--- !u!114 &2890349358067459249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/UI/UI_HideMenu
+  m_EditorClassIdentifier: 
+  Path: event:/UI/UI_HideMenu
+  Guid:
+    Data1: 1333482775
+    Data2: 1230002447
+    Data3: 1142038206
+    Data4: 1807796941
+  Banks:
+  - {fileID: 574385842088845551}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 1183
+--- !u!114 &7077952000015967259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/UI/UI_MouseHover
+  m_EditorClassIdentifier: 
+  Path: event:/UI/UI_MouseHover
+  Guid:
+    Data1: 252530479
+    Data2: 1316510704
+    Data3: 692509875
+    Data4: -793991016
+  Banks:
+  - {fileID: 574385842088845551}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 1083
