@@ -32,13 +32,9 @@ public class ContainerOfExtra : MonoBehaviour
         }
     }
 
-    public void Add(IExtra extra)
+    public void Configure(IExtra extra)
     {
         _extra = extra;
-    }
-
-    public void Configure()
-    {
         if (_extra == null)
         {
             var spriteToPixel = Resources.Load<Sprite>("SinDatos");
@@ -49,7 +45,7 @@ public class ContainerOfExtra : MonoBehaviour
             var spriteToPixel = Resources.Load<Sprite>(_extra.GetIcon());
             imageToShow.sprite = spriteToPixel;
         }
-
+        Debug.Log("Configure");
         ConfigureActionsTuButton();
     }
 

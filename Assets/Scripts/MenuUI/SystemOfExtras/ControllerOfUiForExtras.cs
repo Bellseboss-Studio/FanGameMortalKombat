@@ -3,27 +3,24 @@ using UnityEngine;
 
 public class ControllerOfUiForExtras : MonoBehaviour
 {
-    [SerializeField] private List<ContainerOfExtra> containers;
-    [SerializeField] private ContainerOfExtra container;
-    [SerializeField] private Animator animator;
+    [SerializeField] private ContainerOfExtra containerOfExtraPrefab;
+    [SerializeField] private GameObject content;
+    [SerializeField] private ExtraMediator mediator;
+    private List<ContainerOfExtra> containerOfExtraInstantiates;
 
     public async void LoadData()
     {
         await ServiceLocator.Instance.GetService<ICatalog>().LoadDataCatalog();
-        foreach (var container in containers)
+        foreach (var extra in containerOfExtraInstantiates?.ToArray()!)
         {
-            container.Clean();
+            Destroy(extra.gameObject);
         }
-        var index = 0;
+        containerOfExtraInstantiates = new List<ContainerOfExtra>();
         foreach (var extra in ServiceLocator.Instance.GetService<ICatalog>().GetListOfExtras)
         {
-            containers[index].Add(extra);
-            index++;
-        }
-
-        foreach (var container in containers)
-        {
-            container.Configure();
+            var containerOfExtra = Instantiate(containerOfExtraPrefab, content.transform);
+            containerOfExtra.Configure(extra);
+            containerOfExtraInstantiates.Add(containerOfExtra);
         }
     }
     public void SaveData()
