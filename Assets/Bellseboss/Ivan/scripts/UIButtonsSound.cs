@@ -9,9 +9,9 @@ namespace MortalKombat.Audio
 {
     public class UIButtonsSound : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, IPointerExitHandler
     {
-        [SerializeField] private EventReference m_SfxToPlayOnClick;
-        [SerializeField] private EventReference m_SfxToPlayOnHover;
-        [SerializeField] private EventReference m_SfxToPlayOnPointEnter;
+        [SerializeField] private UISoundList[] m_SoundToPlayOnClick;
+        [SerializeField] private UISoundList[] m_SoundToPlayOnHover;
+        [SerializeField] private UISoundList[] m_SoundToPlayOnPointEnter;
         private IFmodManager m_FmodManager;
        
         private bool m_MouseOver = false;
@@ -23,25 +23,37 @@ namespace MortalKombat.Audio
         
         private void OnMouseHover()
         {
-            if (!m_SfxToPlayOnHover.IsNull)
+            if (m_SoundToPlayOnHover == null)
             {
-                m_FmodManager.PlaySfx(m_SfxToPlayOnHover);
+                return;
+            }
+            foreach (UISoundList sfx in m_SoundToPlayOnHover)
+            {
+                m_FmodManager.PlaySfx(sfx);
             }
         }
 
         public void OnMouseClick()
         {
-            if (!m_SfxToPlayOnClick.IsNull)
+            if (m_SoundToPlayOnClick == null)
             {
-                m_FmodManager.PlaySfx(m_SfxToPlayOnClick);
+                return;
+            }
+            foreach (UISoundList sfx in m_SoundToPlayOnClick)
+            {
+                m_FmodManager.PlaySfx(sfx);
             }
         }
 
         private void OnMouseEnter()
         {
-            if (!m_SfxToPlayOnPointEnter.IsNull)
+            if (m_SoundToPlayOnPointEnter == null)
             {
-                m_FmodManager.PlaySfx(m_SfxToPlayOnPointEnter);
+                return;
+            }
+            foreach (UISoundList sfx in m_SoundToPlayOnPointEnter)
+            {
+                m_FmodManager.PlaySfx(sfx);
             }
         }
         
@@ -53,10 +65,7 @@ namespace MortalKombat.Audio
         public void PointEnter()
         {
             OnMouseHover();
-            if (!m_MouseOver)
-            {
-                m_MouseOver = true;
-            }
+            m_MouseOver = true;
         }
 
         public void OnPointerExit(PointerEventData eventData)
