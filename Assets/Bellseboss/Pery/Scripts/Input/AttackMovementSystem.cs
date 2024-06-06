@@ -10,7 +10,7 @@ public class AttackMovementSystem : MonoBehaviour, IFocusTarget
     [SerializeField] private AttackMovementData attackMovementDataPower;
     [SerializeField] private int maxNumberOfCombosQuick;
     [SerializeField] private int maxNumberOfCombosPower;
-    [SerializeField] private TargetFocus targetFocus; 
+    private TargetFocus targetFocus; 
     private bool canAttackAgain = true;
     private bool attacking;
     private float _deltatimeLocal;
@@ -38,8 +38,8 @@ public class AttackMovementSystem : MonoBehaviour, IFocusTarget
         {
             _deltatimeLocal = 0;
             //_rigidbody.useGravity = false;
-            _rigidbody.constraints = RigidbodyConstraints.FreezeRotationZ |
-                                     RigidbodyConstraints.FreezeRotationX;
+            /*_rigidbody.constraints = RigidbodyConstraints.FreezeRotationZ |
+                                     RigidbodyConstraints.FreezeRotationX;*/
             if (attacking)
             {
                 if (_isQuickAttack)
@@ -83,8 +83,8 @@ public class AttackMovementSystem : MonoBehaviour, IFocusTarget
             _decresing.Play();
             foreach (var enemy in targetFocus.GetEnemies<PJV2>())
             {
-                enemy.ReceiveDamage(_statisticsOfCharacter.damage, gameObject.transform.forward);
-                enemy.SetAnimationToHit(_isQuickAttack, _isQuickAttack ? _numberOfCombosQuick : _numberOfCombosPower);
+                /*enemy.ReceiveDamage(_statisticsOfCharacter.damage, gameObject.transform.forward);*/
+                /*enemy.SetAnimationToHit(_isQuickAttack, _isQuickAttack ? _numberOfCombosQuick : _numberOfCombosPower);*/
             }
             targetFocus.CleanEnemies();
             targetFocus.DisableCollider();
@@ -165,7 +165,7 @@ public class AttackMovementSystem : MonoBehaviour, IFocusTarget
             attacking = false;
             _rigidbody.velocity = Vector3.zero;
             //_rigidbody.useGravity = true;
-            _rigidbody.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX;
+            /*_rigidbody.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX;*/
             //Debug.Log("AttackMovementSystem: End Attack");
             OnEndAttack?.Invoke();
             movementRigidBodyV2.EndAttackMovement();

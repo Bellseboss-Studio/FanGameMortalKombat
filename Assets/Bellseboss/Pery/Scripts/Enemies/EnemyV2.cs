@@ -1,22 +1,27 @@
 using System;
 using System.Collections.Generic;
+using Bellseboss.Angel.CombatSystem;
 using Bellseboss.Pery.Scripts.Input;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementRigidBodyV2
+public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementRigidBodyV2, ICombatSystemAngel
 {
     public event Action OnArriveToTarget;
     public event Action<bool> OnPlayerDetected;
     public event Action<bool> OnPlayerInNearZone;
     public event Action<EnemyV2> OnDead;
+    
+    public Action<float> OnReceiveDamage { get; set; }
 
     [SerializeField] private string id;
     [SerializeField] private StatisticsOfCharacter statisticsOfCharacter;
     [SerializeField] private MovementADSR movementADSR;
     [SerializeField] private AnimationController animationController;
     [SerializeField] private GameObject model;
-    [SerializeField] private AiController aiController;
+
+    [SerializeField, InterfaceType(typeof(IAiController))]
+    private Object ai;
     [SerializeField] private Rigidbody rigidbody;
     [SerializeField] private float minDistanceToArriveToTarget;
     [SerializeField] private float minDistanceToArriveToEnemy;
@@ -31,9 +36,17 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
     private bool _canMove, _canRotate, _canRotateToTarget;
     [SerializeField] private StatesOfEnemy _state;
     [SerializeField] private TargetFocus colliderToDamage;
+    [SerializeField] private CombatSystemAngel combatSystemAngel;
+    private IAiController _aiController => ai as IAiController;
 
     public string Id => id;
     public bool IsDead { get; private set; }
+    public GameObject GetGameObject()
+    {
+        return gameObject;
+    }
+
+    private bool canAttack = true;
 
     private void Start()
     {
@@ -41,7 +54,7 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
         movementADSR.Configure(GetComponent<Rigidbody>(), _statisticsOfCharacter, this);
         _model = Instantiate(model, transform);
         animationController.Configure(_model.GetComponent<Animator>(), this);
-        aiController.Configure(this);
+        _aiController.Configure(this, ref combatSystemAngel.OnEndStunt);
         _state = StatesOfEnemy.NORMAL;
 
         var localPosition = new Vector3(0, -0.5f, 0);
@@ -53,15 +66,18 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
             _canMove = true;
             _canRotate = true;
         };
-        attackMovementSystem.Configure(GetComponent<Rigidbody>(), _statisticsOfCharacter, this);
+        /*attackMovementSystem.Configure(GetComponent<Rigidbody>(), _statisticsOfCharacter, this);
         attackMovementSystem.OnEndAttack += () =>
         {
             aiController.StartAi();
-        };
+        };*/
+        combatSystemAngel.Configure(rigidbody, _statisticsOfCharacter, this, this, false);
+        combatSystemAngel.OnEndAttack += () => { _aiController.StartAi(); };
     }
 
     private void Update()
     {
+        if (IsDead) return;
         if (_canRotate)
         {
             if (_canRotateToTarget)
@@ -75,20 +91,28 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
                 RotateToTarget(position);
             }
         }
-        if(_canMove)
+
+        if (_canMove)
         {
             var direction = _target.transform.position - transform.position;
             direction.Normalize();
             direction *= GetSpeedToMove();
             rigidbody.velocity = direction * Time.deltaTime;
-            if (Vector3.Distance(transform.position, _target.transform.position) < (GetPlayer() != null ? minDistanceToArriveToEnemy : minDistanceToArriveToTarget))
+            if (Vector3.Distance(transform.position, _target.transform.position) <
+                (GetPlayer() != null ? minDistanceToArriveToEnemy : minDistanceToArriveToTarget))
             {
-                Debug.Log("EnemyV2: Arrive to target");
                 _canMove = false;
                 OnArriveToTarget?.Invoke();
             }
         }
-        animationController.Movement(rigidbody.velocity.magnitude/10, 0);
+        else
+        {
+            rigidbody.ResetInertiaTensor();
+            rigidbody.velocity = Vector3.zero;
+            rigidbody.angularVelocity = Vector3.zero;
+        }
+
+        animationController.Movement(rigidbody.velocity.magnitude / 10, 0);
     }
 
     public override void Stun(bool isStun)
@@ -108,7 +132,7 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
         };
     }
 
-    public void RotateToTargetIdle(GameObject transformForward)
+    public void RotateToTargetIdle(GameObject transformForward, bool b)
     {
         _canRotateToTarget = false;
         _target = transformForward;
@@ -131,26 +155,29 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
 
     public void RotateToTarget(Vector3 transformForward)
     {
-        //only rotate in Y axis
         var targetRotation = Quaternion.LookRotation(transformForward - transform.position);
         targetRotation.x = 0;
         targetRotation.z = 0;
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 5 * Time.deltaTime);
     }
-    
-    public override void ReceiveDamage(int damage, Vector3 direction)
+
+    public override void ReceiveDamage(int damage, Vector3 direction, float currentAttackStunTime)
     {
-        if(IsDead) return;
+        if (IsDead) return;
         _statisticsOfCharacter.life -= damage;
+        Debug.Log(_statisticsOfCharacter.life);
         if (_statisticsOfCharacter.life <= 0)
         {
             IsDead = true;
             OnDead?.Invoke(this);
         }
+
         if (movementADSR.CanAttackAgain() && !IsDead)
         {
             movementADSR.Attack(direction);
         }
+
+        OnReceiveDamage?.Invoke(currentAttackStunTime);
     }
 
     public void Died()
@@ -181,8 +208,8 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
             _statisticsOfCharacter.timeToActivateCollider = _statisticsOfCharacter.timeToEnableCollider;
             return true;
         }
+
         return false;
-        
     }
 
     public void ColliderToAttack(bool enableCollider)
@@ -197,14 +224,15 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
         }
     }
 
-    public void SendDamage()
+    /*public void SendDamage()
     {
         _characterV2.ReceiveDamage(_statisticsOfCharacter.damage, transform.forward);
-    }
+    }*/
 
     public void AttackPlayer()
     {
-        attackMovementSystem.Attack(transform.forward, _statisticsOfCharacter.attackAnimationType);
+        if (!canAttack) return;
+        combatSystemAngel.ExecuteMovement(TypeOfAttack.Quick);
     }
 
     public void SetState(StatesOfEnemy state)
@@ -212,21 +240,24 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
         _state = state;
     }
 
-    public override void SetAnimationToHit(bool isQuickAttack, int numberOfCombos)
+    public void CanRotate(bool b)
     {
-        if(IsDead) return;
-        Debug.Log($"EnemyV2: SetAnimationToHit isQuickAttack: {isQuickAttack} numberOfCombos: {numberOfCombos}");
+        _canRotate = b;
+    }
+
+    public override void SetAnimationToHit(string animationParameterName)
+    {
+        if (IsDead) return;
         //TODO set animation to hit
-        animationController.TakeDamage(isQuickAttack, numberOfCombos);
+        animationController.TakeDamage(animationParameterName);
     }
 
     public void SetPlayer(CharacterV2 characterV2)
     {
-        Debug.Log($"EnemyV2: SetPlayer {characterV2 != null}"); 
         _characterV2 = characterV2;
-        if(_characterV2 != null)
+        if (_characterV2 != null)
         {
-            aiController.SetPlayer(characterV2);
+            _aiController.SetPlayer(characterV2);
         }
     }
 
@@ -261,19 +292,17 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
     }
 
     public Action OnAction { get; set; }
+
     public void DisableControls()
     {
-        
     }
 
     public void UpdateAnimation()
     {
-        
     }
 
     public void ChangeToNormalJump()
     {
-        
     }
 
     public void ChangeRotation(Vector3 rotation)
@@ -286,22 +315,30 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
 
     public void EndAttackMovement()
     {
-        
     }
+
+    public void SetCanReadInputs(bool b)
+    {
+        canAttack = b;
+    }
+
+    public bool GetCanReadInputs()
+    {
+        return canAttack;
+    }
+
 
     public void PlayerFall()
     {
-        
     }
 
     public void PlayerRecovery()
     {
-        
     }
 
     public bool IsAttacking()
     {
-        throw new NotImplementedException();
+        return combatSystemAngel.Attacking;
     }
 
     public void PlayerFallV2()
@@ -313,17 +350,47 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
     {
         throw new NotImplementedException();
     }
+
+    public Action<string> GetActionToAnimate()
+    {
+        return animationController.SetTrigger;
+    }
+
+    public void PlayerTouchEnemy()
+    {
+    }
+
+    public List<GameObject> GetEnemiesInCombat()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void SetEnemiesInCombat(List<GameObject> gameObjects)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void RotateCharacter(Vector3 position)
+    {
+        throw new NotImplementedException();
+    }
+
+    public IMovementRigidBodyV2 GetMovementRigidBody()
+    {
+        return this;
+    }
 }
 
 public interface IEnemyV2
 {
+    Action<float> OnReceiveDamage { get; set; }
     List<GameObject> Paths();
     void MoveTo(GameObject target);
     event Action OnArriveToTarget;
     event Action<bool> OnPlayerDetected;
     event Action<bool> OnPlayerInNearZone;
     event Action<EnemyV2> OnDead;
-    void RotateToTargetIdle(GameObject transformForward);
+    void RotateToTargetIdle(GameObject transformForward, bool b);
     void TriggerAnimation(string nameOfAnimation);
     CharacterV2 GetPlayer();
     void CanMove(bool b);
@@ -332,10 +399,15 @@ public interface IEnemyV2
     string GetAttackAnimationName();
     float GetTimeBetweenAttacks();
     bool CanActivateCollider(float delta);
+
     void ColliderToAttack(bool enableCollider);
-    void SendDamage();
+
+    /*void SendDamage();*/
     void AttackPlayer();
     void SetState(StatesOfEnemy state);
+    void CanRotate(bool b);
+    public bool IsDead { get; }
+    GameObject GetGameObject();
 }
 
 public class EnemiesV2Factory
@@ -346,7 +418,7 @@ public class EnemiesV2Factory
     {
         EnemiesConfiguration = Object.Instantiate(enemiesConfiguration);
     }
-        
+
     public EnemyV2 Create(string id)
     {
         var prefab = EnemiesConfiguration.GetEnemyV2PrefabById(id);

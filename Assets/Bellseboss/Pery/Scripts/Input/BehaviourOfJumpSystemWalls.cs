@@ -31,8 +31,8 @@ namespace Bellseboss.Pery.Scripts.Input
             _attack = this.tt().Pause().Add(() =>
             {
                 _rigidbody.useGravity = false;
-                _rigidbody.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotationZ |
-                                         RigidbodyConstraints.FreezeRotationX;
+                /*_rigidbody.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotationZ |
+                                         RigidbodyConstraints.FreezeRotationX;*/
                 _deltatimeLocal = 0;
                 /*Debug.Log("JumpSystem BehaviourOfJumpSystemWall: Attack");*/
                 isJumping = true;
@@ -145,7 +145,7 @@ namespace Bellseboss.Pery.Scripts.Input
             {
                 /*Debug.Log("JumpSystem BehaviourOfJumpSystemWall: End Jump");*/
                 _rigidbody.useGravity = true;
-                _rigidbody.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX;
+                /*_rigidbody.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX;*/
                 _deltatimeLocal = 0;
                 /*jumpSystem.ChangeNormalWall();*/
                 isJumping = false;
@@ -157,7 +157,7 @@ namespace Bellseboss.Pery.Scripts.Input
                 /*Debug.Log("JumpSystem: Delay to Jump");*/
                 _deltatimeLocal = 0;
                 _rigidbody.useGravity = false;
-                _rigidbody.constraints = RigidbodyConstraints.FreezeAll;
+                /*_rigidbody.constraints = RigidbodyConstraints.FreezeAll;*/
                 canJump = true;
                 isColliding = true;
                 isJumping = false;
@@ -175,7 +175,7 @@ namespace Bellseboss.Pery.Scripts.Input
                 {
                     /*Debug.Log("JumpSystem: Delay to Jump End");*/
                     _rigidbody.useGravity = true;
-                    _rigidbody.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX;
+                    /*_rigidbody.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX;*/
                     /*jumpSystem.ChangeNormalWall();*/
                 }
             });

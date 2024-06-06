@@ -21,7 +21,7 @@ namespace Bellseboss.Pery.Scripts.Input
 
         private void OnEndJump()
         {
-            _combatSystemMediator.CanMove();
+            _combatSystemMediator.EnableControls();
         }
 
         public void PowerAttack()
