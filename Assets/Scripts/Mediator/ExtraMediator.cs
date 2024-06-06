@@ -30,6 +30,7 @@ public class ExtraMediator : MonoBehaviour
 
     private void PreConditions()
     {
+        animator.gameObject.SetActive(true);
         animator.SetBool("show", true);
         imageOfResource.enabled = false;
         text.transform.parent.gameObject.SetActive(false);

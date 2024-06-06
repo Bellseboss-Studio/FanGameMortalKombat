@@ -1,12 +1,15 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ControllerOfUiForExtras : MonoBehaviour
 {
     [SerializeField] private ContainerOfExtra containerOfExtraPrefab;
     [SerializeField] private GameObject content;
     [SerializeField] private ExtraMediator mediator;
-    private List<ContainerOfExtra> containerOfExtraInstantiates;
+    [SerializeField] private Button backButton;
+    [SerializeField] private Button backButtonToShowExtra;
+    private List<ContainerOfExtra> containerOfExtraInstantiates = new List<ContainerOfExtra>();
 
     public async void LoadData()
     {
@@ -15,14 +18,60 @@ public class ControllerOfUiForExtras : MonoBehaviour
         {
             Destroy(extra.gameObject);
         }
+
         containerOfExtraInstantiates = new List<ContainerOfExtra>();
         foreach (var extra in ServiceLocator.Instance.GetService<ICatalog>().GetListOfExtras)
         {
             var containerOfExtra = Instantiate(containerOfExtraPrefab, content.transform);
-            containerOfExtra.Configure(extra);
+            containerOfExtra.Configure(extra, mediator, backButtonToShowExtra);
             containerOfExtraInstantiates.Add(containerOfExtra);
         }
+
+        backButton.navigation = new Navigation
+        {
+            mode = Navigation.Mode.Explicit,
+            selectOnUp = containerOfExtraInstantiates[0].ButtonToAction,
+            selectOnDown = containerOfExtraInstantiates[0].ButtonToAction,
+        };
+
+        //change the navigation of all elements
+        foreach (var extra in containerOfExtraInstantiates)
+        {
+            var index = containerOfExtraInstantiates.IndexOf(extra);
+            if (index == 0)
+            {
+                extra.ButtonToAction.navigation = new Navigation
+                {
+                    mode = Navigation.Mode.Explicit,
+                    selectOnUp = backButton,
+                    selectOnRight = containerOfExtraInstantiates[index + 1].ButtonToAction,
+                    selectOnDown = backButton,
+                };
+            }
+            else if (index == containerOfExtraInstantiates.Count - 1)
+            {
+                extra.ButtonToAction.navigation = new Navigation
+                {
+                    mode = Navigation.Mode.Explicit,
+                    selectOnLeft = containerOfExtraInstantiates[index - 1].ButtonToAction,
+                    selectOnUp = backButton,
+                    selectOnDown = backButton,
+                };
+            }
+            else
+            {
+                extra.ButtonToAction.navigation = new Navigation
+                {
+                    mode = Navigation.Mode.Explicit,
+                    selectOnLeft = containerOfExtraInstantiates[index - 1].ButtonToAction,
+                    selectOnRight = containerOfExtraInstantiates[index + 1].ButtonToAction,
+                    selectOnUp = backButton,
+                    selectOnDown = backButton,
+                };
+            }
+        }
     }
+
     public void SaveData()
     {
         ServiceLocator.Instance.GetService<ICatalog>().AddExtra(new Extra());

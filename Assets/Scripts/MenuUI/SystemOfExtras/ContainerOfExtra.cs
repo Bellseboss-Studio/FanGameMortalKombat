@@ -1,9 +1,7 @@
 ﻿using MenuUI.SystemOfExtras;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Threading.Tasks;
-using UnityEngine.Networking;
+using View.UI;
 
 public class ContainerOfExtra : MonoBehaviour
 {
@@ -12,8 +10,11 @@ public class ContainerOfExtra : MonoBehaviour
     [SerializeField] private Button buttonToAction;
 
     [SerializeField] private ExtraMediator mediator;
-    
-    private async void Call()
+    [SerializeField] private ChangeInputMap _content;
+
+    public Button ButtonToAction => buttonToAction;
+
+    private void Call()
     {
         if (_extra == null) return;
         switch (_extra.GetTypeExtra())
@@ -30,10 +31,12 @@ public class ContainerOfExtra : MonoBehaviour
             case "audio":
                 break;
         }
+        _content.ChangeInputMapToNew();
     }
 
-    public void Configure(IExtra extra)
+    public void Configure(IExtra extra, ExtraMediator mediator, Button backButtonToShowExtra)
     {
+        this.mediator = mediator;
         _extra = extra;
         if (_extra == null)
         {
@@ -45,23 +48,8 @@ public class ContainerOfExtra : MonoBehaviour
             var spriteToPixel = Resources.Load<Sprite>(_extra.GetIcon());
             imageToShow.sprite = spriteToPixel;
         }
-        Debug.Log("Configure");
-        ConfigureActionsTuButton();
-    }
 
-    private void ConfigureActionsTuButton()
-    {
         buttonToAction.onClick.AddListener(Call);
-        buttonToAction.navigation = new Navigation {mode = Navigation.Mode.Explicit};
-        /*var navigation = buttonToAction.navigation;
-        navigation.selectOnDown = buttonToAction;
-        buttonToAction.navigation = navigation;*/
-        
+        _content.ChangeInputMapToNew(backButtonToShowExtra.gameObject);
     }
-
-    public void Clean()
-    {
-        _extra = null;
-    }
-    
 }
