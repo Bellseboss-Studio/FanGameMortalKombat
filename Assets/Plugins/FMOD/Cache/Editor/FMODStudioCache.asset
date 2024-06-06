@@ -69,10 +69,10 @@ MonoBehaviour:
   Path: Assets/Bellseboss/Ivan/fmod/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638532155560000000
+  lastModified: 638532265700000000
   FileSizes:
   - Name: 
-    Value: 1158
+    Value: 1210
   Exists: 1
 --- !u!114 &-3004351267505534595
 MonoBehaviour:
@@ -180,13 +180,41 @@ MonoBehaviour:
   - {fileID: -8707804262374614468}
   - {fileID: 6924931413938101846}
   - {fileID: -412211268368833300}
+  - {fileID: 843936005536319262}
   EditorParameters: []
   MasterBanks:
   - {fileID: 5672063328294751724}
   StringsBanks:
   - {fileID: -4958647539326734881}
-  cacheTime: 638532155560000000
+  cacheTime: 638532265700000000
   cacheVersion: 131618
+--- !u!114 &843936005536319262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Ambiences/AMB_MainMenu
+  m_EditorClassIdentifier: 
+  Path: event:/Ambiences/AMB_MainMenu
+  Guid:
+    Data1: 1822978136
+    Data2: 1240471276
+    Data3: 961873077
+    Data4: 60176383
+  Banks:
+  - {fileID: 5672063328294751724}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 27076
 --- !u!114 &2470628644653391668
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -256,7 +284,7 @@ MonoBehaviour:
   Path: Assets/Bellseboss/Ivan/fmod/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638532155560000000
+  lastModified: 638532265700000000
   FileSizes: []
   Exists: 1
 --- !u!114 &6924931413938101846
