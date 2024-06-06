@@ -8,9 +8,10 @@ namespace MortalKombat.Audio
 {
     public class FmodManagerUI : IFmodManager
     {
-        public void PlaySfx(EventReference sfxToPlay)
+        private const string m_UiFolder = "event:/UI/";
+        public void PlaySfx(UISoundList sfxToPlay)
         {
-            RuntimeManager.PlayOneShot(sfxToPlay);
+            RuntimeManager.PlayOneShot($"{m_UiFolder}{sfxToPlay}");
         }
     }
 }

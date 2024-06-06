@@ -3,15 +3,20 @@ using System.Collections.Generic;
 using FMODUnity;
 using MortalKombat.Audio;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class PlayUISfxOnAnimation : StateMachineBehaviour
 {
-    [SerializeField] private EventReference m_SfxToPlay;
+    
+    [SerializeField] private UISoundList[] m_SoundsToPlay;
     private IFmodManager m_FmodManager;
     
-    override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        m_FmodManager = new FmodManagerUI();
-        m_FmodManager.PlaySfx(m_SfxToPlay);
+        foreach (UISoundList sfx in m_SoundsToPlay)
+        {
+            m_FmodManager = new FmodManagerUI();
+            m_FmodManager.PlaySfx(sfx);
+        }
     }
 }

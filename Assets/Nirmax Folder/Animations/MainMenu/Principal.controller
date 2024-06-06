@@ -109,13 +109,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daba1400cd65447d487b9608026b7ed9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SfxToPlay:
-    Guid:
-      Data1: 683870929
-      Data2: 1201915780
-      Data3: 1724421256
-      Data4: -920733423
-    Path: event:/UI/UI_ShowMenu
+  m_SoundsToPlay: 08000000
 --- !u!91 &9100000
 AnimatorController:
   m_ObjectHideFlags: 0
@@ -184,13 +178,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daba1400cd65447d487b9608026b7ed9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SfxToPlay:
-    Guid:
-      Data1: 1333482775
-      Data2: 1230002447
-      Data3: 1142038206
-      Data4: 1807796941
-    Path: event:/UI/UI_HideMenu
+  m_SoundsToPlay: 02000000
 --- !u!1101 &5423742342955841388
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
