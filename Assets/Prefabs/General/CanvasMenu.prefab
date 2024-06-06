@@ -1039,9 +1039,9 @@ GameObject:
   - component: {fileID: 7408765517070079533}
   - component: {fileID: 7408765517070079523}
   - component: {fileID: 7408765517070079522}
-  - component: {fileID: 7408765517070079535}
   - component: {fileID: 7408765517070079534}
   - component: {fileID: 7408765517070079529}
+  - component: {fileID: 330734446}
   m_Layer: 5
   m_Name: Options
   m_TagString: UIButton
@@ -1177,39 +1177,6 @@ MonoBehaviour:
   isOver: 0
   amulet: {fileID: 7408765518744611883}
   amuletIsMoving: 0
---- !u!114 &7408765517070079535
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7408765517070079521}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12cd91da0abe84c03918838717c834de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SfxToPlayOnClick:
-    Guid:
-      Data1: -1566593556
-      Data2: 1247766832
-      Data3: -66308960
-      Data4: 1932147879
-    Path: event:/UI/UI_GenericClick
-  m_SfxToPlayOnHover:
-    Guid:
-      Data1: 1913370057
-      Data2: 1260338211
-      Data3: 1128232089
-      Data4: -1780341218
-    Path: event:/UI/UI_HoverSoundTickSound
-  m_SfxToPlayOnPointEnter:
-    Guid:
-      Data1: 252530479
-      Data2: 1316510704
-      Data3: 692509875
-      Data4: -793991016
-    Path: event:/UI/UI_MouseHover
 --- !u!114 &7408765517070079534
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1252,7 +1219,7 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 7408765517070079535}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Audio.UIButtonsSound, Assembly-CSharp
           m_MethodName: PointEnter
           m_Mode: 1
@@ -1280,7 +1247,7 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 7408765517070079535}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Audio.UIButtonsSound, Assembly-CSharp
           m_MethodName: PointExit
           m_Mode: 1
@@ -1296,7 +1263,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 7408765517070079535}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Audio.UIButtonsSound, Assembly-CSharp
           m_MethodName: OnMouseClick
           m_Mode: 1
@@ -1308,6 +1275,21 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!114 &330734446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7408765517070079521}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12cd91da0abe84c03918838717c834de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SoundToPlayOnClick: 01000000
+  m_SoundToPlayOnHover: 0300000004000000
+  m_SoundToPlayOnPointEnter: 
 --- !u!1 &7408765517078896066
 GameObject:
   m_ObjectHideFlags: 0
@@ -1650,27 +1632,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12cd91da0abe84c03918838717c834de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SfxToPlayOnClick:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
-  m_SfxToPlayOnHover:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
-  m_SfxToPlayOnPointEnter:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+  m_SoundToPlayOnClick: 
+  m_SoundToPlayOnHover: 
+  m_SoundToPlayOnPointEnter: 
 --- !u!1 &7408765517102806835
 GameObject:
   m_ObjectHideFlags: 0
@@ -2448,27 +2412,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12cd91da0abe84c03918838717c834de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SfxToPlayOnClick:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
-  m_SfxToPlayOnHover:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
-  m_SfxToPlayOnPointEnter:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+  m_SoundToPlayOnClick: 09000000
+  m_SoundToPlayOnHover: 03000000
+  m_SoundToPlayOnPointEnter: 
 --- !u!114 &7408765517172703516
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2498,51 +2444,15 @@ MonoBehaviour:
   - eventID: 9
     callback:
       m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 7408765517979398942}
-          m_TargetAssemblyTypeName: Audio.UIButtonsSound, Assembly-CSharp
-          m_MethodName: PointEnter
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+        m_Calls: []
   - eventID: 10
     callback:
       m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 7408765517979398942}
-          m_TargetAssemblyTypeName: Audio.UIButtonsSound, Assembly-CSharp
-          m_MethodName: PointExit
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+        m_Calls: []
   - eventID: 15
     callback:
       m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 7408765517979398942}
-          m_TargetAssemblyTypeName: Audio.UIButtonsSound, Assembly-CSharp
-          m_MethodName: OnMouseClick
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+        m_Calls: []
 --- !u!1 &7408765517202648516
 GameObject:
   m_ObjectHideFlags: 0
@@ -5156,8 +5066,8 @@ GameObject:
   - component: {fileID: 7408765517423315602}
   - component: {fileID: 7408765517423315603}
   - component: {fileID: 7408765517423315600}
-  - component: {fileID: 7408765517423315612}
   - component: {fileID: 7408765517423315601}
+  - component: {fileID: 2712521705009629854}
   m_Layer: 5
   m_Name: Play
   m_TagString: UIButton
@@ -5293,39 +5203,6 @@ MonoBehaviour:
   isOver: 0
   amulet: {fileID: 7408765518744611883}
   amuletIsMoving: 0
---- !u!114 &7408765517423315612
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7408765517423315607}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12cd91da0abe84c03918838717c834de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SfxToPlayOnClick:
-    Guid:
-      Data1: -1695129797
-      Data2: 1084570069
-      Data3: 1044358555
-      Data4: -1820044895
-    Path: event:/UI/UI_ClickPlayButton
-  m_SfxToPlayOnHover:
-    Guid:
-      Data1: 1913370057
-      Data2: 1260338211
-      Data3: 1128232089
-      Data4: -1780341218
-    Path: event:/UI/UI_HoverSoundTickSound
-  m_SfxToPlayOnPointEnter:
-    Guid:
-      Data1: 252530479
-      Data2: 1316510704
-      Data3: 692509875
-      Data4: -793991016
-    Path: event:/UI/UI_MouseHover
 --- !u!114 &7408765517423315601
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5343,20 +5220,8 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 7408765517423315600}
-          m_TargetAssemblyTypeName: View.UI.Amulets, Assembly-CSharp
-          m_MethodName: MoveAmulet
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 7408765517423315612}
-          m_TargetAssemblyTypeName: Audio.UIButtonsSound, Assembly-CSharp
+        - m_Target: {fileID: 0}
+          m_TargetAssemblyTypeName: MortalKombat.Audio.UIButtonsSound, Assembly-CSharp
           m_MethodName: PointEnter
           m_Mode: 1
           m_Arguments:
@@ -5383,34 +5248,21 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 7408765517423315612}
-          m_TargetAssemblyTypeName: Audio.UIButtonsSound, Assembly-CSharp
-          m_MethodName: PointExit
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - eventID: 15
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 7408765517423315612}
-          m_TargetAssemblyTypeName: Audio.UIButtonsSound, Assembly-CSharp
-          m_MethodName: OnMouseClick
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+--- !u!114 &2712521705009629854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7408765517423315607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12cd91da0abe84c03918838717c834de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SoundToPlayOnClick: 00000000
+  m_SoundToPlayOnHover: 0400000003000000
+  m_SoundToPlayOnPointEnter: 
 --- !u!1 &7408765517427164467
 GameObject:
   m_ObjectHideFlags: 0
@@ -9383,27 +9235,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12cd91da0abe84c03918838717c834de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SfxToPlayOnClick:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
-  m_SfxToPlayOnHover:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
-  m_SfxToPlayOnPointEnter:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+  m_SoundToPlayOnClick: 09000000
+  m_SoundToPlayOnHover: 03000000
+  m_SoundToPlayOnPointEnter: 
 --- !u!114 &7408765517979398937
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9433,51 +9267,15 @@ MonoBehaviour:
   - eventID: 9
     callback:
       m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 7408765517979398942}
-          m_TargetAssemblyTypeName: Audio.UIButtonsSound, Assembly-CSharp
-          m_MethodName: PointEnter
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+        m_Calls: []
   - eventID: 10
     callback:
       m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 7408765517979398942}
-          m_TargetAssemblyTypeName: Audio.UIButtonsSound, Assembly-CSharp
-          m_MethodName: PointExit
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+        m_Calls: []
   - eventID: 15
     callback:
       m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 7408765517979398942}
-          m_TargetAssemblyTypeName: Audio.UIButtonsSound, Assembly-CSharp
-          m_MethodName: OnMouseClick
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+        m_Calls: []
 --- !u!1 &7408765517981405288
 GameObject:
   m_ObjectHideFlags: 0
@@ -9659,8 +9457,8 @@ GameObject:
   - component: {fileID: 7408765517983630091}
   - component: {fileID: 7408765517983630089}
   - component: {fileID: 7408765517983630088}
-  - component: {fileID: 7408765517983630197}
   - component: {fileID: 7408765517983630196}
+  - component: {fileID: 1385592085}
   m_Layer: 5
   m_Name: Quit
   m_TagString: UIButton
@@ -9796,39 +9594,6 @@ MonoBehaviour:
   isOver: 0
   amulet: {fileID: 7408765518744611883}
   amuletIsMoving: 0
---- !u!114 &7408765517983630197
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7408765517983630095}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12cd91da0abe84c03918838717c834de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SfxToPlayOnClick:
-    Guid:
-      Data1: -1566593556
-      Data2: 1247766832
-      Data3: -66308960
-      Data4: 1932147879
-    Path: event:/UI/UI_GenericClick
-  m_SfxToPlayOnHover:
-    Guid:
-      Data1: 1913370057
-      Data2: 1260338211
-      Data3: 1128232089
-      Data4: -1780341218
-    Path: event:/UI/UI_HoverSoundTickSound
-  m_SfxToPlayOnPointEnter:
-    Guid:
-      Data1: 252530479
-      Data2: 1316510704
-      Data3: 692509875
-      Data4: -793991016
-    Path: event:/UI/UI_MouseHover
 --- !u!114 &7408765517983630196
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9858,7 +9623,7 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 7408765517983630197}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Audio.UIButtonsSound, Assembly-CSharp
           m_MethodName: PointEnter
           m_Mode: 1
@@ -9886,7 +9651,7 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 7408765517983630197}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Audio.UIButtonsSound, Assembly-CSharp
           m_MethodName: PointExit
           m_Mode: 1
@@ -9902,7 +9667,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 7408765517983630197}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Audio.UIButtonsSound, Assembly-CSharp
           m_MethodName: OnMouseClick
           m_Mode: 1
@@ -9914,6 +9679,21 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!114 &1385592085
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7408765517983630095}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12cd91da0abe84c03918838717c834de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SoundToPlayOnClick: 01000000
+  m_SoundToPlayOnHover: 0300000004000000
+  m_SoundToPlayOnPointEnter: 
 --- !u!1 &7408765517985207232
 GameObject:
   m_ObjectHideFlags: 0
@@ -10178,27 +9958,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12cd91da0abe84c03918838717c834de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SfxToPlayOnClick:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
-  m_SfxToPlayOnHover:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
-  m_SfxToPlayOnPointEnter:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+  m_SoundToPlayOnClick: 
+  m_SoundToPlayOnHover: 
+  m_SoundToPlayOnPointEnter: 
 --- !u!1 &7408765518010576109
 GameObject:
   m_ObjectHideFlags: 0
@@ -14169,8 +13931,8 @@ GameObject:
   - component: {fileID: 7408765518545510206}
   - component: {fileID: 7408765518545510204}
   - component: {fileID: 7408765518545510207}
-  - component: {fileID: 7408765518545510200}
   - component: {fileID: 7408765518545510203}
+  - component: {fileID: 1270280262}
   m_Layer: 5
   m_Name: Credits
   m_TagString: UIButton
@@ -14294,39 +14056,6 @@ MonoBehaviour:
   isOver: 0
   amulet: {fileID: 7408765518744611883}
   amuletIsMoving: 0
---- !u!114 &7408765518545510200
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7408765518545510194}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12cd91da0abe84c03918838717c834de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SfxToPlayOnClick:
-    Guid:
-      Data1: -1566593556
-      Data2: 1247766832
-      Data3: -66308960
-      Data4: 1932147879
-    Path: event:/UI/UI_GenericClick
-  m_SfxToPlayOnHover:
-    Guid:
-      Data1: 1913370057
-      Data2: 1260338211
-      Data3: 1128232089
-      Data4: -1780341218
-    Path: event:/UI/UI_HoverSoundTickSound
-  m_SfxToPlayOnPointEnter:
-    Guid:
-      Data1: 252530479
-      Data2: 1316510704
-      Data3: 692509875
-      Data4: -793991016
-    Path: event:/UI/UI_MouseHover
 --- !u!114 &7408765518545510203
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14356,7 +14085,7 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 7408765518545510200}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Audio.UIButtonsSound, Assembly-CSharp
           m_MethodName: PointEnter
           m_Mode: 1
@@ -14384,7 +14113,7 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 7408765518545510200}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Audio.UIButtonsSound, Assembly-CSharp
           m_MethodName: PointExit
           m_Mode: 1
@@ -14400,7 +14129,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 7408765518545510200}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Audio.UIButtonsSound, Assembly-CSharp
           m_MethodName: OnMouseClick
           m_Mode: 1
@@ -14412,6 +14141,21 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!114 &1270280262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7408765518545510194}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12cd91da0abe84c03918838717c834de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SoundToPlayOnClick: 01000000
+  m_SoundToPlayOnHover: 0300000004000000
+  m_SoundToPlayOnPointEnter: 
 --- !u!1 &7408765518555207657
 GameObject:
   m_ObjectHideFlags: 0
@@ -15196,27 +14940,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12cd91da0abe84c03918838717c834de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SfxToPlayOnClick:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
-  m_SfxToPlayOnHover:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
-  m_SfxToPlayOnPointEnter:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+  m_SoundToPlayOnClick: 01000000
+  m_SoundToPlayOnHover: 04000000
+  m_SoundToPlayOnPointEnter: 
 --- !u!114 &7408765518608783393
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16209,8 +15935,8 @@ GameObject:
   - component: {fileID: 7408765518715701235}
   - component: {fileID: 7408765518715701233}
   - component: {fileID: 7408765518715701232}
-  - component: {fileID: 7408765518715701245}
   - component: {fileID: 7408765518715701244}
+  - component: {fileID: 1406861199}
   m_Layer: 5
   m_Name: Extras
   m_TagString: UIButton
@@ -16358,39 +16084,6 @@ MonoBehaviour:
   isOver: 0
   amulet: {fileID: 7408765518744611883}
   amuletIsMoving: 0
---- !u!114 &7408765518715701245
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7408765518715701239}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12cd91da0abe84c03918838717c834de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SfxToPlayOnClick:
-    Guid:
-      Data1: -1566593556
-      Data2: 1247766832
-      Data3: -66308960
-      Data4: 1932147879
-    Path: event:/UI/UI_GenericClick
-  m_SfxToPlayOnHover:
-    Guid:
-      Data1: 1913370057
-      Data2: 1260338211
-      Data3: 1128232089
-      Data4: -1780341218
-    Path: event:/UI/UI_HoverSoundTickSound
-  m_SfxToPlayOnPointEnter:
-    Guid:
-      Data1: 252530479
-      Data2: 1316510704
-      Data3: 692509875
-      Data4: -793991016
-    Path: event:/UI/UI_MouseHover
 --- !u!114 &7408765518715701244
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16420,18 +16113,6 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 7408765518715701245}
-          m_TargetAssemblyTypeName: Audio.UIButtonsSound, Assembly-CSharp
-          m_MethodName: PointEnter
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
   - eventID: 10
     callback:
       m_PersistentCalls:
@@ -16448,23 +16129,11 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 7408765518715701245}
-          m_TargetAssemblyTypeName: Audio.UIButtonsSound, Assembly-CSharp
-          m_MethodName: PointExit
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
   - eventID: 15
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 7408765518715701245}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: Audio.UIButtonsSound, Assembly-CSharp
           m_MethodName: OnMouseClick
           m_Mode: 1
@@ -16476,6 +16145,21 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!114 &1406861199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7408765518715701239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12cd91da0abe84c03918838717c834de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SoundToPlayOnClick: 01000000
+  m_SoundToPlayOnHover: 0300000004000000
+  m_SoundToPlayOnPointEnter: 
 --- !u!1 &7408765518742306378
 GameObject:
   m_ObjectHideFlags: 0
@@ -17088,27 +16772,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12cd91da0abe84c03918838717c834de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SfxToPlayOnClick:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
-  m_SfxToPlayOnHover:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
-  m_SfxToPlayOnPointEnter:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+  m_SoundToPlayOnClick: 09000000
+  m_SoundToPlayOnHover: 03000000
+  m_SoundToPlayOnPointEnter: 
 --- !u!114 &7408765518785828621
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17138,35 +16804,11 @@ MonoBehaviour:
   - eventID: 9
     callback:
       m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 7408765518785828610}
-          m_TargetAssemblyTypeName: Audio.UIButtonsSound, Assembly-CSharp
-          m_MethodName: PointEnter
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+        m_Calls: []
   - eventID: 10
     callback:
       m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 7408765518785828610}
-          m_TargetAssemblyTypeName: Audio.UIButtonsSound, Assembly-CSharp
-          m_MethodName: PointExit
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+        m_Calls: []
 --- !u!1 &7408765518792706101
 GameObject:
   m_ObjectHideFlags: 0
@@ -18142,27 +17784,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12cd91da0abe84c03918838717c834de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SfxToPlayOnClick:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
-  m_SfxToPlayOnHover:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
-  m_SfxToPlayOnPointEnter:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+  m_SoundToPlayOnClick: 
+  m_SoundToPlayOnHover: 
+  m_SoundToPlayOnPointEnter: 
 --- !u!1 &7408765518921783194
 GameObject:
   m_ObjectHideFlags: 0

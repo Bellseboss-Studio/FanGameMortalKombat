@@ -1,15 +1,14 @@
 public enum UISoundList
 {
     // UI Sounds 0-99
-    UI_Button_BaseShort,
-    UI_MouseHover,
-    UI_ClickPlayButton,
-    UI_GenericClick,
-    UI_Button_HideMenu,
-    UI_Button_HoverMouseTick,
-    UI_Button_HoverTop,
-    UI_Button_ShowMenu,
-    UI_Button_Tick,
-    
-    
+    UI_ClickPlayButton = 0,
+    UI_GenericClick = 1,
+    UI_HideMenu = 2,
+    UI_HoverMouseTick = 3,
+    UI_MouseHover = 4,
+    UI_ShowExtras = 5,
+    UI_Button_Tick = 6,
+    UI_HoverTop = 7,
+    UI_ShowMenu = 8,
+    UI_ClickOnOptionsMenu = 9
 }

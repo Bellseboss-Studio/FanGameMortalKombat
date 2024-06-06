@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-6366329211887951662
+--- !u!114 &-8707804262374614468
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10,23 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/UI/UI_HoverSoundTickSound
+  m_Name: event:/UI/UI_ShowExtras
   m_EditorClassIdentifier: 
-  Path: event:/UI/UI_HoverSoundTickSound
+  Path: event:/UI/UI_ShowExtras
   Guid:
-    Data1: 1913370057
-    Data2: 1260338211
-    Data3: 1128232089
-    Data4: -1780341218
+    Data1: 1221997498
+    Data2: 1175889769
+    Data3: 41285765
+    Data4: -1191591345
   Banks:
-  - {fileID: 574385842088845551}
+  - {fileID: 5672063328294751724}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 0
+  Length: 2922
 --- !u!114 &-5760980517981328603
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46,7 +46,7 @@ MonoBehaviour:
     Data3: 1724421256
     Data4: -920733423
   Banks:
-  - {fileID: 574385842088845551}
+  - {fileID: 5672063328294751724}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -54,7 +54,7 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 2926
---- !u!114 &-4679458894826428827
+--- !u!114 &-4958647539326734881
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -63,24 +63,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Test/Test_Event
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.strings.bank
   m_EditorClassIdentifier: 
-  Path: event:/Test/Test_Event
-  Guid:
-    Data1: -1959309059
-    Data2: 1110812995
-    Data3: 246119833
-    Data4: -87746157
-  Banks:
-  - {fileID: 574385842088845551}
-  IsStream: 0
-  Is3D: 1
-  IsOneShot: 1
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 0
+  Path: Assets/Bellseboss/Ivan/fmod/Desktop/Master.strings.bank
+  Name: Master.strings
+  StudioPath: bank:/Master.strings
+  lastModified: 638532155560000000
+  FileSizes:
+  - Name: 
+    Value: 1158
+  Exists: 1
 --- !u!114 &-3004351267505534595
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -100,7 +93,7 @@ MonoBehaviour:
     Data3: 1044358555
     Data4: -1820044895
   Banks:
-  - {fileID: 574385842088845551}
+  - {fileID: 5672063328294751724}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -127,7 +120,7 @@ MonoBehaviour:
     Data3: -66308960
     Data4: 1932147879
   Banks:
-  - {fileID: 574385842088845551}
+  - {fileID: 5672063328294751724}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -135,7 +128,7 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 833
---- !u!114 &-1632965871059945763
+--- !u!114 &-412211268368833300
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -144,17 +137,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
-  m_Name: bank:/Master.strings.bank
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/UI/UI_ClickOnOptionsMenu
   m_EditorClassIdentifier: 
-  Path: FanGameMK_FMOD/Build/Desktop/Master.strings.bank
-  Name: Master.strings
-  StudioPath: bank:/Master.strings
-  lastModified: 638531252520000000
-  FileSizes:
-  - Name: Desktop
-    Value: 1064
-  Exists: 1
+  Path: event:/UI/UI_ClickOnOptionsMenu
+  Guid:
+    Data1: -1548041608
+    Data2: 1316394340
+    Data3: -664634740
+    Data4: 1700141274
+  Banks:
+  - {fileID: 5672063328294751724}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 540
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -168,24 +168,26 @@ MonoBehaviour:
   m_Name: FMODStudioCache
   m_EditorClassIdentifier: 
   EditorBanks:
-  - {fileID: -1632965871059945763}
-  - {fileID: 574385842088845551}
+  - {fileID: -4958647539326734881}
+  - {fileID: 5672063328294751724}
   EditorEvents:
-  - {fileID: -4679458894826428827}
   - {fileID: -5760980517981328603}
   - {fileID: 2890349358067459249}
   - {fileID: 7077952000015967259}
   - {fileID: -3004351267505534595}
-  - {fileID: -6366329211887951662}
   - {fileID: -1787370147418265803}
+  - {fileID: 2470628644653391668}
+  - {fileID: -8707804262374614468}
+  - {fileID: 6924931413938101846}
+  - {fileID: -412211268368833300}
   EditorParameters: []
   MasterBanks:
-  - {fileID: 574385842088845551}
+  - {fileID: 5672063328294751724}
   StringsBanks:
-  - {fileID: -1632965871059945763}
-  cacheTime: 638531252520000000
+  - {fileID: -4958647539326734881}
+  cacheTime: 638532155560000000
   cacheVersion: 131618
---- !u!114 &574385842088845551
+--- !u!114 &2470628644653391668
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -194,17 +196,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
-  m_Name: bank:/Master.bank
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Test/Beep
   m_EditorClassIdentifier: 
-  Path: FanGameMK_FMOD/Build/Desktop/Master.bank
-  Name: Master
-  StudioPath: bank:/Master
-  lastModified: 638531252520000000
-  FileSizes:
-  - Name: Desktop
-    Value: 116896
-  Exists: 1
+  Path: event:/Test/Beep
+  Guid:
+    Data1: -1959309059
+    Data2: 1110812995
+    Data3: 246119833
+    Data4: -87746157
+  Banks:
+  - {fileID: 5672063328294751724}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 115
 --- !u!114 &2890349358067459249
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -224,7 +233,7 @@ MonoBehaviour:
     Data3: 1142038206
     Data4: 1807796941
   Banks:
-  - {fileID: 574385842088845551}
+  - {fileID: 5672063328294751724}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -232,6 +241,51 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 1183
+--- !u!114 &5672063328294751724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.bank
+  m_EditorClassIdentifier: 
+  Path: Assets/Bellseboss/Ivan/fmod/Desktop/Master.bank
+  Name: Master
+  StudioPath: bank:/Master
+  lastModified: 638532155560000000
+  FileSizes: []
+  Exists: 1
+--- !u!114 &6924931413938101846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/UI/UI_HoverMouseTick
+  m_EditorClassIdentifier: 
+  Path: event:/UI/UI_HoverMouseTick
+  Guid:
+    Data1: 1913370057
+    Data2: 1260338211
+    Data3: 1128232089
+    Data4: -1780341218
+  Banks:
+  - {fileID: 5672063328294751724}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &7077952000015967259
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -251,7 +305,7 @@ MonoBehaviour:
     Data3: 692509875
     Data4: -793991016
   Banks:
-  - {fileID: 574385842088845551}
+  - {fileID: 5672063328294751724}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
