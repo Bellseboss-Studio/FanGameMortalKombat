@@ -30,22 +30,15 @@ namespace ServiceLocatorPath
             if (!isTransitioningToMainMenu)
             {
                 ClientStateAudio.Instance.ChangeSceneSnapshot(isInPause ? GameStates.Paused : GameStates.MainScene);
-                MxManager.Instance.ChangeSceneMx(isInPause? GameStates.Paused : GameStates.MainScene);
             }
-            
         }
-        
-        
 
         public void Exit()
         {
             SceneManager.LoadScene(0);
             ClientStateAudio.Instance.ChangeSceneSnapshot(GameStates.MainMenu);
-            MxManager.Instance.ChangeSceneMx(GameStates.MainMenu);
-            SfxManager.Instance.ChangeSceneAmbient(GameStates.MainMenu);
             isTransitioningToMainMenu = true;
             Pause();
         }
-
     }
 }
