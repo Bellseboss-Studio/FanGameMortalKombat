@@ -232,7 +232,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 8530088935945196260}
   m_Direction: 0
   m_Value: 0
-  m_Size: 0.99999994
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -327,6 +327,7 @@ GameObject:
   - component: {fileID: 3155522442459861653}
   - component: {fileID: 7391834816271485974}
   - component: {fileID: 6629949325510375497}
+  - component: {fileID: 6332612929320606233}
   m_Layer: 5
   m_Name: ButtonBack
   m_TagString: Untagged
@@ -461,6 +462,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   newInputSelected: {fileID: 7408765517423315607}
+--- !u!114 &6332612929320606233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3644389380386083506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12cd91da0abe84c03918838717c834de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SoundToPlayOnClick: 01000000
+  m_SoundToPlayOnHover: 09000000
+  m_SoundToPlayOnPointEnter: 
 --- !u!1 &4780449646163624426
 GameObject:
   m_ObjectHideFlags: 0
@@ -1821,27 +1837,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12cd91da0abe84c03918838717c834de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SfxToPlayOnClick:
-    Guid:
-      Data1: -1566593556
-      Data2: 1247766832
-      Data3: -66308960
-      Data4: 1932147879
-    Path: event:/UI/UI_GenericClick
-  m_SfxToPlayOnHover:
-    Guid:
-      Data1: 1913370057
-      Data2: 1260338211
-      Data3: 1128232089
-      Data4: -1780341218
-    Path: event:/UI/UI_HoverSoundTickSound
-  m_SfxToPlayOnPointEnter:
-    Guid:
-      Data1: 252530479
-      Data2: 1316510704
-      Data3: 692509875
-      Data4: -793991016
-    Path: event:/UI/UI_MouseHover
+  m_SoundToPlayOnClick: 01000000
+  m_SoundToPlayOnHover: 03000000
+  m_SoundToPlayOnPointEnter: 
 --- !u!114 &7408765517070079534
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1884,18 +1882,6 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 7408765517070079535}
-          m_TargetAssemblyTypeName: Audio.UIButtonsSound, Assembly-CSharp
-          m_MethodName: PointEnter
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
   - eventID: 10
     callback:
       m_PersistentCalls:
@@ -1912,34 +1898,10 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 7408765517070079535}
-          m_TargetAssemblyTypeName: Audio.UIButtonsSound, Assembly-CSharp
-          m_MethodName: PointExit
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
   - eventID: 15
     callback:
       m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 7408765517070079535}
-          m_TargetAssemblyTypeName: Audio.UIButtonsSound, Assembly-CSharp
-          m_MethodName: OnMouseClick
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+        m_Calls: []
 --- !u!1 &7408765517078896066
 GameObject:
   m_ObjectHideFlags: 0
@@ -2282,27 +2244,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12cd91da0abe84c03918838717c834de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SfxToPlayOnClick:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
-  m_SfxToPlayOnHover:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
-  m_SfxToPlayOnPointEnter:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+  m_SoundToPlayOnClick: 
+  m_SoundToPlayOnHover: 
+  m_SoundToPlayOnPointEnter: 
 --- !u!1 &7408765517102806835
 GameObject:
   m_ObjectHideFlags: 0
@@ -2847,7 +2791,6 @@ GameObject:
   - component: {fileID: 7408765517172703504}
   - component: {fileID: 7408765517172703517}
   - component: {fileID: 7408765517172703516}
-  - component: {fileID: 7408765517172703519}
   m_Layer: 5
   m_Name: Controls
   m_TagString: Untagged
@@ -3005,27 +2948,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12cd91da0abe84c03918838717c834de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SfxToPlayOnClick:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
-  m_SfxToPlayOnHover:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
-  m_SfxToPlayOnPointEnter:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+  m_SoundToPlayOnClick: 09000000
+  m_SoundToPlayOnHover: 
+  m_SoundToPlayOnPointEnter: 
 --- !u!114 &7408765517172703516
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3039,67 +2964,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   newInputSelected: {fileID: 7408765517100128465}
---- !u!114 &7408765517172703519
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7408765517172703510}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Delegates:
-  - eventID: 9
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 7408765517979398942}
-          m_TargetAssemblyTypeName: Audio.UIButtonsSound, Assembly-CSharp
-          m_MethodName: PointEnter
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - eventID: 10
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 7408765517979398942}
-          m_TargetAssemblyTypeName: Audio.UIButtonsSound, Assembly-CSharp
-          m_MethodName: PointExit
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - eventID: 15
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 7408765517979398942}
-          m_TargetAssemblyTypeName: Audio.UIButtonsSound, Assembly-CSharp
-          m_MethodName: OnMouseClick
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
 --- !u!1 &7408765517204285295
 GameObject:
   m_ObjectHideFlags: 0
@@ -5289,27 +5153,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12cd91da0abe84c03918838717c834de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SfxToPlayOnClick:
-    Guid:
-      Data1: -1695129797
-      Data2: 1084570069
-      Data3: 1044358555
-      Data4: -1820044895
-    Path: event:/UI/UI_ClickPlayButton
-  m_SfxToPlayOnHover:
-    Guid:
-      Data1: 1913370057
-      Data2: 1260338211
-      Data3: 1128232089
-      Data4: -1780341218
-    Path: event:/UI/UI_HoverSoundTickSound
-  m_SfxToPlayOnPointEnter:
-    Guid:
-      Data1: 252530479
-      Data2: 1316510704
-      Data3: 692509875
-      Data4: -793991016
-    Path: event:/UI/UI_MouseHover
+  m_SoundToPlayOnClick: 00000000
+  m_SoundToPlayOnHover: 03000000
+  m_SoundToPlayOnPointEnter: 
 --- !u!114 &7408765517423315601
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5339,18 +5185,6 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 7408765517423315612}
-          m_TargetAssemblyTypeName: Audio.UIButtonsSound, Assembly-CSharp
-          m_MethodName: PointEnter
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
   - eventID: 10
     callback:
       m_PersistentCalls:
@@ -5367,34 +5201,10 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 7408765517423315612}
-          m_TargetAssemblyTypeName: Audio.UIButtonsSound, Assembly-CSharp
-          m_MethodName: PointExit
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
   - eventID: 15
     callback:
       m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 7408765517423315612}
-          m_TargetAssemblyTypeName: Audio.UIButtonsSound, Assembly-CSharp
-          m_MethodName: OnMouseClick
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+        m_Calls: []
 --- !u!1 &7408765517427164467
 GameObject:
   m_ObjectHideFlags: 0
@@ -8206,7 +8016,6 @@ GameObject:
   - component: {fileID: 7408765517979398941}
   - component: {fileID: 7408765517979398942}
   - component: {fileID: 7408765517979398937}
-  - component: {fileID: 7408765517979398936}
   m_Layer: 5
   m_Name: Audio
   m_TagString: Untagged
@@ -8365,27 +8174,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12cd91da0abe84c03918838717c834de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SfxToPlayOnClick:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
-  m_SfxToPlayOnHover:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
-  m_SfxToPlayOnPointEnter:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+  m_SoundToPlayOnClick: 09000000
+  m_SoundToPlayOnHover: 
+  m_SoundToPlayOnPointEnter: 
 --- !u!114 &7408765517979398937
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8399,67 +8190,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   newInputSelected: {fileID: 7408765519130972537}
---- !u!114 &7408765517979398936
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7408765517979398931}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Delegates:
-  - eventID: 9
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 7408765517979398942}
-          m_TargetAssemblyTypeName: Audio.UIButtonsSound, Assembly-CSharp
-          m_MethodName: PointEnter
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - eventID: 10
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 7408765517979398942}
-          m_TargetAssemblyTypeName: Audio.UIButtonsSound, Assembly-CSharp
-          m_MethodName: PointExit
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - eventID: 15
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 7408765517979398942}
-          m_TargetAssemblyTypeName: Audio.UIButtonsSound, Assembly-CSharp
-          m_MethodName: OnMouseClick
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
 --- !u!1 &7408765517981405288
 GameObject:
   m_ObjectHideFlags: 0
@@ -8697,27 +8427,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12cd91da0abe84c03918838717c834de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SfxToPlayOnClick:
-    Guid:
-      Data1: -1566593556
-      Data2: 1247766832
-      Data3: -66308960
-      Data4: 1932147879
-    Path: event:/UI/UI_GenericClick
-  m_SfxToPlayOnHover:
-    Guid:
-      Data1: 1913370057
-      Data2: 1260338211
-      Data3: 1128232089
-      Data4: -1780341218
-    Path: event:/UI/UI_HoverSoundTickSound
-  m_SfxToPlayOnPointEnter:
-    Guid:
-      Data1: 252530479
-      Data2: 1316510704
-      Data3: 692509875
-      Data4: -793991016
-    Path: event:/UI/UI_MouseHover
+  m_SoundToPlayOnClick: 01000000
+  m_SoundToPlayOnHover: 03000000
+  m_SoundToPlayOnPointEnter: 
 --- !u!114 &7408765517983630196
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8747,18 +8459,6 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 7408765517983630197}
-          m_TargetAssemblyTypeName: Audio.UIButtonsSound, Assembly-CSharp
-          m_MethodName: PointEnter
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
   - eventID: 10
     callback:
       m_PersistentCalls:
@@ -8775,34 +8475,10 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 7408765517983630197}
-          m_TargetAssemblyTypeName: Audio.UIButtonsSound, Assembly-CSharp
-          m_MethodName: PointExit
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
   - eventID: 15
     callback:
       m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 7408765517983630197}
-          m_TargetAssemblyTypeName: Audio.UIButtonsSound, Assembly-CSharp
-          m_MethodName: OnMouseClick
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+        m_Calls: []
 --- !u!1 &7408765517985207232
 GameObject:
   m_ObjectHideFlags: 0
@@ -9067,27 +8743,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12cd91da0abe84c03918838717c834de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SfxToPlayOnClick:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
-  m_SfxToPlayOnHover:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
-  m_SfxToPlayOnPointEnter:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+  m_SoundToPlayOnClick: 
+  m_SoundToPlayOnHover: 
+  m_SoundToPlayOnPointEnter: 
 --- !u!1 &7408765518010576109
 GameObject:
   m_ObjectHideFlags: 0
@@ -11539,8 +11197,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7408765518528052111}
   - component: {fileID: 7408765518528052110}
-  - component: {fileID: 7408765518528052105}
-  - component: {fileID: 7408765518528052104}
+  - component: {fileID: 3868575510698178561}
   m_Layer: 5
   m_Name: SfxVol
   m_TagString: Untagged
@@ -11620,20 +11277,8 @@ MonoBehaviour:
   m_Value: 0.0001
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7408765518528052105}
-        m_TargetAssemblyTypeName: SetFaderLevel, Assembly-CSharp
-        m_MethodName: SetVolume
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &7408765518528052105
+      m_Calls: []
+--- !u!114 &3868575510698178561
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -11642,63 +11287,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 7408765518528052108}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eff0c7334952d4ad98b5b1db9078dd2d, type: 3}
+  m_Script: {fileID: 11500000, guid: 7abd95e56ae0040e1ac1b12c3212eb7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Slider: {fileID: 7408765518528052110}
-  m_FaderToControl: SfxVol
-  m_StartingValue: 1
-  m_CurrentValue: 0
-  m_Mixer: {fileID: 24100000, guid: 06bcc6ae4aba94669942571f8fba03be, type: 2}
---- !u!114 &7408765518528052104
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7408765518528052108}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Delegates:
-  - eventID: 9
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 7408765517979398942}
-          m_TargetAssemblyTypeName: Audio.UIButtonsSound, Assembly-CSharp
-          m_MethodName: PointEnter
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - eventID: 10
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 7408765517979398942}
-          m_TargetAssemblyTypeName: Audio.UIButtonsSound, Assembly-CSharp
-          m_MethodName: PointExit
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - eventID: 15
-    callback:
-      m_PersistentCalls:
-        m_Calls: []
+  volumeSlider: {fileID: 7408765518528052110}
+  busToControl: vca:/Sounds
+  playerPrefKey: SoundsVolume
 --- !u!1 &7408765518545510194
 GameObject:
   m_ObjectHideFlags: 0
@@ -11849,27 +11443,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12cd91da0abe84c03918838717c834de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SfxToPlayOnClick:
-    Guid:
-      Data1: -1566593556
-      Data2: 1247766832
-      Data3: -66308960
-      Data4: 1932147879
-    Path: event:/UI/UI_GenericClick
-  m_SfxToPlayOnHover:
-    Guid:
-      Data1: 1913370057
-      Data2: 1260338211
-      Data3: 1128232089
-      Data4: -1780341218
-    Path: event:/UI/UI_HoverSoundTickSound
-  m_SfxToPlayOnPointEnter:
-    Guid:
-      Data1: 252530479
-      Data2: 1316510704
-      Data3: 692509875
-      Data4: -793991016
-    Path: event:/UI/UI_MouseHover
+  m_SoundToPlayOnClick: 01000000
+  m_SoundToPlayOnHover: 03000000
+  m_SoundToPlayOnPointEnter: 
 --- !u!114 &7408765518545510203
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11899,18 +11475,6 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 7408765518545510200}
-          m_TargetAssemblyTypeName: Audio.UIButtonsSound, Assembly-CSharp
-          m_MethodName: PointEnter
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
   - eventID: 10
     callback:
       m_PersistentCalls:
@@ -11927,34 +11491,10 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 7408765518545510200}
-          m_TargetAssemblyTypeName: Audio.UIButtonsSound, Assembly-CSharp
-          m_MethodName: PointExit
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
   - eventID: 15
     callback:
       m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 7408765518545510200}
-          m_TargetAssemblyTypeName: Audio.UIButtonsSound, Assembly-CSharp
-          m_MethodName: OnMouseClick
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+        m_Calls: []
 --- !u!1 &7408765518557922264
 GameObject:
   m_ObjectHideFlags: 0
@@ -12259,27 +11799,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12cd91da0abe84c03918838717c834de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SfxToPlayOnClick:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
-  m_SfxToPlayOnHover:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
-  m_SfxToPlayOnPointEnter:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+  m_SoundToPlayOnClick: 01000000
+  m_SoundToPlayOnHover: 04000000
+  m_SoundToPlayOnPointEnter: 
 --- !u!114 &7408765518608783393
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13434,27 +12956,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12cd91da0abe84c03918838717c834de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SfxToPlayOnClick:
-    Guid:
-      Data1: -1566593556
-      Data2: 1247766832
-      Data3: -66308960
-      Data4: 1932147879
-    Path: event:/UI/UI_GenericClick
-  m_SfxToPlayOnHover:
-    Guid:
-      Data1: 1913370057
-      Data2: 1260338211
-      Data3: 1128232089
-      Data4: -1780341218
-    Path: event:/UI/UI_HoverSoundTickSound
-  m_SfxToPlayOnPointEnter:
-    Guid:
-      Data1: 252530479
-      Data2: 1316510704
-      Data3: 692509875
-      Data4: -793991016
-    Path: event:/UI/UI_MouseHover
+  m_SoundToPlayOnClick: 01000000
+  m_SoundToPlayOnHover: 03000000
+  m_SoundToPlayOnPointEnter: 
 --- !u!114 &7408765518715701244
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13484,18 +12988,6 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 7408765518715701245}
-          m_TargetAssemblyTypeName: Audio.UIButtonsSound, Assembly-CSharp
-          m_MethodName: PointEnter
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
   - eventID: 10
     callback:
       m_PersistentCalls:
@@ -13512,34 +13004,10 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 7408765518715701245}
-          m_TargetAssemblyTypeName: Audio.UIButtonsSound, Assembly-CSharp
-          m_MethodName: PointExit
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
   - eventID: 15
     callback:
       m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 7408765518715701245}
-          m_TargetAssemblyTypeName: Audio.UIButtonsSound, Assembly-CSharp
-          m_MethodName: OnMouseClick
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+        m_Calls: []
 --- !u!114 &3477433293252510404
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13794,7 +13262,6 @@ GameObject:
   - component: {fileID: 7408765518785828609}
   - component: {fileID: 7408765518785828610}
   - component: {fileID: 7408765518785828621}
-  - component: {fileID: 7408765518785828620}
   m_Layer: 5
   m_Name: Video
   m_TagString: Untagged
@@ -13952,27 +13419,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12cd91da0abe84c03918838717c834de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SfxToPlayOnClick:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
-  m_SfxToPlayOnHover:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
-  m_SfxToPlayOnPointEnter:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+  m_SoundToPlayOnClick: 09000000
+  m_SoundToPlayOnHover: 
+  m_SoundToPlayOnPointEnter: 
 --- !u!114 &7408765518785828621
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13986,51 +13435,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   newInputSelected: {fileID: 7408765519021998988}
---- !u!114 &7408765518785828620
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7408765518785828615}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Delegates:
-  - eventID: 9
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 7408765518785828610}
-          m_TargetAssemblyTypeName: Audio.UIButtonsSound, Assembly-CSharp
-          m_MethodName: PointEnter
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - eventID: 10
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 7408765518785828610}
-          m_TargetAssemblyTypeName: Audio.UIButtonsSound, Assembly-CSharp
-          m_MethodName: PointExit
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
 --- !u!1 &7408765518792706101
 GameObject:
   m_ObjectHideFlags: 0
@@ -14615,27 +14019,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12cd91da0abe84c03918838717c834de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SfxToPlayOnClick:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
-  m_SfxToPlayOnHover:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
-  m_SfxToPlayOnPointEnter:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+  m_SoundToPlayOnClick: 
+  m_SoundToPlayOnHover: 
+  m_SoundToPlayOnPointEnter: 
 --- !u!1 &7408765518980234395
 GameObject:
   m_ObjectHideFlags: 0
@@ -15534,8 +14920,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7408765519070449916}
   - component: {fileID: 7408765519070449918}
-  - component: {fileID: 7408765519070449919}
-  - component: {fileID: 7408765519070449913}
+  - component: {fileID: 6516252092481813015}
   m_Layer: 5
   m_Name: DxVol
   m_TagString: Untagged
@@ -15615,20 +15000,8 @@ MonoBehaviour:
   m_Value: 0.0001
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7408765519070449919}
-        m_TargetAssemblyTypeName: SetFaderLevel, Assembly-CSharp
-        m_MethodName: SetVolume
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &7408765519070449919
+      m_Calls: []
+--- !u!114 &6516252092481813015
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -15637,63 +15010,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 7408765519070449917}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f4440e7719f6425bb70a32eeeede6df, type: 3}
+  m_Script: {fileID: 11500000, guid: 7abd95e56ae0040e1ac1b12c3212eb7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Slider: {fileID: 7408765519070449918}
-  m_FaderToControl: DxVol
-  m_StartingValue: 1
-  m_CurrentValue: 0
-  m_Mixer: {fileID: 24100000, guid: 06bcc6ae4aba94669942571f8fba03be, type: 2}
---- !u!114 &7408765519070449913
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7408765519070449917}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Delegates:
-  - eventID: 9
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 7408765517979398942}
-          m_TargetAssemblyTypeName: Audio.UIButtonsSound, Assembly-CSharp
-          m_MethodName: PointEnter
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - eventID: 10
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 7408765517979398942}
-          m_TargetAssemblyTypeName: Audio.UIButtonsSound, Assembly-CSharp
-          m_MethodName: PointExit
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - eventID: 15
-    callback:
-      m_PersistentCalls:
-        m_Calls: []
+  volumeSlider: {fileID: 7408765519070449918}
+  busToControl: vca:/Dialogue
+  playerPrefKey: DialogueVolume
 --- !u!1 &7408765519086102285
 GameObject:
   m_ObjectHideFlags: 0
@@ -15913,8 +15235,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7408765519088130418}
   - component: {fileID: 7408765519088130428}
-  - component: {fileID: 7408765519088130429}
-  - component: {fileID: 7408765519088130431}
+  - component: {fileID: 3209778228880684126}
   m_Layer: 5
   m_Name: MxVol
   m_TagString: Untagged
@@ -15994,20 +15315,8 @@ MonoBehaviour:
   m_Value: 0.0001
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7408765519088130429}
-        m_TargetAssemblyTypeName: SetFaderLevel, Assembly-CSharp
-        m_MethodName: SetVolume
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &7408765519088130429
+      m_Calls: []
+--- !u!114 &3209778228880684126
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -16016,63 +15325,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 7408765519088130419}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b0d5d772461d4c9dbda003d883374bc, type: 3}
+  m_Script: {fileID: 11500000, guid: 7abd95e56ae0040e1ac1b12c3212eb7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Slider: {fileID: 7408765519088130428}
-  m_FaderToControl: MxVol
-  m_StartingValue: 1
-  m_CurrentValue: 1
-  m_Mixer: {fileID: 24100000, guid: 06bcc6ae4aba94669942571f8fba03be, type: 2}
---- !u!114 &7408765519088130431
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7408765519088130419}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Delegates:
-  - eventID: 9
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 7408765517979398942}
-          m_TargetAssemblyTypeName: Audio.UIButtonsSound, Assembly-CSharp
-          m_MethodName: PointEnter
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - eventID: 10
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 7408765517979398942}
-          m_TargetAssemblyTypeName: Audio.UIButtonsSound, Assembly-CSharp
-          m_MethodName: PointExit
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - eventID: 15
-    callback:
-      m_PersistentCalls:
-        m_Calls: []
+  volumeSlider: {fileID: 7408765519088130428}
+  busToControl: vca:/Music
+  playerPrefKey: MusicVolume
 --- !u!1 &7408765519113105381
 GameObject:
   m_ObjectHideFlags: 0
@@ -16119,8 +15377,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7408765519130972536}
   - component: {fileID: 7408765519130972538}
-  - component: {fileID: 7408765519130972539}
-  - component: {fileID: 7408765519130972517}
+  - component: {fileID: 614519092443447747}
   m_Layer: 5
   m_Name: MasterVol
   m_TagString: Untagged
@@ -16200,20 +15457,8 @@ MonoBehaviour:
   m_Value: 0.0001
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7408765519130972539}
-        m_TargetAssemblyTypeName: SetFaderLevel, Assembly-CSharp
-        m_MethodName: SetVolume
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &7408765519130972539
+      m_Calls: []
+--- !u!114 &614519092443447747
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -16222,63 +15467,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 7408765519130972537}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba3bc75f968fb465e958f203d7dc59ad, type: 3}
+  m_Script: {fileID: 11500000, guid: 7abd95e56ae0040e1ac1b12c3212eb7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Slider: {fileID: 7408765519130972538}
-  m_FaderToControl: MasterVol
-  m_StartingValue: 1
-  m_CurrentValue: 1
-  m_Mixer: {fileID: 24100000, guid: 06bcc6ae4aba94669942571f8fba03be, type: 2}
---- !u!114 &7408765519130972517
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7408765519130972537}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Delegates:
-  - eventID: 9
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 7408765517979398942}
-          m_TargetAssemblyTypeName: Audio.UIButtonsSound, Assembly-CSharp
-          m_MethodName: PointEnter
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - eventID: 10
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 7408765517979398942}
-          m_TargetAssemblyTypeName: Audio.UIButtonsSound, Assembly-CSharp
-          m_MethodName: PointExit
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - eventID: 15
-    callback:
-      m_PersistentCalls:
-        m_Calls: []
+  volumeSlider: {fileID: 7408765519130972538}
+  busToControl: vca:/Master
+  playerPrefKey: MasterVolume
 --- !u!1 &7448934283788359649
 GameObject:
   m_ObjectHideFlags: 0
@@ -16399,8 +15593,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8668386687326741494}
   m_HandleRect: {fileID: 3017430040674928547}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 0.99999994
+  m_Value: 0
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
