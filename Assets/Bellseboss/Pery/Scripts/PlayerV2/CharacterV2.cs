@@ -200,6 +200,7 @@ namespace Bellseboss.Pery.Scripts.Input
             rigidbody.velocity = Vector3.zero;
             rigidbody.freezeRotation = true;
             CanReadInputs = true;
+            inputPlayerV2.StartToReadInputs(_canUseButtons);
         }
 
         public void EnableControls()
@@ -208,6 +209,7 @@ namespace Bellseboss.Pery.Scripts.Input
             rotationCharacterV2.CanRotate(true);
             _canUseButtons = true;
             CanReadInputs = true;
+            inputPlayerV2.StartToReadInputs(_canUseButtons);
         }
 
         public Transform GetGameObject()
