@@ -12,12 +12,12 @@ namespace Bellseboss.Pery.Scripts.Input
         private IAnimationController _animationController;
         private bool _isFinishAnimation;
 
-        public void Configure( Animator animator, IAnimationController animationController)
+        public void Configure(Animator animator, IAnimationController animationController)
         {
             _animator = animator;
             _animationController = animationController;
         }
-        
+
         public void Movement(float velocity, float speed)
         {
             _animator.SetFloat(velocityName, velocity);
@@ -58,6 +58,7 @@ namespace Bellseboss.Pery.Scripts.Input
         {
             _animator.SetTrigger("j_recovery");
         }
+
         public void Fall()
         {
             _animator.SetTrigger("j_fall");
@@ -88,7 +89,6 @@ namespace Bellseboss.Pery.Scripts.Input
                     break;
                 }
             }
-            
         }
 
         public void Die(string animationTrigger)
@@ -99,6 +99,17 @@ namespace Bellseboss.Pery.Scripts.Input
         public void SetTrigger(string paramName)
         {
             _animator.SetTrigger(paramName);
+        }
+
+        public void JumpingWalls(bool isTouchingFloor, bool isTouchingWall)
+        {
+            _animator.SetBool("isTouchingFloor", isTouchingFloor);
+            _animator.SetBool("isTouchingWall", isTouchingWall);
+        }
+
+        public void IsJumping()
+        {
+            _animator.SetTrigger("isJumping");
         }
     }
 }
