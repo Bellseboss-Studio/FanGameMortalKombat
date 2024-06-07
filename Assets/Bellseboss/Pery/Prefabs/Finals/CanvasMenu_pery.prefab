@@ -327,6 +327,7 @@ GameObject:
   - component: {fileID: 3155522442459861653}
   - component: {fileID: 7391834816271485974}
   - component: {fileID: 6629949325510375497}
+  - component: {fileID: 6332612929320606233}
   m_Layer: 5
   m_Name: ButtonBack
   m_TagString: Untagged
@@ -461,6 +462,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   newInputSelected: {fileID: 7408765517423315607}
+--- !u!114 &6332612929320606233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3644389380386083506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12cd91da0abe84c03918838717c834de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SoundToPlayOnClick: 01000000
+  m_SoundToPlayOnHover: 09000000
+  m_SoundToPlayOnPointEnter: 
 --- !u!1 &4780449646163624426
 GameObject:
   m_ObjectHideFlags: 0
@@ -1822,7 +1838,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_SoundToPlayOnClick: 01000000
-  m_SoundToPlayOnHover: 0400000003000000
+  m_SoundToPlayOnHover: 03000000
   m_SoundToPlayOnPointEnter: 
 --- !u!114 &7408765517070079534
 MonoBehaviour:
@@ -5138,7 +5154,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_SoundToPlayOnClick: 00000000
-  m_SoundToPlayOnHover: 0400000003000000
+  m_SoundToPlayOnHover: 03000000
   m_SoundToPlayOnPointEnter: 
 --- !u!114 &7408765517423315601
 MonoBehaviour:
@@ -8412,7 +8428,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_SoundToPlayOnClick: 01000000
-  m_SoundToPlayOnHover: 0400000003000000
+  m_SoundToPlayOnHover: 03000000
   m_SoundToPlayOnPointEnter: 
 --- !u!114 &7408765517983630196
 MonoBehaviour:
@@ -11428,7 +11444,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_SoundToPlayOnClick: 01000000
-  m_SoundToPlayOnHover: 0400000003000000
+  m_SoundToPlayOnHover: 03000000
   m_SoundToPlayOnPointEnter: 
 --- !u!114 &7408765518545510203
 MonoBehaviour:
@@ -12941,7 +12957,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_SoundToPlayOnClick: 01000000
-  m_SoundToPlayOnHover: 0400000003000000
+  m_SoundToPlayOnHover: 03000000
   m_SoundToPlayOnPointEnter: 
 --- !u!114 &7408765518715701244
 MonoBehaviour:
