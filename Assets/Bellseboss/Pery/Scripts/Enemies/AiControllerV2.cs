@@ -1,171 +1,248 @@
 ﻿using System;
 using Bellseboss.Pery.Scripts.Input;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class AiControllerV2 : MonoBehaviour, IAiController
 {
-    [SerializeField] private float timeToWaitToChangePath;
-    [SerializeField] private float timeBeforeAttack;
-    private IEnemyV2 _enemyV2;
-    private GameObject _target;
-    private bool _isNearOfTarget;
+    [SerializeField] private float timeToWaitInThePosition;
+
+    private IEnemyV2 _enemy;
+
+    //Without player
+    private TeaTime _idle, _getNextPath, _moveToTarget, _closeToTarget, _watch;
     private int _indexOfPath;
-    private bool _enemyIsDetected;
-    private bool _enemyIsNear;
-    private float _deltaTimeLocal;
-    private TeaTime stateSaveBeforeExitToOtherState;
 
-    //Patrolling
-    private TeaTime _idle, _getTarget, _moving, _stayNearOfTarget, _watch;
+    private GameObject _target;
 
-    //Player Detected
-    private TeaTime _watchEnemy, _patternOfMoving, _waitBeforeAttack, _calculatePath, _attack;
+    //FindPlayer
+    private TeaTime _findPlayer;
 
-    //Receive Damage
-    private TeaTime _receiveDamage, _recover, decideWhatToDo;
+    //With player
+    private TeaTime _watchPlayer,
+        _getPositionAroundPlayer,
+        _moveToPositionAroundPlayer,
+        _waitToAttackPlayer,
+        _getDirectionToPlayer,
+        _moveForwardToPlayer,
+        _attackPlayer;
 
-    public void Configure(IEnemyV2 enemyV2, ref Action onEndStunt)
+    private bool _isClose;
+    private GameObject _randomPosition;
+    private Vector3 _positionToPlayer;
+
+
+    public void Configure(IEnemyV2 enemy, ref Action endStunt)
     {
-        _enemyV2 = enemyV2;
-        onEndStunt += EndStunt;
-        _enemyV2.OnDead += EnemyOnOnDead;
-        _enemyV2.OnArriveToTarget += () =>
+        endStunt += EndStunt;
+        _enemy = enemy;
+
+        _enemy.OnDead += EnemyOnOnDead;
+        _enemy.OnPlayerDetected += isDetected =>
         {
-            Debug.Log("Arrive to target");
-            _isNearOfTarget = true;
-        };
-        _enemyV2.OnReceiveDamage += damage =>
-        {
-            Debug.Log($"Receive damage  {damage}");
+            Debug.Log($"OnPlayerDetected {isDetected}");
+
+            //Stop all teatime
             _idle.Stop();
-            _getTarget.Stop();
-            _moving.Stop();
-            _stayNearOfTarget.Stop();
+            _findPlayer.Stop();
+            _watchPlayer.Stop();
+            _getPositionAroundPlayer.Stop();
+            _moveToPositionAroundPlayer.Stop();
+            _waitToAttackPlayer.Stop();
+            _getDirectionToPlayer.Stop();
+            _moveForwardToPlayer.Stop();
+            _attackPlayer.Stop();
+            _getNextPath.Stop();
+            _moveToTarget.Stop();
             _watch.Stop();
-            _watchEnemy.Stop();
-            _patternOfMoving.Stop();
-            _waitBeforeAttack.Stop();
-            _calculatePath.Stop();
-            _attack.Stop();
-            _receiveDamage.Play();
+            
+            
+            _idle.Play();
         };
 
-        _enemyV2.OnPlayerDetected += isDetected =>
+        _enemy.OnPlayerInNearZone += isNear =>
         {
-            Debug.Log($"Player detected {isDetected}");
-            if (_enemyV2.IsDead) return;
-
-            _enemyIsDetected = isDetected;
+            Debug.Log($"OnPlayerInNearZone {isNear}");
+            _isClose = isNear;
         };
 
-        _enemyV2.OnPlayerInNearZone += isNear =>
+        _idle = this.tt().Pause().Add(() =>
         {
-            Debug.Log($"Player is near {isNear}");
-            if (_enemyV2.IsDead) return;
-            _enemyIsNear = isNear;
-        };
+            Debug.Log("Idle");
+            _enemy.SetState(StatesOfEnemy.NORMAL);
+            _findPlayer.Play();
+        });
 
-        _idle = this.tt().Pause().Add(() => { Debug.Log($"Idle"); }).Add(() => { _getTarget.Play(); });
-
-        _getTarget = this.tt().Pause().Add(() =>
+        _findPlayer = this.tt().Pause().Add(() =>
         {
-            Debug.Log($"Get target");
+            if (!_enemy.GetPlayer())
+            {
+                //without player behavior
+                Debug.Log("Player not found");
+                _getNextPath.Play();
+            }
+            else
+            {
+                //With player behavior
+                Debug.Log("Player found");
+                _watchPlayer.Play();
+            }
+        });
+        BehaviourWithoutPlayer();
+        BehaviourWithPlayer();
+        
+        _randomPosition = new GameObject();
+
+        StartAi();
+    }
+
+    private void BehaviourWithPlayer()
+    {
+        _watchPlayer = this.tt().Pause().Add(() =>
+        {
+            Debug.Log("WatchPlayer");
+            _enemy.CanMove(false);
+            _enemy.RotateToTargetIdle(_enemy.GetPlayer().GetGameObject().gameObject, false);
+        }).Loop(handler =>
+        {
+            if (_isClose)
+            {
+                handler.Break();
+            }
+        }).Add(() => { _getPositionAroundPlayer.Play(); });
+        _getPositionAroundPlayer = this.tt().Pause().Add(() =>
+        {
+            Debug.Log("GetPositionAroundPlayer");
+            _target = _enemy.GetPlayer().GetGameObject().gameObject;
+            //Get position around player
+            if (!_randomPosition)
+            {
+                _randomPosition = new GameObject();    
+            }
+            _randomPosition.transform.position = GetRandomPositionAroundPoint(_target.transform.position, 5);
+        }).Add(() => { _moveToPositionAroundPlayer.Play(); });
+
+        _moveToPositionAroundPlayer = this.tt().Pause().Add(() =>
+        {
+            Debug.Log($"MoveToPositionAroundPlayer {_randomPosition.transform.position}");
+            _enemy.MoveTo(_randomPosition);
+        }).Loop(handler =>
+        {
+            var distance = Vector3.Distance(_enemy.GetGameObject().transform.position,
+                _randomPosition.transform.position);
+            if (distance < 1f)
+            {
+                handler.Break();
+            }
+            _enemy.MoveTo(_randomPosition);
+        }).Add(() => { _waitToAttackPlayer.Play(); });
+
+        _waitToAttackPlayer = this.tt().Pause().Add(() =>
+        {
+            Debug.Log($"WaitToAttackPlayer");
+            _enemy.RotateToTargetIdle(_enemy.GetPlayer().GetGameObject().gameObject, false);
+        }).Add(2).Add(() => { _getDirectionToPlayer.Play(); });
+
+        _getDirectionToPlayer = this.tt().Pause().Add(() =>
+        {
+            Debug.Log($"GetDirectionToPlayer");
+            _positionToPlayer = _enemy.GetPlayer().GetGameObject().position;
+            if (!_randomPosition)
+            {
+                _randomPosition = new GameObject();    
+            }
+            _randomPosition.transform.position = GetPointBeyondTarget(_enemy.GetGameObject(), _enemy.GetPlayer().GetGameObject().gameObject, 3);
+        }).Add(() => { _moveForwardToPlayer.Play(); });
+
+        _moveForwardToPlayer = this.tt().Pause().Add(() =>
+        {
+            Debug.Log($"MoveForwardToPlayer");
+            _enemy.SetState(StatesOfEnemy.ANGRY);
+            _enemy.MoveTo(_randomPosition);
+        }).Loop(handler =>
+        {
+            var distance = Vector3.Distance(_enemy.GetGameObject().transform.position, _positionToPlayer);
+            if (distance < 1f)
+            {
+                handler.Break();
+            }
+        }).Add(() => { _attackPlayer.Play(); });
+
+        _attackPlayer = this.tt().Pause().Add(() =>
+        {
+            Debug.Log($"AttackPlayer");
+            _enemy.AttackPlayer();
+        }).Loop(handler =>
+        {
+            var distance = Vector3.Distance(_enemy.GetGameObject().transform.position,
+                _randomPosition.transform.position);
+            if (distance < 1f)
+            {
+                handler.Break();
+            }
+        }).Add(() => { _idle.Play(); });
+    }
+
+    public Vector3 GetRandomPositionAroundPoint(Vector3 origin, float radius)
+    {
+        Vector2 randomPointInCircle = Random.insideUnitCircle * radius;
+        Vector3 randomPosition = origin + new Vector3(randomPointInCircle.x, 0, randomPointInCircle.y);
+        return randomPosition;
+    }
+
+    public Vector3 GetPointBeyondTarget(GameObject source, GameObject target, float distanceBeyond)
+    {
+        // Obtener la dirección de source a target
+        Vector3 direction = (target.transform.position - source.transform.position).normalized;
+
+        // Calcular un punto a 'distanceBeyond' unidades más allá de target en la misma dirección
+        Vector3 pointBeyondTarget = target.transform.position + direction * distanceBeyond;
+
+        return pointBeyondTarget;
+    }
+
+    private void BehaviourWithoutPlayer()
+    {
+        _getNextPath = this.tt().Pause().Add(() =>
+        {
+            _target = _enemy.Paths()[_indexOfPath];
             _indexOfPath++;
-            if (_indexOfPath >= _enemyV2.Paths().Count)
+            if (_indexOfPath >= _enemy.Paths().Count)
             {
                 _indexOfPath = 0;
             }
 
-            _target = _enemyV2.Paths()[_indexOfPath];
-        }).Add(() => { _moving.Play(); });
-
-        _moving = this.tt().Pause().Add(() =>
-        {
-            Debug.Log($"Moving");
-            _enemyV2.MoveTo(_target);
-        }).Add(() => { _stayNearOfTarget.Play(); });
-
-        _stayNearOfTarget = this.tt().Pause().Add(() => { Debug.Log($"Stay near of target start"); }).Wait(() =>
-        {
-            if (_enemyIsDetected)
-            {
-                stateSaveBeforeExitToOtherState = _stayNearOfTarget;
-                _watchEnemy.Play();
-                _stayNearOfTarget.Stop();
-            }
-
-            return _isNearOfTarget;
-        }).Add(() =>
-        {
-            Debug.Log($"Stay near of target end");
-            _isNearOfTarget = false;
-            _enemyV2.RotateToTargetIdle(_target, false);
-        }).Add(timeToWaitToChangePath).Add(() => { _getTarget.Play(); });
-
-        _watchEnemy = this.tt().Pause().Add(() =>
-            {
-                Debug.Log($"Watch enemy");
-                _enemyV2.CanMove(false);
-                _target = _enemyV2.GetPlayer().gameObject;
-                _enemyV2.RotateToTargetIdle(_target, false);
-            }).Wait(() => _isNearOfTarget)
-            .Add(() =>
-            {
-                _isNearOfTarget = false;
-                _patternOfMoving.Play();
-            });
-
-        _patternOfMoving = this.tt().Pause().Loop(handle =>
-        {
-            Debug.Log($"Pattern of moving");
-            _enemyV2.MoveTo(_enemyV2.GetPlayer().gameObject);
-            if (_isNearOfTarget)
-            {
-                _isNearOfTarget = false;
-                handle.Break();
-            }
-        }).Add(() => { _waitBeforeAttack.Play(); });
-
-        _waitBeforeAttack = this.tt().Pause().Add(() =>
-            {
-                Debug.Log($"Wait before attack");
-                _enemyV2.CanMove(false);
-            }).Add(timeBeforeAttack)
-            .Add(() => { _patternOfMoving.Play(); });
-
-        _receiveDamage = this.tt().Pause().Add(() =>
-        {
-            Debug.Log($"Receive damage");
-            _enemyV2.CanMove(false);
-        }).Add(() => { _recover.Play(); });
-        _recover = this.tt().Pause().Add(() =>
-        {
-            Debug.Log($"Recover");
-            _enemyV2.CanMove(true);
-            stateSaveBeforeExitToOtherState.Play();
+            _moveToTarget.Play();
         });
 
+        _moveToTarget = this.tt().Pause().Add(() => { _enemy.MoveTo(_target); }).Loop(handle =>
+        {
+            var distance = Vector3.Distance(_enemy.GetGameObject().transform.position, _target.transform.position);
+            if (distance < 1f)
+            {
+                handle.Break();
+            }
+        }).Add(() => { _watch.Play(); });
 
+        _watch = this.tt().Pause().Add(() => { _enemy.RotateToTargetIdle(_target, false); }).Add(5)
+            .Add(() => { _idle.Play(); });
+    }
+
+    private void EndStunt()
+    {
         StartAi();
     }
 
     private void EnemyOnOnDead(EnemyV2 obj)
     {
-        Debug.Log($"AiController: Enemy is dead {obj.gameObject.name}");
     }
 
-    private void EndStunt()
+    public void SetPlayer(CharacterV2 characterV2)
     {
-        Debug.Log("EndStunt");
-        StartAi();
     }
 
     public void StartAi()
     {
         _idle.Play();
-    }
-
-    public void SetPlayer(CharacterV2 characterV2)
-    {
     }
 }

@@ -154,8 +154,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b74f6dea901d49c592cc3bb85951ffd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeToWaitToChangePath: 7
-  timeBeforeAttack: 5
+  timeToWaitInThePosition: 0
 --- !u!1 &1206345099777460001
 GameObject:
   m_ObjectHideFlags: 0
@@ -245,7 +244,7 @@ MonoBehaviour:
   movementADSR: {fileID: 1206345099777460004}
   animationController: {fileID: 1206345099777460007}
   model: {fileID: 1312773036128729196, guid: 8749889458dafcd49b59e798851590dd, type: 3}
-  ai: {fileID: 1275030522904514881}
+  ai: {fileID: 6041967002102733454}
   rigidbody: {fileID: 1206345099777460003}
   minDistanceToArriveToTarget: 1
   minDistanceToArriveToEnemy: 2

@@ -28,12 +28,13 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
     [SerializeField] private AttackMovementSystem attackMovementSystem;
     private GameObject _model;
     private StatisticsOfCharacter _statisticsOfCharacter;
-    private CharacterV2 _characterV2;
+    [SerializeField] private CharacterV2 _characterV2;
     private bool _inFarZone;
     private bool _inNearZone;
     private List<GameObject> _paths;
     private GameObject _target;
     private bool _canMove, _canRotate, _canRotateToTarget;
+    private GameObject centerOfTheZone;
     [SerializeField] private StatesOfEnemy _state;
     [SerializeField] private TargetFocus colliderToDamage;
     [SerializeField] private CombatSystemAngel combatSystemAngel;
@@ -44,6 +45,11 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
     public GameObject GetGameObject()
     {
         return gameObject;
+    }
+
+    public GameObject GetCenterOfTheZone()
+    {
+        return centerOfTheZone;   
     }
 
     private bool canAttack = true;
@@ -286,9 +292,10 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
         _canRotateToTarget = true;
     }
 
-    public void Configure(GameObject[] pathToFollow)
+    public void Configure(GameObject[] pathToFollow, GameObject center)
     {
         _paths = new List<GameObject>(pathToFollow);
+        centerOfTheZone = center;
     }
 
     public Action OnAction { get; set; }
@@ -408,6 +415,7 @@ public interface IEnemyV2
     void CanRotate(bool b);
     public bool IsDead { get; }
     GameObject GetGameObject();
+    GameObject GetCenterOfTheZone();
 }
 
 public class EnemiesV2Factory
