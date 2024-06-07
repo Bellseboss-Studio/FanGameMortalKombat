@@ -283,7 +283,7 @@ namespace Bellseboss.Pery.Scripts.Input
         public void UpdateAnimation(bool isTouchingFloor, bool isTouchingWall)
         {
             animationController.Movement(movementRigidbodyV2.GetXZVelocity(), 0);
-            animationController.JumpingWalls(isTouchingFloor, isTouchingWall);
+            animationController.JumpingWalls(isTouchingFloor, isTouchingWall, movementRigidbodyV2.GetJumpSystem().IsJump());
             
         }
 

@@ -101,15 +101,16 @@ namespace Bellseboss.Pery.Scripts.Input
             _animator.SetTrigger(paramName);
         }
 
-        public void JumpingWalls(bool isTouchingFloor, bool isTouchingWall)
+        public void JumpingWalls(bool isTouchingFloor, bool isTouchingWall, bool isJumping)
         {
             _animator.SetBool("isTouchingFloor", isTouchingFloor);
             _animator.SetBool("isTouchingWall", isTouchingWall);
+            _animator.SetBool("isJumping", isJumping);
         }
 
         public void IsJumping()
         {
-            _animator.SetTrigger("isJumping");
+            _animator.SetTrigger("j");
         }
     }
 }
