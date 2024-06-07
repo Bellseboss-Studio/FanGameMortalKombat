@@ -308,6 +308,11 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
     {
     }
 
+    public void UpdateAnimation(bool isTouchingFloor, bool isJumping)
+    {
+        
+    }
+
     public void ChangeToNormalJump()
     {
     }
