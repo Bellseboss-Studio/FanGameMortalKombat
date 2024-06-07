@@ -10,5 +10,6 @@ public enum UISoundList
     UI_Button_Tick = 6,
     UI_HoverTop = 7,
     UI_ShowMenu = 8,
-    UI_ClickOnOptionsMenu = 9
+    UI_ClickOnOptionsMenu = 9,
+    UI_HoverOnOptionsMenu = 10
 }

@@ -62,6 +62,100 @@ MonoBehaviour:
   OverrideAttenuation: 0
   OverrideMinDistance: 1
   OverrideMaxDistance: 20
+--- !u!1 &3631725016647846926
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8930160163167989803}
+  - component: {fileID: 4128224910321818676}
+  - component: {fileID: 948998825835320641}
+  - component: {fileID: 1781238204520682154}
+  - component: {fileID: 8763717257563029318}
+  m_Layer: 0
+  m_Name: InitializeVolume
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8930160163167989803
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3631725016647846926}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4384918967332051142}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4128224910321818676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3631725016647846926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4d808f2dba3f43f38ba6527bbf160e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  busName: vca:/Master
+  defaultVolume: 0.75
+  volumePrefKey: MasterVolume
+--- !u!114 &948998825835320641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3631725016647846926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4d808f2dba3f43f38ba6527bbf160e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  busName: vca:/Music
+  defaultVolume: 0.75
+  volumePrefKey: MusicVolume
+--- !u!114 &1781238204520682154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3631725016647846926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4d808f2dba3f43f38ba6527bbf160e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  busName: vca:/Sounds
+  defaultVolume: 0.75
+  volumePrefKey: SoundsVolume
+--- !u!114 &8763717257563029318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3631725016647846926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4d808f2dba3f43f38ba6527bbf160e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  busName: vca:/Dialogue
+  defaultVolume: 0.75
+  volumePrefKey: DialogueVolume
 --- !u!1 &4413549379089336552
 GameObject:
   m_ObjectHideFlags: 0
@@ -153,6 +247,7 @@ Transform:
   m_Children:
   - {fileID: 5488122982722771054}
   - {fileID: 3638819858512363511}
+  - {fileID: 8930160163167989803}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
