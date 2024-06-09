@@ -3697,8 +3697,8 @@ MonoBehaviour:
   combatMovements:
   - comboSequence: 00000000
     transitionParameterName: p
-    stuntAnimationParameterName: 
-    timeToAttack: 0.3
+    stuntAnimationParameterName: q1
+    timeToAttack: 0.15
     timeToDecreasing: 0.3
     timeToSustain: 0
     timeToRelease: 0.5
@@ -3706,11 +3706,11 @@ MonoBehaviour:
     distanceToDecresing: 0.1
     forceToAttack: 5
     forceToDecreasing: 0
-    stunTime: 0
+    stunTime: 1
   - comboSequence: 01000000
     transitionParameterName: k
-    stuntAnimationParameterName: 
-    timeToAttack: 0.5
+    stuntAnimationParameterName: p1
+    timeToAttack: 0.1
     timeToDecreasing: 0.2
     timeToSustain: 0.5
     timeToRelease: 0
@@ -3718,11 +3718,11 @@ MonoBehaviour:
     distanceToDecresing: 0.1
     forceToAttack: 1
     forceToDecreasing: 1
-    stunTime: 0
+    stunTime: 1
   - comboSequence: 0000000000000000
     transitionParameterName: mantis2
-    stuntAnimationParameterName: 
-    timeToAttack: 0.5
+    stuntAnimationParameterName: q2
+    timeToAttack: 0.2
     timeToDecreasing: 0.2
     timeToSustain: 0.5
     timeToRelease: 0
@@ -3730,10 +3730,10 @@ MonoBehaviour:
     distanceToDecresing: 0.1
     forceToAttack: 1
     forceToDecreasing: 1
-    stunTime: 0
+    stunTime: 1
   - comboSequence: 000000000000000000000000
     transitionParameterName: mantis3
-    stuntAnimationParameterName: 
+    stuntAnimationParameterName: q3
     timeToAttack: 0.5
     timeToDecreasing: 0.2
     timeToSustain: 0.5
@@ -3742,10 +3742,10 @@ MonoBehaviour:
     distanceToDecresing: 0.1
     forceToAttack: 1
     forceToDecreasing: 1
-    stunTime: 0
+    stunTime: 1
   - comboSequence: 0000000001000000
     transitionParameterName: k
-    stuntAnimationParameterName: 
+    stuntAnimationParameterName: p1
     timeToAttack: 0.5
     timeToDecreasing: 0.2
     timeToSustain: 0.5
@@ -3754,10 +3754,10 @@ MonoBehaviour:
     distanceToDecresing: 0.1
     forceToAttack: 1
     forceToDecreasing: 1
-    stunTime: 0
+    stunTime: 1.5
   - comboSequence: 000000000000000001000000
     transitionParameterName: k
-    stuntAnimationParameterName: 
+    stuntAnimationParameterName: p1
     timeToAttack: 0.5
     timeToDecreasing: 0.2
     timeToSustain: 0.5
@@ -3766,11 +3766,11 @@ MonoBehaviour:
     distanceToDecresing: 0.1
     forceToAttack: 1
     forceToDecreasing: 1
-    stunTime: 0
+    stunTime: 1.5
   - comboSequence: 00000000000000000000000001000000
     transitionParameterName: k
-    stuntAnimationParameterName: 
-    timeToAttack: 0.5
+    stuntAnimationParameterName: p1
+    timeToAttack: 0.3
     timeToDecreasing: 0.2
     timeToSustain: 0.5
     timeToRelease: 0
@@ -3778,10 +3778,10 @@ MonoBehaviour:
     distanceToDecresing: 0.1
     forceToAttack: 1
     forceToDecreasing: 1
-    stunTime: 0
+    stunTime: 1.5
   currentComboSequence: 
-  angleAttack: 0
-  autoTargetDistance: 0
+  angleAttack: 60
+  autoTargetDistance: 5
   canAttackAgain: 1
   attacking: 0
   _deltatimeLocal: 0
