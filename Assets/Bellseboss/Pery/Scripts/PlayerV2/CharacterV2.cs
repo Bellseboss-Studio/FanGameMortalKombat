@@ -407,6 +407,16 @@ namespace Bellseboss.Pery.Scripts.Input
             else
                 _enemiesInCombat.Remove(enemy);
         }
+        public void GetIntoEnemyZone(List<GameObject> enemies)
+        {
+            _enemiesInCombat = enemies;
+        }
+        
+        public void GetOutOfEnemyZone()
+        {
+            _enemiesInCombat.Clear();
+        }
+        
     }
 
     public interface ICharacterUi

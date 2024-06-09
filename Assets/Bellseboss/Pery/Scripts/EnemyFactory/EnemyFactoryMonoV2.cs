@@ -12,7 +12,8 @@ public class EnemyFactoryMonoV2 : MonoBehaviour
     [SerializeField] private GameObject[] pathToFollow;
     private List<EnemyV2> _enemies = new List<EnemyV2>();
     [SerializeField] private bool allEnemiesAreDead;
-    
+    public List<EnemyV2> Enemies => _enemies;
+
     public bool IsAllEnemiesAreDead => allEnemiesAreDead;
     
     public void Configure(EnemiesV2Factory factory, GameObject center)

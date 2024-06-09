@@ -12,7 +12,7 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
     public event Action<bool> OnPlayerInNearZone;
     public event Action<EnemyV2> OnDead;
     
-    public Action<float> OnReceiveDamage { get; set; }
+    public Action<float> OnReceiveDamage {get; set;}
 
     [SerializeField] private string id;
     [SerializeField] private StatisticsOfCharacter statisticsOfCharacter;
