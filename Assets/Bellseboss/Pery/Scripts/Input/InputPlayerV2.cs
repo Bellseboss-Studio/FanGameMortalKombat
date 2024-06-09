@@ -42,19 +42,7 @@ namespace Bellseboss.Pery.Scripts.Input
             if (!_canReadInput) return;
             onCameraMovementEvet?.Invoke();
         }
-        
-        public void OnTarget(InputAction.CallbackContext context)
-        {
-            if (!_canReadInput) return;
-            if (context.started)
-            {
-                onTargetEvent?.Invoke(true);
-            }else if (context.canceled)
-            {
-                onTargetEvent?.Invoke(false);
-            }
-        }
-        
+
         public void OnKick(InputAction.CallbackContext context)
         {
             if (!_canReadInput) return;
