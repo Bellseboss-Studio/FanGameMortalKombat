@@ -18,6 +18,7 @@ public class FatalitySystem : MonoBehaviour, IFatalitySystem
     [SerializeField] private GameObject panelTitleFatality, panelInputs;
     [SerializeField] private TextMeshProUGUI title;
     [SerializeField] private UiFatalityInputs uiFatalityInputs;
+    [SerializeField] private GameObject audioSourceFatality;
     public Action<INPUTS> OnInputPressed;
     private IFatality _characterV2;
     private ICharacterV2 _cV2;
@@ -134,6 +135,16 @@ public class FatalitySystem : MonoBehaviour, IFatalitySystem
         {
             uiFatalityInputs.DefaultValue();
         }
+    }
+
+    public void StartAudioFatality()
+    {
+        audioSourceFatality.SetActive(true);
+    }
+
+    public void RestartAllElements()
+    {
+        audioSourceFatality.SetActive(false);
     }
 
     public void PauseCinematic()

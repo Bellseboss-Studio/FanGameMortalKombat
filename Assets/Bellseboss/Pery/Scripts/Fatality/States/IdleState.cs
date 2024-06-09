@@ -6,6 +6,12 @@ public class IdleState : StatePatterFatality
     {
     }
 
+    protected override void StartState()
+    {
+        base.StartState();
+        _fatalitySystem.RestartAllElements();
+    }
+
     internal override IEnumerator Execute()
     {
         while (!_fatalitySystem.IsStartFatality())
