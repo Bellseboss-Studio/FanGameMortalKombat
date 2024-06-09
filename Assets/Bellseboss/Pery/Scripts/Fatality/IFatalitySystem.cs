@@ -19,4 +19,6 @@ public interface IFatalitySystem
     void ShowPanelTitle();
     void ShowPanelTitle(string title);
     void CanReadInputs(bool b);
+    void StartAudioFatality();
+    void RestartAllElements();
 }
