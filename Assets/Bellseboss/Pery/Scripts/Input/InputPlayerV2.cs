@@ -153,6 +153,11 @@ namespace Bellseboss.Pery.Scripts.Input
         {
             Debug.Log(b);
             _canReadInput = b;
+            if (b)
+            {
+                _lastInput = INPUTS.NONE;
+                _isReadingInput = false;
+            }
         }
     }
 }
