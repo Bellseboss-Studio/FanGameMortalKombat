@@ -37,7 +37,7 @@ public class FightZone : MonoBehaviour
         {
             
             enemyFactoryMonoV2.AllEnemiesAreDead += EnemyFactoryMonoV2OnAllEnemiesAreDead;
-            enemyFactoryMonoV2.Configure(_factory);
+            enemyFactoryMonoV2.Configure(_factory, near.gameObject);
         }
     }
 

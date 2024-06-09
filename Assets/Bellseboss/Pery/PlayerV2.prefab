@@ -1601,7 +1601,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea7b7e4ebf8942c2b56fc4ab062be1f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeToAttack: 0.5
+  timeToAttack: 0.6
   timeToDecreasing: 0.2
   timeToSustain: 0
   timeToRelease: 0
@@ -2308,7 +2308,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8788049306266036261
 Transform:
   m_ObjectHideFlags: 0
@@ -3274,14 +3274,15 @@ MonoBehaviour:
   speedWalk: 5
   speedRun: 10
   animationController: {fileID: 8585594586927423063}
-  model3D: {fileID: 3278654553256477002, guid: ac33f347a1d94e2458a269aae2bc91f0, type: 3}
+  model3D: {fileID: 1312773036128729196, guid: 8749889458dafcd49b59e798851590dd, type: 3}
   rotationCharacterV2: {fileID: 8585594586927423062}
-  forceRotation: 20
+  forceRotation: 50
   targetFocus: {fileID: 919132148402666361}
   statisticsOfCharacter: {fileID: 11400000, guid: 2c107fda2a30a3a4fb6d83dca49c4ffb, type: 2}
   combatSystemAngel: {fileID: 2074710249}
   movementADSR: {fileID: 1309216378850590419}
   FatalitySystem: {fileID: 4996582286142792170}
+  _enemiesInCombat: []
 --- !u!114 &8585594586927423060
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3540,7 +3541,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 1
 --- !u!136 &8585594586927423066
 CapsuleCollider:
@@ -3696,6 +3697,7 @@ MonoBehaviour:
   combatMovements:
   - comboSequence: 00000000
     transitionParameterName: p
+    stuntAnimationParameterName: 
     timeToAttack: 0.3
     timeToDecreasing: 0.3
     timeToSustain: 0
@@ -3707,6 +3709,7 @@ MonoBehaviour:
     stunTime: 0
   - comboSequence: 01000000
     transitionParameterName: k
+    stuntAnimationParameterName: 
     timeToAttack: 0.5
     timeToDecreasing: 0.2
     timeToSustain: 0.5
@@ -3718,6 +3721,7 @@ MonoBehaviour:
     stunTime: 0
   - comboSequence: 0000000000000000
     transitionParameterName: mantis2
+    stuntAnimationParameterName: 
     timeToAttack: 0.5
     timeToDecreasing: 0.2
     timeToSustain: 0.5
@@ -3729,6 +3733,7 @@ MonoBehaviour:
     stunTime: 0
   - comboSequence: 000000000000000000000000
     transitionParameterName: mantis3
+    stuntAnimationParameterName: 
     timeToAttack: 0.5
     timeToDecreasing: 0.2
     timeToSustain: 0.5
@@ -3740,6 +3745,7 @@ MonoBehaviour:
     stunTime: 0
   - comboSequence: 0000000001000000
     transitionParameterName: k
+    stuntAnimationParameterName: 
     timeToAttack: 0.5
     timeToDecreasing: 0.2
     timeToSustain: 0.5
@@ -3751,6 +3757,7 @@ MonoBehaviour:
     stunTime: 0
   - comboSequence: 000000000000000001000000
     transitionParameterName: k
+    stuntAnimationParameterName: 
     timeToAttack: 0.5
     timeToDecreasing: 0.2
     timeToSustain: 0.5
@@ -3762,6 +3769,7 @@ MonoBehaviour:
     stunTime: 0
   - comboSequence: 00000000000000000000000001000000
     transitionParameterName: k
+    stuntAnimationParameterName: 
     timeToAttack: 0.5
     timeToDecreasing: 0.2
     timeToSustain: 0.5
@@ -3772,11 +3780,11 @@ MonoBehaviour:
     forceToDecreasing: 1
     stunTime: 0
   currentComboSequence: 
+  angleAttack: 0
+  autoTargetDistance: 0
   canAttackAgain: 1
   attacking: 0
   _deltatimeLocal: 0
-  _numberOfCombosQuick: 0
-  _numberOfCombosPower: 0
   targetFocus: {fileID: 434739508}
 --- !u!1 &8585594587426267891
 GameObject:
