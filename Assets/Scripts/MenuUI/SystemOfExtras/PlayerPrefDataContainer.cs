@@ -56,7 +56,7 @@ public class PlayerPrefDataContainer : ISaveData
     {
     }
 
-    public void SaveData(string itemId)
+    public void SaveData(List<string> itemId)
     {
     }
 }

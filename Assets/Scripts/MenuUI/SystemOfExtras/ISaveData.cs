@@ -10,6 +10,6 @@ namespace MenuUI.SystemOfExtras
         List<IExtra> LoadData();
         void SaveData(List<IExtra> listOfExtras);
         void SaveData();
-        void SaveData(string itemId);
+        void SaveData(List<string> itemId);
     }
 }

@@ -31,7 +31,7 @@ namespace MenuUI.SystemOfExtras
             _saveData.SaveData();
         }
         
-        public void SaveData(string itemId)
+        public void SaveData(List<string> itemId)
         {
             _saveData.SaveData(itemId);
         }

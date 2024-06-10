@@ -7,7 +7,7 @@ public interface ICatalog
     List<IExtra> GetListOfExtras { get; }
     void AddExtra(Extra extra);
     void SaveData();
-    void SaveData(string itemId);
+    void SaveData(List<string> itemId);
     void LoadCatalog();
     Task LoadDataCatalog();
 }

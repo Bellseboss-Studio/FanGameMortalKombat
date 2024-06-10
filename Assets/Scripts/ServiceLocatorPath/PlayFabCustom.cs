@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using MenuUI.SystemOfExtras;
 using PlayFab;
@@ -100,7 +101,7 @@ namespace ServiceLocatorPath
                 {
                     isCreatedPlayer = JsonUtility.FromJson<IsCreated>(defaultResult.Data["isCreated"].Value);
                     systemInfoCustom = JsonUtility.FromJson<SystemInfoCustom>(defaultResult.Data["SystemInfo"].Value);
-                    CreatedItem("AntesyDespues");
+                    CreatedItem(new List<string> { "AntesyDespues", "LogoBellseboss", "LogoImg", "Leena" });
                 }
             }, OnLoginFailure);
         }
@@ -147,7 +148,7 @@ namespace ServiceLocatorPath
             return inventary.Count > 0;
         }
 
-        public async void GetInventory(Action<GetCatalogItemsResult> resultCallback)
+        public async Task GetInventory(Action<GetCatalogItemsResult> resultCallback)
         {
             var resultPlayfab = false;
             var catalog = new GetCatalogItemsRequest()
@@ -188,7 +189,7 @@ namespace ServiceLocatorPath
             CreatedItem();
         }
 
-        public void SaveData(string itemId)
+        public void SaveData(List<string> itemId)
         {
             CreatedItem(itemId);
         }
@@ -204,7 +205,7 @@ namespace ServiceLocatorPath
                 {
                     var catalogItem = itemsResult.Catalog[Random.Range(0, itemsResult.Catalog.Capacity)];
                     Extra extra = null;
-                    if(result.Inventory.FindAll(i => i.ItemId == catalogItem.ItemId).Count == 0)
+                    if (result.Inventory.FindAll(i => i.ItemId == catalogItem.ItemId).Count == 0)
                     {
                         PurchaseItemRequest purchase = new PurchaseItemRequest
                         {
@@ -227,37 +228,45 @@ namespace ServiceLocatorPath
         }
 
 
-        public async void CreatedItem(string itemId)
+        public async Task CreatedItem(List<string> itemIds)
         {
-            var isRequestOk = false;
-            var request = new GetUserInventoryRequest();
-            PlayFabClientAPI.GetUserInventory(request, result =>
+            var semaphore = new SemaphoreSlim(1, 1);
+            var tasks = itemIds.Select(async itemId =>
             {
-                inventary = new List<IExtra>();
-                GetInventory(itemsResult =>
+                await GetInventory(async itemsResult =>
                 {
-                    var catalogItem = itemsResult.Catalog.Find(item => item.ItemId == itemId);
-                    Extra extra = null;
-                    if(result.Inventory.FindAll(i => i.ItemId == catalogItem.ItemId).Count == 0)
+                    await semaphore.WaitAsync();
+                    try
                     {
-                        PurchaseItemRequest purchase = new PurchaseItemRequest
+                        var catalogItem = itemsResult.Catalog.Find(item => item.ItemId == itemId);
+                        Extra extra = null;
+                        var request = new GetUserInventoryRequest();
+                        PlayFabClientAPI.GetUserInventory(request, result =>
                         {
-                            CatalogVersion = catalogItem.CatalogVersion,
-                            ItemId = catalogItem.ItemId,
-                            Price = 0,
-                            VirtualCurrency = "MK"
-                        };
-                        PlayFabClientAPI.PurchaseItem(purchase, result => { }, OnLoginFailure);
-                        return;
-                    }
+                            inventary = new List<IExtra>();
 
-                    isRequestOk = true;
+                            if (result.Inventory.FindAll(i => i.ItemId == catalogItem.ItemId).Count == 0)
+                            {
+                                PurchaseItemRequest purchase = new PurchaseItemRequest
+                                {
+                                    CatalogVersion = catalogItem.CatalogVersion,
+                                    ItemId = catalogItem.ItemId,
+                                    Price = 0,
+                                    VirtualCurrency = "MK"
+                                };
+                                PlayFabClientAPI.PurchaseItem(purchase, result => { }, OnLoginFailure);
+                                return;
+                            }
+                        }, error => { });
+                    }
+                    finally
+                    {
+                        semaphore.Release();
+                    }
                 });
-            }, error => { isRequestOk = true; });
-            while (!isRequestOk)
-            {
-                await Task.Delay(TimeSpan.FromSeconds(.3f));
-            }
+            });
+
+            await Task.WhenAll(tasks);
         }
     }
 }
