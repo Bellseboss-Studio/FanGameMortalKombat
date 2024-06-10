@@ -189,6 +189,7 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
     public void Died()
     {
         Debug.Log("EnemyV2: Die");
+        animationController.Die("dead");
     }
 
     public float GetTimeToAttack()
@@ -238,7 +239,7 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
     public void AttackPlayer()
     {
         if (!canAttack) return;
-        combatSystemAngel.ExecuteMovement(TypeOfAttack.Quick);
+        combatSystemAngel.ExecuteMovement(TypeOfAttack.Power);
     }
 
     public void SetState(StatesOfEnemy state)
@@ -253,8 +254,11 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
 
     public override void SetAnimationToHit(string animationParameterName)
     {
+        Debug.Log($"EnemyV2: IsDead {IsDead}");
         if (IsDead) return;
         //TODO set animation to hit
+        Debug.Log($"EnemyV2: Set Animation To Hit {animationParameterName}");
+        _aiController.TakeDamage();
         animationController.TakeDamage(animationParameterName);
     }
 

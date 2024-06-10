@@ -36,28 +36,14 @@ public class AiControllerV2 : MonoBehaviour, IAiController
     {
         endStunt += EndStunt;
         _enemy = enemy;
+        _enemy.OnReceiveDamage += OnReceiveDamage;
 
         _enemy.OnDead += EnemyOnOnDead;
         _enemy.OnPlayerDetected += isDetected =>
         {
             Debug.Log($"OnPlayerDetected {isDetected}");
 
-            //Stop all teatime
-            _idle.Stop();
-            _findPlayer.Stop();
-            _watchPlayer.Stop();
-            _getPositionAroundPlayer.Stop();
-            _moveToPositionAroundPlayer.Stop();
-            _waitToAttackPlayer.Stop();
-            _getDirectionToPlayer.Stop();
-            _moveForwardToPlayer.Stop();
-            _attackPlayer.Stop();
-            _getNextPath.Stop();
-            _moveToTarget.Stop();
-            _watch.Stop();
-            
-            
-            _idle.Play();
+            StopAllStartIdle();
         };
 
         _enemy.OnPlayerInNearZone += isNear =>
@@ -70,7 +56,14 @@ public class AiControllerV2 : MonoBehaviour, IAiController
         {
             Debug.Log("Idle");
             _enemy.SetState(StatesOfEnemy.NORMAL);
-            _findPlayer.Play();
+            if (_enemy.IsDead)
+            {
+                _enemy.Died();
+            }
+            else
+            {
+                _findPlayer.Play();
+            }
         });
 
         _findPlayer = this.tt().Pause().Add(() =>
@@ -90,10 +83,37 @@ public class AiControllerV2 : MonoBehaviour, IAiController
         });
         BehaviourWithoutPlayer();
         BehaviourWithPlayer();
-        
+
         _randomPosition = new GameObject();
 
         StartAi();
+    }
+
+    private void StopAllStartIdle(bool startIdle = true)
+    {
+        //Stop all teatime
+        _idle.Stop();
+        _findPlayer.Stop();
+        _watchPlayer.Stop();
+        _getPositionAroundPlayer.Stop();
+        _moveToPositionAroundPlayer.Stop();
+        _waitToAttackPlayer.Stop();
+        _getDirectionToPlayer.Stop();
+        _moveForwardToPlayer.Stop();
+        _attackPlayer.Stop();
+        _getNextPath.Stop();
+        _moveToTarget.Stop();
+        _watch.Stop();
+
+        if (startIdle)
+        {
+            _idle.Play();
+        }
+    }
+
+    private void OnReceiveDamage(float obj)
+    {
+        StopAllStartIdle();
     }
 
     private void BehaviourWithPlayer()
@@ -117,8 +137,9 @@ public class AiControllerV2 : MonoBehaviour, IAiController
             //Get position around player
             if (!_randomPosition)
             {
-                _randomPosition = new GameObject();    
+                _randomPosition = new GameObject();
             }
+
             _randomPosition.transform.position = GetRandomPositionAroundPoint(_target.transform.position, 5);
         }).Add(() => { _moveToPositionAroundPlayer.Play(); });
 
@@ -134,6 +155,7 @@ public class AiControllerV2 : MonoBehaviour, IAiController
             {
                 handler.Break();
             }
+
             _enemy.MoveTo(_randomPosition);
         }).Add(() => { _waitToAttackPlayer.Play(); });
 
@@ -149,9 +171,11 @@ public class AiControllerV2 : MonoBehaviour, IAiController
             _positionToPlayer = _enemy.GetPlayer().GetGameObject().position;
             if (!_randomPosition)
             {
-                _randomPosition = new GameObject();    
+                _randomPosition = new GameObject();
             }
-            _randomPosition.transform.position = GetPointBeyondTarget(_enemy.GetGameObject(), _enemy.GetPlayer().GetGameObject().gameObject, 3);
+
+            _randomPosition.transform.position = GetPointBeyondTarget(_enemy.GetGameObject(),
+                _enemy.GetPlayer().GetGameObject().gameObject, 3);
         }).Add(() => { _moveForwardToPlayer.Play(); });
 
         _moveForwardToPlayer = this.tt().Pause().Add(() =>
@@ -230,7 +254,7 @@ public class AiControllerV2 : MonoBehaviour, IAiController
 
     private void EndStunt()
     {
-        StartAi();
+        StopAllStartIdle();
     }
 
     private void EnemyOnOnDead(EnemyV2 obj)
@@ -239,6 +263,11 @@ public class AiControllerV2 : MonoBehaviour, IAiController
 
     public void SetPlayer(CharacterV2 characterV2)
     {
+    }
+
+    public void TakeDamage()
+    {
+        StopAllStartIdle(false);
     }
 
     public void StartAi()
