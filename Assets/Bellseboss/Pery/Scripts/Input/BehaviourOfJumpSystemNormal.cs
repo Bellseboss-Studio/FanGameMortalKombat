@@ -108,6 +108,7 @@ namespace Bellseboss.Pery.Scripts.Input
                 _deltatimeLocal = 0;
                 //Debug.Log("JumpSystem: Attack End");
                 OnEndJump?.Invoke();
+                jumpSystem.RestoreRotation();
             });
         }
 
