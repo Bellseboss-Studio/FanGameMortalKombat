@@ -30,8 +30,8 @@ public class MovementADSR : MonoBehaviour
         {
             _deltatimeLocal = 0;
             //_rigidbody.useGravity = false;
-            _rigidbody.constraints = RigidbodyConstraints.FreezeRotationZ |
-                                     RigidbodyConstraints.FreezeRotationX ;
+            /*_rigidbody.constraints = RigidbodyConstraints.FreezeRotationZ |
+                                     RigidbodyConstraints.FreezeRotationX ;*/
             if (attacking)
             {
                 
@@ -134,7 +134,7 @@ public class MovementADSR : MonoBehaviour
             attacking = false;
             _rigidbody.velocity = Vector3.zero;
             //_rigidbody.useGravity = true;
-            _rigidbody.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX;
+            /*_rigidbody.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX;*/
             //Debug.Log("AttackMovementSystem: End Attack");
             OnEndAttack?.Invoke();
             _pJV2.Stun(false);

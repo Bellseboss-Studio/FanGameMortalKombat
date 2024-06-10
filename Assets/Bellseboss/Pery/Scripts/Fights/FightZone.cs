@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Bellseboss.Pery.Scripts.Input;
 using Unity.Collections;
@@ -37,7 +38,7 @@ public class FightZone : MonoBehaviour
         {
             
             enemyFactoryMonoV2.AllEnemiesAreDead += EnemyFactoryMonoV2OnAllEnemiesAreDead;
-            enemyFactoryMonoV2.Configure(_factory);
+            enemyFactoryMonoV2.Configure(_factory, near.gameObject);
         }
     }
 
@@ -82,14 +83,19 @@ public class FightZone : MonoBehaviour
             factoryMonoV2.SetPlayer(null);
             factoryMonoV2.IntoToFarZone(false);
         }
+        arg1.GetComponent<CharacterV2>().GetOutOfEnemyZone();
     }
 
     private void FarOnCollisionEnter(GameObject arg1, Vector3 arg2)
     {
+        var characterV2 = arg1.GetComponent<CharacterV2>();
+        var enemies = new List<GameObject>();
         foreach (var factoryMonoV2 in enemiesMonoV2FactoryMono)
         {
-            factoryMonoV2.SetPlayer(arg1.GetComponent<CharacterV2>());
+            factoryMonoV2.SetPlayer(characterV2);
             factoryMonoV2.IntoToFarZone(true);
+            enemies.AddRange(factoryMonoV2.Enemies.Select(enemy => enemy.gameObject));
         }
+        characterV2.GetIntoEnemyZone(enemies);
     }
 }

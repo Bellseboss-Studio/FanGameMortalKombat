@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using MortalKombat.Audio;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -12,6 +13,7 @@ namespace View.UI
         private IAmuletPositioner _amuletPositioner;
         public bool amuletIsMoving;
         private AmuletsMediator _amuletsMediator;
+        private IFmodManager m_FmodManager = new FmodManagerUI();
 
         private void Awake()
         {
@@ -36,6 +38,7 @@ namespace View.UI
             isOver = true;
             if (isOver != true) return;
             amulet.enabled = true;
+            m_FmodManager.PlaySfx(UISoundList.UI_MouseHover);
             _amuletsMediator.AnyScriptCanMove();
         }
 
