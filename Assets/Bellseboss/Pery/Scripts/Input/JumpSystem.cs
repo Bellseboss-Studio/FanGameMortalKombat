@@ -6,11 +6,15 @@ using Object = UnityEngine.Object;
 public class JumpSystem : MonoBehaviour, IJumpSystem
 {
     public Action OnAttack, OnMidAir, OnRelease, OnSustain, OnEndJump;
+
     [SerializeField, InterfaceType(typeof(IBehaviourOfJumpSystem))]
     private MonoBehaviour behaviourOfJumpSystemNormal;
+
     private IBehaviourOfJumpSystem BehaviourOfJumpSystemNormal => behaviourOfJumpSystemNormal as IBehaviourOfJumpSystem;
+
     [SerializeField, InterfaceType(typeof(IBehaviourOfJumpSystem))]
     private MonoBehaviour behaviourOfJumpSystemWalls;
+
     private IBehaviourOfJumpSystem BehaviourOfJumpSystemWalls => behaviourOfJumpSystemWalls as IBehaviourOfJumpSystem;
     private TeaTime _attack, _decay, _sustain, _release, _endJump;
     private Rigidbody _rigidbody;
@@ -21,7 +25,8 @@ public class JumpSystem : MonoBehaviour, IJumpSystem
     private IMovementRigidBodyV2 _movementRigidBodyV2;
     private bool _isJump;
 
-    public void Configure(Rigidbody rigidbody, IMovementRigidBodyV2 movementRigidBodyV2, FloorController floorController)
+    public void Configure(Rigidbody rigidbody, IMovementRigidBodyV2 movementRigidBodyV2,
+        FloorController floorController)
     {
         Debug.Log($"Configured JumpSystem: {rigidbody.gameObject.name}");
         BehaviourOfJumpSystemWalls.Configure(rigidbody, this);
@@ -31,7 +36,7 @@ public class JumpSystem : MonoBehaviour, IJumpSystem
         _rigidbodyConstraints = _rigidbody.constraints;
         _floorController = floorController;
         _movementRigidBodyV2 = movementRigidBodyV2;
-        
+
         /*IsScalableWall(false, floorController, Vector3.zero);*/
     }
 
@@ -54,18 +59,9 @@ public class JumpSystem : MonoBehaviour, IJumpSystem
                 OnAttack?.Invoke();
                 _isJump = true;
             };
-            BehaviourOfJumpSystemNormal.OnMidAir = () =>
-            {
-                OnMidAir?.Invoke();
-            };
-            BehaviourOfJumpSystemNormal.OnSustain = () =>
-            {
-                OnSustain?.Invoke();
-            };
-            BehaviourOfJumpSystemNormal.OnRelease = () =>
-            {
-                OnRelease?.Invoke();
-            };
+            BehaviourOfJumpSystemNormal.OnMidAir = () => { OnMidAir?.Invoke(); };
+            BehaviourOfJumpSystemNormal.OnSustain = () => { OnSustain?.Invoke(); };
+            BehaviourOfJumpSystemNormal.OnRelease = () => { OnRelease?.Invoke(); };
             BehaviourOfJumpSystemNormal.OnEndJump = () =>
             {
                 OnEndJump?.Invoke();
@@ -92,32 +88,24 @@ public class JumpSystem : MonoBehaviour, IJumpSystem
                     OnAttack?.Invoke();
                     _isJump = true;
                 };
-                BehaviourOfJumpSystemWalls.OnMidAir = () =>
-                {
-                    OnMidAir?.Invoke();
-                };
-                BehaviourOfJumpSystemWalls.OnSustain = () =>
-                {
-                    OnSustain?.Invoke();
-                };
-                BehaviourOfJumpSystemWalls.OnRelease = () =>
-                {
-                    OnRelease?.Invoke();
-                };
+                BehaviourOfJumpSystemWalls.OnMidAir = () => { OnMidAir?.Invoke(); };
+                BehaviourOfJumpSystemWalls.OnSustain = () => { OnSustain?.Invoke(); };
+                BehaviourOfJumpSystemWalls.OnRelease = () => { OnRelease?.Invoke(); };
                 BehaviourOfJumpSystemWalls.OnEndJump = () =>
                 {
                     OnEndJump?.Invoke();
                     _isJump = false;
                 };
                 var behaviourOfJumpSystemWallsMono = BehaviourOfJumpSystemWalls as BehaviourOfJumpSystemWalls;
-                System.Diagnostics.Debug.Assert(behaviourOfJumpSystemWallsMono != null, nameof(behaviourOfJumpSystemWallsMono) + " != null");
+                System.Diagnostics.Debug.Assert(behaviourOfJumpSystemWallsMono != null,
+                    nameof(behaviourOfJumpSystemWallsMono) + " != null");
                 behaviourOfJumpSystemWallsMono.ConfigureWall(scalableWallDirection);
                 _attack.Play();
             }
         }
     }
 
-    public void IsScalableWall(bool isScalableWall, FloorController floorController, Vector3 direction)
+    /*public void IsScalableWall(bool isScalableWall, FloorController floorController, Vector3 direction)
     {
         _attack?.Stop();
         _decay?.Stop();
@@ -125,8 +113,8 @@ public class JumpSystem : MonoBehaviour, IJumpSystem
         _release?.Stop();
         _endJump?.Stop();
         _isJump = false;
-        
-        if(isScalableWall)
+
+        if (isScalableWall)
         {
             _attack = BehaviourOfJumpSystemWalls.GetAttack();
             _decay = BehaviourOfJumpSystemWalls.GetDecay();
@@ -138,25 +126,17 @@ public class JumpSystem : MonoBehaviour, IJumpSystem
                 OnAttack?.Invoke();
                 _isJump = true;
             };
-            BehaviourOfJumpSystemWalls.OnMidAir = () =>
-            {
-                OnMidAir?.Invoke();
-            };
-            BehaviourOfJumpSystemWalls.OnSustain = () =>
-            {
-                OnSustain?.Invoke();
-            };
-            BehaviourOfJumpSystemWalls.OnRelease = () =>
-            {
-                OnRelease?.Invoke();
-            };
+            BehaviourOfJumpSystemWalls.OnMidAir = () => { OnMidAir?.Invoke(); };
+            BehaviourOfJumpSystemWalls.OnSustain = () => { OnSustain?.Invoke(); };
+            BehaviourOfJumpSystemWalls.OnRelease = () => { OnRelease?.Invoke(); };
             BehaviourOfJumpSystemWalls.OnEndJump = () =>
             {
                 OnEndJump?.Invoke();
                 _isJump = false;
             };
             var behaviourOfJumpSystemWallsMono = BehaviourOfJumpSystemWalls as BehaviourOfJumpSystemWalls;
-            System.Diagnostics.Debug.Assert(behaviourOfJumpSystemWallsMono != null, nameof(behaviourOfJumpSystemWallsMono) + " != null");
+            System.Diagnostics.Debug.Assert(behaviourOfJumpSystemWallsMono != null,
+                nameof(behaviourOfJumpSystemWallsMono) + " != null");
             behaviourOfJumpSystemWallsMono.ConfigureWall(direction);
         }
         else
@@ -171,26 +151,16 @@ public class JumpSystem : MonoBehaviour, IJumpSystem
                 OnAttack?.Invoke();
                 _isJump = true;
             };
-            BehaviourOfJumpSystemNormal.OnMidAir = () =>
-            {
-                OnMidAir?.Invoke();
-            };
-            BehaviourOfJumpSystemNormal.OnSustain = () =>
-            {
-                OnSustain?.Invoke();
-            };
-            BehaviourOfJumpSystemNormal.OnRelease = () =>
-            {
-                OnRelease?.Invoke();
-            };
+            BehaviourOfJumpSystemNormal.OnMidAir = () => { OnMidAir?.Invoke(); };
+            BehaviourOfJumpSystemNormal.OnSustain = () => { OnSustain?.Invoke(); };
+            BehaviourOfJumpSystemNormal.OnRelease = () => { OnRelease?.Invoke(); };
             BehaviourOfJumpSystemNormal.OnEndJump = () =>
             {
                 OnEndJump?.Invoke();
                 _isJump = false;
             };
         }
-        
-    }
+    }*/
 
     public void ChangeNormalWall()
     {

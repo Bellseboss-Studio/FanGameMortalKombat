@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using MenuUI.SystemOfExtras;
 using PlayFab;
@@ -26,24 +27,26 @@ namespace ServiceLocatorPath
 
         private void Login(Action<LoginResult> resultCallback, Action<PlayFabError> errorCallback)
         {
-            if (string.IsNullOrEmpty(PlayFabSettings.staticSettings.TitleId)){
+            if (string.IsNullOrEmpty(PlayFabSettings.staticSettings.TitleId))
+            {
                 /*
                 Please change the titleId below to your own titleId from PlayFab Game Manager.
                 If you have already set the value in the Editor Extensions, this can be skipped.
                 */
                 PlayFabSettings.staticSettings.TitleId = "42";
             }
+
             Debug.Log($"SystemInfo.deviceUniqueIdentifier {SystemInfo.deviceUniqueIdentifier}");
-            var request = new LoginWithCustomIDRequest { CustomId = SystemInfo.deviceUniqueIdentifier, CreateAccount = true};
+            var request = new LoginWithCustomIDRequest
+                { CustomId = SystemInfo.deviceUniqueIdentifier, CreateAccount = true };
             PlayFabClientAPI.LoginWithCustomID(request, resultCallback, errorCallback);
         }
 
         private void CreatedPlayer()
         {
-        
             GetTitleDataRequest request = new GetTitleDataRequest()
             {
-                Keys = new List<string>(){"InitialUserData"}
+                Keys = new List<string>() { "InitialUserData" }
             };
             PlayFabClientAPI.GetTitleData(request, (defaultData) =>
             {
@@ -52,15 +55,17 @@ namespace ServiceLocatorPath
                 {
                     Data = new Dictionary<string, string>()
                     {
-                        {"isCreated",JsonUtility.ToJson(new IsCreated(){isCreated = true})},
-                        {"SystemInfo",JsonUtility.ToJson(new SystemInfoCustom()
+                        { "isCreated", JsonUtility.ToJson(new IsCreated() { isCreated = true }) },
                         {
-                            model = SystemInfo.deviceModel,
-                            name = SystemInfo.deviceName,
-                            os = SystemInfo.operatingSystem,
-                            processor = SystemInfo.processorType,
-                            graphicsDeviceName = SystemInfo.graphicsDeviceName
-                        })}
+                            "SystemInfo", JsonUtility.ToJson(new SystemInfoCustom()
+                            {
+                                model = SystemInfo.deviceModel,
+                                name = SystemInfo.deviceName,
+                                os = SystemInfo.operatingSystem,
+                                processor = SystemInfo.processorType,
+                                graphicsDeviceName = SystemInfo.graphicsDeviceName
+                            })
+                        }
                     }
                 }, requestCreate =>
                 {
@@ -69,9 +74,9 @@ namespace ServiceLocatorPath
                         Amount = 0,
                         VirtualCurrency = "MK"
                     };
-                    PlayFabClientAPI.AddUserVirtualCurrency(reqCurrenci, result =>{},OnLoginFailure);
-                },OnLoginFailure);
-            },OnLoginFailure);
+                    PlayFabClientAPI.AddUserVirtualCurrency(reqCurrenci, result => { }, OnLoginFailure);
+                }, OnLoginFailure);
+            }, OnLoginFailure);
         }
 
         private void OnLoginFailure(PlayFabError error)
@@ -83,7 +88,8 @@ namespace ServiceLocatorPath
 
         private void OnLoginSuccess(LoginResult result)
         {
-            GetUserDataRequest requestCreated = new GetUserDataRequest(){Keys = new List<string>(){"isCreated","SystemInfo"}};
+            GetUserDataRequest requestCreated = new GetUserDataRequest()
+                { Keys = new List<string>() { "isCreated", "SystemInfo" } };
             _playerId = result.PlayFabId;
             PlayFabClientAPI.GetUserData(requestCreated, defaultResult =>
             {
@@ -95,8 +101,9 @@ namespace ServiceLocatorPath
                 {
                     isCreatedPlayer = JsonUtility.FromJson<IsCreated>(defaultResult.Data["isCreated"].Value);
                     systemInfoCustom = JsonUtility.FromJson<SystemInfoCustom>(defaultResult.Data["SystemInfo"].Value);
+                    CreatedItem(new List<string> { "AntesyDespues", "LogoBellseboss", "LogoImg", "Leena" });
                 }
-            },OnLoginFailure);
+            }, OnLoginFailure);
         }
 
         public async Task<bool> HasData()
@@ -115,6 +122,7 @@ namespace ServiceLocatorPath
                         {
                             extra = JsonUtility.FromJson<Extra>(item.CustomData);
                         }
+
                         switch (extra.type)
                         {
                             case "text":
@@ -128,21 +136,19 @@ namespace ServiceLocatorPath
                                 break;
                         }
                     }
+
                     isRequestOk = true;
                 });
-                
-            }, error =>
-            {
-                isRequestOk = true;
-            });
+            }, error => { isRequestOk = true; });
             while (!isRequestOk)
             {
                 await Task.Delay(TimeSpan.FromSeconds(.3f));
             }
+
             return inventary.Count > 0;
         }
 
-        public async void GetInventory(Action<GetCatalogItemsResult> resultCallback)
+        public async Task GetInventory(Action<GetCatalogItemsResult> resultCallback)
         {
             var resultPlayfab = false;
             var catalog = new GetCatalogItemsRequest()
@@ -176,7 +182,6 @@ namespace ServiceLocatorPath
 
         public void SaveData(List<IExtra> listOfExtras)
         {
-            throw new NotImplementedException();
         }
 
         public void SaveData()
@@ -184,20 +189,84 @@ namespace ServiceLocatorPath
             CreatedItem();
         }
 
-        public void CreatedItem()
+        public void SaveData(List<string> itemId)
         {
-            GetInventory(result =>
+            CreatedItem(itemId);
+        }
+
+        public async void CreatedItem()
+        {
+            var isRequestOk = false;
+            var request = new GetUserInventoryRequest();
+            PlayFabClientAPI.GetUserInventory(request, result =>
             {
-                var catalogItem = result.Catalog[Random.Range(0, result.Catalog.Capacity)];
-                PurchaseItemRequest purchase = new PurchaseItemRequest()
+                inventary = new List<IExtra>();
+                GetInventory(itemsResult =>
                 {
-                    CatalogVersion = catalogItem.CatalogVersion,
-                    ItemId = catalogItem.ItemId,
-                    Price = 0,
-                    VirtualCurrency = "MK"
-                };
-                PlayFabClientAPI.PurchaseItem(purchase, result =>{},OnLoginFailure);
+                    var catalogItem = itemsResult.Catalog[Random.Range(0, itemsResult.Catalog.Capacity)];
+                    Extra extra = null;
+                    if (result.Inventory.FindAll(i => i.ItemId == catalogItem.ItemId).Count == 0)
+                    {
+                        PurchaseItemRequest purchase = new PurchaseItemRequest
+                        {
+                            CatalogVersion = catalogItem.CatalogVersion,
+                            ItemId = catalogItem.ItemId,
+                            Price = 0,
+                            VirtualCurrency = "MK"
+                        };
+                        PlayFabClientAPI.PurchaseItem(purchase, result => { }, OnLoginFailure);
+                        return;
+                    }
+
+                    isRequestOk = true;
+                });
+            }, error => { isRequestOk = true; });
+            while (!isRequestOk)
+            {
+                await Task.Delay(TimeSpan.FromSeconds(.3f));
+            }
+        }
+
+
+        public async Task CreatedItem(List<string> itemIds)
+        {
+            var semaphore = new SemaphoreSlim(1, 1);
+            var tasks = itemIds.Select(async itemId =>
+            {
+                await GetInventory(async itemsResult =>
+                {
+                    await semaphore.WaitAsync();
+                    try
+                    {
+                        var catalogItem = itemsResult.Catalog.Find(item => item.ItemId == itemId);
+                        Extra extra = null;
+                        var request = new GetUserInventoryRequest();
+                        PlayFabClientAPI.GetUserInventory(request, result =>
+                        {
+                            inventary = new List<IExtra>();
+
+                            if (result.Inventory.FindAll(i => i.ItemId == catalogItem.ItemId).Count == 0)
+                            {
+                                PurchaseItemRequest purchase = new PurchaseItemRequest
+                                {
+                                    CatalogVersion = catalogItem.CatalogVersion,
+                                    ItemId = catalogItem.ItemId,
+                                    Price = 0,
+                                    VirtualCurrency = "MK"
+                                };
+                                PlayFabClientAPI.PurchaseItem(purchase, result => { }, OnLoginFailure);
+                                return;
+                            }
+                        }, error => { });
+                    }
+                    finally
+                    {
+                        semaphore.Release();
+                    }
+                });
             });
+
+            await Task.WhenAll(tasks);
         }
     }
 }

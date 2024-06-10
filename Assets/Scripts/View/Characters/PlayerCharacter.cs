@@ -5,6 +5,7 @@ using System.Diagnostics;
 using Cinemachine;
 using InputSystemCustom;
 using ServiceLocatorPath;
+using TargetingSystemPath;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Debug = UnityEngine.Debug;
@@ -41,12 +42,12 @@ namespace View.Characters
 
         private Vector2 movementInputValue;
         
-        private TargetingSystem.TargetingSystem _targetingSystem;
+        private TargetingSystem _targetingSystem;
         protected override void Start()
         {
             _combosSystem = new CombosSystem(punch1, punch2, kick1, kickCombo1, attackTypes);
             _enemiesInCombat = new List<GameObject>();
-            _targetingSystem = new TargetingSystem.TargetingSystem();
+            _targetingSystem = new TargetingSystem();
             base.Start();
             pointInicialToPointToFar = pointFarToCamera.transform.localPosition;
             OnPunchEvent+=OnPunchEventInPlayer;

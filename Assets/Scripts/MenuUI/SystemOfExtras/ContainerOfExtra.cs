@@ -2,8 +2,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Threading.Tasks;
-using UnityEngine.Networking;
+using View.UI;
 
 public class ContainerOfExtra : MonoBehaviour
 {
@@ -12,8 +11,15 @@ public class ContainerOfExtra : MonoBehaviour
     [SerializeField] private Button buttonToAction;
 
     [SerializeField] private ExtraMediator mediator;
+    [SerializeField] private ChangeInputMap _content;
     
-    private async void Call()
+    [SerializeField] private TextMeshProUGUI nameOfExtra;
+    
+    [SerializeField] public int indexIntoContent;
+
+    public Button ButtonToAction => buttonToAction;
+
+    private void Call()
     {
         if (_extra == null) return;
         switch (_extra.GetTypeExtra())
@@ -30,15 +36,13 @@ public class ContainerOfExtra : MonoBehaviour
             case "audio":
                 break;
         }
+        _content.ChangeInputMapToNew();
     }
 
-    public void Add(IExtra extra)
+    public void Configure(IExtra extra, ExtraMediator mediator, Button backButtonToShowExtra)
     {
+        this.mediator = mediator;
         _extra = extra;
-    }
-
-    public void Configure()
-    {
         if (_extra == null)
         {
             var spriteToPixel = Resources.Load<Sprite>("SinDatos");
@@ -49,23 +53,14 @@ public class ContainerOfExtra : MonoBehaviour
             var spriteToPixel = Resources.Load<Sprite>(_extra.GetIcon());
             imageToShow.sprite = spriteToPixel;
         }
-
-        ConfigureActionsTuButton();
-    }
-
-    private void ConfigureActionsTuButton()
-    {
+        nameOfExtra.text = _extra?.GetName();
         buttonToAction.onClick.AddListener(Call);
-        buttonToAction.navigation = new Navigation {mode = Navigation.Mode.Explicit};
-        /*var navigation = buttonToAction.navigation;
-        navigation.selectOnDown = buttonToAction;
-        buttonToAction.navigation = navigation;*/
-        
-    }
-
-    public void Clean()
-    {
-        _extra = null;
+        _content.ChangeInputMapToNew(backButtonToShowExtra.gameObject);
     }
     
+    public void DebugExtra()
+    {
+        Debug.Log($"Extra: {_extra.GetTypeExtra()}");
+        mediator.SetIndex(indexIntoContent);
+    }
 }

@@ -1,4 +1,5 @@
-﻿using ServiceLocatorPath;
+﻿using Bellseboss.Pery.Scripts.Input;
+using ServiceLocatorPath;
 using View;
 using View.Characters;
 using View.Installers;
@@ -16,7 +17,7 @@ namespace ServiceLocatorPath
             _ui = ui;
         }
 
-        public void Observer(Character character)
+        public void Observer(ICharacterUi character)
         {
             character.OnEnterDamageEvent += CharacterOnEnterDamageEvent;
             character.OnAddingEnergy += AddingEnergy;

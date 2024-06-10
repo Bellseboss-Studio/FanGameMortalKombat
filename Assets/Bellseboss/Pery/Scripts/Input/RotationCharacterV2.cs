@@ -62,7 +62,7 @@ namespace Bellseboss.Pery.Scripts.Input
                 {
                     _player.transform.rotation = Quaternion.Lerp(_player.transform.rotation,
                         Quaternion.LookRotation(_lastDirection), _forceRotation * Time.deltaTime);
-                }   
+                }
             }
         }
 
@@ -109,6 +109,7 @@ namespace Bellseboss.Pery.Scripts.Input
             //invert direction
             direction = -direction;
             //rotate to direction without lerp
+            direction = new Vector3(direction.x, 0, direction.z);
             _player.transform.rotation = Quaternion.LookRotation(direction);
             _lastDirection = direction;
         }

@@ -9,17 +9,15 @@ namespace Bellseboss.Pery.Scripts.Input
     {
         [SerializeField] private float force;
         [SerializeField] private FloorController floorController;
+
         [SerializeField] private bool isFall, isUp;
+
         //[SerializeField] private AttackMovementSystem attackMovementSystem;
         [SerializeField] private JumpSystem jumpSystem;
-        [Range(0, 1)]
-        [SerializeField] private float inputMin;
-        [Range(0, 2)]
-        [SerializeField] private float inputMax;
-        [Range(0, 1f)]
-        [SerializeField] private float minSpeed;
-        [Range(0.5f, 1)]
-        [SerializeField] private float maxSpeed;
+        [Range(0, 1)] [SerializeField] private float inputMin;
+        [Range(0, 2)] [SerializeField] private float inputMax;
+        [Range(0, 1f)] [SerializeField] private float minSpeed;
+        [Range(0.5f, 1)] [SerializeField] private float maxSpeed;
         [SerializeField] private bool isScalableWall;
         [SerializeField] private float forceToGravitate;
         private Rigidbody _rigidbody;
@@ -36,7 +34,8 @@ namespace Bellseboss.Pery.Scripts.Input
         private float _velocityOfAnimation;
         private Vector3 _scalableWallFordWard;
 
-        public void Configure(Rigidbody rigidBody, float speedWalk, float speedRun, GameObject camera, IMovementRigidBodyV2 movementRigidBodyV2, StatisticsOfCharacter statisticsOfCharacter)
+        public void Configure(Rigidbody rigidBody, float speedWalk, float speedRun, GameObject camera,
+            IMovementRigidBodyV2 movementRigidBodyV2, StatisticsOfCharacter statisticsOfCharacter)
         {
             _rigidbody = rigidBody;
             _speedWalk = speedWalk;
@@ -63,7 +62,7 @@ namespace Bellseboss.Pery.Scripts.Input
         {
             _movementRigidBodyV2.PlayerFall();
         }
-        
+
         private void TouchingFloorChanged(bool isTouching)
         {
             if (_movementRigidBodyV2.IsAttacking() || jumpSystem.IsJump()) return;
@@ -143,6 +142,7 @@ namespace Bellseboss.Pery.Scripts.Input
             {
                 _rigidbody.velocity = new Vector3(resultMovement.x, _rigidbody.velocity.y, resultMovement.z);
             }
+
             if (_rigidbody.velocity.y > 0)
             {
                 isUp = true;
@@ -165,16 +165,15 @@ namespace Bellseboss.Pery.Scripts.Input
             _lastDirection = vector2;
         }
 
-        private void FixedUpdate()
-        {
-            
-        }
-
         private void Update()
         {
             if (!_isConfigured || !_canMove || _movementRigidBodyV2.IsAttacking()) return;
             Move();
-            _movementRigidBodyV2.UpdateAnimation();
+            _movementRigidBodyV2.UpdateAnimation(floorController.IsTouchingFloor(), isScalableWall);
+            if (!floorController.IsTouchingFloor() && jumpSystem.IsJump() && isScalableWall)
+            {
+                jumpSystem.ChangeRotation(_scalableWallFordWard);
+            }
         }
 
         public void IsTarget(bool isTarget)
@@ -187,7 +186,8 @@ namespace Bellseboss.Pery.Scripts.Input
             return _rigidbody.velocity.magnitude / 10;
         }
 
-        public void AddForce(Vector3 runningDirection, float runningDistance, AttackMovementSystem.TypeOfAttack typeOfAttack)
+        public void AddForce(Vector3 runningDirection, float runningDistance,
+            AttackMovementSystem.TypeOfAttack typeOfAttack)
         {
             _rigidbody.velocity = Vector3.zero;
             Vector3 globalDirection = transform.TransformDirection(runningDirection.normalized);

@@ -7,8 +7,8 @@ namespace ServiceLocatorPath
 {
     public class Installer : MonoBehaviour
     {
-        [SerializeField] private ObserverUIPlayer ui;
-        [SerializeField] private PauseMenu pause;
+        //[SerializeField] private ObserverUIPlayer ui;
+        //[SerializeField] private PauseMenu pause;
         private void Awake()
         {
             if (FindObjectsOfType<Installer>().Length > 1)
@@ -16,12 +16,12 @@ namespace ServiceLocatorPath
                 Destroy(gameObject);
                 return;
             }
-            pause.Configuracion();
-            var observerZonesGod = new ObserverZoneGod();
-            ServiceLocator.Instance.RegisterService<IGodObserver>(observerZonesGod);
-            var observer = new ObserverUI(ui);
-            ServiceLocator.Instance.RegisterService<IObserverUI>(observer);
-            ServiceLocator.Instance.RegisterService<IPauseMainMenu>(pause);
+            //pause.Configuracion();
+            //var observerZonesGod = new ObserverZoneGod();
+            //ServiceLocator.Instance.RegisterService<IGodObserver>(observerZonesGod);
+            //var observer = new ObserverUI(ui);
+            //ServiceLocator.Instance.RegisterService<IObserverUI>(observer);
+            //ServiceLocator.Instance.RegisterService<IPauseMainMenu>(pause);
             //Comentario para ejemplo
             DontDestroyOnLoad(gameObject);
         }

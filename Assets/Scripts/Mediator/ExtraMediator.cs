@@ -15,6 +15,8 @@ public class ExtraMediator : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private Image imageOfResource;
     [SerializeField] private ControladorDeCinematica cinematic;
+    private ControllerOfUiForExtras _controllerOfUiForExtras;
+
     public void SetExtraText(IExtra extra)
     {
         PreConditions();
@@ -30,6 +32,7 @@ public class ExtraMediator : MonoBehaviour
 
     private void PreConditions()
     {
+        animator.gameObject.SetActive(true);
         animator.SetBool("show", true);
         imageOfResource.enabled = false;
         text.transform.parent.gameObject.SetActive(false);
@@ -96,5 +99,15 @@ public class ExtraMediator : MonoBehaviour
         }
         cinematic.StartVideo();
         PostConditions(cinematic.gameObject);
+    }
+
+    public void SetIndex(int indexIntoContent)
+    {
+        _controllerOfUiForExtras.SetIndex(indexIntoContent);
+    }
+
+    public void Configure(ControllerOfUiForExtras controllerOfUiForExtras)
+    {
+        _controllerOfUiForExtras = controllerOfUiForExtras;
     }
 }

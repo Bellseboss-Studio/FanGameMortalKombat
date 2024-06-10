@@ -33,7 +33,7 @@ namespace Bellseboss.Pery.Scripts.Input
             return result;
         }
 
-        private GameObject GetClosestEnemy()
+        public GameObject GetClosestEnemy()
         {
             GameObject closestEnemy = null;
             var minDistance = float.MaxValue;
@@ -107,6 +107,11 @@ namespace Bellseboss.Pery.Scripts.Input
         public void CleanEnemies()
         {
             _enemies = new List<GameObject>();
+        }
+
+        public bool IsEnemyTouched()
+        {
+            return _enemies.Count > 0;
         }
     }
 }

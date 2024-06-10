@@ -27,8 +27,8 @@ namespace Bellseboss.Pery.Scripts.Input
             {
                 _deltatimeLocal = 0;
                 _rigidbody.useGravity = false;
-                _rigidbody.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotationZ |
-                                         RigidbodyConstraints.FreezeRotationX;
+                /*_rigidbody.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotationZ |
+                                         RigidbodyConstraints.FreezeRotationX;*/
                 //Debug.Log("JumpSystem: Attack");
             }).Add(() => { OnAttack?.Invoke(); }).Loop(loop =>
             {
@@ -82,7 +82,6 @@ namespace Bellseboss.Pery.Scripts.Input
             _release = this.tt().Pause().Add(() =>
             {
                 OnRelease?.Invoke();
-                Debug.Log("JumpSystem BehaviourOfJumpSystemNormal: Release");
             }).Loop(loop =>
             {
                 _deltatimeLocal += loop.deltaTime;
@@ -105,10 +104,11 @@ namespace Bellseboss.Pery.Scripts.Input
             _endJump = this.tt().Pause().Add(() =>
             {
                 _rigidbody.useGravity = true;
-                _rigidbody.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX;
+                /*_rigidbody.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX;*/
                 _deltatimeLocal = 0;
                 //Debug.Log("JumpSystem: Attack End");
                 OnEndJump?.Invoke();
+                jumpSystem.RestoreRotation();
             });
         }
 
