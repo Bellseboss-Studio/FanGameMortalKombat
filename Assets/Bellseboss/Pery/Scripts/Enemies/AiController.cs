@@ -219,6 +219,11 @@ internal class AiController : MonoBehaviour, IAiController
         
     }
 
+    public void TakeDamage()
+    {
+        
+    }
+
     public void StartAi()
     {
         if (_isDeath) return;
