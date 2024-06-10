@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using V2;
 
 public class ControllerOfUiForExtras : MonoBehaviour
 {
@@ -9,10 +10,12 @@ public class ControllerOfUiForExtras : MonoBehaviour
     [SerializeField] private ExtraMediator mediator;
     [SerializeField] private Button backButton;
     [SerializeField] private Button backButtonToShowExtra;
+    [SerializeField] private StepsConfig stepsConfig;
     private List<ContainerOfExtra> containerOfExtraInstantiates = new List<ContainerOfExtra>();
 
     public async void LoadData()
     {
+        mediator.Configure(this);
         await ServiceLocator.Instance.GetService<ICatalog>().LoadDataCatalog();
         foreach (var extra in containerOfExtraInstantiates?.ToArray()!)
         {
@@ -35,6 +38,7 @@ public class ControllerOfUiForExtras : MonoBehaviour
         };
 
         //change the navigation of all elements
+        var indexIntoContent = 0;
         foreach (var extra in containerOfExtraInstantiates)
         {
             var index = containerOfExtraInstantiates.IndexOf(extra);
@@ -69,7 +73,10 @@ public class ControllerOfUiForExtras : MonoBehaviour
                     selectOnDown = backButton,
                 };
             }
+            extra.indexIntoContent = indexIntoContent;
+            indexIntoContent++;
         }
+        stepsConfig.Configure(indexIntoContent-1);
     }
 
     public void SaveData()
@@ -81,6 +88,11 @@ public class ControllerOfUiForExtras : MonoBehaviour
     public void CreateItem()
     {
         ServiceLocator.Instance.GetService<ICatalog>().SaveData();
+    }
+
+    public void SetIndex(int indexIntoContent)
+    {
+        stepsConfig.SetStep(indexIntoContent);
     }
 }
 
