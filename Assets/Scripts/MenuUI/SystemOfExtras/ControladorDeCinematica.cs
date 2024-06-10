@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using MortalKombat.Audio;
 using Rest;
 using UnityEngine;
 using UnityEngine.Video;
@@ -12,9 +13,11 @@ public class ControladorDeCinematica : MonoBehaviour
     [SerializeField] private VideoPlayer video;
     [SerializeField] private bool isPreparedVideo;
     [SerializeField] private GameObject canvas;
+    private IFmodManager _fmodManager;
 
     public void LoadVideo(string urlVideo)
     {
+        _fmodManager = new FmodManagerUI();
         canvas.SetActive(true);
         video.source = VideoSource.Url;
         video.url = urlVideo;
@@ -28,6 +31,7 @@ public class ControladorDeCinematica : MonoBehaviour
     public void StartVideo()
     {
         video.Play();
+        
     }
 
     public bool IsPrepared => isPreparedVideo;
