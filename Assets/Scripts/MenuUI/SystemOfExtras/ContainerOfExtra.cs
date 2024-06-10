@@ -1,9 +1,7 @@
 ﻿using MenuUI.SystemOfExtras;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Threading.Tasks;
-using UnityEngine.Networking;
+using View.UI;
 
 public class ContainerOfExtra : MonoBehaviour
 {
@@ -12,8 +10,11 @@ public class ContainerOfExtra : MonoBehaviour
     [SerializeField] private Button buttonToAction;
 
     [SerializeField] private ExtraMediator mediator;
-    
-    private async void Call()
+    [SerializeField] private ChangeInputMap _content;
+
+    public Button ButtonToAction => buttonToAction;
+
+    private void Call()
     {
         if (_extra == null) return;
         switch (_extra.GetTypeExtra())
@@ -30,15 +31,13 @@ public class ContainerOfExtra : MonoBehaviour
             case "audio":
                 break;
         }
+        _content.ChangeInputMapToNew();
     }
 
-    public void Add(IExtra extra)
+    public void Configure(IExtra extra, ExtraMediator mediator, Button backButtonToShowExtra)
     {
+        this.mediator = mediator;
         _extra = extra;
-    }
-
-    public void Configure()
-    {
         if (_extra == null)
         {
             var spriteToPixel = Resources.Load<Sprite>("SinDatos");
@@ -50,17 +49,7 @@ public class ContainerOfExtra : MonoBehaviour
             imageToShow.sprite = spriteToPixel;
         }
 
-        ConfigureActionsTuButton();
-    }
-
-    private void ConfigureActionsTuButton()
-    {
         buttonToAction.onClick.AddListener(Call);
+        _content.ChangeInputMapToNew(backButtonToShowExtra.gameObject);
     }
-
-    public void Clean()
-    {
-        _extra = null;
-    }
-    
 }

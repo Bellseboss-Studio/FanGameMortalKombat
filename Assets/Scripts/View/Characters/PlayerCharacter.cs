@@ -5,6 +5,7 @@ using System.Diagnostics;
 using Cinemachine;
 using InputSystemCustom;
 using ServiceLocatorPath;
+using TargetingSystemPath;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Debug = UnityEngine.Debug;
@@ -41,12 +42,12 @@ namespace View.Characters
 
         private Vector2 movementInputValue;
         
-        private TargetingSystem.TargetingSystem _targetingSystem;
+        private TargetingSystem _targetingSystem;
         protected override void Start()
         {
             _combosSystem = new CombosSystem(punch1, punch2, kick1, kickCombo1, attackTypes);
             _enemiesInCombat = new List<GameObject>();
-            _targetingSystem = new TargetingSystem.TargetingSystem();
+            _targetingSystem = new TargetingSystem();
             base.Start();
             pointInicialToPointToFar = pointFarToCamera.transform.localPosition;
             OnPunchEvent+=OnPunchEventInPlayer;
@@ -95,16 +96,13 @@ namespace View.Characters
         
         private IEnumerator ExecuteKickCombo(string kick, float time)
         {
-            animator.SetBool(kick, true);
             CanMove = false;
             CanReadInputs = false;
             Move(Vector3.zero);
             OnInputChangedExtend(movementInputValue);
-            Debug.Log(animator.GetCurrentAnimatorClipInfo(0)[0].clip.length);
             yield return new WaitForSeconds(time);
             CanMove = true;
             CanReadInputs = true;
-            animator.SetBool(kick, false);
         }
         
         private void OnPunchEventInPlayer()
@@ -154,6 +152,7 @@ namespace View.Characters
                     cameraChange.FreeLookCamera();
                 }
                 Debug.Log("DejaDeApuntar");
+                animatorController.IsTarget(false);
             }
             else
             {
@@ -165,7 +164,8 @@ namespace View.Characters
                 }
 
                 isAiming = true;
-                Debug.Log("Apunta");
+                Debug.Log("Apuntar");
+                animatorController.IsTarget(true);
             }
         }
         
@@ -176,7 +176,6 @@ namespace View.Characters
                 if (Random.Range(0, 100) < 2)
                 {
                     changeIdle = true;
-                    animator.SetTrigger("change_idle");
                     StartCoroutine(DelayToIdle());
                 }
             }
@@ -209,10 +208,7 @@ namespace View.Characters
 
         protected override void Muerte()
         {
-            {
-                animator.SetTrigger("Muerte");
-                
-            }
+            Debug.Log("Muerte");
         }
 
         public override Vector3 GetDirectionWithObjective()
@@ -230,6 +226,7 @@ namespace View.Characters
         private void OnMovementControllers(InputValue value)
         {
             movementInputValue = value.Get <Vector2>();
+            Debug.Log($"vec {movementInputValue}");
             OnInputChangedExtend(movementInputValue);
         }
 

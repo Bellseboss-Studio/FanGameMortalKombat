@@ -10,9 +10,6 @@ namespace View.UI
         public void LoadSceneMethod()
         {
             SceneManager.LoadScene(1);
-            MxManager.Instance.ChangeSceneMx(GameStates.MainScene);
-            SfxManager.Instance.ChangeSceneAmbient(GameStates.MainScene);
-            ClientStateAudio.Instance.ChangeSceneSnapshot(GameStates.MainScene);
         }
 
         public void QuitGame()

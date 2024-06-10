@@ -7,19 +7,20 @@ using UnityEngine.SceneManagement;
 
 namespace Audio.Managers
 {
-    public class SfxManager : Singleton<SfxManager>
+    public class SfxManager : MonoBehaviour
     {
-    
+
         [SerializeField] Transform[] AudioObjects;
         private string m_CurrentState;
         private Dictionary<string, GameObject> m_AudioObjectsDic = new Dictionary<string, GameObject>();
-    
+
 
         private void Start()
         {
             AddItemsToDictionary();
             ChangeSceneAmbient(GameStates.MainMenu);
         }
+
         //TODO deactivate go on scene change. Implement State Pattern???
         public void ChangeSceneAmbient(GameStates gameStates)
         {
@@ -28,7 +29,7 @@ namespace Audio.Managers
                 m_AudioObjectsDic[audioObject.Key].SetActive(false);
             }
 
-            
+
             string nameOfAudioObject = gameStates.ToString() + "Ambience";
             Debug.Log($"The current state is:{nameOfAudioObject}");
             m_AudioObjectsDic[nameOfAudioObject].SetActive(true);
@@ -49,8 +50,9 @@ namespace Audio.Managers
                 m_AudioObjectsDic.Add(t.gameObject.name, t.gameObject);
             }
         }
+    
 
-        public void PlaySound(string goName)
+    public void PlaySound(string goName)
         {
             StartCoroutine(ActivateNonLoopableGameObject(goName));
         }

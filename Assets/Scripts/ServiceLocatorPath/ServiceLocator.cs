@@ -32,4 +32,13 @@ public class ServiceLocator
 
         return (T) service;
     }
+    
+    public void UnregisterService<T>()
+    {
+        var type = typeof(T);
+        Assert.IsTrue(_services.ContainsKey(type), 
+            $"Service {type} not registered");
+        
+        _services.Remove(type);
+    }
 }
