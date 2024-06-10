@@ -16,6 +16,7 @@ public class PlayerPrefDataContainer : ISaveData
         {
             return false;
         }
+
         extraParse = JsonHelper.FromJson<Extra>(data);
         return extraParse.Length > 0;
     }
@@ -32,6 +33,7 @@ public class PlayerPrefDataContainer : ISaveData
         {
             list.Add(new ImageComponentExtra(extra));
         }
+
         return list;
     }
 
@@ -52,6 +54,9 @@ public class PlayerPrefDataContainer : ISaveData
 
     public void SaveData()
     {
-        throw new System.NotImplementedException();
+    }
+
+    public void SaveData(string itemId)
+    {
     }
 }

@@ -30,6 +30,11 @@ namespace MenuUI.SystemOfExtras
         {
             _saveData.SaveData();
         }
+        
+        public void SaveData(string itemId)
+        {
+            _saveData.SaveData(itemId);
+        }
 
         public async void LoadCatalog()
         {

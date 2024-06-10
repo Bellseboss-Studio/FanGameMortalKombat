@@ -89,6 +89,11 @@ public class ControllerOfUiForExtras : MonoBehaviour
     {
         ServiceLocator.Instance.GetService<ICatalog>().SaveData();
     }
+    
+    public void CreateItem(string itemId)
+    {
+        ServiceLocator.Instance.GetService<ICatalog>().SaveData(itemId);
+    }
 
     public void SetIndex(int indexIntoContent)
     {
