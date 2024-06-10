@@ -105,7 +105,7 @@ public class JumpSystem : MonoBehaviour, IJumpSystem
         }
     }
 
-    public void IsScalableWall(bool isScalableWall, FloorController floorController, Vector3 direction)
+    /*public void IsScalableWall(bool isScalableWall, FloorController floorController, Vector3 direction)
     {
         _attack?.Stop();
         _decay?.Stop();
@@ -160,7 +160,7 @@ public class JumpSystem : MonoBehaviour, IJumpSystem
                 _isJump = false;
             };
         }
-    }
+    }*/
 
     public void ChangeNormalWall()
     {
