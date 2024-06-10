@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Bellseboss.Pery.Scripts.Input
@@ -10,31 +11,34 @@ namespace Bellseboss.Pery.Scripts.Input
         [SerializeField] private float minDistanceToFloor;
         [SerializeField] private bool _isTouchingFloor;
         [SerializeField] private LayerMask layerMask;
+        [SerializeField] private List<Transform> raycastsOrigins;
         private GameObject _player;
         private bool _isConfigured;
         
         private void FixedUpdate()
         {
             if (!_isConfigured) return;
-            if (Physics.Raycast(_player.transform.position + Vector3.up, Vector3.down, out var hit, 10, layerMask))
+            var touching = false;
+            foreach (var origin in raycastsOrigins)
             {
-                var isTouchingFloor = hit.distance <= minDistanceToFloor;
-                if (isTouchingFloor)
+                if (Physics.Raycast(origin.position + Vector3.up, Vector3.down, out var hit, 10, layerMask))
                 {
-                    OnRecovery?.Invoke();
+                    var isTouchingFloor = hit.distance <= minDistanceToFloor;
+                    if (isTouchingFloor)
+                    {
+                        OnRecovery?.Invoke();
+                        if (!_isTouchingFloor)
+                        {
+                            OnTouchingFloorChanged?.Invoke(true);
+                            _isTouchingFloor = true;
+                        }
+                        return;
+                    }
                 }
-                else
-                {
-                    OnFall?.Invoke();
-                }
-                if (isTouchingFloor != _isTouchingFloor) OnTouchingFloorChanged?.Invoke(isTouchingFloor);
-                _isTouchingFloor = isTouchingFloor;
             }
-            else
-            {
-                if (_isTouchingFloor) OnTouchingFloorChanged?.Invoke(false);
-                _isTouchingFloor = false;
-            }
+            
+            if (_isTouchingFloor) OnTouchingFloorChanged?.Invoke(false);
+            _isTouchingFloor = false;
         }
 
         public bool IsTouchingFloor()

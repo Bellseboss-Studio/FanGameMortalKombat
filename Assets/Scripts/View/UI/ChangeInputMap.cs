@@ -17,5 +17,10 @@ namespace View.UI
         {
             EventSystem.current.SetSelectedGameObject(newInputSelected);
         }
+        
+        public void ChangeInputMapToNew(GameObject newInput)
+        {
+            newInputSelected = newInput;
+        }
     }
 }

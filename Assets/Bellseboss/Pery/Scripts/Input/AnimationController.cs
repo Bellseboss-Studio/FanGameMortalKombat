@@ -12,12 +12,12 @@ namespace Bellseboss.Pery.Scripts.Input
         private IAnimationController _animationController;
         private bool _isFinishAnimation;
 
-        public void Configure( Animator animator, IAnimationController animationController)
+        public void Configure(Animator animator, IAnimationController animationController)
         {
             _animator = animator;
             _animationController = animationController;
         }
-        
+
         public void Movement(float velocity, float speed)
         {
             _animator.SetFloat(velocityName, velocity);
@@ -40,6 +40,7 @@ namespace Bellseboss.Pery.Scripts.Input
 
         public void JumpJump()
         {
+            _animator.ResetTrigger("j_mid_air");
             _animator.SetTrigger("j");
         }
 
@@ -56,8 +57,11 @@ namespace Bellseboss.Pery.Scripts.Input
 
         public void JumpRecovery()
         {
+            _animator.ResetTrigger("j_mid_air");
+            _animator.ResetTrigger("j_fall");
             _animator.SetTrigger("j_recovery");
         }
+
         public void Fall()
         {
             _animator.SetTrigger("j_fall");
@@ -68,12 +72,12 @@ namespace Bellseboss.Pery.Scripts.Input
             _animator.SetTrigger(animationTrigger);
         }
 
-        public void TakeDamage(bool isQuickAttack, int numberOfCombos)
+        public void TakeDamage(string animationParameterName)
         {
-            var nameOfAnimation = isQuickAttack ? "q" : "p";
-            nameOfAnimation += numberOfCombos;
-            StartCoroutine(FinishTimeAnimation(nameOfAnimation));
-            _animator.Play(nameOfAnimation);
+            /*nameOfAnimation += numberOfCombos;*/
+            /*Debug.Log(nameOfAnimation);*/
+            StartCoroutine(FinishTimeAnimation(animationParameterName));
+            _animator.Play(animationParameterName);
         }
 
         private IEnumerator FinishTimeAnimation(string nameOfAnimation)
@@ -88,7 +92,6 @@ namespace Bellseboss.Pery.Scripts.Input
                     break;
                 }
             }
-            
         }
 
         public void Die(string animationTrigger)
@@ -99,6 +102,18 @@ namespace Bellseboss.Pery.Scripts.Input
         public void SetTrigger(string paramName)
         {
             _animator.SetTrigger(paramName);
+        }
+
+        public void JumpingWalls(bool isTouchingFloor, bool isTouchingWall, bool isJumping)
+        {
+            _animator.SetBool("isTouchingFloor", isTouchingFloor);
+            _animator.SetBool("isTouchingWall", isTouchingWall);
+            _animator.SetBool("isJumping", isJumping);
+        }
+
+        public void IsJumping()
+        {
+            _animator.SetTrigger("j");
         }
     }
 }

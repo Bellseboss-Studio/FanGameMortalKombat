@@ -9,6 +9,7 @@ namespace Bellseboss.Pery.Scripts.Input
         void DisableControls();
         void ActivateAnimationTrigger(string animationTrigger);
         void SetPositionAndRotation(GameObject refOfPlayer);
-        void CanMove();
+        void EnableControls();
+        Transform GetGameObject();
     }
 }
