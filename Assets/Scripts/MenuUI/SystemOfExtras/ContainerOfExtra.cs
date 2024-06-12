@@ -1,4 +1,5 @@
 ﻿using MenuUI.SystemOfExtras;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using View.UI;
@@ -11,6 +12,10 @@ public class ContainerOfExtra : MonoBehaviour
 
     [SerializeField] private ExtraMediator mediator;
     [SerializeField] private ChangeInputMap _content;
+    
+    [SerializeField] private TextMeshProUGUI nameOfExtra;
+    
+    [SerializeField] public int indexIntoContent;
 
     public Button ButtonToAction => buttonToAction;
 
@@ -48,8 +53,14 @@ public class ContainerOfExtra : MonoBehaviour
             var spriteToPixel = Resources.Load<Sprite>(_extra.GetIcon());
             imageToShow.sprite = spriteToPixel;
         }
-
+        nameOfExtra.text = _extra?.GetName();
         buttonToAction.onClick.AddListener(Call);
         _content.ChangeInputMapToNew(backButtonToShowExtra.gameObject);
+    }
+    
+    public void DebugExtra()
+    {
+        Debug.Log($"Extra: {_extra.GetTypeExtra()}");
+        mediator.SetIndex(indexIntoContent);
     }
 }

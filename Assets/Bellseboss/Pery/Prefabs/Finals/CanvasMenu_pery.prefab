@@ -148,7 +148,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -17, y: 20}
+  m_SizeDelta: {x: -17, y: 0}
   m_Pivot: {x: 0, y: 0}
 --- !u!222 &8711025714399986174
 CanvasRenderer:
@@ -231,7 +231,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6221196280096804562}
   m_HandleRect: {fileID: 8530088935945196260}
   m_Direction: 0
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -248,8 +248,9 @@ GameObject:
   - component: {fileID: 210317235855706054}
   - component: {fileID: 8335566155945018168}
   - component: {fileID: 1548122200453087726}
+  - component: {fileID: 3217922834777067610}
   m_Layer: 5
-  m_Name: Panel
+  m_Name: PanelContent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -314,6 +315,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &3217922834777067610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2591456470576319295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8097df8da171164cbb4d673b7b9c692, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scrollRect: {fileID: 5621827415816880835}
+  countOfSteps: 7
 --- !u!1 &3644389380386083506
 GameObject:
   m_ObjectHideFlags: 0
@@ -487,6 +502,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3921054772059474919}
   - component: {fileID: 6690210700948117163}
+  - component: {fileID: 3924358055575164393}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -510,7 +526,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.00012207031, y: 0.0000076293945}
+  m_AnchoredPosition: {x: -0.00024414062, y: 0.000038146973}
   m_SizeDelta: {x: 0, y: 200}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &6690210700948117163
@@ -537,6 +553,20 @@ MonoBehaviour:
   m_Spacing: {x: 30, y: 30}
   m_Constraint: 2
   m_ConstraintCount: 1
+--- !u!114 &3924358055575164393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4780449646163624426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalFit: 2
+  m_VerticalFit: 0
 --- !u!1 &5093258100227186128
 GameObject:
   m_ObjectHideFlags: 0
@@ -1434,7 +1464,7 @@ VideoPlayer:
   m_AspectRatio: 2
   m_DataSource: 0
   m_PlaybackSpeed: 1
-  m_AudioOutputMode: 1
+  m_AudioOutputMode: 0
   m_TargetAudioSources:
   - {fileID: 0}
   m_DirectAudioVolumes:
@@ -10972,6 +11002,7 @@ MonoBehaviour:
   mediator: {fileID: 7408765518480002697}
   backButton: {fileID: 7391834816271485974}
   backButtonToShowExtra: {fileID: 7408765517932032022}
+  stepsConfig: {fileID: 3217922834777067610}
 --- !u!114 &7408765518480002697
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15594,7 +15625,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 3017430040674928547}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
