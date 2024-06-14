@@ -204,6 +204,7 @@ namespace Bellseboss.Pery.Scripts.Input
             rigidbody.freezeRotation = true;
             CanReadInputs = true;
             inputPlayerV2.StartToReadInputs(_canUseButtons);
+            animationController.Movement(movementRigidbodyV2.GetXZVelocity(), 0);
         }
 
         public void EnableControls()
