@@ -40,6 +40,7 @@ namespace Bellseboss.Pery.Scripts.Input
 
         public void JumpJump()
         {
+            _animator.ResetTrigger("j_mid_air");
             _animator.SetTrigger("j");
         }
 
@@ -56,6 +57,8 @@ namespace Bellseboss.Pery.Scripts.Input
 
         public void JumpRecovery()
         {
+            _animator.ResetTrigger("j_mid_air");
+            _animator.ResetTrigger("j_fall");
             _animator.SetTrigger("j_recovery");
         }
 
