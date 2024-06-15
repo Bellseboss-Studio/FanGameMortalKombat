@@ -4032,7 +4032,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activables:
-  - {fileID: 1243639691}
   - {fileID: 642621222}
   - {fileID: 10343527}
   - {fileID: 1783462580}
@@ -5690,9 +5689,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 914368258}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3eee18f05cae4064881e68e5b09292b7, type: 3}
+  m_Script: {fileID: 11500000, guid: 94001dd46d464dfab668439c6af7657a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timeToWait: 6
   objectsToEnable:
   - {fileID: 2049752620}
   isEnable: 1
@@ -7709,7 +7709,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1243639690
 Transform:
   m_ObjectHideFlags: 0
@@ -7736,8 +7736,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f667508a4ee409eae8e1757f4f14e61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 
-  audioSource: {fileID: 1243639692}
+  id: 0
 --- !u!82 &1243639692
 AudioSource:
   m_ObjectHideFlags: 0
@@ -13515,6 +13514,10 @@ PrefabInstance:
     - target: {fileID: 6561242320601317461, guid: d7876ba52bbb0354b8b54b426d0393e5, type: 3}
       propertyPath: m_Name
       value: TrainingRoomAudio
+      objectReference: {fileID: 0}
+    - target: {fileID: 6561242320601317461, guid: d7876ba52bbb0354b8b54b426d0393e5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d7876ba52bbb0354b8b54b426d0393e5, type: 3}
