@@ -2,6 +2,9 @@ name: Actions Windows Dev 😎
 
 on:
   workflow_dispatch: {}
+  pull_request:
+    branches:
+      - develop
 
 jobs:
   build:
