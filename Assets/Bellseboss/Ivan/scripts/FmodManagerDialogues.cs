@@ -11,10 +11,6 @@ namespace MortalKombat.Audio
         private const string m_DxFolder = "event:/DX/";
         private EventInstance m_EventInstance;
         
-        private StatusFmod m_StatusFmod;
-        
-        public StatusFmod StatusFmod => m_StatusFmod;
-        
         public FmodManagerDialogues(string dialogueToPlay)
         {
             m_EventInstance = RuntimeManager.CreateInstance(m_DxFolder + dialogueToPlay);
@@ -37,11 +33,6 @@ namespace MortalKombat.Audio
             m_EventInstance.start();
             m_EventInstance.release();
         }
-        
-        public float GetSoundLength(NarratorDialogues sfxToPlay)
-        {
-            return 5;
-        }
 
         public PLAYBACK_STATE GetStatus()
         {
@@ -49,11 +40,5 @@ namespace MortalKombat.Audio
             return state;
         }
         
-    }
-
-    public enum StatusFmod
-    {
-        PLAYING,
-        STOPPED
     }
 }
