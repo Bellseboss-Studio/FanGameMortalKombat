@@ -7,19 +7,13 @@ namespace MortalKombat.Audio
     public class ActivatableSpeaker : ActivableTutorial, IFmodClient
     {
         [SerializeField] private NarratorDialogues m_Id;
-        private FmodFacade m_FmodFacade;
-
-        private void Start()
-        {
-            m_FmodFacade = new FmodFacade("event:/DX/", m_Id.ToString());
-        }
 
         public override void Activate()
         {
             try
             {
                 if (IsFinished) return;
-                StartCoroutine(WentToFinish(m_FmodFacade.PlayToGetMilliseconds()));
+                StartCoroutine(WentToFinish(FmodFacade.PlayToGetMilliseconds("event:/DX/", m_Id.ToString())));
             }
             catch
             {
