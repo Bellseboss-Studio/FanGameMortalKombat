@@ -21,6 +21,7 @@ namespace Bellseboss.Pery.Scripts.Input
         private float _nextReadTime;
         private bool _isReadingInput;
         private bool _canReadInput = true;
+        private bool _canReadInputToFatality;
 
         public bool CanReadInput => _canReadInput;
 

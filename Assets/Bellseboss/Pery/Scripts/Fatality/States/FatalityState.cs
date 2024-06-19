@@ -13,6 +13,8 @@ public class FatalityState : StatePatterFatality
         _fatalitySystem.StartCinematic();
         _fatalitySystem.ShowPanelTitle("FATALITY");
         _fatalitySystem.StartAudioFatality();
+        _fatalitySystem.FatalityPlayer();
+        _fatalitySystem.FatalityEnemy();
     }
 
     internal override IEnumerator Execute()

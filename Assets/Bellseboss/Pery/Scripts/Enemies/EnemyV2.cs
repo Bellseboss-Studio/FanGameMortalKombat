@@ -38,6 +38,7 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
     [SerializeField] private StatesOfEnemy _state;
     [SerializeField] private TargetFocus colliderToDamage;
     [SerializeField] private CombatSystemAngel combatSystemAngel;
+    [SerializeField] private List<Collider> collidersToDisable;
     private IAiController _aiController => ai as IAiController;
 
     public string Id => id;
@@ -304,8 +305,11 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
 
     public Action OnAction { get; set; }
 
-    public void DisableControls()
+    public override void DisableControls()
     {
+        CanMove(false);
+        CanRotate(false);
+        rigidbody.velocity = Vector3.zero;
     }
 
     public void UpdateAnimation()
@@ -394,6 +398,45 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
     public IMovementRigidBodyV2 GetMovementRigidBody()
     {
         return this;
+    }
+
+    public void Mareado()
+    {
+        animationController.SetTrigger("mareado");
+    }
+    
+    public void GetFatalities()
+    {
+        animationController.SetTrigger("get_fatality");
+    }
+
+    public void SetPositionAndRotation(GameObject refOfPlayer)
+    {
+        transform.position = Vector3.Lerp(transform.position, refOfPlayer.transform.position, 0.5f);
+        transform.rotation = Quaternion.Lerp(transform.rotation, refOfPlayer.transform.rotation, 0.5f);
+    }
+
+    public void StartAnimationFatality()
+    {
+        animationController.SetTrigger("get_fatality");
+    }
+
+    public void DisableColliders()
+    {
+        rigidbody.useGravity = false;
+        foreach (var collider1 in collidersToDisable)
+        {
+            collider1.enabled = false;
+        }
+    }
+    
+    public void EnableColliders()
+    {
+        foreach (var collider1 in collidersToDisable)
+        {
+            collider1.enabled = true;
+        }
+        rigidbody.useGravity = true;
     }
 }
 

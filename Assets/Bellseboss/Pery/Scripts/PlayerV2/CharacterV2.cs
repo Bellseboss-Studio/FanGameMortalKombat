@@ -13,6 +13,11 @@ namespace Bellseboss.Pery.Scripts.Input
     {
         public string Id => id;
         public Action OnAction { get; set; }
+
+        public GameObject Model3DInstance
+        {
+            get => _model3DInstance;
+        }
         public Action<float> OnReceiveDamage { get; set; }
 
         [SerializeField] private string id;
@@ -195,7 +200,7 @@ namespace Bellseboss.Pery.Scripts.Input
         }
 
 
-        public void DisableControls()
+        public override void DisableControls()
         {
             rotationCharacterV2.CanRotate(false);
             movementRigidbodyV2.CanMove(false);
@@ -399,6 +404,11 @@ namespace Bellseboss.Pery.Scripts.Input
         public void StartToReadInputs(bool b)
         {
             CanReadInputs = b;
+        }
+
+        public void StartAnimationFatality()
+        {
+            animationController.SetTrigger("fatality");
         }
 
         public void GetIntoEnemyZone(GameObject enemy, bool isNear)
