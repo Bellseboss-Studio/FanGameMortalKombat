@@ -302,6 +302,7 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 2048
+  tagToCompare: Enemy
 --- !u!1 &437562582
 GameObject:
   m_ObjectHideFlags: 0
@@ -2558,6 +2559,7 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 2048
+  tagToCompare: 
 --- !u!1 &7146114776881552419
 GameObject:
   m_ObjectHideFlags: 0
@@ -3544,7 +3546,7 @@ GameObject:
   - component: {fileID: 2074710249}
   m_Layer: 10
   m_Name: PlayerV2
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4382,6 +4384,18 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7563506777814421181, guid: 795204be2e914634498bacb860ac0d58, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 58.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7563506777814421181, guid: 795204be2e914634498bacb860ac0d58, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 57.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7563506777814421181, guid: 795204be2e914634498bacb860ac0d58, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 26.69
+      objectReference: {fileID: 0}
+    - target: {fileID: 7563506777814421181, guid: 795204be2e914634498bacb860ac0d58, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -4391,7 +4405,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7563506777814421181, guid: 795204be2e914634498bacb860ac0d58, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -2.2
       objectReference: {fileID: 0}
     - target: {fileID: 7563506777814421181, guid: 795204be2e914634498bacb860ac0d58, type: 3}
       propertyPath: m_LocalRotation.w
@@ -4452,3 +4466,4 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 2048
+  tagToCompare: Enemy

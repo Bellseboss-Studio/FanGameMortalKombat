@@ -111,6 +111,7 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 1024
+  tagToCompare: 
 --- !u!1 &912000095417191719
 GameObject:
   m_ObjectHideFlags: 0
@@ -173,7 +174,7 @@ GameObject:
   - component: {fileID: 2642460372781197086}
   m_Layer: 11
   m_Name: EnemyV2Prefab
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -601,6 +602,7 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 1024
+  tagToCompare: Player
 --- !u!1 &6661334500977642171
 GameObject:
   m_ObjectHideFlags: 0

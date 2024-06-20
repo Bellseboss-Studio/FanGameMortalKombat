@@ -491,6 +491,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1836405086886666966}
   - component: {fileID: 3564006186729673116}
+  - component: {fileID: 8799907557211762627}
+  - component: {fileID: 6787875185803217621}
   m_Layer: 0
   m_Name: Bob_v2
   m_TagString: Untagged
@@ -533,6 +535,31 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &8799907557211762627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1312773036128729196}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 976397a92be64bc6a9a7e3643530aabb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6787875185803217621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1312773036128729196}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5f8b4547d1e4026928d290fb5387efa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  referenceOfFatalitySystem: {fileID: 4455849377274276840}
 --- !u!1 &1519075591112459909
 GameObject:
   m_ObjectHideFlags: 0
