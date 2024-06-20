@@ -249,9 +249,12 @@ MonoBehaviour:
   minDistanceToArriveToTarget: 1
   minDistanceToArriveToEnemy: 2
   attackMovementSystem: {fileID: 2863771388383812434}
+  _characterV2: {fileID: 0}
   _state: 1
   colliderToDamage: {fileID: 2266430711236299576}
   combatSystemAngel: {fileID: 2642460372781197086}
+  collidersToDisable:
+  - {fileID: 1206345099777460002}
 --- !u!114 &1206345099777460004
 MonoBehaviour:
   m_ObjectHideFlags: 0

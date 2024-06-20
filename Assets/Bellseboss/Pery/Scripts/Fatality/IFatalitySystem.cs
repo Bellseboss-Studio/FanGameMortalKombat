@@ -21,4 +21,6 @@ public interface IFatalitySystem
     void CanReadInputs(bool b);
     void StartAudioFatality();
     void RestartAllElements();
+    void FatalityPlayer();
+    void FatalityEnemy();
 }
