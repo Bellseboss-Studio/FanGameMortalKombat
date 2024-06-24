@@ -9,7 +9,7 @@ using View.Installers;
 namespace Bellseboss.Pery.Scripts.Input
 {
     public class CharacterV2 : PJV2, ICharacterV2, IMovementRigidBodyV2, IAnimationController, IRotationCharacterV2,
-        ICombatSystem, IFocusTarget, ICombatSystemAngel, IFatality, ICharacterUi
+        ICombatSystem, IFocusTarget, ICombatSystemAngel, IFatality, ICharacterUi, IStunSystem
     {
         public string Id => id;
         public Action OnAction { get; set; }
@@ -18,7 +18,7 @@ namespace Bellseboss.Pery.Scripts.Input
         {
             get => _model3DInstance;
         }
-        public Action<float> OnReceiveDamage { get; set; }
+        public Action<StunInfo> OnReceiveDamage { get; set; }
 
         [SerializeField] private string id;
         [SerializeField] private InputPlayerV2 inputPlayerV2;
@@ -35,6 +35,7 @@ namespace Bellseboss.Pery.Scripts.Input
         [SerializeField] private TargetFocus targetFocus;
         [SerializeField] private StatisticsOfCharacter statisticsOfCharacter;
         [SerializeField] private CombatSystemAngel combatSystemAngel;
+        [SerializeField] private StunSystem stunSystem;
         [SerializeField] private MovementADSR movementADSR;
 
         [SerializeField, InterfaceType(typeof(IFatalitySystem))]
@@ -287,6 +288,7 @@ namespace Bellseboss.Pery.Scripts.Input
             movementRigidbodyV2.Configure(rigidbody, speedWalk, speedRun, currentCamera.gameObject, this,
                 _statisticsOfCharacter);
             combatSystemAngel.Configure(rigidbody, _statisticsOfCharacter, this, this);
+            stunSystem.Configure(rigidbody, _statisticsOfCharacter, this, this, this);
             rotationCharacterV2.Configure(currentCamera.gameObject, gameObject, this, forceRotation);
         }
 
@@ -367,7 +369,7 @@ namespace Bellseboss.Pery.Scripts.Input
             movementRigidbodyV2.ExitToWall();
         }
 
-        public override void ReceiveDamage(int damage, Vector3 transformForward, float currentAttackStunTime)
+        public override void ReceiveDamage(int damage, Vector3 transformForward, StunInfo currentAttackStunTime)
         {
             if (IsDead) return;
             _statisticsOfCharacter.life -= damage;

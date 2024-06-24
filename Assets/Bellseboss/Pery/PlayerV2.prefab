@@ -3587,6 +3587,7 @@ GameObject:
   - component: {fileID: 835371845}
   - component: {fileID: 835371846}
   - component: {fileID: 2074710249}
+  - component: {fileID: 468385863}
   m_Layer: 10
   m_Name: PlayerV2
   m_TagString: Player
@@ -3644,6 +3645,7 @@ MonoBehaviour:
   targetFocus: {fileID: 919132148402666361}
   statisticsOfCharacter: {fileID: 11400000, guid: 2c107fda2a30a3a4fb6d83dca49c4ffb, type: 2}
   combatSystemAngel: {fileID: 2074710249}
+  stunSystem: {fileID: 468385863}
   movementADSR: {fileID: 1309216378850590419}
   FatalitySystem: {fileID: 4996582286142792170}
   _enemiesInCombat: []
@@ -4082,7 +4084,7 @@ MonoBehaviour:
   combatMovements:
   - comboSequence: 00000000
     transitionParameterName: p
-    stuntAnimationParameterName: q1
+    stuntInfo: {fileID: 11400000, guid: 1052aac890bff954c8f0667594600780, type: 2}
     timeToAttack: 0.15
     timeToDecreasing: 0.3
     timeToSustain: 0
@@ -4094,7 +4096,7 @@ MonoBehaviour:
     stunTime: 1
   - comboSequence: 01000000
     transitionParameterName: k
-    stuntAnimationParameterName: p1
+    stuntInfo: {fileID: 11400000, guid: 1052aac890bff954c8f0667594600780, type: 2}
     timeToAttack: 0.1
     timeToDecreasing: 0.2
     timeToSustain: 0.5
@@ -4106,7 +4108,7 @@ MonoBehaviour:
     stunTime: 1
   - comboSequence: 0000000000000000
     transitionParameterName: mantis2
-    stuntAnimationParameterName: q2
+    stuntInfo: {fileID: 11400000, guid: 1052aac890bff954c8f0667594600780, type: 2}
     timeToAttack: 0.2
     timeToDecreasing: 0.2
     timeToSustain: 0.5
@@ -4118,7 +4120,7 @@ MonoBehaviour:
     stunTime: 1
   - comboSequence: 000000000000000000000000
     transitionParameterName: mantis3
-    stuntAnimationParameterName: q3
+    stuntInfo: {fileID: 11400000, guid: 1052aac890bff954c8f0667594600780, type: 2}
     timeToAttack: 0.5
     timeToDecreasing: 0.2
     timeToSustain: 0.5
@@ -4130,7 +4132,7 @@ MonoBehaviour:
     stunTime: 1
   - comboSequence: 0000000001000000
     transitionParameterName: k
-    stuntAnimationParameterName: p1
+    stuntInfo: {fileID: 11400000, guid: 1052aac890bff954c8f0667594600780, type: 2}
     timeToAttack: 0.5
     timeToDecreasing: 0.2
     timeToSustain: 0.5
@@ -4142,7 +4144,7 @@ MonoBehaviour:
     stunTime: 1.5
   - comboSequence: 000000000000000001000000
     transitionParameterName: k
-    stuntAnimationParameterName: p1
+    stuntInfo: {fileID: 11400000, guid: 1052aac890bff954c8f0667594600780, type: 2}
     timeToAttack: 0.5
     timeToDecreasing: 0.2
     timeToSustain: 0.5
@@ -4154,7 +4156,7 @@ MonoBehaviour:
     stunTime: 1.5
   - comboSequence: 00000000000000000000000001000000
     transitionParameterName: k
-    stuntAnimationParameterName: p1
+    stuntInfo: {fileID: 11400000, guid: 1052aac890bff954c8f0667594600780, type: 2}
     timeToAttack: 0.3
     timeToDecreasing: 0.2
     timeToSustain: 0.5
@@ -4171,6 +4173,19 @@ MonoBehaviour:
   attacking: 0
   _deltatimeLocal: 0
   targetFocus: {fileID: 434739508}
+--- !u!114 &468385863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8585594586927423071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a30a13079f0458cb10041474c6a32f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _deltatimeLocal: 0
 --- !u!1 &8585594587426267891
 GameObject:
   m_ObjectHideFlags: 0
@@ -4501,14 +4516,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 795204be2e914634498bacb860ac0d58, type: 3}
---- !u!4 &543450652048892544 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7563506777814421181, guid: 795204be2e914634498bacb860ac0d58, type: 3}
-  m_PrefabInstance: {fileID: 8033366385658129469}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &919132147592493114 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7186946741610157063, guid: 795204be2e914634498bacb860ac0d58, type: 3}
+  m_PrefabInstance: {fileID: 8033366385658129469}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &543450652048892544 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7563506777814421181, guid: 795204be2e914634498bacb860ac0d58, type: 3}
   m_PrefabInstance: {fileID: 8033366385658129469}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &919132148402666361
