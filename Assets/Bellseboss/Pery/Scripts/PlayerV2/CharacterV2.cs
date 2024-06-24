@@ -97,8 +97,22 @@ namespace Bellseboss.Pery.Scripts.Input
             fatalitySystem.Configure(this, this);
 
             ServiceLocator.Instance.GetService<IObserverUI>().Observer(this);
+            
+            ServiceLocator.Instance.GetService<IPauseMainMenu>().onPause += OnPausaMenu; 
 
             ConfigCamera(cameraMain);
+        }
+
+        private void OnPausaMenu(bool ispause)
+        {
+            if (ispause)
+            {
+                DisableControls();
+            }
+            else
+            {
+                EnableControls();
+            }
         }
 
         private void OnFatalityEvent()
@@ -107,11 +121,6 @@ namespace Bellseboss.Pery.Scripts.Input
             {
                 fatalitySystem.Fatality();
             }
-        }
-
-        private void OnPause()
-        {
-            ServiceLocator.Instance.GetService<IPauseMainMenu>().Pause();
         }
 
         public void ActivateAnimationTrigger(string animationTrigger)

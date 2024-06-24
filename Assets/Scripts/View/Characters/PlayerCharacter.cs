@@ -369,7 +369,7 @@ namespace View.Characters
         
         private void OnStartButton(InputValue value)
         {
-            ServiceLocator.Instance.GetService<IPauseMainMenu>().Pause();
+            //ServiceLocator.Instance.GetService<IPauseMainMenu>().Pause();
         }
         
         public override void AddEnergy()

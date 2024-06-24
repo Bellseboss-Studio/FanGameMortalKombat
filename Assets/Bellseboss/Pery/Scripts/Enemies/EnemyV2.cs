@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Bellseboss.Angel.CombatSystem;
 using Bellseboss.Pery.Scripts.Input;
 using UnityEngine;
 using Object = UnityEngine.Object;
+using Random = System.Random;
 
 public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementRigidBodyV2, ICombatSystemAngel
 {
@@ -286,7 +288,10 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
 
     public List<GameObject> Paths()
     {
-        return _paths;
+        //need reorganize the paths with random positions
+        Random rng = new Random();
+        List<GameObject> randomizedList = _paths.OrderBy(x => rng.Next()).ToList();
+        return randomizedList;
     }
 
     public void MoveTo(GameObject target)

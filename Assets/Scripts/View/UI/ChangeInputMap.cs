@@ -10,7 +10,7 @@ namespace View.UI
 
         private void Start()
         {
-            GetComponent<Button>().onClick.AddListener(ChangeInputMapToNew);
+            GetComponent<Button>()?.onClick.AddListener(ChangeInputMapToNew);
         }
 
         public void ChangeInputMapToNew()
