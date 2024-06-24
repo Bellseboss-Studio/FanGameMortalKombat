@@ -206,7 +206,7 @@ GameObject:
   - component: {fileID: 434739508}
   m_Layer: 14
   m_Name: ColliderToFDamage
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2506,7 +2506,7 @@ GameObject:
   - component: {fileID: 7936408346058950360}
   m_Layer: 14
   m_Name: ColliderToFDamage
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4453,6 +4453,10 @@ PrefabInstance:
     - target: {fileID: 7186946741610157063, guid: 795204be2e914634498bacb860ac0d58, type: 3}
       propertyPath: m_Layer
       value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 7186946741610157063, guid: 795204be2e914634498bacb860ac0d58, type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 7563506777814421181, guid: 795204be2e914634498bacb860ac0d58, type: 3}
       propertyPath: m_RootOrder

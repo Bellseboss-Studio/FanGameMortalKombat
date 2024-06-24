@@ -7,7 +7,7 @@ using UnityEngine;
 using Object = UnityEngine.Object;
 using Random = System.Random;
 
-public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementRigidBodyV2, ICombatSystemAngel
+public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementRigidBodyV2, ICombatSystemAngel, IStunSystem
 {
     public event Action OnArriveToTarget;
     public event Action<bool> OnPlayerDetected;
@@ -40,6 +40,7 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
     [SerializeField] private StatesOfEnemy _state;
     [SerializeField] private TargetFocus colliderToDamage;
     [SerializeField] private CombatSystemAngel combatSystemAngel;
+    [SerializeField] private StunSystem stunSystem;
     [SerializeField] private List<Collider> collidersToDisable;
     private IAiController _aiController => ai as IAiController;
 
@@ -75,12 +76,8 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
             _canMove = true;
             _canRotate = true;
         };
-        /*attackMovementSystem.Configure(GetComponent<Rigidbody>(), _statisticsOfCharacter, this);
-        attackMovementSystem.OnEndAttack += () =>
-        {
-            aiController.StartAi();
-        };*/
         combatSystemAngel.Configure(rigidbody, _statisticsOfCharacter, this, this, false);
+        stunSystem.Configure(rigidbody, _statisticsOfCharacter, this, this, this, false);
         combatSystemAngel.OnEndAttack += () => { _aiController.StartAi(); };
     }
 
@@ -89,16 +86,8 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
         if (IsDead) return;
         if (_canRotate)
         {
-            if (_canRotateToTarget)
-            {
-                var position = _target.transform.position;
-                RotateToTarget(position);
-            }
-            else
-            {
-                var position = _target.transform.forward + transform.position;
-                RotateToTarget(position);
-            }
+            var position = _target.transform.position;
+            RotateToTarget(position);
         }
 
         if (_canMove)
@@ -372,6 +361,11 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
     }
 
     public void PlayerRecoveryV2()
+    {
+        throw new NotImplementedException();
+    }
+
+    public bool IsJumpingInWall()
     {
         throw new NotImplementedException();
     }
