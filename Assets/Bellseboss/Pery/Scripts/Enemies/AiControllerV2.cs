@@ -1,4 +1,5 @@
 ﻿using System;
+using Bellseboss.Angel.CombatSystem;
 using Bellseboss.Pery.Scripts.Input;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -111,7 +112,7 @@ public class AiControllerV2 : MonoBehaviour, IAiController
         }
     }
 
-    private void OnReceiveDamage(float obj)
+    private void OnReceiveDamage(StunInfo obj)
     {
         StopAllStartIdle();
     }

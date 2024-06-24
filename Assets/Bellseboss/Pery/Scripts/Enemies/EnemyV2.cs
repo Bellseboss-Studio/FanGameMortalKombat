@@ -12,7 +12,7 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
     public event Action<bool> OnPlayerInNearZone;
     public event Action<EnemyV2> OnDead;
     
-    public Action<float> OnReceiveDamage {get; set;}
+    public Action<StunInfo> OnReceiveDamage {get; set;}
 
     [SerializeField] private string id;
     [SerializeField] private StatisticsOfCharacter statisticsOfCharacter;
@@ -168,7 +168,7 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 5 * Time.deltaTime);
     }
 
-    public override void ReceiveDamage(int damage, Vector3 direction, float currentAttackStunTime)
+    public override void ReceiveDamage(int damage, Vector3 direction, StunInfo currentAttackStunTime)
     {
         if (IsDead) return;
         _statisticsOfCharacter.life -= damage;
@@ -442,7 +442,7 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
 
 public interface IEnemyV2
 {
-    Action<float> OnReceiveDamage { get; set; }
+    Action<StunInfo> OnReceiveDamage { get; set; }
     List<GameObject> Paths();
     void MoveTo(GameObject target);
     event Action OnArriveToTarget;

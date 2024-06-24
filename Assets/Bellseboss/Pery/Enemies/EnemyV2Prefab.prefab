@@ -320,7 +320,7 @@ MonoBehaviour:
   combatMovements:
   - comboSequence: 00000000
     transitionParameterName: p
-    stuntAnimationParameterName: q1
+    stuntInfo: {fileID: 11400000, guid: 1052aac890bff954c8f0667594600780, type: 2}
     timeToAttack: 0.15
     timeToDecreasing: 0.3
     timeToSustain: 3
@@ -332,7 +332,7 @@ MonoBehaviour:
     stunTime: 1
   - comboSequence: 01000000
     transitionParameterName: k
-    stuntAnimationParameterName: p1
+    stuntInfo: {fileID: 11400000, guid: 1052aac890bff954c8f0667594600780, type: 2}
     timeToAttack: 0.5
     timeToDecreasing: 0.2
     timeToSustain: 0.5
@@ -344,7 +344,7 @@ MonoBehaviour:
     stunTime: 1
   - comboSequence: 0000000000000000
     transitionParameterName: mantis2
-    stuntAnimationParameterName: q2
+    stuntInfo: {fileID: 11400000, guid: 1052aac890bff954c8f0667594600780, type: 2}
     timeToAttack: 0.5
     timeToDecreasing: 0.2
     timeToSustain: 0.5
@@ -356,7 +356,7 @@ MonoBehaviour:
     stunTime: 1
   - comboSequence: 000000000000000000000000
     transitionParameterName: mantis3
-    stuntAnimationParameterName: q3
+    stuntInfo: {fileID: 11400000, guid: 1052aac890bff954c8f0667594600780, type: 2}
     timeToAttack: 0.5
     timeToDecreasing: 0.2
     timeToSustain: 0.5
@@ -368,7 +368,7 @@ MonoBehaviour:
     stunTime: 1
   - comboSequence: 0000000001000000
     transitionParameterName: k
-    stuntAnimationParameterName: p1
+    stuntInfo: {fileID: 11400000, guid: 1052aac890bff954c8f0667594600780, type: 2}
     timeToAttack: 0.5
     timeToDecreasing: 0.2
     timeToSustain: 0.5
@@ -380,7 +380,7 @@ MonoBehaviour:
     stunTime: 1.5
   - comboSequence: 000000000000000001000000
     transitionParameterName: k
-    stuntAnimationParameterName: p1
+    stuntInfo: {fileID: 11400000, guid: 1052aac890bff954c8f0667594600780, type: 2}
     timeToAttack: 0.5
     timeToDecreasing: 0.2
     timeToSustain: 0.5
@@ -392,7 +392,7 @@ MonoBehaviour:
     stunTime: 1.5
   - comboSequence: 00000000000000000000000001000000
     transitionParameterName: k
-    stuntAnimationParameterName: p1
+    stuntInfo: {fileID: 11400000, guid: 1052aac890bff954c8f0667594600780, type: 2}
     timeToAttack: 0.5
     timeToDecreasing: 0.2
     timeToSustain: 0.5
