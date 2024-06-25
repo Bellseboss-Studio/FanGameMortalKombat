@@ -354,6 +354,11 @@ namespace Bellseboss.Pery.Scripts.Input
             animationController.JumpRecovery();
         }
 
+        public bool IsJumpingInWall()
+        {
+            return movementRigidbodyV2.GetJumpSystem().IsJumpingInScalableWall;
+        }
+
         public bool IsAttacking()
         {
             return combatSystemAngel.Attacking;
