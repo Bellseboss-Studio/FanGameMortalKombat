@@ -25,6 +25,8 @@ public class JumpSystem : MonoBehaviour, IJumpSystem
     private IMovementRigidBodyV2 _movementRigidBodyV2;
     private bool _isJump;
 
+    public bool IsJumpingInScalableWall => _isJump && _isScalableWall;
+
     public void Configure(Rigidbody rigidbody, IMovementRigidBodyV2 movementRigidBodyV2,
         FloorController floorController)
     {
@@ -37,7 +39,6 @@ public class JumpSystem : MonoBehaviour, IJumpSystem
         _floorController = floorController;
         _movementRigidBodyV2 = movementRigidBodyV2;
 
-        /*IsScalableWall(false, floorController, Vector3.zero);*/
     }
 
     public void Jump(bool isTouchingFloor, bool isTouchingScalableWall, Vector3 scalableWallDirection)
@@ -45,6 +46,7 @@ public class JumpSystem : MonoBehaviour, IJumpSystem
         if (isTouchingFloor)
         {
             //Execute normal jump
+            _isScalableWall = false;
             _attack?.Stop();
             _decay?.Stop();
             _sustain?.Stop();
@@ -74,6 +76,7 @@ public class JumpSystem : MonoBehaviour, IJumpSystem
             if (isTouchingScalableWall)
             {
                 //Execute Scalable Wall Jump
+                _isScalableWall = true;
                 _attack?.Stop();
                 _decay?.Stop();
                 _sustain?.Stop();
@@ -105,62 +108,7 @@ public class JumpSystem : MonoBehaviour, IJumpSystem
         }
     }
 
-    /*public void IsScalableWall(bool isScalableWall, FloorController floorController, Vector3 direction)
-    {
-        _attack?.Stop();
-        _decay?.Stop();
-        _sustain?.Stop();
-        _release?.Stop();
-        _endJump?.Stop();
-        _isJump = false;
-
-        if (isScalableWall)
-        {
-            _attack = BehaviourOfJumpSystemWalls.GetAttack();
-            _decay = BehaviourOfJumpSystemWalls.GetDecay();
-            _sustain = BehaviourOfJumpSystemWalls.GetSustain();
-            _release = BehaviourOfJumpSystemWalls.GetRelease();
-            _endJump = BehaviourOfJumpSystemWalls.GetEndJump();
-            BehaviourOfJumpSystemWalls.OnAttack = () =>
-            {
-                OnAttack?.Invoke();
-                _isJump = true;
-            };
-            BehaviourOfJumpSystemWalls.OnMidAir = () => { OnMidAir?.Invoke(); };
-            BehaviourOfJumpSystemWalls.OnSustain = () => { OnSustain?.Invoke(); };
-            BehaviourOfJumpSystemWalls.OnRelease = () => { OnRelease?.Invoke(); };
-            BehaviourOfJumpSystemWalls.OnEndJump = () =>
-            {
-                OnEndJump?.Invoke();
-                _isJump = false;
-            };
-            var behaviourOfJumpSystemWallsMono = BehaviourOfJumpSystemWalls as BehaviourOfJumpSystemWalls;
-            System.Diagnostics.Debug.Assert(behaviourOfJumpSystemWallsMono != null,
-                nameof(behaviourOfJumpSystemWallsMono) + " != null");
-            behaviourOfJumpSystemWallsMono.ConfigureWall(direction);
-        }
-        else
-        {
-            _attack = BehaviourOfJumpSystemNormal.GetAttack();
-            _decay = BehaviourOfJumpSystemNormal.GetDecay();
-            _sustain = BehaviourOfJumpSystemNormal.GetSustain();
-            _release = BehaviourOfJumpSystemNormal.GetRelease();
-            _endJump = BehaviourOfJumpSystemNormal.GetEndJump();
-            BehaviourOfJumpSystemNormal.OnAttack = () =>
-            {
-                OnAttack?.Invoke();
-                _isJump = true;
-            };
-            BehaviourOfJumpSystemNormal.OnMidAir = () => { OnMidAir?.Invoke(); };
-            BehaviourOfJumpSystemNormal.OnSustain = () => { OnSustain?.Invoke(); };
-            BehaviourOfJumpSystemNormal.OnRelease = () => { OnRelease?.Invoke(); };
-            BehaviourOfJumpSystemNormal.OnEndJump = () =>
-            {
-                OnEndJump?.Invoke();
-                _isJump = false;
-            };
-        }
-    }*/
+    
 
     public void ChangeNormalWall()
     {
