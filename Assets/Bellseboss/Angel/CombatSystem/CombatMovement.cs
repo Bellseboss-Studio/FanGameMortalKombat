@@ -8,7 +8,7 @@ namespace Bellseboss.Angel.CombatSystem
     {
         public List<TypeOfAttack> comboSequence;
         public string transitionParameterName;
-        public string stuntAnimationParameterName;
+        public StunInfo stuntInfo;
         public float timeToAttack, timeToDecreasing, timeToSustain, timeToRelease;
         public float maxDistance;
         public float distanceToDecresing;

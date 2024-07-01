@@ -1,4 +1,5 @@
 ﻿using System;
+using Bellseboss.Angel.CombatSystem;
 using Bellseboss.Pery.Scripts.Input;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -111,7 +112,7 @@ public class AiControllerV2 : MonoBehaviour, IAiController
         }
     }
 
-    private void OnReceiveDamage(float obj)
+    private void OnReceiveDamage(StunInfo obj)
     {
         StopAllStartIdle();
     }
@@ -122,7 +123,8 @@ public class AiControllerV2 : MonoBehaviour, IAiController
         {
             Debug.Log("WatchPlayer");
             _enemy.CanMove(false);
-            _enemy.RotateToTargetIdle(_enemy.GetPlayer().GetGameObject().gameObject, false);
+            _enemy.RotateToTargetIdle(_target, false);
+            /*_enemy.RotateToTargetIdle(_enemy.GetPlayer().GetGameObject().gameObject, false);*/
         }).Loop(handler =>
         {
             if (_isClose)
@@ -162,7 +164,8 @@ public class AiControllerV2 : MonoBehaviour, IAiController
         _waitToAttackPlayer = this.tt().Pause().Add(() =>
         {
             Debug.Log($"WaitToAttackPlayer");
-            _enemy.RotateToTargetIdle(_enemy.GetPlayer().GetGameObject().gameObject, false);
+            _enemy.RotateToTargetIdle(_target, false);
+            /*_enemy.RotateToTargetIdle(_enemy.GetPlayer().GetGameObject().gameObject, false);*/
         }).Add(2).Add(() => { _getDirectionToPlayer.Play(); });
 
         _getDirectionToPlayer = this.tt().Pause().Add(() =>

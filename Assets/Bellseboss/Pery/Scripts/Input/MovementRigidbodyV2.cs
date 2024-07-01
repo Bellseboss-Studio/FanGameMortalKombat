@@ -138,11 +138,20 @@ namespace Bellseboss.Pery.Scripts.Input
                     _jump = false;
                 }
             }*/
-            if (floorController.IsTouchingFloor())
+            var velocity = new Vector3(resultMovement.x, _rigidbody.velocity.y, resultMovement.z);
+            if (!_movementRigidBodyV2.IsJumpingInWall())
             {
-                _rigidbody.velocity = new Vector3(resultMovement.x, _rigidbody.velocity.y, resultMovement.z);
+                if (floorController.IsTouchingFloor())
+                {
+                    _rigidbody.velocity = velocity;
+                }
+                else
+                {
+                    _rigidbody.velocity = new Vector3(velocity.x / 1.5f, velocity.y, velocity.z / 1.5f);
+                }
             }
 
+            
             if (_rigidbody.velocity.y > 0)
             {
                 isUp = true;

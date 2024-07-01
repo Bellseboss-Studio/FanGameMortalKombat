@@ -7,14 +7,14 @@ using UnityEngine;
 using Object = UnityEngine.Object;
 using Random = System.Random;
 
-public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementRigidBodyV2, ICombatSystemAngel
+public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementRigidBodyV2, ICombatSystemAngel, IStunSystem
 {
     public event Action OnArriveToTarget;
     public event Action<bool> OnPlayerDetected;
     public event Action<bool> OnPlayerInNearZone;
     public event Action<EnemyV2> OnDead;
     
-    public Action<float> OnReceiveDamage {get; set;}
+    public Action<StunInfo> OnReceiveDamage {get; set;}
 
     [SerializeField] private string id;
     [SerializeField] private StatisticsOfCharacter statisticsOfCharacter;
@@ -40,6 +40,7 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
     [SerializeField] private StatesOfEnemy _state;
     [SerializeField] private TargetFocus colliderToDamage;
     [SerializeField] private CombatSystemAngel combatSystemAngel;
+    [SerializeField] private StunSystem stunSystem;
     [SerializeField] private List<Collider> collidersToDisable;
     private IAiController _aiController => ai as IAiController;
 
@@ -75,12 +76,8 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
             _canMove = true;
             _canRotate = true;
         };
-        /*attackMovementSystem.Configure(GetComponent<Rigidbody>(), _statisticsOfCharacter, this);
-        attackMovementSystem.OnEndAttack += () =>
-        {
-            aiController.StartAi();
-        };*/
         combatSystemAngel.Configure(rigidbody, _statisticsOfCharacter, this, this, false);
+        stunSystem.Configure(rigidbody, _statisticsOfCharacter, this, this, this, false);
         combatSystemAngel.OnEndAttack += () => { _aiController.StartAi(); };
     }
 
@@ -89,16 +86,8 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
         if (IsDead) return;
         if (_canRotate)
         {
-            if (_canRotateToTarget)
-            {
-                var position = _target.transform.position;
-                RotateToTarget(position);
-            }
-            else
-            {
-                var position = _target.transform.forward + transform.position;
-                RotateToTarget(position);
-            }
+            var position = _target.transform.position;
+            RotateToTarget(position);
         }
 
         if (_canMove)
@@ -170,7 +159,7 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 5 * Time.deltaTime);
     }
 
-    public override void ReceiveDamage(int damage, Vector3 direction, float currentAttackStunTime)
+    public override void ReceiveDamage(int damage, Vector3 direction, StunInfo currentAttackStunTime)
     {
         if (IsDead) return;
         _statisticsOfCharacter.life -= damage;
@@ -376,6 +365,11 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
         throw new NotImplementedException();
     }
 
+    public bool IsJumpingInWall()
+    {
+        throw new NotImplementedException();
+    }
+
     public Action<string> GetActionToAnimate()
     {
         return animationController.SetTrigger;
@@ -447,7 +441,7 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
 
 public interface IEnemyV2
 {
-    Action<float> OnReceiveDamage { get; set; }
+    Action<StunInfo> OnReceiveDamage { get; set; }
     List<GameObject> Paths();
     void MoveTo(GameObject target);
     event Action OnArriveToTarget;
