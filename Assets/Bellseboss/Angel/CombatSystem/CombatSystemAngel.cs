@@ -16,7 +16,7 @@ namespace Bellseboss.Angel.CombatSystem
 
 
         public Action OnAttack, OnMidAir, OnRelease, OnSustain, OnEndAttack, oneTimeOnEndAttack, OnStunt, OnEndStunt;
-        private TeaTime _attack, _decresing, _sustain, _release, _stunt;
+        private TeaTime _attack, _decresing, _sustain, _release;
         private Rigidbody _rigidbody;
         private RigidbodyConstraints _rigidbodyConstraints;
         private bool _isQuickAttack;
@@ -33,7 +33,6 @@ namespace Bellseboss.Angel.CombatSystem
         [SerializeField] private bool attacking;
         [SerializeField] private float _deltatimeLocal;
         [SerializeField] private TargetFocus targetFocus;
-        private float _stuntTime;
 
 
         private List<GameObject> _enemiesInCombat
@@ -126,8 +125,8 @@ namespace Bellseboss.Angel.CombatSystem
                 foreach (var enemy in targetFocus.GetEnemies<PJV2>())
                 {
                     Debug.Log("has da;o");
-                    enemy.ReceiveDamage(_statisticsOfCharacter.damage, gameObject.transform.forward, _currentAttack.stunTime);
-                    enemy.SetAnimationToHit(_currentAttack.stuntAnimationParameterName);
+                    enemy.ReceiveDamage(_statisticsOfCharacter.damage, gameObject.transform.forward, _currentAttack.stuntInfo);
+                    enemy.SetAnimationToHit(_currentAttack.stuntInfo.parameterName);
                 }
 
                 if (targetFocus.GetEnemies<EnemyV2>().Count > 0)
@@ -202,22 +201,6 @@ namespace Bellseboss.Angel.CombatSystem
 
             }).Add(EndCombo);
             
-            _stunt = this.tt().Pause().Add(() =>
-            {
-                _deltatimeLocal = 0;
-                OnStunt?.Invoke();
-            }).Loop(loop =>
-            {
-                _deltatimeLocal += loop.deltaTime;
-                if (_deltatimeLocal >= _stuntTime)
-                {
-                    loop.Break();
-                }
-            }).Add(() =>
-            {
-                _combatSystemAngel.SetCanReadInputs(true);
-                OnEndStunt?.Invoke();
-            });
         }
 
         private void EndCombo()
@@ -232,16 +215,13 @@ namespace Bellseboss.Angel.CombatSystem
             _combatSystemAngel.EndAttackMovement();
         }
 
-        private void GotAttacked(float stuntTime)
+        private void GotAttacked(StunInfo stunInfo)
         {
-            _combatSystemAngel.SetCanReadInputs(false);
-            _stuntTime = stuntTime;
             EndCombo();
             _decresing.Stop();
             _sustain.Stop();
             _release.Stop();
             _attack.Stop();
-            _stunt.Stop().Play();
         }
 
         private void Attack(CombatMovement currentAttack)
