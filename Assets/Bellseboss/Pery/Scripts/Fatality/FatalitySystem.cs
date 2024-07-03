@@ -19,12 +19,15 @@ public class FatalitySystem : MonoBehaviour, IFatalitySystem
     [SerializeField] private TextMeshProUGUI title;
     [SerializeField] private UiFatalityInputs uiFatalityInputs;
     [SerializeField] private GameObject audioSourceFatality;
+    private GameObject refOfEnemy;
     public Action<INPUTS> OnInputPressed;
     private IFatality _characterV2;
     private ICharacterV2 _cV2;
     private bool _isFatality;
-    private GameObject enemy;
+    private EnemyV2 enemy;
     private bool _isCinematicFinished;
+    private bool canChangePosition;
+    private float deltaTimeLocal;
 
     public void Configure(IFatality characterV2, ICharacterV2 cV2)
     {
@@ -49,13 +52,17 @@ public class FatalitySystem : MonoBehaviour, IFatalitySystem
     {
         _cV2.DisableControls();
         _isFatality = true;
-        enemy = _characterV2.GetEnemyToKillWithFatality();
+        enemy = _characterV2.GetEnemyToKillWithFatality().GetComponent<EnemyV2>();
         cinematicTargetGroup.m_Targets = new[]
         {
             new CinemachineTargetGroup.Target {target = _cV2.GetGameObject(), radius = 1, weight = 1},
             new CinemachineTargetGroup.Target {target = enemy.transform, radius = 1, weight = 1}
         };
         cinematicVirtualCameraBase.gameObject.SetActive(true);
+        enemy.DisableControls();
+        enemy.DisableColliders();
+        enemy.Mareado();
+        refOfEnemy = _cV2.Model3DInstance.GetComponent<ReferencesOfPlayer>().ReferenceOfFatalitySystem;
     }
 
     public bool IsStartFatality()
@@ -100,6 +107,8 @@ public class FatalitySystem : MonoBehaviour, IFatalitySystem
         _cV2.EnableControls();
         cinematicVirtualCameraBase.gameObject.SetActive(false);
         inputsRead.Clear();
+        canChangePosition = false;
+        enemy.EnableColliders();
     }
 
     public void HidePanelTitle()
@@ -147,8 +156,32 @@ public class FatalitySystem : MonoBehaviour, IFatalitySystem
         audioSourceFatality.SetActive(false);
     }
 
+    public void FatalityPlayer()
+    {
+        _characterV2.StartAnimationFatality();
+        canChangePosition = true;
+    }
+
+    public void FatalityEnemy()
+    {
+        enemy.StartAnimationFatality();
+    }
+
     public void PauseCinematic()
     {
         playableDirector.Pause();
+    }
+    
+    
+    private void Update()
+    {
+        /*if(!canChangePosition) return;
+        enemy.SetPositionAndRotation(refOfEnemy);
+        deltaTimeLocal += Time.deltaTime;
+        if (deltaTimeLocal >= playableDirector.duration)
+        {
+            canChangePosition = false;
+            _cV2.EnableControls();
+        }*/
     }
 }

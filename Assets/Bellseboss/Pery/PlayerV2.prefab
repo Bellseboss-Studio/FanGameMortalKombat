@@ -206,7 +206,7 @@ GameObject:
   - component: {fileID: 434739508}
   m_Layer: 14
   m_Name: ColliderToFDamage
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -302,6 +302,7 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 2048
+  tagToCompare: Enemy
 --- !u!1 &437562582
 GameObject:
   m_ObjectHideFlags: 0
@@ -326,7 +327,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 437562582}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.25, y: 0, z: 0}
+  m_LocalPosition: {x: 0.45, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 853251488}
@@ -1186,7 +1187,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1108895630}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.25}
+  m_LocalPosition: {x: 0, y: 0, z: -0.45}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 853251488}
@@ -1650,7 +1651,7 @@ MonoBehaviour:
   maxHeighJump: 5
   heightDecreasing: 1
   forceToAttack: 1
-  forceToDecreasing: 1
+  forceToDecreasing: 2
   floorController: {fileID: 790305426}
 --- !u!1 &1590763360
 GameObject:
@@ -1703,7 +1704,7 @@ MonoBehaviour:
   maxHeighJump: 5
   heightDecreasing: 1
   forceToAttack: 2
-  forceToDecreasing: 3
+  forceToDecreasing: 8
   floorController: {fileID: 790305426}
   lenghtOfArrow: 2
   _direction: {x: 0, y: 0, z: 1}
@@ -1731,7 +1732,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1594373770}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.25}
+  m_LocalPosition: {x: 0, y: 0, z: 0.45}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 853251488}
@@ -2127,7 +2128,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1968865581}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.25, y: 0, z: 0}
+  m_LocalPosition: {x: -0.45, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 853251488}
@@ -2268,6 +2269,49 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2004883087}
   m_CullTransparentMesh: 1
+--- !u!1 &566437753892623071
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6345815196357360949}
+  - component: {fileID: 8626583970816129493}
+  m_Layer: 10
+  m_Name: PausaMenu
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6345815196357360949
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 566437753892623071}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8585594586927423070}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8626583970816129493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 566437753892623071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73269c0bf96ac49499209bfb41a83f55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2289398064001770119
 GameObject:
   m_ObjectHideFlags: 0
@@ -2462,7 +2506,7 @@ GameObject:
   - component: {fileID: 7936408346058950360}
   m_Layer: 14
   m_Name: ColliderToFDamage
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2558,6 +2602,7 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 2048
+  tagToCompare: 
 --- !u!1 &7146114776881552419
 GameObject:
   m_ObjectHideFlags: 0
@@ -3542,9 +3587,10 @@ GameObject:
   - component: {fileID: 835371845}
   - component: {fileID: 835371846}
   - component: {fileID: 2074710249}
+  - component: {fileID: 468385863}
   m_Layer: 10
   m_Name: PlayerV2
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3569,6 +3615,7 @@ Transform:
   - {fileID: 1546169685}
   - {fileID: 3949808562703367793}
   - {fileID: 853251488}
+  - {fileID: 6345815196357360949}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3598,6 +3645,7 @@ MonoBehaviour:
   targetFocus: {fileID: 919132148402666361}
   statisticsOfCharacter: {fileID: 11400000, guid: 2c107fda2a30a3a4fb6d83dca49c4ffb, type: 2}
   combatSystemAngel: {fileID: 2074710249}
+  stunSystem: {fileID: 468385863}
   movementADSR: {fileID: 1309216378850590419}
   FatalitySystem: {fileID: 4996582286142792170}
   _enemiesInCombat: []
@@ -3827,6 +3875,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: ce16104b-17ff-4d6c-a6fd-6369590e364b
     m_ActionName: Player/Fatality[/Keyboard/f]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8626583970816129493}
+        m_TargetAssemblyTypeName: PausaMenuV2, Assembly-CSharp
+        m_MethodName: OnPause
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 2e2af2a8-a8b6-446c-be63-84e6edc3682c
+    m_ActionName: Player/Pausa[/Keyboard/p,/DualSenseGamepadHID/start]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -4020,7 +4084,7 @@ MonoBehaviour:
   combatMovements:
   - comboSequence: 00000000
     transitionParameterName: p
-    stuntAnimationParameterName: q1
+    stuntInfo: {fileID: 11400000, guid: 1052aac890bff954c8f0667594600780, type: 2}
     timeToAttack: 0.15
     timeToDecreasing: 0.3
     timeToSustain: 0
@@ -4032,7 +4096,7 @@ MonoBehaviour:
     stunTime: 1
   - comboSequence: 01000000
     transitionParameterName: k
-    stuntAnimationParameterName: p1
+    stuntInfo: {fileID: 11400000, guid: 1052aac890bff954c8f0667594600780, type: 2}
     timeToAttack: 0.1
     timeToDecreasing: 0.2
     timeToSustain: 0.5
@@ -4044,7 +4108,7 @@ MonoBehaviour:
     stunTime: 1
   - comboSequence: 0000000000000000
     transitionParameterName: mantis2
-    stuntAnimationParameterName: q2
+    stuntInfo: {fileID: 11400000, guid: 1052aac890bff954c8f0667594600780, type: 2}
     timeToAttack: 0.2
     timeToDecreasing: 0.2
     timeToSustain: 0.5
@@ -4056,7 +4120,7 @@ MonoBehaviour:
     stunTime: 1
   - comboSequence: 000000000000000000000000
     transitionParameterName: mantis3
-    stuntAnimationParameterName: q3
+    stuntInfo: {fileID: 11400000, guid: 1052aac890bff954c8f0667594600780, type: 2}
     timeToAttack: 0.5
     timeToDecreasing: 0.2
     timeToSustain: 0.5
@@ -4068,7 +4132,7 @@ MonoBehaviour:
     stunTime: 1
   - comboSequence: 0000000001000000
     transitionParameterName: k
-    stuntAnimationParameterName: p1
+    stuntInfo: {fileID: 11400000, guid: 1052aac890bff954c8f0667594600780, type: 2}
     timeToAttack: 0.5
     timeToDecreasing: 0.2
     timeToSustain: 0.5
@@ -4080,7 +4144,7 @@ MonoBehaviour:
     stunTime: 1.5
   - comboSequence: 000000000000000001000000
     transitionParameterName: k
-    stuntAnimationParameterName: p1
+    stuntInfo: {fileID: 11400000, guid: 1052aac890bff954c8f0667594600780, type: 2}
     timeToAttack: 0.5
     timeToDecreasing: 0.2
     timeToSustain: 0.5
@@ -4092,7 +4156,7 @@ MonoBehaviour:
     stunTime: 1.5
   - comboSequence: 00000000000000000000000001000000
     transitionParameterName: k
-    stuntAnimationParameterName: p1
+    stuntInfo: {fileID: 11400000, guid: 1052aac890bff954c8f0667594600780, type: 2}
     timeToAttack: 0.3
     timeToDecreasing: 0.2
     timeToSustain: 0.5
@@ -4109,6 +4173,19 @@ MonoBehaviour:
   attacking: 0
   _deltatimeLocal: 0
   targetFocus: {fileID: 434739508}
+--- !u!114 &468385863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8585594586927423071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a30a13079f0458cb10041474c6a32f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _deltatimeLocal: 0
 --- !u!1 &8585594587426267891
 GameObject:
   m_ObjectHideFlags: 0
@@ -4377,9 +4454,25 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 14
       objectReference: {fileID: 0}
+    - target: {fileID: 7186946741610157063, guid: 795204be2e914634498bacb860ac0d58, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 7563506777814421181, guid: 795204be2e914634498bacb860ac0d58, type: 3}
       propertyPath: m_RootOrder
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7563506777814421181, guid: 795204be2e914634498bacb860ac0d58, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 58.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7563506777814421181, guid: 795204be2e914634498bacb860ac0d58, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 57.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7563506777814421181, guid: 795204be2e914634498bacb860ac0d58, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 26.69
       objectReference: {fileID: 0}
     - target: {fileID: 7563506777814421181, guid: 795204be2e914634498bacb860ac0d58, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4391,7 +4484,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7563506777814421181, guid: 795204be2e914634498bacb860ac0d58, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -2.2
       objectReference: {fileID: 0}
     - target: {fileID: 7563506777814421181, guid: 795204be2e914634498bacb860ac0d58, type: 3}
       propertyPath: m_LocalRotation.w
@@ -4427,14 +4520,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 795204be2e914634498bacb860ac0d58, type: 3}
---- !u!4 &543450652048892544 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7563506777814421181, guid: 795204be2e914634498bacb860ac0d58, type: 3}
-  m_PrefabInstance: {fileID: 8033366385658129469}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &919132147592493114 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7186946741610157063, guid: 795204be2e914634498bacb860ac0d58, type: 3}
+  m_PrefabInstance: {fileID: 8033366385658129469}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &543450652048892544 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7563506777814421181, guid: 795204be2e914634498bacb860ac0d58, type: 3}
   m_PrefabInstance: {fileID: 8033366385658129469}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &919132148402666361
@@ -4452,3 +4545,4 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 2048
+  tagToCompare: Enemy

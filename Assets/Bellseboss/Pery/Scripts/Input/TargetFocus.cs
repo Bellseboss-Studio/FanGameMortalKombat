@@ -9,6 +9,7 @@ namespace Bellseboss.Pery.Scripts.Input
         public Action<GameObject> CollisionEnter;
         public Action<GameObject> CollisionExit;
         public LayerMask layerMask;
+        public string tagToCompare;
         private IFocusTarget _focusTarget;
         private List<GameObject> _enemies = new List<GameObject>();
         private Collider _collider;
@@ -51,7 +52,7 @@ namespace Bellseboss.Pery.Scripts.Input
 
         private void OnTriggerEnter(Collider other)
         {
-            if ((layerMask.value & (1 << other.gameObject.layer)) > 0)
+            if ((layerMask.value & (1 << other.gameObject.layer)) > 0 && other.gameObject.CompareTag(tagToCompare))
             {
                 //Debug.Log($"TargetFocus: OnTriggerEnter: other: {other.gameObject.name}");
                 _enemies.Add(other.gameObject);
@@ -62,7 +63,7 @@ namespace Bellseboss.Pery.Scripts.Input
         private void OnTriggerExit(Collider other)
         {
             //compare layer
-            if ((layerMask.value & (1 << other.gameObject.layer)) > 0)
+            if ((layerMask.value & (1 << other.gameObject.layer)) > 0 && other.gameObject.CompareTag(tagToCompare))
             {
                 //Debug.Log($"TargetFocus: OnTriggerExit: other: {other.gameObject.name}");
                 _enemies.Remove(other.gameObject);
