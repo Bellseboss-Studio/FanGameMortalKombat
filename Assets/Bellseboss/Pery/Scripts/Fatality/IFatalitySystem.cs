@@ -24,4 +24,5 @@ public interface IFatalitySystem
     void FatalityPlayer();
     void FatalityEnemy();
     void FatalityComposite();
+    void CanReadInputsToFatality(bool canRead);
 }

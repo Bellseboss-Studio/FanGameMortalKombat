@@ -42,7 +42,7 @@ public class WaitForInputs : StatePatterFatality
         base.StartState();
         _fatalitySystem.ContinueCinematic();
         _fatalitySystem.ShowPanelInputs();
-        _fatalitySystem.CanReadInputs(true);
+        _fatalitySystem.CanReadInputsToFatality(true);
     }
 
     protected override void EndState()
@@ -50,6 +50,7 @@ public class WaitForInputs : StatePatterFatality
         base.EndState();
         _fatalitySystem.HidePanelInputs();
         _fatalitySystem.CanReadInputs(false);
+        _fatalitySystem.CanReadInputsToFatality(true);
     }
 
     public override STATE_FATALITY NextState()

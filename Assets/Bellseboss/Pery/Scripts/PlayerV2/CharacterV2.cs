@@ -101,6 +101,9 @@ namespace Bellseboss.Pery.Scripts.Input
             ServiceLocator.Instance.GetService<IPauseMainMenu>().onPause += OnPausaMenu; 
 
             ConfigCamera(cameraMain);
+            
+            
+            CanReadInputs = true;
         }
 
         private void OnPausaMenu(bool ispause)
@@ -229,6 +232,7 @@ namespace Bellseboss.Pery.Scripts.Input
             _canUseButtons = true;
             CanReadInputs = true;
             inputPlayerV2.StartToReadInputs(_canUseButtons);
+            
         }
 
         public Transform GetGameObject()
@@ -425,6 +429,11 @@ namespace Bellseboss.Pery.Scripts.Input
         public void StartAnimationFatality()
         {
             animationController.SetTrigger("fatality");
+        }
+
+        public void StartToReadInputsToFatality(bool canRead)
+        {
+            inputPlayerV2.StartToReadInputsToFatality(canRead);
         }
 
         public void GetIntoEnemyZone(GameObject enemy, bool isNear)

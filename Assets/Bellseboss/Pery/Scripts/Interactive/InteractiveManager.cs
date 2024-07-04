@@ -55,6 +55,7 @@ public class InteractiveManager : MonoBehaviour
         {
             canChangePosition = false;
             _characterV2.EnableControls();
+            Debug.Log($"InteractiveManager: OnAction {deltaTimeLocal}");
         }
     }
 
@@ -66,6 +67,7 @@ public class InteractiveManager : MonoBehaviour
     private void OnAction()
     {
         //Debug.Log("InteractiveManager: OnAction");
+        Debug.Log($"InteractiveManager: OnAction {playableDirector.duration}");
         playableDirector.Play();
         animatorInteractiveObject.SetTrigger("activate");
         _characterV2.DisableControls();

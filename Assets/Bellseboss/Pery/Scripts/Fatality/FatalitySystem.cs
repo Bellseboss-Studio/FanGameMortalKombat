@@ -141,10 +141,6 @@ public class FatalitySystem : MonoBehaviour, IFatalitySystem
     public void CanReadInputs(bool b)
     {
         _characterV2.StartToReadInputs(b);
-        if (b)
-        {
-            uiFatalityInputs.DefaultValue();
-        }
     }
 
     public void StartAudioFatality()
@@ -158,6 +154,7 @@ public class FatalitySystem : MonoBehaviour, IFatalitySystem
         compositeToFatality.FinishFatality();
         _cV2.Model3DInstance.transform.localPosition = Vector3.zero;
         _cV2.Model3DInstance.transform.localRotation = Quaternion.identity;
+        uiFatalityInputs.DefaultValue();
     }
 
     public void FatalityPlayer()
@@ -169,11 +166,20 @@ public class FatalitySystem : MonoBehaviour, IFatalitySystem
     public void FatalityEnemy()
     {
         enemy.StartAnimationFatality();
+        enemy.CanMove(false);
+        enemy.CanRotate(false);
+        enemy.DisableControls();
+        enemy.DisableColliders();
     }
 
     public void FatalityComposite()
     {
         compositeToFatality.Fatality();
+    }
+
+    public void CanReadInputsToFatality(bool canRead)
+    {
+        _characterV2.StartToReadInputsToFatality(canRead);
     }
 
     public void PauseCinematic()
