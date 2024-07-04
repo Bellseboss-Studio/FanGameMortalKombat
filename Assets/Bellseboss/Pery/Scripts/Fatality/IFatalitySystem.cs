@@ -23,4 +23,5 @@ public interface IFatalitySystem
     void RestartAllElements();
     void FatalityPlayer();
     void FatalityEnemy();
+    void FatalityComposite();
 }

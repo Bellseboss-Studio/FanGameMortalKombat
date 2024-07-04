@@ -15,6 +15,7 @@ public class FatalityState : StatePatterFatality
         _fatalitySystem.StartAudioFatality();
         _fatalitySystem.FatalityPlayer();
         _fatalitySystem.FatalityEnemy();
+        _fatalitySystem.FatalityComposite();
     }
 
     internal override IEnumerator Execute()

@@ -135,6 +135,10 @@ namespace Bellseboss.Pery.Scripts.Input
                 input = _lastInput;
             }
             _isReadingInput = false;
+            if (input == INPUTS.NONE)
+            {
+                aux = false;
+            }
             return aux;
         }
 
