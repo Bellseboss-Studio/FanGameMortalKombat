@@ -209,6 +209,11 @@ namespace Bellseboss.Pery.Scripts.Input
         public void CanMove(bool canMove)
         {
             _canMove = canMove;
+            if (!canMove)
+            {
+                _rigidbody.velocity = Vector3.zero;
+                _lastDirection = Vector2.zero;
+            }
         }
 
         public void Jump()
