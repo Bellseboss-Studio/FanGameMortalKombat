@@ -6,6 +6,7 @@ using UnityEngine;
 public class TutorialSystem : MonoBehaviour
 {
     [SerializeField] private List<ActivableTutorial> activables;
+    [SerializeField] private bool isFinished;
     private TeaTime _flow;
     private bool _allFinished;
     private CharacterV2 _character;
@@ -32,12 +33,12 @@ public class TutorialSystem : MonoBehaviour
             {
                 h.Break();
             }
-        }).Add(() => { _character.EnableControls(); }).Add(() => { _character = null; });
+        }).Add(() => { _character.EnableControls(); }).Add(() => { _character = null; isFinished = true;});
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.TryGetComponent<CharacterV2>(out var character))
+        if (other.gameObject.TryGetComponent<CharacterV2>(out var character) && !isFinished)
         {
             _character = character;
             _flow.Play();

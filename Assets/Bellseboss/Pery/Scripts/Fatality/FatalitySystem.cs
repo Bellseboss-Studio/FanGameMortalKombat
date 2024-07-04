@@ -19,7 +19,7 @@ public class FatalitySystem : MonoBehaviour, IFatalitySystem
     [SerializeField] private TextMeshProUGUI title;
     [SerializeField] private UiFatalityInputs uiFatalityInputs;
     [SerializeField] private GameObject audioSourceFatality;
-    private GameObject refOfEnemy;
+    [SerializeField] private CompositeToFatality compositeToFatality;
     public Action<INPUTS> OnInputPressed;
     private IFatality _characterV2;
     private ICharacterV2 _cV2;
@@ -62,7 +62,8 @@ public class FatalitySystem : MonoBehaviour, IFatalitySystem
         enemy.DisableControls();
         enemy.DisableColliders();
         enemy.Mareado();
-        refOfEnemy = _cV2.Model3DInstance.GetComponent<ReferencesOfPlayer>().ReferenceOfFatalitySystem;
+        compositeToFatality.StartEqualizePosition();
+        compositeToFatality.Coordinator(_cV2.Model3DInstance, enemy.gameObject);
     }
 
     public bool IsStartFatality()
@@ -140,10 +141,6 @@ public class FatalitySystem : MonoBehaviour, IFatalitySystem
     public void CanReadInputs(bool b)
     {
         _characterV2.StartToReadInputs(b);
-        if (b)
-        {
-            uiFatalityInputs.DefaultValue();
-        }
     }
 
     public void StartAudioFatality()
@@ -154,6 +151,10 @@ public class FatalitySystem : MonoBehaviour, IFatalitySystem
     public void RestartAllElements()
     {
         audioSourceFatality.SetActive(false);
+        compositeToFatality.FinishFatality();
+        _cV2.Model3DInstance.transform.localPosition = Vector3.zero;
+        _cV2.Model3DInstance.transform.localRotation = Quaternion.identity;
+        uiFatalityInputs.DefaultValue();
     }
 
     public void FatalityPlayer()
@@ -165,6 +166,20 @@ public class FatalitySystem : MonoBehaviour, IFatalitySystem
     public void FatalityEnemy()
     {
         enemy.StartAnimationFatality();
+        enemy.CanMove(false);
+        enemy.CanRotate(false);
+        enemy.DisableControls();
+        enemy.DisableColliders();
+    }
+
+    public void FatalityComposite()
+    {
+        compositeToFatality.Fatality();
+    }
+
+    public void CanReadInputsToFatality(bool canRead)
+    {
+        _characterV2.StartToReadInputsToFatality(canRead);
     }
 
     public void PauseCinematic()

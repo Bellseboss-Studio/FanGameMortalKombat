@@ -28,8 +28,11 @@ namespace Bellseboss.Pery.Scripts.Input
         public void OnMove(InputAction.CallbackContext context)
         {
             _currentInputVector = context.ReadValue<Vector2>();
-            onMoveEvent?.Invoke(_currentInputVector, _lastInput);
-            if (Time.time >= _nextReadTime && _canReadInput)
+            if (_canReadInput)
+            {
+                onMoveEvent?.Invoke(_currentInputVector, _lastInput);   
+            }
+            if (Time.time >= _nextReadTime && _canReadInputToFatality)
             {
                 _lastInput = GetDirectionFromVector(_currentInputVector);
                 _nextReadTime = Time.time + timeToReadInput;
@@ -46,53 +49,75 @@ namespace Bellseboss.Pery.Scripts.Input
 
         public void OnKick(InputAction.CallbackContext context)
         {
-            if (!_canReadInput) return;
             if (context.started)
             {
-                _lastInput = INPUTS.QUICK;
-                _isReadingInput = true;
-                onKickEvent?.Invoke();
+                if (_canReadInputToFatality)
+                {
+                    _lastInput = INPUTS.QUICK;
+                    _isReadingInput = true;   
+                }
+                if (_canReadInput)
+                {
+                    onKickEvent?.Invoke();
+                }
             }
         }
         
         public void OnPunch(InputAction.CallbackContext context)
         {
-            if (!_canReadInput) return;
             if (context.started)
             {
-                _lastInput = INPUTS.POWER;
-                _isReadingInput = true;
-                onPunchEvent?.Invoke();
+                if (_canReadInputToFatality)
+                {
+                    _lastInput = INPUTS.POWER;
+                    _isReadingInput = true;
+                }
+                if (_canReadInput)
+                {
+                    onPunchEvent?.Invoke();
+                }
             }
         }
         
         public void OnJump(InputAction.CallbackContext context)
         {
-            if (!_canReadInput) return;
             if (context.started)
             {
-                //Debug.Log("Jump");
-                onJumpEvent?.Invoke();
+                if (_canReadInputToFatality)
+                {
+                }
+                if (_canReadInput)
+                {
+                    onJumpEvent?.Invoke();
+                }
             }
         }
         
         public void OnAction(InputAction.CallbackContext context)
         {
-            if (!_canReadInput) return;
             if (context.started)
             {
-                //Debug.Log("Action");
-                onActionEvent?.Invoke();
+                if (_canReadInputToFatality)
+                {
+                }
+                if (_canReadInput)
+                {
+                    onActionEvent?.Invoke();
+                }
             }
         }
 
         public void OnFatality(InputAction.CallbackContext context)
         {
-            if (!_canReadInput) return;
             if (context.started)
             {
-                //Debug.Log("Fatality");
-                onFatalityEvent?.Invoke();
+                if (_canReadInputToFatality)
+                {
+                }
+                if (_canReadInput)
+                {
+                    onFatalityEvent?.Invoke();
+                }
             }
         }
 
@@ -135,6 +160,10 @@ namespace Bellseboss.Pery.Scripts.Input
                 input = _lastInput;
             }
             _isReadingInput = false;
+            if (input == INPUTS.NONE)
+            {
+                aux = false;
+            }
             return aux;
         }
 
@@ -146,7 +175,13 @@ namespace Bellseboss.Pery.Scripts.Input
             {
                 _lastInput = INPUTS.NONE;
                 _isReadingInput = false;
+                _currentInputVector = Vector3.zero;
             }
+        }
+
+        public void StartToReadInputsToFatality(bool canRead)
+        {
+            _canReadInputToFatality = canRead;
         }
     }
 }
