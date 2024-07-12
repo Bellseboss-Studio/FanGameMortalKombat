@@ -224,6 +224,11 @@ internal class AiController : MonoBehaviour, IAiController
         
     }
 
+    public void Fatality()
+    {
+        
+    }
+
     public void StartAi()
     {
         if (_isDeath) return;

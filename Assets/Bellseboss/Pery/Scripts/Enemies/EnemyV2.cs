@@ -67,9 +67,6 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
         _aiController.Configure(this, ref combatSystemAngel.OnEndStunt);
         _state = StatesOfEnemy.NORMAL;
 
-        var localPosition = new Vector3(0, -0.5f, 0);
-        _model.transform.localPosition = localPosition;
-
         animationController.OnFinishAnimationDamage += () =>
         {
             Debug.Log("EnemyV2: Finish Animation Damage");
@@ -402,6 +399,7 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
     public void Mareado()
     {
         animationController.SetTrigger("mareado");
+        _aiController.Fatality();
     }
     
     public void GetFatalities()
