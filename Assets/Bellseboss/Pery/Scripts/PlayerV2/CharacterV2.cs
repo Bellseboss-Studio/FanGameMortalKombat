@@ -9,7 +9,7 @@ using View.Installers;
 namespace Bellseboss.Pery.Scripts.Input
 {
     public class CharacterV2 : PJV2, ICharacterV2, IMovementRigidBodyV2, IAnimationController, IRotationCharacterV2,
-        ICombatSystem, IFocusTarget, ICombatSystemAngel, IFatality, ICharacterUi, IStunSystem
+        ICombatSystem, IFocusTarget, ICombatSystemAngel, IFatality, ICharacterUi, IStunSystem, IPlayer 
     {
         public string Id => id;
         public Action OnAction { get; set; }
@@ -104,6 +104,8 @@ namespace Bellseboss.Pery.Scripts.Input
             
             
             CanReadInputs = true;
+            
+            ServiceLocator.Instance.RegisterService<IPlayer>(this);
         }
 
         private void OnPausaMenu(bool ispause)
@@ -452,7 +454,16 @@ namespace Bellseboss.Pery.Scripts.Input
         {
             _enemiesInCombat.Clear();
         }
-        
+
+        GameObject IPlayer.GetGameObject()
+        {
+            return gameObject;
+        }
+    }
+
+    public interface IPlayer
+    {
+        GameObject GetGameObject();
     }
 
     public interface ICharacterUi
