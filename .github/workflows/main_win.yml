@@ -92,7 +92,9 @@ jobs:
     needs: create_release_and_upload_file
     name: Update the downloads in server
     steps:
-      - name: Send a POST request
-        run: |
-          response=$(curl -X POST -H "Content-Type: application/json" -d '{"comment": "${{ steps.last_commit.outputs.message }}", "data": {"key":"${{ secrets.DOWNLOAD_UPDATE_JSON }}", "URL": "${{ needs.create_release_and_upload_file.outputs.download_url }}"}}' ${{ secrets.DOWNLOAD_UPDATE_URL }})
-          echo "Response code: $response"
+      - name: Print download URL
+        run: echo "Download URL is ${{ needs.create_release_and_upload_file.outputs.download_url }}"
+      # - name: Send a POST request
+      #   run: |
+      #     response=$(curl -X POST -H "Content-Type: application/json" -d '{"comment": "${{ steps.last_commit.outputs.message }}", "data": {"key":"${{ secrets.DOWNLOAD_UPDATE_JSON }}", "URL": "${{ needs.create_release_and_upload_file.outputs.download_url }}"}}' ${{ secrets.DOWNLOAD_UPDATE_URL }})
+      #     echo "Response code: $response"
