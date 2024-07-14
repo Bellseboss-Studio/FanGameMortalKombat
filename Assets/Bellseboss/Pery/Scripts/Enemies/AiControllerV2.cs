@@ -123,7 +123,9 @@ public class AiControllerV2 : MonoBehaviour, IAiController
 
     private void OnReceiveDamage(StunInfo obj)
     {
-        StopAllStartIdle();
+        StopAllStartIdle(false);
+        _enemy.SetInstaRotation(true);
+        
     }
 
     private void BehaviourWithPlayer()
@@ -267,6 +269,7 @@ public class AiControllerV2 : MonoBehaviour, IAiController
     private void EndStunt()
     {
         StopAllStartIdle();
+        _enemy.SetInstaRotation(false);
     }
 
     private void EnemyOnOnDead(EnemyV2 obj)

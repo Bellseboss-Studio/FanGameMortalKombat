@@ -4033,6 +4033,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activables:
   - {fileID: 1243639691}
+  isFinished: 0
 --- !u!4 &588342223
 Transform:
   m_ObjectHideFlags: 0
@@ -4400,7 +4401,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a650460bc6082a84388384a31cfe7a28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberOfEnemies: 0
+  numberOfEnemies: 1
   idToCreate: gordo
   positionToCreate: {fileID: 1865883530}
   pathToFollow:

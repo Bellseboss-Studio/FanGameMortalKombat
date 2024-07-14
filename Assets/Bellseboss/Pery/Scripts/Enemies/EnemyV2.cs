@@ -42,6 +42,7 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
     [SerializeField] private CombatSystemAngel combatSystemAngel;
     [SerializeField] private StunSystem stunSystem;
     [SerializeField] private List<Collider> collidersToDisable;
+    private bool isInstarotating;
     private IAiController _aiController => ai as IAiController;
 
     public string Id => id;
@@ -56,15 +57,20 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
         return centerOfTheZone;   
     }
 
+    public void SetInstaRotation(bool instaRotation)
+    {
+        isInstarotating = instaRotation;
+    }
+
     private bool canAttack = true;
 
     private void Start()
     {
         _statisticsOfCharacter = Instantiate(statisticsOfCharacter);
-        movementADSR.Configure(GetComponent<Rigidbody>(), _statisticsOfCharacter, this);
+        /*movementADSR.Configure(GetComponent<Rigidbody>(), _statisticsOfCharacter, this);*/
         _model = Instantiate(model, transform);
         animationController.Configure(_model.GetComponent<Animator>(), this);
-        _aiController.Configure(this, ref combatSystemAngel.OnEndStunt);
+        _aiController.Configure(this, ref stunSystem.OnEndStunt);
         _state = StatesOfEnemy.NORMAL;
 
         animationController.OnFinishAnimationDamage += () =>
@@ -84,7 +90,7 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
         if (_canRotate)
         {
             var position = _target.transform.position;
-            RotateToTarget(position);
+            RotateToTarget(position, isInstarotating);
         }
 
         if (_canMove)
@@ -148,15 +154,20 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
         _canMove = b;
     }
 
-    public void RotateToTarget(Vector3 transformForward)
+    public void RotateToTarget(Vector3 transformForward, bool instant = false)
     {
         var targetRotation = Quaternion.LookRotation(transformForward - transform.position);
         targetRotation.x = 0;
         targetRotation.z = 0;
+        if (instant)
+        {
+            transform.rotation = targetRotation;
+            return;
+        }
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 5 * Time.deltaTime);
     }
 
-    public override void ReceiveDamage(int damage, Vector3 direction, StunInfo currentAttackStunTime)
+    public override void ReceiveDamage(int damage, GameObject direction, StunInfo currentAttackStunTime)
     {
         if (IsDead) return;
         _statisticsOfCharacter.life -= damage;
@@ -167,11 +178,13 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
             OnDead?.Invoke(this);
         }
 
-        if (movementADSR.CanAttackAgain() && !IsDead)
+        /*if (movementADSR.CanAttackAgain() && !IsDead)
         {
             movementADSR.Attack(direction);
-        }
+        }*/
 
+        _target = direction;
+        
         OnReceiveDamage?.Invoke(currentAttackStunTime);
     }
 
@@ -465,6 +478,7 @@ public interface IEnemyV2
     public bool IsDead { get; }
     GameObject GetGameObject();
     GameObject GetCenterOfTheZone();
+    void SetInstaRotation(bool instaRotation);
 }
 
 public class EnemiesV2Factory
