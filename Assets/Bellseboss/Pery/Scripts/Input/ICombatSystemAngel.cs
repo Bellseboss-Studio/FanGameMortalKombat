@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Bellseboss.Angel.CombatSystem;
 using UnityEngine;
 
 namespace Bellseboss.Pery.Scripts.Input
@@ -20,6 +21,6 @@ namespace Bellseboss.Pery.Scripts.Input
         void EndAttackMovement();
         void SetCanReadInputs(bool b);
         bool GetCanReadInputs();
-        Action<float> OnReceiveDamage { get; set; }
+        Action<StunInfo> OnReceiveDamage { get; set; }
     }
 }

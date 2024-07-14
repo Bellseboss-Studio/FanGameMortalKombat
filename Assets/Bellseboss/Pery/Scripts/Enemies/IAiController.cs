@@ -7,4 +7,5 @@ internal interface IAiController
     void StartAi();
     void SetPlayer(CharacterV2 characterV2);
     void TakeDamage();
+    void Fatality();
 }
