@@ -380,7 +380,7 @@ namespace Bellseboss.Pery.Scripts.Input
             movementRigidbodyV2.ExitToWall();
         }
 
-        public override void ReceiveDamage(int damage, Vector3 transformForward, StunInfo currentAttackStunTime)
+        public override void ReceiveDamage(int damage, GameObject transformForward, StunInfo currentAttackStunTime)
         {
             if (IsDead) return;
             _statisticsOfCharacter.life -= damage;
@@ -393,10 +393,10 @@ namespace Bellseboss.Pery.Scripts.Input
 
             if (movementADSR.CanAttackAgain() && !IsDead)
             {
-                movementADSR.Attack(transformForward);
+                movementADSR.Attack(transformForward.transform.forward);
             }
 
-            rotationCharacterV2.RotateToDirection(transformForward);
+            rotationCharacterV2.RotateToDirection(transformForward.transform.forward);
             this.OnReceiveDamage?.Invoke(currentAttackStunTime);
         }
 
