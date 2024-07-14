@@ -61,10 +61,10 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
     private void Start()
     {
         _statisticsOfCharacter = Instantiate(statisticsOfCharacter);
-        movementADSR.Configure(GetComponent<Rigidbody>(), _statisticsOfCharacter, this);
+        /*movementADSR.Configure(GetComponent<Rigidbody>(), _statisticsOfCharacter, this);*/
         _model = Instantiate(model, transform);
         animationController.Configure(_model.GetComponent<Animator>(), this);
-        _aiController.Configure(this, ref combatSystemAngel.OnEndStunt);
+        _aiController.Configure(this, ref stunSystem.OnEndStunt);
         _state = StatesOfEnemy.NORMAL;
 
         animationController.OnFinishAnimationDamage += () =>
@@ -167,11 +167,11 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
             OnDead?.Invoke(this);
         }
 
-        if (movementADSR.CanAttackAgain() && !IsDead)
+        /*if (movementADSR.CanAttackAgain() && !IsDead)
         {
             movementADSR.Attack(direction);
-        }
-
+        }*/
+        
         OnReceiveDamage?.Invoke(currentAttackStunTime);
     }
 
