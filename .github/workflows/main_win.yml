@@ -94,6 +94,9 @@ jobs:
 
       - name: Get download URL
         run: echo "The download URL is ${{ steps.upload_release_asset.outputs.browser_download_url }}"
+    
+    outputs:
+      download_url: ${{ steps.set_output.outputs.download_url }}
 
   update_the_downloads:
     runs-on: ubuntu-latest
@@ -101,7 +104,7 @@ jobs:
     name: Update the downloads in server
     steps:
       - name: Use Download URL
-        run: echo "The download URL is $UPLOAD_URL"
+        run: echo "The download URL is ${{ needs.create_release_and_upload_file.outputs.download_url }}"
       # - name: Send a POST request
       #   run: |
       #     response=$(curl -X POST -H "Content-Type: application/json" -d '{"comment": "${{ steps.last_commit.outputs.message }}", "data": {"key":"${{ secrets.DOWNLOAD_UPDATE_JSON }}", "URL": "${{ needs.create_release_and_upload_file.outputs.download_url }}"}}' ${{ secrets.DOWNLOAD_UPDATE_URL }})
