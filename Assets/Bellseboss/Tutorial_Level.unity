@@ -2746,8 +2746,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Explore until you find a lever. Quickly!
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d49aa088049f05c46abaae2d98325c9f, type: 2}
+  m_sharedMaterial: {fileID: 5278395681692352492, guid: d49aa088049f05c46abaae2d98325c9f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2771,10 +2771,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 81.6
+  m_fontSize: 36
   m_fontSizeBase: 36
   m_fontWeight: 400
-  m_enableAutoSizing: 1
+  m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 172
   m_fontStyle: 0
@@ -3397,7 +3397,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &387185331
 Transform:
   m_ObjectHideFlags: 0
@@ -3792,8 +3792,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Kombat, the most ancient and powerful art. No other choice.
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d49aa088049f05c46abaae2d98325c9f, type: 2}
+  m_sharedMaterial: {fileID: 5278395681692352492, guid: d49aa088049f05c46abaae2d98325c9f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3817,7 +3817,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 77.6
+  m_fontSize: 85
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -5392,6 +5392,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 587972344}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!224 &588003316 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 5174975609828303881, guid: 4f4be7ef470f3f74e854ab33222a4f98, type: 3}
+  m_PrefabInstance: {fileID: 994048451}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &602700595
 GameObject:
   m_ObjectHideFlags: 0
@@ -6775,7 +6780,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &731650190
 Transform:
   m_ObjectHideFlags: 0
@@ -8637,6 +8642,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1225852314}
     m_Modifications:
+    - target: {fileID: 1236136078943130308, guid: 4f4be7ef470f3f74e854ab33222a4f98, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1236136078943130308, guid: 4f4be7ef470f3f74e854ab33222a4f98, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1679917938913849509, guid: 4f4be7ef470f3f74e854ab33222a4f98, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -8745,12 +8758,44 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI_MainPanel
       objectReference: {fileID: 0}
+    - target: {fileID: 3381674704264446635, guid: 4f4be7ef470f3f74e854ab33222a4f98, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3381674704264446635, guid: 4f4be7ef470f3f74e854ab33222a4f98, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3381674704264446635, guid: 4f4be7ef470f3f74e854ab33222a4f98, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4730701175871177119, guid: 4f4be7ef470f3f74e854ab33222a4f98, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4730701175871177119, guid: 4f4be7ef470f3f74e854ab33222a4f98, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174975609538056146, guid: 4f4be7ef470f3f74e854ab33222a4f98, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174975609538056146, guid: 4f4be7ef470f3f74e854ab33222a4f98, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174975610646438910, guid: 4f4be7ef470f3f74e854ab33222a4f98, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174975610646438910, guid: 4f4be7ef470f3f74e854ab33222a4f98, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5174975610646438910, guid: 4f4be7ef470f3f74e854ab33222a4f98, type: 3}
+      propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9110623352845455856, guid: 4f4be7ef470f3f74e854ab33222a4f98, type: 3}
@@ -8767,11 +8812,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4f4be7ef470f3f74e854ab33222a4f98, type: 3}
---- !u!224 &994048452 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 1679917940780070738, guid: 4f4be7ef470f3f74e854ab33222a4f98, type: 3}
-  m_PrefabInstance: {fileID: 994048451}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &994344467
 GameObject:
   m_ObjectHideFlags: 3
@@ -8972,8 +9012,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Very well! It seems the end justifies the means. Finish this!
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d49aa088049f05c46abaae2d98325c9f, type: 2}
+  m_sharedMaterial: {fileID: 5278395681692352492, guid: d49aa088049f05c46abaae2d98325c9f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -8997,7 +9037,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 77.6
+  m_fontSize: 85
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -10849,7 +10889,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
-  - {fileID: 994048452}
+  - {fileID: 588003316}
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -12801,7 +12841,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1510821292
 Transform:
   m_ObjectHideFlags: 0
@@ -13426,7 +13466,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1589279509
 Transform:
   m_ObjectHideFlags: 0
@@ -15595,8 +15635,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Climb, ther is an exit up far. No turning back now. '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d49aa088049f05c46abaae2d98325c9f, type: 2}
+  m_sharedMaterial: {fileID: 5278395681692352492, guid: d49aa088049f05c46abaae2d98325c9f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -15620,7 +15660,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 77.6
+  m_fontSize: 92.2
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -17434,8 +17474,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Jump and reach the other side. Do not dissapoint!
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d49aa088049f05c46abaae2d98325c9f, type: 2}
+  m_sharedMaterial: {fileID: 5278395681692352492, guid: d49aa088049f05c46abaae2d98325c9f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -17459,7 +17499,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 77.6
+  m_fontSize: 92.7
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
