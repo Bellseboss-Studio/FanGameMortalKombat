@@ -95,7 +95,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.25, z: 0}
 --- !u!114 &2266430711236299576
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -111,6 +111,7 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 1024
+  tagToCompare: Player
 --- !u!1 &912000095417191719
 GameObject:
   m_ObjectHideFlags: 0
@@ -171,9 +172,10 @@ GameObject:
   - component: {fileID: 1206345099777460007}
   - component: {fileID: 2863771388383812434}
   - component: {fileID: 2642460372781197086}
+  - component: {fileID: 5409886556760632503}
   m_Layer: 11
   m_Name: EnemyV2Prefab
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -210,7 +212,7 @@ CapsuleCollider:
   m_Radius: 0.5
   m_Height: 3
   m_Direction: 1
-  m_Center: {x: 0, y: 1, z: 0}
+  m_Center: {x: 0, y: 1.5, z: 0}
 --- !u!54 &1206345099777460003
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -249,9 +251,13 @@ MonoBehaviour:
   minDistanceToArriveToTarget: 1
   minDistanceToArriveToEnemy: 2
   attackMovementSystem: {fileID: 2863771388383812434}
+  _characterV2: {fileID: 0}
   _state: 1
   colliderToDamage: {fileID: 2266430711236299576}
   combatSystemAngel: {fileID: 2642460372781197086}
+  stunSystem: {fileID: 5409886556760632503}
+  collidersToDisable:
+  - {fileID: 1206345099777460002}
 --- !u!114 &1206345099777460004
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -317,7 +323,7 @@ MonoBehaviour:
   combatMovements:
   - comboSequence: 00000000
     transitionParameterName: p
-    stuntAnimationParameterName: q1
+    stuntInfo: {fileID: 11400000, guid: 1052aac890bff954c8f0667594600780, type: 2}
     timeToAttack: 0.15
     timeToDecreasing: 0.3
     timeToSustain: 3
@@ -329,7 +335,7 @@ MonoBehaviour:
     stunTime: 1
   - comboSequence: 01000000
     transitionParameterName: k
-    stuntAnimationParameterName: p1
+    stuntInfo: {fileID: 11400000, guid: 1052aac890bff954c8f0667594600780, type: 2}
     timeToAttack: 0.5
     timeToDecreasing: 0.2
     timeToSustain: 0.5
@@ -341,7 +347,7 @@ MonoBehaviour:
     stunTime: 1
   - comboSequence: 0000000000000000
     transitionParameterName: mantis2
-    stuntAnimationParameterName: q2
+    stuntInfo: {fileID: 11400000, guid: 1052aac890bff954c8f0667594600780, type: 2}
     timeToAttack: 0.5
     timeToDecreasing: 0.2
     timeToSustain: 0.5
@@ -353,7 +359,7 @@ MonoBehaviour:
     stunTime: 1
   - comboSequence: 000000000000000000000000
     transitionParameterName: mantis3
-    stuntAnimationParameterName: q3
+    stuntInfo: {fileID: 11400000, guid: 1052aac890bff954c8f0667594600780, type: 2}
     timeToAttack: 0.5
     timeToDecreasing: 0.2
     timeToSustain: 0.5
@@ -365,7 +371,7 @@ MonoBehaviour:
     stunTime: 1
   - comboSequence: 0000000001000000
     transitionParameterName: k
-    stuntAnimationParameterName: p1
+    stuntInfo: {fileID: 11400000, guid: 1052aac890bff954c8f0667594600780, type: 2}
     timeToAttack: 0.5
     timeToDecreasing: 0.2
     timeToSustain: 0.5
@@ -377,7 +383,7 @@ MonoBehaviour:
     stunTime: 1.5
   - comboSequence: 000000000000000001000000
     transitionParameterName: k
-    stuntAnimationParameterName: p1
+    stuntInfo: {fileID: 11400000, guid: 1052aac890bff954c8f0667594600780, type: 2}
     timeToAttack: 0.5
     timeToDecreasing: 0.2
     timeToSustain: 0.5
@@ -389,7 +395,7 @@ MonoBehaviour:
     stunTime: 1.5
   - comboSequence: 00000000000000000000000001000000
     transitionParameterName: k
-    stuntAnimationParameterName: p1
+    stuntInfo: {fileID: 11400000, guid: 1052aac890bff954c8f0667594600780, type: 2}
     timeToAttack: 0.5
     timeToDecreasing: 0.2
     timeToSustain: 0.5
@@ -406,6 +412,19 @@ MonoBehaviour:
   attacking: 0
   _deltatimeLocal: 0
   targetFocus: {fileID: 2266430711236299576}
+--- !u!114 &5409886556760632503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1206345099777460001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a30a13079f0458cb10041474c6a32f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _deltatimeLocal: 0
 --- !u!1 &1206345100813594570
 GameObject:
   m_ObjectHideFlags: 0
@@ -582,7 +601,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.25, z: 0}
 --- !u!114 &4317083078364413094
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -598,6 +617,7 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 1024
+  tagToCompare: Player
 --- !u!1 &6661334500977642171
 GameObject:
   m_ObjectHideFlags: 0

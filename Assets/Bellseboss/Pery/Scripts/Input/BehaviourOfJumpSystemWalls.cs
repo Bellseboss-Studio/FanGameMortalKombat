@@ -26,25 +26,18 @@ namespace Bellseboss.Pery.Scripts.Input
 
         public void Configure(Rigidbody _rigidbody, IJumpSystem jumpSystem)
         {
-            /*Debug.Log($"Configured BehaviourOfJumpSystemWall: {_rigidbody.gameObject.name}");*/
             var gameObjectToPlayer = _rigidbody.gameObject;
             _attack = this.tt().Pause().Add(() =>
             {
                 _rigidbody.useGravity = false;
-                /*_rigidbody.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotationZ |
-                                         RigidbodyConstraints.FreezeRotationX;*/
                 _deltatimeLocal = 0;
-                /*Debug.Log("JumpSystem BehaviourOfJumpSystemWall: Attack");*/
                 isJumping = true;
                 isColliding = false;
             }).Add(()=>
             {
-                //rotate the player to the direction of the wall
-                //_direction = Quaternion.LookRotation(_direction)
                 jumpSystem.ChangeRotation(_direction);
             }).Add(() => { OnAttack?.Invoke(); }).Loop(loop =>
             {
-                //Debug.Log("JumpSystem BehaviourOfJumpSystemWall: Attack Loop");
                 _deltatimeLocal += loop.deltaTime;
                 if (_deltatimeLocal >= timeToAttack || isColliding)
                 {
@@ -55,14 +48,11 @@ namespace Bellseboss.Pery.Scripts.Input
                 
                 var position = gameObjectToPlayer.transform.position;
                 position = Vector3.Lerp(position,
-                    position + (_direction + Vector3.up) * (maxHeighJump * heightMultiplier),
+                    position + ((_direction * .8f) + Vector3.up) * (maxHeighJump * heightMultiplier),
                     forceToAttack * loop.deltaTime);
-                //Debug.Log($"position {gameObjectToPlayer.transform.position} target {position} con direccion {_direction} con time {_deltatimeLocalToJump}");
                 gameObjectToPlayer.transform.position = position;
             }).Add(() =>
             {
-                //_decresing.Play();
-                /*Debug.Log("JumpSystem BehaviourOfJumpSystemWall: End Attack");*/
             }).Add(() =>
             {
                 if (isColliding) return;
@@ -71,7 +61,6 @@ namespace Bellseboss.Pery.Scripts.Input
             _decresing = this.tt().Pause().Add(() =>
             {
                 OnMidAir?.Invoke();
-                /*Debug.Log("JumpSystem BehaviourOfJumpSystemWall: Decreasing");*/
             }).Loop(loop =>
             {
                 _deltatimeLocal += loop.deltaTime;
@@ -85,9 +74,8 @@ namespace Bellseboss.Pery.Scripts.Input
 
                 var position = gameObjectToPlayer.transform.position;
                 position = Vector3.Lerp(position,
-                    position - Vector3.up * (heightDecreasing * heightMultiplier),
+                    position - Vector3.up + (_direction / 3) * (heightDecreasing * heightMultiplier),
                     forceToDecreasing * loop.deltaTime);
-                //validate is not NaN
                 if (!double.IsNaN(position.x) && !double.IsNaN(position.y) && !double.IsNaN(position.z))
                 {
                     gameObjectToPlayer.transform.position = position;
@@ -100,10 +88,8 @@ namespace Bellseboss.Pery.Scripts.Input
             _sustain = this.tt().Pause().Add(() =>
             {
                 OnSustain?.Invoke();
-                /*Debug.Log("JumpSystem BehaviourOfJumpSystemWall: Sustain"); */
             }).Loop(loop =>
             {
-                //Debug.Log("JumpSystem: Sustain Loop");
                 _deltatimeLocal += loop.deltaTime;
                 if (_deltatimeLocal >= timeToAttack + timeToDecreasing + timeToSustain || isColliding || floorController.IsTouchingFloor())
                 {
@@ -118,7 +104,6 @@ namespace Bellseboss.Pery.Scripts.Input
             _release = this.tt().Pause().Add(() =>
             {
                 OnRelease?.Invoke();
-                /*Debug.Log("JumpSystem  BehaviourOfJumpSystemWall: Release");*/
             }).Loop(loop =>
             {
                 _deltatimeLocal += loop.deltaTime;
@@ -132,7 +117,7 @@ namespace Bellseboss.Pery.Scripts.Input
 
                 var position = gameObjectToPlayer.transform.position;
                 position = Vector3.Lerp(position,
-                    position - Vector3.up * (heightDecreasing * heightMultiplier),
+                    position - Vector3.up + (_direction / 6) * (heightDecreasing * heightMultiplier),
                     forceToDecreasing * loop.deltaTime);
                 //validate is not NaN
                 if (!double.IsNaN(position.x) && !double.IsNaN(position.y) && !double.IsNaN(position.z))
@@ -143,9 +128,7 @@ namespace Bellseboss.Pery.Scripts.Input
             
             _endJump = this.tt().Pause().Add(() =>
             {
-                /*Debug.Log("JumpSystem BehaviourOfJumpSystemWall: End Jump");*/
                 _rigidbody.useGravity = true;
-                /*_rigidbody.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX;*/
                 _deltatimeLocal = 0;
                 /*jumpSystem.ChangeNormalWall();*/
                 isJumping = false;
@@ -154,10 +137,8 @@ namespace Bellseboss.Pery.Scripts.Input
             });
             _delayToJump = this.tt().Add(() =>
             {
-                /*Debug.Log("JumpSystem: Delay to Jump");*/
                 _deltatimeLocal = 0;
                 _rigidbody.useGravity = false;
-                /*_rigidbody.constraints = RigidbodyConstraints.FreezeAll;*/
                 canJump = true;
                 isColliding = true;
                 isJumping = false;
@@ -173,10 +154,7 @@ namespace Bellseboss.Pery.Scripts.Input
                 canJump = false;
                 if(!isJumping)
                 {
-                    /*Debug.Log("JumpSystem: Delay to Jump End");*/
                     _rigidbody.useGravity = true;
-                    /*_rigidbody.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationX;*/
-                    /*jumpSystem.ChangeNormalWall();*/
                 }
             });
             
@@ -220,22 +198,17 @@ namespace Bellseboss.Pery.Scripts.Input
         {
             _direction = direction;
             _delayToJump.Play();
-            /*Debug.Log($"JumpSystem BehaviourOfJumpSystemWall: ConfigureWall {direction}");*/
         }
         
         
         private void OnDrawGizmos()
         {
-            //draw a line to direction of object with gizmo
             var direc = _direction;
             if (direc == Vector3.zero) return;
-            //draw a line to front of object with gizmo
             Gizmos.color = Color.red;
-            //Target to front of object
             var target = transform.position + direc * lenghtOfArrow;
             Gizmos.DrawLine(transform.position, target);
         
-            // Dibujar la punta de la flecha en orientacion de la direccion
             Vector3 rightArrowPoint = Quaternion.LookRotation(direc) * Quaternion.Euler(0, 180 + 20, 0) * new Vector3(0, 0, 1);
             Vector3 leftArrowPoint = Quaternion.LookRotation(direc) * Quaternion.Euler(0, 180 - 20, 0) * new Vector3(0, 0, 1);
 

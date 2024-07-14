@@ -9,11 +9,16 @@ using View.Installers;
 namespace Bellseboss.Pery.Scripts.Input
 {
     public class CharacterV2 : PJV2, ICharacterV2, IMovementRigidBodyV2, IAnimationController, IRotationCharacterV2,
-        ICombatSystem, IFocusTarget, ICombatSystemAngel, IFatality, ICharacterUi
+        ICombatSystem, IFocusTarget, ICombatSystemAngel, IFatality, ICharacterUi, IStunSystem, IPlayer 
     {
         public string Id => id;
         public Action OnAction { get; set; }
-        public Action<float> OnReceiveDamage { get; set; }
+
+        public GameObject Model3DInstance
+        {
+            get => _model3DInstance;
+        }
+        public Action<StunInfo> OnReceiveDamage { get; set; }
 
         [SerializeField] private string id;
         [SerializeField] private InputPlayerV2 inputPlayerV2;
@@ -30,6 +35,7 @@ namespace Bellseboss.Pery.Scripts.Input
         [SerializeField] private TargetFocus targetFocus;
         [SerializeField] private StatisticsOfCharacter statisticsOfCharacter;
         [SerializeField] private CombatSystemAngel combatSystemAngel;
+        [SerializeField] private StunSystem stunSystem;
         [SerializeField] private MovementADSR movementADSR;
 
         [SerializeField, InterfaceType(typeof(IFatalitySystem))]
@@ -91,8 +97,27 @@ namespace Bellseboss.Pery.Scripts.Input
             fatalitySystem.Configure(this, this);
 
             ServiceLocator.Instance.GetService<IObserverUI>().Observer(this);
+            
+            ServiceLocator.Instance.GetService<IPauseMainMenu>().onPause += OnPausaMenu; 
 
             ConfigCamera(cameraMain);
+            
+            
+            CanReadInputs = true;
+            
+            ServiceLocator.Instance.RegisterService<IPlayer>(this);
+        }
+
+        private void OnPausaMenu(bool ispause)
+        {
+            if (ispause)
+            {
+                DisableControls();
+            }
+            else
+            {
+                EnableControls();
+            }
         }
 
         private void OnFatalityEvent()
@@ -101,11 +126,6 @@ namespace Bellseboss.Pery.Scripts.Input
             {
                 fatalitySystem.Fatality();
             }
-        }
-
-        private void OnPause()
-        {
-            ServiceLocator.Instance.GetService<IPauseMainMenu>().Pause();
         }
 
         public void ActivateAnimationTrigger(string animationTrigger)
@@ -195,7 +215,7 @@ namespace Bellseboss.Pery.Scripts.Input
         }
 
 
-        public void DisableControls()
+        public override void DisableControls()
         {
             rotationCharacterV2.CanRotate(false);
             movementRigidbodyV2.CanMove(false);
@@ -204,6 +224,7 @@ namespace Bellseboss.Pery.Scripts.Input
             rigidbody.freezeRotation = true;
             CanReadInputs = true;
             inputPlayerV2.StartToReadInputs(_canUseButtons);
+            animationController.Movement(movementRigidbodyV2.GetXZVelocity(), 0);
         }
 
         public void EnableControls()
@@ -213,6 +234,7 @@ namespace Bellseboss.Pery.Scripts.Input
             _canUseButtons = true;
             CanReadInputs = true;
             inputPlayerV2.StartToReadInputs(_canUseButtons);
+            
         }
 
         public Transform GetGameObject()
@@ -272,6 +294,7 @@ namespace Bellseboss.Pery.Scripts.Input
             movementRigidbodyV2.Configure(rigidbody, speedWalk, speedRun, currentCamera.gameObject, this,
                 _statisticsOfCharacter);
             combatSystemAngel.Configure(rigidbody, _statisticsOfCharacter, this, this);
+            stunSystem.Configure(rigidbody, _statisticsOfCharacter, this, this, this);
             rotationCharacterV2.Configure(currentCamera.gameObject, gameObject, this, forceRotation);
         }
 
@@ -337,6 +360,11 @@ namespace Bellseboss.Pery.Scripts.Input
             animationController.JumpRecovery();
         }
 
+        public bool IsJumpingInWall()
+        {
+            return movementRigidbodyV2.GetJumpSystem().IsJumpingInScalableWall;
+        }
+
         public bool IsAttacking()
         {
             return combatSystemAngel.Attacking;
@@ -352,7 +380,7 @@ namespace Bellseboss.Pery.Scripts.Input
             movementRigidbodyV2.ExitToWall();
         }
 
-        public override void ReceiveDamage(int damage, Vector3 transformForward, float currentAttackStunTime)
+        public override void ReceiveDamage(int damage, GameObject transformForward, StunInfo currentAttackStunTime)
         {
             if (IsDead) return;
             _statisticsOfCharacter.life -= damage;
@@ -365,10 +393,10 @@ namespace Bellseboss.Pery.Scripts.Input
 
             if (movementADSR.CanAttackAgain() && !IsDead)
             {
-                movementADSR.Attack(transformForward);
+                movementADSR.Attack(transformForward.transform.forward);
             }
 
-            rotationCharacterV2.RotateToDirection(transformForward);
+            rotationCharacterV2.RotateToDirection(transformForward.transform.forward);
             this.OnReceiveDamage?.Invoke(currentAttackStunTime);
         }
 
@@ -400,6 +428,16 @@ namespace Bellseboss.Pery.Scripts.Input
             CanReadInputs = b;
         }
 
+        public void StartAnimationFatality()
+        {
+            animationController.SetTrigger("fatality");
+        }
+
+        public void StartToReadInputsToFatality(bool canRead)
+        {
+            inputPlayerV2.StartToReadInputsToFatality(canRead);
+        }
+
         public void GetIntoEnemyZone(GameObject enemy, bool isNear)
         {
             if (isNear)
@@ -416,7 +454,16 @@ namespace Bellseboss.Pery.Scripts.Input
         {
             _enemiesInCombat.Clear();
         }
-        
+
+        GameObject IPlayer.GetGameObject()
+        {
+            return gameObject;
+        }
+    }
+
+    public interface IPlayer
+    {
+        GameObject GetGameObject();
     }
 
     public interface ICharacterUi

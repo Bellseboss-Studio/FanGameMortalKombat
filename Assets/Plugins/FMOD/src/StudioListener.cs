@@ -9,6 +9,18 @@ namespace FMODUnity
         [SerializeField]
         private GameObject attenuationObject = null;
 
+        public GameObject AttenuationObject
+        {
+            get
+            {
+                return attenuationObject;
+            }
+            set
+            {
+                attenuationObject = value;
+            }
+        }
+        
 #if UNITY_PHYSICS_EXIST
         private Rigidbody rigidBody;
 #endif
