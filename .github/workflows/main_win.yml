@@ -80,6 +80,10 @@ jobs:
           asset_name: mkoc.zip
           asset_content_type: application/zip
       
+      
+      - name: Print download URL
+        run: echo "Download URL is ${{ steps.upload_release_asset.outputs.browser_download_url }}"
+      
       - name: Set output
         id: set_output
         run: echo "::set-output name=download_url::${{ steps.upload_release_asset.outputs.browser_download_url }}"
