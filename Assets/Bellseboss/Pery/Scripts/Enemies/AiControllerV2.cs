@@ -1,4 +1,5 @@
 ﻿using System;
+using Bellseboss.Angel.CombatSystem;
 using Bellseboss.Pery.Scripts.Input;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -26,10 +27,14 @@ public class AiControllerV2 : MonoBehaviour, IAiController
         _getDirectionToPlayer,
         _moveForwardToPlayer,
         _attackPlayer;
+    
+    private TeaTime _fatality;
 
     private bool _isClose;
     private GameObject _randomPosition;
     private Vector3 _positionToPlayer;
+    
+    private bool _isInFatality;
 
 
     public void Configure(IEnemyV2 enemy, ref Action endStunt)
@@ -83,6 +88,11 @@ public class AiControllerV2 : MonoBehaviour, IAiController
         });
         BehaviourWithoutPlayer();
         BehaviourWithPlayer();
+        
+        _fatality = this.tt().Pause().Add(() =>
+        {
+            Debug.Log("Fatality");
+        });
 
         _randomPosition = new GameObject();
 
@@ -111,9 +121,11 @@ public class AiControllerV2 : MonoBehaviour, IAiController
         }
     }
 
-    private void OnReceiveDamage(float obj)
+    private void OnReceiveDamage(StunInfo obj)
     {
-        StopAllStartIdle();
+        StopAllStartIdle(false);
+        _enemy.SetInstaRotation(true);
+        
     }
 
     private void BehaviourWithPlayer()
@@ -122,7 +134,8 @@ public class AiControllerV2 : MonoBehaviour, IAiController
         {
             Debug.Log("WatchPlayer");
             _enemy.CanMove(false);
-            _enemy.RotateToTargetIdle(_enemy.GetPlayer().GetGameObject().gameObject, false);
+            _enemy.RotateToTargetIdle(_target, false);
+            /*_enemy.RotateToTargetIdle(_enemy.GetPlayer().GetGameObject().gameObject, false);*/
         }).Loop(handler =>
         {
             if (_isClose)
@@ -162,7 +175,8 @@ public class AiControllerV2 : MonoBehaviour, IAiController
         _waitToAttackPlayer = this.tt().Pause().Add(() =>
         {
             Debug.Log($"WaitToAttackPlayer");
-            _enemy.RotateToTargetIdle(_enemy.GetPlayer().GetGameObject().gameObject, false);
+            _enemy.RotateToTargetIdle(_target, false);
+            /*_enemy.RotateToTargetIdle(_enemy.GetPlayer().GetGameObject().gameObject, false);*/
         }).Add(2).Add(() => { _getDirectionToPlayer.Play(); });
 
         _getDirectionToPlayer = this.tt().Pause().Add(() =>
@@ -255,6 +269,7 @@ public class AiControllerV2 : MonoBehaviour, IAiController
     private void EndStunt()
     {
         StopAllStartIdle();
+        _enemy.SetInstaRotation(false);
     }
 
     private void EnemyOnOnDead(EnemyV2 obj)
@@ -266,6 +281,11 @@ public class AiControllerV2 : MonoBehaviour, IAiController
     }
 
     public void TakeDamage()
+    {
+        StopAllStartIdle(false);
+    }
+
+    public void Fatality()
     {
         StopAllStartIdle(false);
     }
