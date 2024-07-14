@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2771,7 +2771,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 157.05
+  m_fontSize: 157.5
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -3817,7 +3817,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 157.05
+  m_fontSize: 157.5
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -10752,7 +10752,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2257385732563856966, guid: db6a3cf8623f841d48bb41fd37819ac2, type: 3}
   m_PrefabInstance: {fileID: 2257385733770551530}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2257385733770551531}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 72ece51f2901e7445ab60da3685d6b5f, type: 3}
@@ -14517,7 +14517,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1675724180}
-  m_LocalRotation: {x: 0.2691842, y: -0.48873383, z: 0.16162579, w: 0.8139756}
+  m_LocalRotation: {x: 0.26918423, y: -0.48873383, z: 0.1616258, w: 0.8139756}
   m_LocalPosition: {x: 10.15626, y: -9.750031, z: 10.022971}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -15620,7 +15620,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 157.05
+  m_fontSize: 157.5
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -17459,7 +17459,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 157.05
+  m_fontSize: 157.5
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -18630,7 +18630,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2257385732563856960, guid: db6a3cf8623f841d48bb41fd37819ac2, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.2691842
+      value: 0.26918423
       objectReference: {fileID: 0}
     - target: {fileID: 2257385732563856960, guid: db6a3cf8623f841d48bb41fd37819ac2, type: 3}
       propertyPath: m_LocalRotation.y
@@ -18638,7 +18638,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2257385732563856960, guid: db6a3cf8623f841d48bb41fd37819ac2, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.16162579
+      value: 0.1616258
       objectReference: {fileID: 0}
     - target: {fileID: 2257385732563856960, guid: db6a3cf8623f841d48bb41fd37819ac2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -18662,19 +18662,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: db6a3cf8623f841d48bb41fd37819ac2, type: 3}
---- !u!1 &2257385733770551531 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2257385732563856973, guid: db6a3cf8623f841d48bb41fd37819ac2, type: 3}
-  m_PrefabInstance: {fileID: 2257385733770551530}
-  m_PrefabAsset: {fileID: 0}
---- !u!81 &2257385733770551532
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2257385733770551531}
-  m_Enabled: 1
 --- !u!1001 &3793837846419825355
 PrefabInstance:
   m_ObjectHideFlags: 0
