@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parameterName: p1
   timeToAttack: 0.3
-  timeToDecreasing: 0.3
-  timeToSustain: 0.3
-  timeToRelease: 0.3
+  timeToDecreasing: 0
+  timeToSustain: 0
+  timeToRelease: 1
   maxDistance: 2
-  distanceToDecreasing: 2
+  distanceToDecreasing: 0
   forceToAttack: 2
-  forceToDecreasing: 2
+  forceToDecreasing: 0
   stunTime: 0.8

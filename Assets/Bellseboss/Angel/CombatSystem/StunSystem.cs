@@ -43,11 +43,11 @@ namespace Bellseboss.Angel.CombatSystem
                     loop.Break();
                 }
 
-                float t = _deltatimeLocal / _currentStun.timeToAttack;
-                float heightMultiplier = Mathf.Cos(t * Mathf.PI * 0.5f);
+                float t = 1 - _deltatimeLocal / _currentStun.timeToAttack;
+                float heightMultiplier = Mathf.Log(1 + t * 4);
 
                 _moveAttackingSystem.MovePlayer(gameObjectToPlayer, heightMultiplier, loop, _currentStun.forceToAttack,
-                    _currentStun.maxDistance);
+                    _currentStun.maxDistance, true);
             }).Add(() => { _decreasing.Play(); });
 
             _decreasing = this.tt().Pause().Add(() => { OnMidAir?.Invoke(); }).Loop(loop =>
@@ -58,11 +58,11 @@ namespace Bellseboss.Angel.CombatSystem
                     loop.Break();
                 }
 
-                float t = (_deltatimeLocal - _currentStun.timeToAttack) / _currentStun.timeToDecreasing;
+                float t = 1 - ((_deltatimeLocal - _currentStun.timeToAttack) / _currentStun.timeToDecreasing);
                 float heightMultiplier = Mathf.Log(1 + t * 4);
-
-                _moveAttackingSystem.MovePlayer(gameObjectToPlayer, heightMultiplier, loop,
-                    _currentStun.forceToDecreasing, _currentStun.distanceToDecreasing, true);
+                Debug.Log(t);
+                /*_moveAttackingSystem.MovePlayer(gameObjectToPlayer, heightMultiplier, loop,
+                    _currentStun.forceToDecreasing, _currentStun.distanceToDecreasing, true);*/
 
             }).Add(() => { _sustain.Play(); });
 
@@ -88,8 +88,8 @@ namespace Bellseboss.Angel.CombatSystem
                 var t = _deltatimeLocal / _currentStun.timeToAttack;
                 var heightMultiplier = Mathf.Log(1 + t * _currentStun.forceToDecreasing);
 
-                _moveAttackingSystem.MovePlayer(gameObjectToPlayer, heightMultiplier, loop,
-                    _currentStun.forceToDecreasing, _currentStun.maxDistance, true);
+                /*_moveAttackingSystem.MovePlayer(gameObjectToPlayer, heightMultiplier, loop,
+                    _currentStun.forceToDecreasing, 0, true);*/
 
             }).Add(EndStunt);
         }
@@ -107,6 +107,7 @@ namespace Bellseboss.Angel.CombatSystem
         private void EndStunt()
         {
             _combatSystemAngel.SetCanReadInputs(true);
+            OnEndStunt?.Invoke();
         }
     }
 }
