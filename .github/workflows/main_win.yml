@@ -83,6 +83,10 @@ jobs:
       
       - name: Print download URL
         run: echo "Download URL is ${{ steps.upload_release_asset.outputs.browser_download_url }}"
+
+      - name: Upload Release Asset and Set URL
+        run: |
+          echo "UPLOAD_URL=https://github.com/Bellseboss-Studio/FanGameMortalKombat/releases/download/release-6e4a16456317500311bae9d968cbf583ea2a9c79/mkoc.zip" >> $GITHUB_ENV
       
       - name: Set output
         id: set_output
@@ -96,8 +100,8 @@ jobs:
     needs: create_release_and_upload_file
     name: Update the downloads in server
     steps:
-      - name: Print download URL
-        run: echo "Download URL is ${{ needs.create_release_and_upload_file.outputs.download_url }}"
+      - name: Use Download URL
+        run: echo "The download URL is $UPLOAD_URL"
       # - name: Send a POST request
       #   run: |
       #     response=$(curl -X POST -H "Content-Type: application/json" -d '{"comment": "${{ steps.last_commit.outputs.message }}", "data": {"key":"${{ secrets.DOWNLOAD_UPDATE_JSON }}", "URL": "${{ needs.create_release_and_upload_file.outputs.download_url }}"}}' ${{ secrets.DOWNLOAD_UPDATE_URL }})
