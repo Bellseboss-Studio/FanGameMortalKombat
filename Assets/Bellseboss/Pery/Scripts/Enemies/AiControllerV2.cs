@@ -123,7 +123,7 @@ public class AiControllerV2 : MonoBehaviour, IAiController
 
     private void OnReceiveDamage(StunInfo obj)
     {
-        StopAllStartIdle();
+        StopAllStartIdle(false);
     }
 
     private void BehaviourWithPlayer()
