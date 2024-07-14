@@ -2746,8 +2746,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Jala la palanca
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d49aa088049f05c46abaae2d98325c9f, type: 2}
+  m_sharedMaterial: {fileID: 5278395681692352492, guid: d49aa088049f05c46abaae2d98325c9f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2771,7 +2771,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 157.4
+  m_fontSize: 154.6
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -3792,8 +3792,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: partele la cabeza
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d49aa088049f05c46abaae2d98325c9f, type: 2}
+  m_sharedMaterial: {fileID: 5278395681692352492, guid: d49aa088049f05c46abaae2d98325c9f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3817,7 +3817,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 157.4
+  m_fontSize: 137.5
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -7281,6 +7281,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PausaMenu
       objectReference: {fileID: 0}
+    - target: {fileID: 1368275660646370114, guid: a822849ecb238c64a84c1be145f66c9a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1368275660646370115, guid: a822849ecb238c64a84c1be145f66c9a, type: 3}
       propertyPath: m_RootOrder
       value: 9
@@ -8830,8 +8834,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Al final del pasillo esta la salida
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d49aa088049f05c46abaae2d98325c9f, type: 2}
+  m_sharedMaterial: {fileID: 5278395681692352492, guid: d49aa088049f05c46abaae2d98325c9f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -8855,7 +8859,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 98.1
+  m_fontSize: 123.15
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -14375,7 +14379,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1675724180}
-  m_LocalRotation: {x: 0.26918423, y: -0.48873377, z: 0.16162574, w: 0.81397563}
+  m_LocalRotation: {x: 0.2691842, y: -0.4887338, z: 0.16162577, w: 0.81397563}
   m_LocalPosition: {x: 10.15626, y: -9.750031, z: 10.022971}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -15453,8 +15457,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Salta los muros
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d49aa088049f05c46abaae2d98325c9f, type: 2}
+  m_sharedMaterial: {fileID: 5278395681692352492, guid: d49aa088049f05c46abaae2d98325c9f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -15478,7 +15482,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 157.4
+  m_fontSize: 151.3
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -17292,8 +17296,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Salta el vacio
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d49aa088049f05c46abaae2d98325c9f, type: 2}
+  m_sharedMaterial: {fileID: 5278395681692352492, guid: d49aa088049f05c46abaae2d98325c9f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -17317,7 +17321,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 157.4
+  m_fontSize: 171.95
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -18493,15 +18497,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2257385732563856960, guid: db6a3cf8623f841d48bb41fd37819ac2, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.26918423
+      value: 0.2691842
       objectReference: {fileID: 0}
     - target: {fileID: 2257385732563856960, guid: db6a3cf8623f841d48bb41fd37819ac2, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.48873377
+      value: -0.4887338
       objectReference: {fileID: 0}
     - target: {fileID: 2257385732563856960, guid: db6a3cf8623f841d48bb41fd37819ac2, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.16162574
+      value: 0.16162577
       objectReference: {fileID: 0}
     - target: {fileID: 2257385732563856960, guid: db6a3cf8623f841d48bb41fd37819ac2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -18641,6 +18645,10 @@ PrefabInstance:
     - target: {fileID: 6561242320601317461, guid: d7876ba52bbb0354b8b54b426d0393e5, type: 3}
       propertyPath: m_Name
       value: TrainingRoomAudio
+      objectReference: {fileID: 0}
+    - target: {fileID: 6561242320601317461, guid: d7876ba52bbb0354b8b54b426d0393e5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d7876ba52bbb0354b8b54b426d0393e5, type: 3}
