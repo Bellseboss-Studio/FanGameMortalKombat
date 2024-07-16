@@ -1,5 +1,3 @@
-using Audio.Managers;
-using AudioStatePattern;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -7,9 +5,10 @@ namespace View.UI
 {
     public class LoadScene : MonoBehaviour
     {
+        [SerializeField] private int sceneIndex;
         public void LoadSceneMethod()
         {
-            SceneManager.LoadScene(1);
+            SceneManager.LoadScene(sceneIndex);
         }
 
         public void QuitGame()
