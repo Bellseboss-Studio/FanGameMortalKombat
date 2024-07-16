@@ -6,4 +6,5 @@ public interface IFatality
     bool ReadInput(out INPUTS input);
     void StartToReadInputs(bool b);
     void StartAnimationFatality();
+    void StartToReadInputsToFatality(bool canRead);
 }

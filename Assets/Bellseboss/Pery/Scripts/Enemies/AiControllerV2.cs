@@ -27,10 +27,14 @@ public class AiControllerV2 : MonoBehaviour, IAiController
         _getDirectionToPlayer,
         _moveForwardToPlayer,
         _attackPlayer;
+    
+    private TeaTime _fatality;
 
     private bool _isClose;
     private GameObject _randomPosition;
     private Vector3 _positionToPlayer;
+    
+    private bool _isInFatality;
 
 
     public void Configure(IEnemyV2 enemy, ref Action endStunt)
@@ -84,6 +88,11 @@ public class AiControllerV2 : MonoBehaviour, IAiController
         });
         BehaviourWithoutPlayer();
         BehaviourWithPlayer();
+        
+        _fatality = this.tt().Pause().Add(() =>
+        {
+            Debug.Log("Fatality");
+        });
 
         _randomPosition = new GameObject();
 
@@ -114,7 +123,9 @@ public class AiControllerV2 : MonoBehaviour, IAiController
 
     private void OnReceiveDamage(StunInfo obj)
     {
-        StopAllStartIdle();
+        StopAllStartIdle(false);
+        _enemy.SetInstaRotation(true);
+        
     }
 
     private void BehaviourWithPlayer()
@@ -258,6 +269,7 @@ public class AiControllerV2 : MonoBehaviour, IAiController
     private void EndStunt()
     {
         StopAllStartIdle();
+        _enemy.SetInstaRotation(false);
     }
 
     private void EnemyOnOnDead(EnemyV2 obj)
@@ -269,6 +281,11 @@ public class AiControllerV2 : MonoBehaviour, IAiController
     }
 
     public void TakeDamage()
+    {
+        StopAllStartIdle(false);
+    }
+
+    public void Fatality()
     {
         StopAllStartIdle(false);
     }

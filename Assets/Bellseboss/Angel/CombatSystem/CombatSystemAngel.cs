@@ -125,7 +125,7 @@ namespace Bellseboss.Angel.CombatSystem
                 foreach (var enemy in targetFocus.GetEnemies<PJV2>())
                 {
                     Debug.Log("has da;o");
-                    enemy.ReceiveDamage(_statisticsOfCharacter.damage, gameObject.transform.forward, _currentAttack.stuntInfo);
+                    enemy.ReceiveDamage(_statisticsOfCharacter.damage, gameObject, _currentAttack.stuntInfo);
                     enemy.SetAnimationToHit(_currentAttack.stuntInfo.parameterName);
                 }
 
