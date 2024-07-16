@@ -2,11 +2,14 @@ using System.Collections.Generic;
 using System.Linq;
 using Bellseboss.Pery.Scripts.Input;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class TutorialSystem : MonoBehaviour
 {
     [SerializeField] private List<ActivableTutorial> activables;
     [SerializeField] private bool isFinished;
+    public UnityEvent OnStart;
+    public UnityEvent OnFinish;
     private TeaTime _flow;
     private bool _allFinished;
     private CharacterV2 _character;
@@ -20,7 +23,7 @@ public class TutorialSystem : MonoBehaviour
                 activable.Activate();
             }
 
-            _character.DisableControls();
+            _character?.DisableControls();
         }).Loop(h =>
         {
             _allFinished = true;
@@ -33,7 +36,12 @@ public class TutorialSystem : MonoBehaviour
             {
                 h.Break();
             }
-        }).Add(() => { _character.EnableControls(); }).Add(() => { _character = null; isFinished = true;});
+        }).Add(() => { _character?.EnableControls(); }).Add(() =>
+        {
+            _character = null; isFinished = true;
+            OnFinish?.Invoke();
+        });
+        OnStart?.Invoke();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -41,7 +49,12 @@ public class TutorialSystem : MonoBehaviour
         if (other.gameObject.TryGetComponent<CharacterV2>(out var character) && !isFinished)
         {
             _character = character;
-            _flow.Play();
+            StartTutorial();
         }
+    }
+
+    public void StartTutorial()
+    {
+        _flow.Play();
     }
 }

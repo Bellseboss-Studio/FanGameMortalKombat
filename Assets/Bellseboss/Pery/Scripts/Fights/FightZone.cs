@@ -48,7 +48,7 @@ public class FightZone : MonoBehaviour
         Debug.Log($"AllEnemiesAreDead: {allDead}");
         if (allDead)
         {
-            activable.Activate();
+            activable?.Activate();
         }
     }
 

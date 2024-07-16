@@ -51,7 +51,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Kick",
+                    "name": "Power",
                     "type": "Button",
                     "id": "7e131b7b-e4ac-45b9-85d7-c47e9cdbba0a",
                     "expectedControlType": "Button",
@@ -60,7 +60,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Punch",
+                    "name": "Quick",
                     "type": "Button",
                     "id": "5c4f3e8b-9666-4083-af15-b04757789e0f",
                     "expectedControlType": "Button",
@@ -295,6 +295,17 @@
                 },
                 {
                     "name": "",
+                    "id": "7ac8352e-5138-41c9-9b78-c9470183a1fa",
+                    "path": "<Gamepad>/dpad",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "c1f7a91b-d0fd-4a62-997e-7fb9b69bf235",
                     "path": "<Gamepad>/rightStick",
                     "interactions": "",
@@ -355,7 +366,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Punch",
+                    "action": "Quick",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -366,7 +377,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Punch",
+                    "action": "Quick",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -377,18 +388,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Joystick",
-                    "action": "Punch",
+                    "action": "Quick",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
                     "id": "10274184-4ec2-4c4f-b083-48431e5ba500",
-                    "path": "<Gamepad>/buttonNorth",
+                    "path": "<Gamepad>/buttonEast",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Kick",
+                    "action": "Power",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -399,7 +410,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Kick",
+                    "action": "Power",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -410,7 +421,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Joystick",
-                    "action": "Kick",
+                    "action": "Power",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -560,7 +571,7 @@
                 {
                     "name": "",
                     "id": "57526446-4225-4f5a-afc8-d80f03712998",
-                    "path": "<Gamepad>/buttonEast",
+                    "path": "<Gamepad>/rightTrigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -615,7 +626,7 @@
                 {
                     "name": "",
                     "id": "c6aafdad-c94f-43d4-a982-da042cf50619",
-                    "path": "<Gamepad>/rightShoulder",
+                    "path": "<Gamepad>/leftShoulder",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
