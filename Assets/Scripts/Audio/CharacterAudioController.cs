@@ -25,6 +25,7 @@ namespace MortalKombat.Audio
                     Debug.Log($"il ya un problème avec {this.gameObject}");
                     return;
                 }
+                
                 m_SfxDictionary[sfxName].Play();
             }
         }
