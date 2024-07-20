@@ -74,7 +74,7 @@ public class FatalitySystem : MonoBehaviour, IFatalitySystem
     public void StartCinematic()
     {
         playableDirector.Play();
-        ShowPanelTitle("Finished Him!");
+        ShowPanelTitle("Finish Them!");
     }
 
     public bool FinishedCinematic()
