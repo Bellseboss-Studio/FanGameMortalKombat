@@ -30,7 +30,11 @@ namespace Bellseboss.Pery.Scripts.Input
                 /*_rigidbody.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotationZ |
                                          RigidbodyConstraints.FreezeRotationX;*/
                 //Debug.Log("JumpSystem: Attack");
-            }).Add(() => { OnAttack?.Invoke(); }).Loop(loop =>
+            }).Add(() =>
+            {
+                OnAttack?.Invoke(); 
+                //TODO IVAN: Play sound went jump
+            }).Loop(loop =>
             {
                 //Debug.Log("JumpSystem: Attack Loop");
                 _deltatimeLocal += loop.deltaTime;
@@ -47,7 +51,11 @@ namespace Bellseboss.Pery.Scripts.Input
                     forceToAttack * loop.deltaTime);
                 gameObjectToPlayer.transform.position = position;
             }).Add(() => { _decay.Play(); });
-            _decay = this.tt().Pause().Add(() => { OnMidAir?.Invoke(); }).Loop(loop =>
+            _decay = this.tt().Pause().Add(() =>
+            {
+                OnMidAir?.Invoke();
+                //TODO IVAN: Play sound went jump is in mid air
+            }).Loop(loop =>
             {
                 //Debug.Log("JumpSystem: Decreasing Loop");
                 _deltatimeLocal += loop.deltaTime;
@@ -69,7 +77,11 @@ namespace Bellseboss.Pery.Scripts.Input
                     loop.Break();
                 }
             }).Add(() => { _sustain.Play(); });
-            _sustain = this.tt().Pause().Add(() => { OnSustain?.Invoke(); }).Loop(loop =>
+            _sustain = this.tt().Pause().Add(() =>
+            {
+                OnSustain?.Invoke();
+                //TODO IVAN: Play sound went jump is in sustain
+            }).Loop(loop =>
             {
                 //Debug.Log("JumpSystem: Sustain Loop");
                 _deltatimeLocal += loop.deltaTime;
@@ -82,6 +94,7 @@ namespace Bellseboss.Pery.Scripts.Input
             _release = this.tt().Pause().Add(() =>
             {
                 OnRelease?.Invoke();
+                //TODO IVAN: Play sound went jump is in release use the gravity
             }).Loop(loop =>
             {
                 _deltatimeLocal += loop.deltaTime;
@@ -109,6 +122,7 @@ namespace Bellseboss.Pery.Scripts.Input
                 //Debug.Log("JumpSystem: Attack End");
                 OnEndJump?.Invoke();
                 jumpSystem.RestoreRotation();
+                //TODO IVAN: Play sound went jump is in end went touch the floor
             });
         }
 
