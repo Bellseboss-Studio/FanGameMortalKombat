@@ -79,7 +79,7 @@ namespace Bellseboss.Pery.Scripts.Input
             inputPlayerV2.onFatalityEvent += OnFatalityEvent;
 
             _model3DInstance = Instantiate(model3D, transform);
-            animationController.Configure(_model3DInstance.GetComponent<Animator>(), this);
+            animationController.Configure(_model3DInstance.GetComponent<ReferencesOfPlayer>().Animator, this);
             targetFocus.Configure(this);
             targetFocus.EnableCollider();
 
