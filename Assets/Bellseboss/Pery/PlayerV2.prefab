@@ -3620,6 +3620,7 @@ GameObject:
   - component: {fileID: 835371846}
   - component: {fileID: 2074710249}
   - component: {fileID: 468385863}
+  - component: {fileID: 3734989195479904293}
   m_Layer: 10
   m_Name: PlayerV2
   m_TagString: Player
@@ -3681,6 +3682,7 @@ MonoBehaviour:
   movementADSR: {fileID: 1309216378850590419}
   FatalitySystem: {fileID: 4996582286142792170}
   _enemiesInCombat: []
+  healComponent: {fileID: 3734989195479904293}
 --- !u!114 &8585594586927423060
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4218,6 +4220,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _deltatimeLocal: 0
+--- !u!114 &3734989195479904293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8585594586927423071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb0d124cc2a44a3caaf78b19e5d809bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8585594587426267891
 GameObject:
   m_ObjectHideFlags: 0

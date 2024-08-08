@@ -5,6 +5,6 @@ namespace View.Installers
 {
     internal interface IObserverUI
     {
-        void Observer(ICharacterUi character);
+        void Observer(ICharacterUi character, ICharacterV2 characterV2);
     }
 }

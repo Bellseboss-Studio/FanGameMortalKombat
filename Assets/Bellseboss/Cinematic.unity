@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: b26bd0dab26ab104cbadce977a680c0b, type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -123,6 +123,21 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!95 &917230000 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 747731503, guid: cec682f7cafa71e438b091a28aa7fa66, type: 3}
+  m_PrefabInstance: {fileID: 8415127805125568745}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &1735403052 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 847216060, guid: cec682f7cafa71e438b091a28aa7fa66, type: 3}
+  m_PrefabInstance: {fileID: 8415127805125568745}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &1980406457 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 1368219843, guid: cec682f7cafa71e438b091a28aa7fa66, type: 3}
+  m_PrefabInstance: {fileID: 8415127805125568745}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8415127805125568745
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -130,6 +145,74 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 9379314, guid: cec682f7cafa71e438b091a28aa7fa66, type: 3}
+      propertyPath: m_SceneBindings.Array.size
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 9379314, guid: cec682f7cafa71e438b091a28aa7fa66, type: 3}
+      propertyPath: m_SceneBindings.Array.data[8].key
+      value: 
+      objectReference: {fileID: 6208778778399468576, guid: fd2eed53ebae0354e99921f4b751c023, type: 2}
+    - target: {fileID: 9379314, guid: cec682f7cafa71e438b091a28aa7fa66, type: 3}
+      propertyPath: m_SceneBindings.Array.data[9].key
+      value: 
+      objectReference: {fileID: 5142598040169776164, guid: fd2eed53ebae0354e99921f4b751c023, type: 2}
+    - target: {fileID: 9379314, guid: cec682f7cafa71e438b091a28aa7fa66, type: 3}
+      propertyPath: m_SceneBindings.Array.data[10].key
+      value: 
+      objectReference: {fileID: 8023437023537420173, guid: fd2eed53ebae0354e99921f4b751c023, type: 2}
+    - target: {fileID: 9379314, guid: cec682f7cafa71e438b091a28aa7fa66, type: 3}
+      propertyPath: m_SceneBindings.Array.data[11].key
+      value: 
+      objectReference: {fileID: -3401525736349801387, guid: fd2eed53ebae0354e99921f4b751c023, type: 2}
+    - target: {fileID: 9379314, guid: cec682f7cafa71e438b091a28aa7fa66, type: 3}
+      propertyPath: m_SceneBindings.Array.data[8].value
+      value: 
+      objectReference: {fileID: 1735403052}
+    - target: {fileID: 9379314, guid: cec682f7cafa71e438b091a28aa7fa66, type: 3}
+      propertyPath: m_SceneBindings.Array.data[9].value
+      value: 
+      objectReference: {fileID: 1980406457}
+    - target: {fileID: 9379314, guid: cec682f7cafa71e438b091a28aa7fa66, type: 3}
+      propertyPath: m_SceneBindings.Array.data[10].value
+      value: 
+      objectReference: {fileID: 917230000}
+    - target: {fileID: 9379314, guid: cec682f7cafa71e438b091a28aa7fa66, type: 3}
+      propertyPath: m_SceneBindings.Array.data[11].value
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1435300070, guid: cec682f7cafa71e438b091a28aa7fa66, type: 3}
+      propertyPath: field of view
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 1435300071, guid: cec682f7cafa71e438b091a28aa7fa66, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -80.894
+      objectReference: {fileID: 0}
+    - target: {fileID: 1435300071, guid: cec682f7cafa71e438b091a28aa7fa66, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 82.24
+      objectReference: {fileID: 0}
+    - target: {fileID: 1435300071, guid: cec682f7cafa71e438b091a28aa7fa66, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -223.363
+      objectReference: {fileID: 0}
+    - target: {fileID: 1435300071, guid: cec682f7cafa71e438b091a28aa7fa66, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.56460017
+      objectReference: {fileID: 0}
+    - target: {fileID: 1435300071, guid: cec682f7cafa71e438b091a28aa7fa66, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.25242043
+      objectReference: {fileID: 0}
+    - target: {fileID: 1435300071, guid: cec682f7cafa71e438b091a28aa7fa66, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.35261703
+      objectReference: {fileID: 0}
+    - target: {fileID: 1435300071, guid: cec682f7cafa71e438b091a28aa7fa66, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.09516075
+      objectReference: {fileID: 0}
     - target: {fileID: 6529240109818489431, guid: cec682f7cafa71e438b091a28aa7fa66, type: 3}
       propertyPath: m_Name
       value: CinematicPrefab
