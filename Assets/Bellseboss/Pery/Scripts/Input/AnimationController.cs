@@ -115,5 +115,10 @@ namespace Bellseboss.Pery.Scripts.Input
         {
             _animator.SetTrigger("j");
         }
+
+        public void Dead()
+        {
+            _animator.SetTrigger("dead");
+        }
     }
 }

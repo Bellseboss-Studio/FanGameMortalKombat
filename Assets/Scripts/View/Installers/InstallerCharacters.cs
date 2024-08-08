@@ -36,7 +36,7 @@ namespace View.Installers
             character.ConfigureCameras(cameraMainFreeLook, secondCamera, group);
             cameraMainFreeLook.Follow = character.GetPointToCamera();
             cameraMainFreeLook.LookAt = character.GetPointToCamera();
-            ServiceLocator.Instance.GetService<IObserverUI>().Observer(character);
+            //ServiceLocator.Instance.GetService<IObserverUI>().Observer(character, character);
             ServiceLocator.Instance.GetService<IPauseMainMenu>().onPause += OnPause;
             //inputCamera = _cinemachineInputProvider.XYAxis;
         }

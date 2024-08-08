@@ -17,12 +17,19 @@ namespace ServiceLocatorPath
             _ui = ui;
         }
 
-        public void Observer(ICharacterUi character)
+        public void Observer(ICharacterUi character, ICharacterV2 characterV2)
         {
             character.OnEnterDamageEvent += CharacterOnEnterDamageEvent;
             character.OnAddingEnergy += AddingEnergy;
+            characterV2.OnDead += CharacterV2OnDead;
             totalLife = character.GetLife();
             _ui.DefaultValue();
+        }
+
+        private void CharacterV2OnDead(ICharacterV2 obj)
+        {
+            _ui.SetSliderValue(0);
+            _ui.ShowGameOver();
         }
 
         private void AddingEnergy(float energy)

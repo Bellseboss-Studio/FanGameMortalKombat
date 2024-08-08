@@ -6,5 +6,6 @@
         void SetEnergyValue(float energyToAdd);
         float GetSliderValue();
         void SetSliderValue(float totalLifePercent);
+        void ShowGameOver();
     }
 }
