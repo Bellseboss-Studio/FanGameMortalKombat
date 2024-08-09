@@ -92,12 +92,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
+  m_fontSize: 65.65
   m_fontSizeBase: 36
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 120
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -128,7 +128,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 41.781708, y: 22.861649, z: 27.591553, w: 22.073349}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1415,6 +1415,7 @@ GameObject:
   - component: {fileID: 5801041563190746885}
   - component: {fileID: 5801041563194389107}
   - component: {fileID: 2897222408056284322}
+  - component: {fileID: 1067367548285652604}
   m_Layer: 5
   m_Name: UI_MainPanel
   m_TagString: Untagged
@@ -1499,6 +1500,7 @@ MonoBehaviour:
   gameOverPanel: {fileID: 4052976270247142951}
   inputButton: {fileID: 1896565394992190260}
   changeInputMap: {fileID: 2897222408056284322}
+  phaseUIGameOver: {fileID: 1067367548285652604}
   sliderEnergy: {fileID: 5174975609767940382}
 --- !u!114 &5801041563194389107
 MonoBehaviour:
@@ -1526,6 +1528,47 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   newInputSelected: {fileID: 0}
+--- !u!114 &1067367548285652604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5174975609828303880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa5506c8fe654eeea720afc96663d875, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogText: {fileID: 5674545696700022317}
+  dialogTexts:
+  - "Saca clip y mu\xE9straselo a tus amigos."
+  - Saca captura y ponlo de estado en tus redes.
+  - Llama a tu vieja.
+  - Se venden manos en Mercado Libre.
+  - "Smoke est\xE1 muerto en Edenia."
+  - Invita a tus amigos para que te ayuden.
+  - "\xBFYa peleaste contra Goro?"
+  - There is no knowledge that is not power.
+  - Hay secretos por todas partes.
+  - Utiliza tu entorno para el combate.
+  - A veces huir es mejor que pelear.
+  - "\xBFEste es tu final?"
+  - No hay conejos en el sombrero de Florencia.
+  - Escucha a Diana cuidadosamente.
+  - "El enemigo pregunta: \xBFC\xF3mo se le sube la dificultad al jugador?"
+  - "\xBFYa visitaste el sal\xF3n de OCIO del laboratorio?"
+  - "\xBFQu\xE9 habitaci\xF3n te identifica m\xE1s?"
+  - "\xBFTodav\xEDa no subiste tu OC a nuestra comunidad?"
+  - "Av\xEDsale a los desarrolladores: [Link de Discord]"
+  - "\xBFQui\xE9n es el malo/a al final?"
+  - "\xBFViste alg\xFAn personaje canon?"
+  - "Si moriste ac\xE1, imag\xEDnate lo que viene despu\xE9s."
+  - "\xBFEst\xE1s haciendo speedrun?"
+  - "Uno volvi\xF3 donde fue feliz y muri\xF3."
+  - "\xBFC\xF3mo puede algo tan maravilloso venir acompa\xF1ado de tanto dolor?"
+  - "\xBFNo vas a decir nada?"
+  - "Quien no haya sufrido lo que vos en este juego, que no te d\xE9 consejos."
 --- !u!1 &5174975609860324855
 GameObject:
   m_ObjectHideFlags: 0

@@ -152,9 +152,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 322637716640582434}
-  - component: {fileID: 322637716640582433}
   - component: {fileID: 322637716640582432}
   - component: {fileID: 322637716640582435}
+  - component: {fileID: 6303457368675569438}
   m_Layer: 0
   m_Name: LeverPrefab
   m_TagString: Untagged
@@ -181,25 +181,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: -90}
---- !u!114 &322637716640582433
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 322637716640582439}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fa99e8e4b5a1834b9cd2a7896f17305, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  colliderWithLayer: {fileID: 322637716893786326}
-  activable: {fileID: 0}
-  playableDirector: {fileID: 322637716640582432}
-  animationTrigger: a
-  animatorInteractiveObject: {fileID: 643327524719826929}
-  refOfPlayer: {fileID: 8610002923171597803}
-  cinemachineVirtualCamera: {fileID: 322637715658472715}
 --- !u!320 &322637716640582432
 PlayableDirector:
   m_ObjectHideFlags: 0
@@ -229,6 +210,8 @@ PlayableDirector:
     value: {fileID: 0}
   - key: {fileID: -1994405394348430872, guid: 437988027bcd7c842a8fec211f0f8eab, type: 2}
     value: {fileID: 1860863483706785392}
+  - key: {fileID: 1567259920478526015, guid: 437988027bcd7c842a8fec211f0f8eab, type: 2}
+    value: {fileID: 0}
   m_ExposedReferences:
     m_References:
     - 2119b84b0de573a458d506331b297366: {fileID: 322637715658472715}
@@ -250,7 +233,7 @@ MonoBehaviour:
     m_Events:
     - m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 322637716640582433}
+        - m_Target: {fileID: 6303457368675569438}
           m_TargetAssemblyTypeName: InteractiveManager, Assembly-CSharp
           m_MethodName: SignalAction
           m_Mode: 1
@@ -262,6 +245,25 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!114 &6303457368675569438
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 322637716640582439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf7e4515d64b42daa1c4838783c8da94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  colliderWithLayer: {fileID: 322637716893786326}
+  activable: {fileID: 0}
+  playableDirector: {fileID: 322637716640582432}
+  cinemachineVirtualCamera: {fileID: 322637715658472715}
+  animationTrigger: a
+  animatorInteractiveObject: {fileID: 643327524719826929}
+  refOfPlayer: {fileID: 8610002923171597803}
 --- !u!1 &322637716811785521
 GameObject:
   m_ObjectHideFlags: 0
@@ -790,6 +792,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5f98ed9bd0239cc43aa785df80053ae9, type: 3}
+--- !u!1 &8610002923171597803 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5086811766519934283, guid: 5f98ed9bd0239cc43aa785df80053ae9, type: 3}
+  m_PrefabInstance: {fileID: 3596999873549131936}
+  m_PrefabAsset: {fileID: 0}
 --- !u!95 &643327524719826929 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 4109132970494621521, guid: 5f98ed9bd0239cc43aa785df80053ae9, type: 3}
@@ -798,10 +805,5 @@ Animator:
 --- !u!4 &7881622356881510633 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6668205513269211209, guid: 5f98ed9bd0239cc43aa785df80053ae9, type: 3}
-  m_PrefabInstance: {fileID: 3596999873549131936}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &8610002923171597803 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5086811766519934283, guid: 5f98ed9bd0239cc43aa785df80053ae9, type: 3}
   m_PrefabInstance: {fileID: 3596999873549131936}
   m_PrefabAsset: {fileID: 0}
