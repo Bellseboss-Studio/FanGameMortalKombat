@@ -38,3 +38,17 @@ jobs:
         with:
           name: build-Windows
           path: build
+
+      - name: Set download URL
+        id: set_download_url
+        run: echo "DOWNLOAD_URL=https://github.com/${{ github.repository }}/releases/download/${{ github.ref }}/build-Windows.zip" >> $GITHUB_ENV
+
+      - name: Send Discord Notification
+        run: |
+          json_payload=$(jq -n \
+                        --arg content "New build available: $DOWNLOAD_URL" \
+                        '{content: $content}')
+          echo "JSON being sent: $json_payload"
+          curl -X POST -H "Content-Type: application/json" -d "$json_payload" ${{ secrets.DISCORD_WEBHOOK_URL }}
+        env:
+          DOWNLOAD_URL: ${{ github.event.repository.html_url }}/releases/download/${{ github.ref }}/build-Windows.zip
