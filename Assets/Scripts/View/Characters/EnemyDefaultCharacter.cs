@@ -46,8 +46,6 @@ namespace View.Characters
         protected override void ConfigureExplicit()
         {
             _points = new List<Vector3>();
-            _observerUI = new ObserverUI(_uiController);
-            _observerUI.Observer(this);
         }
 
         public override float GetDamageForKick()
