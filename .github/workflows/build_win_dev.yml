@@ -51,6 +51,8 @@ jobs:
       - name: Set download URL
         id: set_download_url
         run: echo "DOWNLOAD_URL=https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts/${{ steps.get_artifact_id.outputs.artifact_id }}" >> $GITHUB_ENV
+        env:
+          ARTIFACT_ID: ${{ steps.get_artifact_id.outputs.artifact_id }}
 
       - name: Send Discord Notification
         run: |
