@@ -5,7 +5,7 @@
 			<value>Beep</value>
 		</property>
 		<property name="outputFormat">
-			<value>2</value>
+			<value>0</value>
 		</property>
 		<relationship name="folder">
 			<destination>{2547e2c8-95bb-44a4-9e3d-31e3cb776a16}</destination>
@@ -90,7 +90,7 @@
 	<object class="MixerBusPanner" id="{f64c309d-c2b7-4787-a294-dc549b9d6742}" />
 	<object class="SingleSound" id="{94cd72ce-f630-4e88-a672-7d157373637d}">
 		<property name="length">
-			<value>0.1155328798185941</value>
+			<value>0.115</value>
 		</property>
 		<relationship name="audioFile">
 			<destination>{528065e2-947f-474a-aa1b-72a98bc04001}</destination>
@@ -113,7 +113,6 @@
 	<object class="MixerBusEffectChain" id="{94f50fbd-32ab-44b0-981a-e66eca60ca9a}">
 		<relationship name="effects">
 			<destination>{698e256a-d643-4ae2-9fcc-a301fde60d37}</destination>
-			<destination>{747168a1-9ad2-47db-8769-3988d8854033}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{24509512-64ff-417f-9d22-0861013cb4e6}" />
@@ -125,6 +124,5 @@
 	</object>
 	<object class="MixerBusPanner" id="{df3ae0f0-cc4e-4249-914b-1b248e614ab9}" />
 	<object class="MixerBusFader" id="{698e256a-d643-4ae2-9fcc-a301fde60d37}" />
-	<object class="SpatialiserEffect" id="{747168a1-9ad2-47db-8769-3988d8854033}" />
 	<object class="MixerBusFader" id="{7718c243-3cb4-45e0-9a67-1764f1b7028f}" />
 </objects>

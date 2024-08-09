@@ -7,10 +7,13 @@ namespace View.UI
     public class UiController : MonoBehaviour, IUIController
     {
         [SerializeField] private Slider sliderLife, sliderSecondLife;
+        [SerializeField] private GameObject gameOverPanel;
+        [SerializeField] private GameObject inputButton;
+        [SerializeField] private ChangeInputMap changeInputMap;
+        [SerializeField] private PhaseUIGameOver phaseUIGameOver;
 
         public virtual void SetEnergyValue(float energyToAdd)
         {
-            
         }
 
         public float GetSliderValue()
@@ -23,7 +26,15 @@ namespace View.UI
             sliderLife.value = totalLife;
             StartCoroutine(SetAsyncSliderValue(totalLife, 2));
         }
-        
+
+        public void ShowGameOver()
+        {
+            Debug.Log("Game Over");
+            phaseUIGameOver.SetDialogToRandom();
+            gameOverPanel.SetActive(true);
+            changeInputMap.ChangeInputMapToNew(inputButton);
+        }
+
         private IEnumerator SetAsyncSliderValue(float totalLife, float timeToWait = 1)
         {
             //create a loop to update the slider value in total x seconds
@@ -39,7 +50,7 @@ namespace View.UI
         public virtual void DefaultValue()
         {
             sliderLife.value = 1;
+            gameOverPanel.SetActive(false);
         }
-        
     }
 }

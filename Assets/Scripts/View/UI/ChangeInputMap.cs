@@ -21,6 +21,7 @@ namespace View.UI
         public void ChangeInputMapToNew(GameObject newInput)
         {
             newInputSelected = newInput;
+            ChangeInputMapToNew();
         }
     }
 }

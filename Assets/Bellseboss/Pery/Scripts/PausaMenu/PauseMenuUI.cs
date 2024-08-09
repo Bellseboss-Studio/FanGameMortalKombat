@@ -17,7 +17,6 @@ public class PauseMenuUI : MonoBehaviour
     {
         pauseMenu.SetActive(ispause);
         changeInputMap.ChangeInputMapToNew(ispause ? newInputSelected : null);
-        changeInputMap.ChangeInputMapToNew();
     }
     
     public void Resume()

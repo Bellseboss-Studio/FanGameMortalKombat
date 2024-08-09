@@ -13,6 +13,7 @@ namespace Bellseboss.Pery.Scripts.Input
     {
         public string Id => id;
         public Action OnAction { get; set; }
+        public Action<ICharacterV2> OnDead { get; set; }
 
         public GameObject Model3DInstance
         {
@@ -47,6 +48,8 @@ namespace Bellseboss.Pery.Scripts.Input
         private bool _canUseButtons = true;
         private bool isAnimationWasRun, isAnimationRecovered;
         [SerializeField] private List<GameObject> _enemiesInCombat;
+        
+        [SerializeField] private HealComponent healComponent;
 
 
         public event Action<float> OnEnterDamageEvent;
@@ -68,6 +71,11 @@ namespace Bellseboss.Pery.Scripts.Input
             Configure();
         }
 
+        private void OnDestroy()
+        {
+            ServiceLocator.Instance.UnregisterService<IPlayer>();
+        }
+
         public void Configure()
         {
             inputPlayerV2.onMoveEvent += OnMove;
@@ -79,7 +87,7 @@ namespace Bellseboss.Pery.Scripts.Input
             inputPlayerV2.onFatalityEvent += OnFatalityEvent;
 
             _model3DInstance = Instantiate(model3D, transform);
-            animationController.Configure(_model3DInstance.GetComponent<Animator>(), this);
+            animationController.Configure(_model3DInstance.GetComponent<ReferencesOfPlayer>().Animator, this);
             targetFocus.Configure(this);
             targetFocus.EnableCollider();
 
@@ -96,7 +104,7 @@ namespace Bellseboss.Pery.Scripts.Input
 
             fatalitySystem.Configure(this, this);
 
-            ServiceLocator.Instance.GetService<IObserverUI>().Observer(this);
+            ServiceLocator.Instance.GetService<IObserverUI>().Observer(this, this);
             
             ServiceLocator.Instance.GetService<IPauseMainMenu>().onPause += OnPausaMenu; 
 
@@ -106,6 +114,8 @@ namespace Bellseboss.Pery.Scripts.Input
             CanReadInputs = true;
             
             ServiceLocator.Instance.RegisterService<IPlayer>(this);
+            
+            healComponent.Configure(this);
         }
 
         private void OnPausaMenu(bool ispause)
@@ -240,6 +250,12 @@ namespace Bellseboss.Pery.Scripts.Input
         public Transform GetGameObject()
         {
             return transform;
+        }
+
+        public void StartDeadAction()
+        {
+            DisableControls();
+            animationController.Dead();
         }
 
         public Action<string> GetActionToAnimate()
@@ -384,10 +400,12 @@ namespace Bellseboss.Pery.Scripts.Input
         {
             if (IsDead) return;
             _statisticsOfCharacter.life -= damage;
+            Debug.Log($"_statisticsOfCharacter.life {_statisticsOfCharacter.life}");
+            OnEnterDamageEvent?.Invoke(damage);
             if (_statisticsOfCharacter.life <= 0)
             {
                 IsDead = true;
-                //OnDead?.Invoke(this);
+                OnDead?.Invoke(this);
                 Debug.Log("CharacterV2: Dead");
             }
 
@@ -404,7 +422,6 @@ namespace Bellseboss.Pery.Scripts.Input
         {
             if (IsDead) return;
             animationController.TakeDamage(animationParameterName);
-            OnEnterDamageEvent?.Invoke(10);
         }
 
         public override void Stun(bool isStun)
