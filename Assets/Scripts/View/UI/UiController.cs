@@ -10,6 +10,7 @@ namespace View.UI
         [SerializeField] private GameObject gameOverPanel;
         [SerializeField] private GameObject inputButton;
         [SerializeField] private ChangeInputMap changeInputMap;
+        [SerializeField] private PhaseUIGameOver phaseUIGameOver;
 
         public virtual void SetEnergyValue(float energyToAdd)
         {
@@ -29,6 +30,7 @@ namespace View.UI
         public void ShowGameOver()
         {
             Debug.Log("Game Over");
+            phaseUIGameOver.SetDialogToRandom();
             gameOverPanel.SetActive(true);
             changeInputMap.ChangeInputMapToNew(inputButton);
         }
