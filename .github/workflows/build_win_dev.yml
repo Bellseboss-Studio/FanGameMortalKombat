@@ -39,9 +39,51 @@ jobs:
           name: build-Windows
           path: build
 
+  create_release_and_upload:
+    name: Create Release and Upload Artifact
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Download build artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: build-Windows
+          path: build
+
+      - name: Create directory for zip
+        run: mkdir files
+
+      - name: Compress build
+        run: zip -r files/build-Windows.zip build
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: release-${{ github.sha }}
+          release_name: Release ${{ github.sha }}
+          draft: false
+          prerelease: false
+
+      - name: Upload Release Asset
+        id: upload_release_asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./files/build-Windows.zip
+          asset_name: build-Windows.zip
+          asset_content_type: application/zip
+
       - name: Set download URL
         id: set_download_url
-        run: echo "DOWNLOAD_URL=https://github.com/${{ github.repository }}/releases/download/${{ github.ref }}/build-Windows.zip" >> $GITHUB_ENV
+        run: echo "DOWNLOAD_URL=${{ steps.upload_release_asset.outputs.browser_download_url }}" >> $GITHUB_ENV
 
       - name: Send Discord Notification
         run: |
@@ -51,4 +93,4 @@ jobs:
           echo "JSON being sent: $json_payload"
           curl -X POST -H "Content-Type: application/json" -d "$json_payload" ${{ secrets.DISCORD_WEBHOOK_URL }}
         env:
-          DOWNLOAD_URL: ${{ github.event.repository.html_url }}/releases/download/${{ github.ref }}/build-Windows.zip
+          DOWNLOAD_URL: ${{ steps.upload_release_asset.outputs.browser_download_url }}
