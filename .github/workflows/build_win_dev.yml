@@ -34,25 +34,10 @@ jobs:
 
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v2
+        id: get_artifact_id
         with:
           name: build-Windows
           path: build
-
-      - name: Get Artifact ID
-        id: get_artifact_id
-        run: |
-          artifact_id=$(curl -s \
-            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-            "https://api.github.com/repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts" \
-            | jq -r '.artifacts[] | select(.name=="build-Windows") | .id')
-          echo "ARTIFACT_ID=$artifact_id" >> $GITHUB_ENV
-          echo "::set-output name=artifact_id::$artifact_id"
-
-      - name: Set download URL
-        id: set_download_url
-        run: echo "DOWNLOAD_URL=https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts/${{ steps.get_artifact_id.outputs.artifact_id }}" >> $GITHUB_ENV
-        env:
-          ARTIFACT_ID: ${{ steps.get_artifact_id.outputs.artifact_id }}
 
       - name: Send Discord Notification
         run: |
@@ -62,4 +47,4 @@ jobs:
           echo "JSON being sent: $json_payload"
           curl -X POST -H "Content-Type: application/json" -d "$json_payload" ${{ secrets.DISCORD_WEBHOOK_URL }}
         env:
-          DOWNLOAD_URL: ${{ steps.set_download_url.outputs.DOWNLOAD_URL }}
+          DOWNLOAD_URL: "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts/${{ steps.get_artifact_id.outputs.artifact-id }}"
