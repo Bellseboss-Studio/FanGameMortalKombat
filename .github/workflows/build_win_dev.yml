@@ -33,7 +33,7 @@ jobs:
           targetPlatform: StandaloneWindows64
 
       - name: Upload Build Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         id: get_artifact_id
         with:
           name: build-Windows
