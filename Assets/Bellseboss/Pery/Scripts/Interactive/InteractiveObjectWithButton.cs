@@ -1,4 +1,5 @@
-﻿using Bellseboss.Pery.Scripts.Input;
+﻿using System;
+using Bellseboss.Pery.Scripts.Input;
 using UnityEngine;
 
 public class InteractiveObjectWithButton : InteractiveManager
@@ -6,13 +7,23 @@ public class InteractiveObjectWithButton : InteractiveManager
     [SerializeField] protected string animationTrigger;
     [SerializeField] protected Animator animatorInteractiveObject;
     [SerializeField] protected GameObject refOfPlayer;
+    [SerializeField] protected TooltipToInteractable tooltipToInteractable;
+    public Action OnActionEnter;
+    public Action OnActionExit;
+
+    protected override void Start()
+    {
+        base.Start();
+        tooltipToInteractable.Configurate(this);
+    }
 
     protected override void OnColliderExit(GameObject o, CameraCollider room)
     {
         if (o.TryGetComponent(out ICharacterV2 character))
         {
-            _characterV2.OnAction -= OnAction;
+            _characterV2.OnAction -= OnActionTrigger;
             _characterV2 = null;
+            OnActionExit?.Invoke();
         }
     }
 
@@ -21,14 +32,13 @@ public class InteractiveObjectWithButton : InteractiveManager
         if (o.TryGetComponent(out ICharacterV2 character))
         {
             _characterV2 = character;
-            _characterV2.OnAction += OnAction;
+            _characterV2.OnAction += OnActionTrigger;
+            OnActionEnter?.Invoke();
         }
     }
 
-    protected override void OnAction()
+    protected override void OnActionTrigger()
     {
-        //Debug.Log("InteractiveManager: OnAction");
-        Debug.Log($"InteractiveManager: OnAction {playableDirector.duration}");
         playableDirector.Play();
         animatorInteractiveObject.SetTrigger("activate");
         _characterV2.DisableControls();

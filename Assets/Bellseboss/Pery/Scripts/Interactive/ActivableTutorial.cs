@@ -7,4 +7,6 @@
     {
         _isFinished = true;
     }
+
+    public abstract void Deactivate();
 }

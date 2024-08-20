@@ -14,7 +14,7 @@ public class InteractiveObjectWithCollision : InteractiveManager
         o.GetComponent<ICharacterV2>().DisableControls();
     }
 
-    protected override void OnAction()
+    protected override void OnActionTrigger()
     {
         SignalAction();
     }
