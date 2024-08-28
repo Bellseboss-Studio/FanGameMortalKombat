@@ -1997,6 +1997,7 @@ GameObject:
   - component: {fileID: 297813931293656251}
   - component: {fileID: 297813931293656253}
   - component: {fileID: 297813931293656250}
+  - component: {fileID: 1185387707158617960}
   m_Layer: 0
   m_Name: Tutorial
   m_TagString: Untagged
@@ -2059,6 +2060,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 31.01, y: 10, z: 8.6}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1185387707158617960
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 297813931293656248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb6e20a12a33429480440cf0e9cbc2d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &297813931397336904
 GameObject:
   m_ObjectHideFlags: 0
@@ -2181,7 +2194,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 77.1
+  m_fontSize: 77.7
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1

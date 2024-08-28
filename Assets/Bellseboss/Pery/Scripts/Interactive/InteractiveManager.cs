@@ -17,7 +17,7 @@ public abstract class InteractiveManager : MonoBehaviour
     protected ICharacterV2 _characterV2;
     protected double deltaTimeLocal;
 
-    private void Start()
+    protected virtual void Start()
     {
         _collider.ColliderEnter += OnColliderEnter;
         _collider.ColliderExit += OnColliderExit;
@@ -33,5 +33,5 @@ public abstract class InteractiveManager : MonoBehaviour
         activable.Activate();
     }
 
-    protected abstract void OnAction();
+    protected abstract void OnActionTrigger();
 }

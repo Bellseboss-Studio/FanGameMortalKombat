@@ -27,6 +27,11 @@ namespace MortalKombat.Audio
             yield return new WaitForSeconds(milliseconds / 1000);
             Finish();
         }
+
+        public override void Deactivate()
+        {
+            FmodFacade.Stop();
+        }
     }
 
     public interface IFmodClient
