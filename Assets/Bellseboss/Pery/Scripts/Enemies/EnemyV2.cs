@@ -67,6 +67,11 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
 
     private void Start()
     {
+        Configure();
+    }
+
+    private void Configure()
+    {
         _statisticsOfCharacter = Instantiate(statisticsOfCharacter);
         /*movementADSR.Configure(GetComponent<Rigidbody>(), _statisticsOfCharacter, this);*/
         _model = Instantiate(model, transform);
@@ -415,7 +420,7 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
     public void Mareado()
     {
         animationController.SetTrigger("mareado");
-        _aiController.Fatality();
+        _aiController.StopAI();
     }
     
     public void GetFatalities()
@@ -453,6 +458,17 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
             collider1.enabled = true;
         }
         rigidbody.useGravity = true;
+    }
+
+    public void SetLifeTo(int percentage)
+    {
+        _statisticsOfCharacter.life = statisticsOfCharacter.life * percentage / 100;
+    }
+
+    public void Clean()
+    {
+        _aiController.StopAI();
+        _aiController.Clean();
     }
 }
 

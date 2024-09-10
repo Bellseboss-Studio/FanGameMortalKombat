@@ -102,6 +102,7 @@ public class AiControllerV2 : MonoBehaviour, IAiController
     private void StopAllStartIdle(bool startIdle = true)
     {
         //Stop all teatime
+        Debug.Log($"name {gameObject.name}", gameObject);
         _idle.Stop();
         _findPlayer.Stop();
         _watchPlayer.Stop();
@@ -285,9 +286,14 @@ public class AiControllerV2 : MonoBehaviour, IAiController
         StopAllStartIdle(false);
     }
 
-    public void Fatality()
+    public void StopAI()
     {
         StopAllStartIdle(false);
+    }
+
+    public void Clean()
+    {
+        Destroy(_randomPosition);
     }
 
     public void StartAi()

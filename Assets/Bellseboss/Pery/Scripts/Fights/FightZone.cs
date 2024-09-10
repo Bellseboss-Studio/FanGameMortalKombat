@@ -1,11 +1,10 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Bellseboss.Pery.Scripts.Input;
 using Unity.Collections;
 using UnityEngine;
 
-public class FightZone : MonoBehaviour
+public class FightZone : MonoBehaviour, IFightZone
 {
     [SerializeField] private GetDataWentCollisionWithPlayer far, near;
     [SerializeField] private EnemyFactoryMonoV2[] enemiesMonoV2FactoryMono;
@@ -40,6 +39,8 @@ public class FightZone : MonoBehaviour
             enemyFactoryMonoV2.AllEnemiesAreDead += EnemyFactoryMonoV2OnAllEnemiesAreDead;
             enemyFactoryMonoV2.Configure(_factory, near.gameObject);
         }
+        
+        ServiceLocator.Instance.GetService<IDebugService>().RegisterFightZone(this);
     }
 
     private void EnemyFactoryMonoV2OnAllEnemiesAreDead()
@@ -98,4 +99,31 @@ public class FightZone : MonoBehaviour
         }
         characterV2.GetIntoEnemyZone(enemies);
     }
+
+    public void Restart()
+    {
+        foreach (var factoryMonoV2 in enemiesMonoV2FactoryMono)
+        {
+            factoryMonoV2.AllEnemiesAreDead -= EnemyFactoryMonoV2OnAllEnemiesAreDead;
+            factoryMonoV2.Clean();
+        }
+        Configure();
+    }
+
+    public void SetLifeAllEnemiesTo(int percentage)
+    {
+        foreach (var factoryMonoV2 in enemiesMonoV2FactoryMono)
+        {
+            foreach (var enemy in factoryMonoV2.Enemies)
+            {
+                enemy.SetLifeTo(percentage);
+            }
+        }
+    }
+}
+
+public interface IFightZone
+{
+    void Restart();
+    void SetLifeAllEnemiesTo(int percentage);
 }
