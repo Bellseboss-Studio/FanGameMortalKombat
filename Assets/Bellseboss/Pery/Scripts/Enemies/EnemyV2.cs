@@ -47,6 +47,7 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
 
     public string Id => id;
     public bool IsDead { get; private set; }
+    public bool IsDeadWithFatality { get; private set; }
     public GameObject GetGameObject()
     {
         return gameObject;
@@ -175,7 +176,7 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
         if (_statisticsOfCharacter.life <= 0)
         {
             IsDead = true;
-            OnDead?.Invoke(this);
+            Died();
         }
 
         /*if (movementADSR.CanAttackAgain() && !IsDead)
@@ -191,6 +192,8 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
     public void Died()
     {
         Debug.Log("EnemyV2: Die");
+        OnDead?.Invoke(this);
+        if (IsDeadWithFatality) return;
         animationController.Die("dead");
     }
 
@@ -429,6 +432,9 @@ public abstract class EnemyV2 : PJV2, IAnimationController, IEnemyV2, IMovementR
     public void StartAnimationFatality()
     {
         animationController.SetTrigger("get_fatality");
+        IsDead = true;
+        IsDeadWithFatality = true;
+        Died();
     }
 
     public void DisableColliders()
