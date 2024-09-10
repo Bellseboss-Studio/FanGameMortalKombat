@@ -1,5 +1,6 @@
 ﻿using Bellseboss.Pery.Scripts.Input;
 using ServiceLocatorPath;
+using UnityEngine;
 using View;
 using View.Characters;
 using View.Installers;
@@ -41,7 +42,8 @@ namespace ServiceLocatorPath
         {
             var percentageDamage = damage / totalLife;
             var valueSlider = _ui.GetSliderValue();
-            var totalLifePercent = valueSlider - percentageDamage;
+            //var totalLifePercent = Mathf.Clamp(percentageDamage - valueSlider, 0, 1);
+            var totalLifePercent = percentageDamage - valueSlider;
             _ui.SetSliderValue(totalLifePercent);
         }
     }

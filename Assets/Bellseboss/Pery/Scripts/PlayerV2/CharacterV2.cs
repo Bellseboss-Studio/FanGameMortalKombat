@@ -252,6 +252,18 @@ namespace Bellseboss.Pery.Scripts.Input
             return transform;
         }
 
+        public void LoadRageTo(int percentage)
+        {
+            _statisticsOfCharacter.energy = statisticsOfCharacter.energy * percentage / 100;
+            OnAddingEnergy?.Invoke(_statisticsOfCharacter.energy);
+        }
+
+        public void LoadLifeTo(int percentage)
+        {
+            _statisticsOfCharacter.life = statisticsOfCharacter.life * percentage / 100;
+            OnEnterDamageEvent?.Invoke(_statisticsOfCharacter.life);
+        }
+
         public void StartDeadAction()
         {
             DisableControls();
@@ -266,7 +278,7 @@ namespace Bellseboss.Pery.Scripts.Input
         public void PlayerTouchEnemy()
         {
             _statisticsOfCharacter.energy += _statisticsOfCharacter.energyToAdd;
-            OnAddingEnergy?.Invoke(_statisticsOfCharacter.energyToAdd);
+            OnAddingEnergy?.Invoke(_statisticsOfCharacter.energy);
         }
 
         public List<GameObject> GetEnemiesInCombat()
@@ -401,7 +413,7 @@ namespace Bellseboss.Pery.Scripts.Input
             if (IsDead) return;
             _statisticsOfCharacter.life -= damage;
             Debug.Log($"_statisticsOfCharacter.life {_statisticsOfCharacter.life}");
-            OnEnterDamageEvent?.Invoke(damage);
+            OnEnterDamageEvent?.Invoke(_statisticsOfCharacter.life);
             if (_statisticsOfCharacter.life <= 0)
             {
                 IsDead = true;
@@ -481,6 +493,8 @@ namespace Bellseboss.Pery.Scripts.Input
     public interface IPlayer
     {
         GameObject GetGameObject();
+        void LoadRageTo(int percentage);
+        void LoadLifeTo(int percentage);
     }
 
     public interface ICharacterUi

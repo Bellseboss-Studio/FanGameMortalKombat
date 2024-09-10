@@ -3,7 +3,7 @@ using Bellseboss.Pery.Scripts.Input;
 using UnityEngine;
 using View;
 
-internal class AiController : MonoBehaviour, IAiController
+internal class AiController : MonoBehaviour
 {
     [SerializeField] private float timeToWaitToChangePath;
     private IEnemyV2 _enemy;
@@ -224,7 +224,12 @@ internal class AiController : MonoBehaviour, IAiController
         
     }
 
-    public void Fatality()
+    public void StopAI()
+    {
+        
+    }
+
+    public void Clean()
     {
         
     }
