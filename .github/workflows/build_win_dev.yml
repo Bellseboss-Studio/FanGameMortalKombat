@@ -5,17 +5,18 @@ on:
   pull_request:
     branches:
       - develop
-
+      
 jobs:
   build:
     name: Build Project Dev
     runs-on: ubuntu-latest
     steps:
+    
       - name: Checkout repository
         uses: actions/checkout@v2
         with:
           lfs: true
-
+          
       - name: Cache Library
         uses: actions/cache@v2
         with:
