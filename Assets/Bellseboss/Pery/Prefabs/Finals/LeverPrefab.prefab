@@ -282,6 +282,7 @@ MonoBehaviour:
   tooltipGameObject: {fileID: 6149591235153696882}
   limitLeft: -45
   limitRight: 45
+  canUse: 0
 --- !u!1 &322637716811785521
 GameObject:
   m_ObjectHideFlags: 0
@@ -476,7 +477,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 2, y: 2, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &322637716893786326
 MonoBehaviour:

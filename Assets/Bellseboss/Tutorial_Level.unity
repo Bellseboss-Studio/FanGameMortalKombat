@@ -2573,6 +2573,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Dungeon_Onaga_Shrine
       objectReference: {fileID: 0}
+    - target: {fileID: 3628094504821860014, guid: 609d1d9567d667646ba4035ba84be518, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 609d1d9567d667646ba4035ba84be518, type: 3}
 --- !u!114 &762213041 stripped
@@ -6461,7 +6465,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3470406433390512454, guid: 534d863713ce4594e867fab14ce67a26, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.18543321
+      value: 0.18543318
       objectReference: {fileID: 0}
     - target: {fileID: 3470406433390512455, guid: 534d863713ce4594e867fab14ce67a26, type: 3}
       propertyPath: m_LookAt
@@ -6472,8 +6476,48 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 989140884}
     - target: {fileID: 3470406434019865948, guid: 534d863713ce4594e867fab14ce67a26, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 12.686259
+      objectReference: {fileID: 0}
+    - target: {fileID: 3470406434019865948, guid: 534d863713ce4594e867fab14ce67a26, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 8.997849
+      objectReference: {fileID: 0}
+    - target: {fileID: 3470406434019865948, guid: 534d863713ce4594e867fab14ce67a26, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -7.817029
+      objectReference: {fileID: 0}
+    - target: {fileID: 3470406434019865948, guid: 534d863713ce4594e867fab14ce67a26, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.68776655
+      objectReference: {fileID: 0}
+    - target: {fileID: 3470406434019865948, guid: 534d863713ce4594e867fab14ce67a26, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.18865576
+      objectReference: {fileID: 0}
+    - target: {fileID: 3470406434019865948, guid: 534d863713ce4594e867fab14ce67a26, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.6760183
+      objectReference: {fileID: 0}
+    - target: {fileID: 3470406434019865948, guid: 534d863713ce4594e867fab14ce67a26, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.18543321
+      value: 0.18543318
+      objectReference: {fileID: 0}
+    - target: {fileID: 3470406434247736723, guid: 534d863713ce4594e867fab14ce67a26, type: 3}
+      propertyPath: rooms.Array.data[0].betweenRoomsTransitions.Array.data[0].transitionTime
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3470406434247736723, guid: 534d863713ce4594e867fab14ce67a26, type: 3}
+      propertyPath: rooms.Array.data[1].betweenRoomsTransitions.Array.data[0].transitionTime
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3470406434247736723, guid: 534d863713ce4594e867fab14ce67a26, type: 3}
+      propertyPath: rooms.Array.data[2].betweenRoomsTransitions.Array.data[0].transitionTime
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3470406434247736723, guid: 534d863713ce4594e867fab14ce67a26, type: 3}
+      propertyPath: rooms.Array.data[3].betweenRoomsTransitions.Array.data[0].transitionTime
+      value: 0.2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 534d863713ce4594e867fab14ce67a26, type: 3}
@@ -6931,6 +6975,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3921851481632196690, guid: 45a3e0eb0718dd34ba8d35c036f936a4, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3921851481632196690, guid: 45a3e0eb0718dd34ba8d35c036f936a4, type: 3}
+      propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4791604952842585326, guid: 45a3e0eb0718dd34ba8d35c036f936a4, type: 3}
