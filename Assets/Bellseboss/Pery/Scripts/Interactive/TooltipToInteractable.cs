@@ -6,12 +6,14 @@ public class TooltipToInteractable : MonoBehaviour
     private bool _isTooltipActive;
     [SerializeField] private float limitLeft;
     [SerializeField] private float limitRight;
+    [SerializeField] private bool canUse;
 
     public void Configurate(InteractiveObjectWithButton interactiveManager)
     {
+        tooltipGameObject.SetActive(false);
+        if (!canUse) return;
         interactiveManager.OnActionEnter += ShowTooltip;
         interactiveManager.OnActionExit += HideTooltip;
-        tooltipGameObject.SetActive(false);
     }
 
     private void HideTooltip()

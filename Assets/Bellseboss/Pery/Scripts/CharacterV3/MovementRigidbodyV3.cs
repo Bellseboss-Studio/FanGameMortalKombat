@@ -113,7 +113,7 @@ public class MovementRigidbodyV3 : MonoBehaviour
         }
 
         var resultMovement = _inputMovementCustom.CalculateMovement(result, _choiceMax ? _speedRun : _speedWalk,
-            _camera, _rigidbody.gameObject);
+            _camera, _rigidbody.gameObject, _jump);
 
         if (_jump)
         {
