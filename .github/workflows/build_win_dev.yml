@@ -32,13 +32,22 @@ jobs:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
         with:
           targetPlatform: StandaloneWindows64
+          buildName: MKOC_RiseOfLeena
+          outputDir: build/MKOC_RiseOfLeena
+      - name: Rename executable
+        run: |
+          mv build/MKOC_RiseOfLeena/*.exe build/MKOC_RiseOfLeena/MKOC_RiseOfLeena.exe
+
+      - name: Compress build output
+        run: |
+          zip -r MortalKombatProjectOC_RiseOfLeena.zip build/MKOC_RiseOfLeena
 
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v4
         id: get_artifact_id
         with:
-          name: build-Windows
-          path: build
+          name: MortalKombatProjectOC_RiseOfLeena
+          path: MortalKombatProjectOC_RiseOfLeena.zip
 
       - name: Send Discord Notification
         run: |
