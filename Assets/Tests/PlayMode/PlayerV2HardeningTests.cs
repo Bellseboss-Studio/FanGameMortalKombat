@@ -72,6 +72,18 @@ namespace MortalKombat.Tests
             return cv;
         }
 
+        /// <summary>
+        /// Sets a private serialized field on the given instance via reflection.
+        /// Used to null ONE required reference on the fully-wired scene player so
+        /// the fail-fast suite can prove each individual D3 ref is validated.
+        /// </summary>
+        private static void SetPrivateField(object instance, string fieldName, object value)
+        {
+            var field = typeof(CharacterV2).GetField(fieldName, BindingFlags.NonPublic | BindingFlags.Instance);
+            Assert.IsNotNull(field, $"Field {fieldName} must exist on CharacterV2.");
+            field.SetValue(instance, value);
+        }
+
         [UnityTest]
         public IEnumerator Configure_AllRefsNull_LogsError_AndSkipsRegistration()
         {
@@ -135,6 +147,48 @@ namespace MortalKombat.Tests
             Assert.IsFalse(ServiceLocator.Instance.TryGetService<IPlayer>(out _),
                 "Configure must reject a missing required reference without registering (C3 S2).");
             Object.Destroy(broken.gameObject);
+            yield return null;
+        }
+
+        [UnityTest]
+        public IEnumerator Configure_NullFatalitySystem_LogsError_AndSkipsRegistration()
+        {
+            // Design D3: fatalitySystem belongs in the fail-fast non-null list.
+            LogAssert.Expect(LogType.Error,
+                new System.Text.RegularExpressions.Regex("missing required reference: fatalitySystem"));
+            ServiceLocator.Instance.Reset();
+            var player = GameObject.Find("PlayerV2Update");
+            Assert.IsNotNull(player, "The test scene must contain PlayerV2Update.");
+            var cv = player.GetComponent<CharacterV2>();
+            // The scene player wires every ref; null ONLY the fatality system so
+            // this is the sole missing reference (all other D3 refs stay non-null).
+            SetPrivateField(cv, "FatalitySystem", null);
+
+            cv.Configure();
+
+            Assert.IsFalse(ServiceLocator.Instance.TryGetService<IPlayer>(out _),
+                "Configure must reject a missing fatalitySystem without registering (design D3).");
+            yield return null;
+        }
+
+        [UnityTest]
+        public IEnumerator Configure_NullTargetFocus_LogsError_AndSkipsRegistration()
+        {
+            // Design D3: targetFocus belongs in the fail-fast non-null list.
+            LogAssert.Expect(LogType.Error,
+                new System.Text.RegularExpressions.Regex("missing required reference: targetFocus"));
+            ServiceLocator.Instance.Reset();
+            var player = GameObject.Find("PlayerV2Update");
+            Assert.IsNotNull(player, "The test scene must contain PlayerV2Update.");
+            var cv = player.GetComponent<CharacterV2>();
+            // Same isolation trick: the scene player wires every ref; null ONLY
+            // targetFocus so it is the sole missing reference.
+            SetPrivateField(cv, "targetFocus", null);
+
+            cv.Configure();
+
+            Assert.IsFalse(ServiceLocator.Instance.TryGetService<IPlayer>(out _),
+                "Configure must reject a missing targetFocus without registering (design D3).");
             yield return null;
         }
 

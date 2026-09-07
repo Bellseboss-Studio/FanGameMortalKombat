@@ -206,9 +206,23 @@ namespace _Scripts.Player
                 return false;
             }
 
+            if (fatalitySystem == null)
+            {
+                Debug.LogError("[CharacterV2] Fail-fast: missing required reference: fatalitySystem. " +
+                               "Configure aborted; player not registered.");
+                return false;
+            }
+
             if (healComponent == null)
             {
                 Debug.LogError("[CharacterV2] Fail-fast: missing required reference: healComponent. " +
+                               "Configure aborted; player not registered.");
+                return false;
+            }
+
+            if (targetFocus == null)
+            {
+                Debug.LogError("[CharacterV2] Fail-fast: missing required reference: targetFocus. " +
                                "Configure aborted; player not registered.");
                 return false;
             }
