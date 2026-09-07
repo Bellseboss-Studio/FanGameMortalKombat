@@ -36,9 +36,36 @@ public class ServiceLocator
     public void UnregisterService<T>()
     {
         var type = typeof(T);
-        Assert.IsTrue(_services.ContainsKey(type), 
-            $"Service {type} not registered");
-        
+        // Tolerant by design: unregistering a service that was never registered
+        // (e.g. a player destroyed before Configure completed, or after Reset)
+        // is a no-op, not a failure. Duplicate REGISTRATION is still asserted
+        // in RegisterService because that indicates a real double-instance bug.
         _services.Remove(type);
+    }
+
+    /// <summary>
+    /// Non-throwing lookup. Returns true and sets <paramref name="service"/> when the
+    /// service is registered; returns false with a default value otherwise.
+    /// </summary>
+    public bool TryGetService<T>(out T service)
+    {
+        var type = typeof(T);
+        if (_services.TryGetValue(type, out var value))
+        {
+            service = (T) value;
+            return true;
+        }
+
+        service = default;
+        return false;
+    }
+
+    /// <summary>
+    /// Clears the static registry. Used as the test-isolation seam between
+    /// PlayMode tests (the singleton survives scene loads).
+    /// </summary>
+    public void Reset()
+    {
+        _services.Clear();
     }
 }
