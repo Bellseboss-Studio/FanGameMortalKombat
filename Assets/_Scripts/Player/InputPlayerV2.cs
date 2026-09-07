@@ -121,7 +121,12 @@ namespace _Scripts.Player
             }
         }
 
-        private INPUTS GetDirectionFromVector(Vector2 vector)
+        /// <summary>
+        /// Maps an analog input vector to a cardinal <see cref="INPUTS"/> direction,
+        /// ignoring sub-threshold axes (0.01 dead zone). Pure math — kept internal
+        /// so EditMode tests can cover input routing without scenes (spec V3).
+        /// </summary>
+        internal static INPUTS GetDirectionFromVector(Vector2 vector)
         {
             if (Mathf.Abs(vector.x) > Mathf.Abs(vector.y))
             {
@@ -169,7 +174,6 @@ namespace _Scripts.Player
 
         public void StartToReadInputs(bool b)
         {
-            Debug.Log(b);
             _canReadInput = b;
             if (b)
             {

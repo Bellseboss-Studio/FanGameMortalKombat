@@ -172,13 +172,24 @@ namespace _Scripts.Player
             // Si JumpSystem necesitara saberlo, implementar método correspondiente allí.
         }
 
-        private float CalculateDirection(float axis, bool isTarget)
+        /// <summary>
+        /// Maps an input axis to a normalized speed step (0 / minSpeed / maxSpeed)
+        /// using the dead zone and max thresholds. Pure math — kept internal so
+        /// EditMode tests cover speed math without scenes (spec V3, design D7).
+        /// </summary>
+        internal static float CalculateDirection(float axis, bool isTarget,
+            float inputMin, float inputMax, float minSpeed, float maxSpeed)
         {
             var axisAbs = Mathf.Abs(axis);
             if (axisAbs < inputMin) return 0;
             if (isTarget) return axis >= 0 ? minSpeed : -minSpeed;
             if (axisAbs < inputMax) return axis >= 0 ? minSpeed : -minSpeed;
             return axis >= 0 ? maxSpeed : -maxSpeed;
+        }
+
+        private float CalculateDirection(float axis, bool isTarget)
+        {
+            return CalculateDirection(axis, isTarget, inputMin, inputMax, minSpeed, maxSpeed);
         }
 
         // -----------------------------

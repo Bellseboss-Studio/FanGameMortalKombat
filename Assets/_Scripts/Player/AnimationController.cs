@@ -49,7 +49,7 @@ namespace _Scripts.Player
             public const string WallSlide = "Wall_Slide";
 
             public const string Hit = "Hit";
-            public const string Death = "Death";
+            public const string Death = "Dead"; // Player/enemy animator controllers (V1/V2/V3) name this state "Dead".
             public const string Watch = "Watch";
 
             public const string Activate = "Activate";

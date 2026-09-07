@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using ServiceLocatorPath;
 using Unity.Cinemachine;
 using UnityEngine;
+using View.Installers;
 
 namespace _Scripts.Player
 {
@@ -85,6 +87,14 @@ namespace _Scripts.Player
 
         public void Configure()
         {
+            if (!ValidateConfiguration())
+            {
+                // Fail fast (C3/S2): a clear error is logged and registration is
+                // skipped so the player never half-initializes. OnDestroy's
+                // tolerant unregister is a safe no-op when nothing was registered.
+                return;
+            }
+
             inputPlayerV2.onMoveEvent += OnMove;
             inputPlayerV2.onTargetEvent += OnTargetEvent;
             inputPlayerV2.onPunchEvent += OnPunchEvent;
@@ -111,9 +121,19 @@ namespace _Scripts.Player
 
             fatalitySystem.Configure(this, this);
 
-            // ServiceLocator.Instance.GetService<IObserverUI>().Observer(this, this);
+            // Guarded pause/UI wiring (design D5): subscribe only when a registrant
+            // is present. The isolated test scene has neither; 03_Game has neither
+            // today, so this stays off there too (no installers added — orchestrator
+            // decision). TryGetService is non-throwing (D2).
+            if (ServiceLocator.Instance.TryGetService<IObserverUI>(out var observerUi))
+            {
+                observerUi.Observer(this, this);
+            }
 
-            // ServiceLocator.Instance.GetService<IPauseMainMenu>().onPause += OnPausaMenu; 
+            if (ServiceLocator.Instance.TryGetService<IPauseMainMenu>(out var pauseMainMenu))
+            {
+                pauseMainMenu.onPause += OnPausaMenu;
+            }
 
             ConfigCamera(cameraMain);
 
@@ -123,6 +143,77 @@ namespace _Scripts.Player
             ServiceLocator.Instance.RegisterService<IPlayer>(this);
 
             healComponent.Configure(this);
+        }
+
+        /// <summary>
+        /// Fail-fast configuration validation (spec character-configuration C3,
+        /// design D3). Checks required references and that the statistics are
+        /// playable (life &gt; 0, speeds &gt;= 0) BEFORE any side effect. Logs a
+        /// clear error and returns false so Configure skips registration.
+        /// </summary>
+        private bool ValidateConfiguration()
+        {
+            if (statisticsOfCharacter == null)
+            {
+                Debug.LogError("[CharacterV2] Fail-fast: statisticsOfCharacter is null. " +
+                               "Configure aborted; player not registered.");
+                return false;
+            }
+
+            if (!statisticsOfCharacter.IsValid())
+            {
+                Debug.LogError($"[CharacterV2] Fail-fast: statisticsOfCharacter is invalid " +
+                               $"(life={statisticsOfCharacter.life}, speeds=" +
+                               $"{statisticsOfCharacter.speedToMoveAngry}/" +
+                               $"{statisticsOfCharacter.speedToMoveNormal}/" +
+                               $"{statisticsOfCharacter.speedToMoveScared}). " +
+                               "life must be > 0 and speeds >= 0. Configure aborted; player not registered.");
+                return false;
+            }
+
+            if (inputPlayerV2 == null)
+            {
+                Debug.LogError("[CharacterV2] Fail-fast: missing required reference: inputPlayerV2. " +
+                               "Configure aborted; player not registered.");
+                return false;
+            }
+
+            if (movementRigidbodyV2 == null)
+            {
+                Debug.LogError("[CharacterV2] Fail-fast: missing required reference: movementRigidbodyV2. " +
+                               "Configure aborted; player not registered.");
+                return false;
+            }
+
+            if (animationController == null)
+            {
+                Debug.LogError("[CharacterV2] Fail-fast: missing required reference: animationController. " +
+                               "Configure aborted; player not registered.");
+                return false;
+            }
+
+            if (model3D == null)
+            {
+                Debug.LogError("[CharacterV2] Fail-fast: missing required reference: model3D. " +
+                               "Configure aborted; player not registered.");
+                return false;
+            }
+
+            if (cameraMain == null)
+            {
+                Debug.LogError("[CharacterV2] Fail-fast: missing required reference: cameraMain. " +
+                               "Configure aborted; player not registered.");
+                return false;
+            }
+
+            if (healComponent == null)
+            {
+                Debug.LogError("[CharacterV2] Fail-fast: missing required reference: healComponent. " +
+                               "Configure aborted; player not registered.");
+                return false;
+            }
+
+            return true;
         }
 
         private void OnPausaMenu(bool ispause)
@@ -247,7 +338,8 @@ namespace _Scripts.Player
             _canUseButtons = false;
             rigidbody.linearVelocity = Vector3.zero;
             rigidbody.freezeRotation = true;
-            CanReadInputs = true;
+            // P7: stop input reading exactly once. (Previously this toggled
+            // CanReadInputs = true and then immediately false — dead code.)
             inputPlayerV2.StartToReadInputs(_canUseButtons);
             animationController.UpdateMovementAnimation(movementRigidbodyV2.GetXZVelocity());
         }

@@ -21,5 +21,19 @@ namespace _Scripts.Player
         public float energyToAdd;
 
         public float energy;
+
+        /// <summary>
+        /// Fail-fast configuration validation (spec character-configuration C3):
+        /// the statistics are playable only when life &gt; 0 and every movement
+        /// speed is &gt;= 0. Returns false for any invalid field so callers can
+        /// log a clear error and skip half-initialization.
+        /// </summary>
+        public bool IsValid()
+        {
+            return life > 0
+                   && speedToMoveAngry >= 0f
+                   && speedToMoveNormal >= 0f
+                   && speedToMoveScared >= 0f;
+        }
     }
 }

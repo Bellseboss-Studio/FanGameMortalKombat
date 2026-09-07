@@ -50,12 +50,22 @@ namespace _Scripts.Player
             return closestEnemy;
         }
 
+        /// <summary>
+        /// Registers an enemy for targeting. The trigger path calls this after
+        /// layer/tag filtering; tests use it to exercise closest-enemy selection
+        /// without a physics scene (spec V3, design D7).
+        /// </summary>
+        internal void AddEnemy(GameObject enemy)
+        {
+            _enemies.Add(enemy);
+        }
+
         private void OnTriggerEnter(Collider other)
         {
             if ((layerMask.value & (1 << other.gameObject.layer)) > 0 && other.gameObject.CompareTag(tagToCompare))
             {
                 //Debug.Log($"TargetFocus: OnTriggerEnter: other: {other.gameObject.name}");
-                _enemies.Add(other.gameObject);
+                AddEnemy(other.gameObject);
                 CollisionEnter?.Invoke(other.gameObject);
             }
         }
