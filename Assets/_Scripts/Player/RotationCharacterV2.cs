@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Bellseboss.Pery.Scripts.Input;
+using UnityEngine;
 
 namespace _Scripts.Player
 {
@@ -73,6 +74,17 @@ namespace _Scripts.Player
             _forceRotation = forceRotation;
             _isConfigured = true;
             _canRotate = true;
+
+            // Design "movementReference null": quantization is single-sourced in
+            // MovementRigidbodyV2, so rotation must hold ZERO duplicate thresholds.
+            // Auto-resolve the movement system on the same GameObject wherever both
+            // components coexist (they do on PlayerV2Update). When it is still null
+            // the expected direction degrades to zero and the sync gate accepts
+            // movement's direction unconditionally (graceful, no drift).
+            if (movementReference == null)
+            {
+                movementReference = GetComponent<MovementRigidbodyV2>();
+            }
         }
 
         public void Direction(Vector2 vector2) => _vector2 = vector2;
@@ -88,7 +100,8 @@ namespace _Scripts.Player
                 Vector3 normalizedDirection = worldDirection.normalized;
                 
                 // Calcular la dirección esperada basada en el input actual
-                Vector3 expectedDirection = CalculateMovementDirection(_vector2);
+                // (single source: movement.QuantizeInput + BuildCanonicalDirection)
+                Vector3 expectedDirection = BuildExpectedDirection();
                 
                 // Solo usar la dirección sincronizada si está alineada con la expectativa del input
                 if (expectedDirection != Vector3.zero)
@@ -141,69 +154,20 @@ namespace _Scripts.Player
         }
 
         /// <summary>
-        /// Calcula la dirección de movimiento usando EXACTAMENTE la misma lógica que InputMovementCustomV2.CalculateMovement
+        /// Expected world direction for the current input, built from the SHARED
+        /// single sources (spec player-v2-movement-orientation-alignment): input
+        /// quantization lives in MovementRigidbodyV2.QuantizeInput and the
+        /// yaw-only camera-rotation XZ world direction (camera forward projected
+        /// to XZ; position-independent) lives in
+        /// InputMovementCustomV2.BuildCanonicalDirection. Rotation holds no
+        /// duplicated thresholds or basis. Returns zero (no rotation, no drift)
+        /// when the camera, player or movement reference is unavailable.
         /// </summary>
-        private Vector3 CalculateMovementDirection(Vector2 input)
+        private Vector3 BuildExpectedDirection()
         {
-            if (_camera == null) return Vector3.forward;
-            
-            // PASO 1: Cuantizar input igual que MovementRigidbodyV2
-            Vector2 quantizedInput = Vector2.zero;
-            quantizedInput.y = CalculateDirection(input.y, false);
-            quantizedInput.x = CalculateDirection(input.x, false);
-            
-            if (quantizedInput.sqrMagnitude <= 0.0001f) return Vector3.zero;
-            
-            // PASO 2: usar la forward de la cámara proyectada en XZ para mayor estabilidad cuando la cámara está en LookAt
-            var camForward = _camera.transform.forward;
-            camForward.y = 0f;
-            if (camForward.sqrMagnitude <= 0.000001f)
-            {
-                camForward = _player.transform.position - _camera.transform.position;
-                camForward.y = 0f;
-            }
-            camForward.Normalize();
-            var right = new Vector3(camForward.z, 0f, -camForward.x);
-            var result = quantizedInput.x * right + quantizedInput.y * camForward;
-            
-            if (result.sqrMagnitude > 0.0001f)
-                result.Normalize();
-            
-            if (enableDebugLogs)
-            {
-                Debug.Log($"[RotationCharacterV2] RawInput={input}, QuantizedInput={quantizedInput}, CameraToPlayer={camForward}, Right={right}, Result={result}");
-            }
-            
-            return result;
-        }
-
-        /// <summary>
-        /// Replica la misma lógica de cuantización que MovementRigidbodyV2.CalculateDirection
-        /// </summary>
-        private float CalculateDirection(float axis, bool isTarget)
-        {
-            var axisAbs = Mathf.Abs(axis);
-            
-            // Obtener valores del MovementRigidbodyV2 si está disponible
-            float inputMin = 0.1f;
-            float inputMax = 1f; 
-            float minSpeed = 0.5f;
-            float maxSpeed = 1f;
-            
-            if (movementReference != null)
-            {
-                // Acceder a los valores reales (necesitaríamos propiedades públicas en MovementRigidbodyV2)
-                // Por ahora usamos valores estándar que coincidan
-                inputMin = 0.1f; // inputMin por defecto
-                inputMax = 2f;   // inputMax por defecto 
-                minSpeed = 0.5f; // minSpeed por defecto
-                maxSpeed = 1f;   // maxSpeed por defecto
-            }
-            
-            if (axisAbs < inputMin) return 0;
-            if (isTarget) return axis >= 0 ? minSpeed : -minSpeed;
-            if (axisAbs < inputMax) return axis >= 0 ? minSpeed : -minSpeed;
-            return axis >= 0 ? maxSpeed : -maxSpeed;
+            if (_camera == null || _player == null || movementReference == null) return Vector3.zero;
+            var quantized = movementReference.QuantizeInput(_vector2);
+            return InputMovementCustomV2.BuildCanonicalDirection(quantized, _camera, _player);
         }
 
         private void Update()
@@ -229,7 +193,7 @@ namespace _Scripts.Player
             Vector3 desiredMoveDir;
             
             // SIEMPRE calcular la dirección esperada del input
-            Vector3 expectedFromInput = CalculateMovementDirection(_vector2);
+            Vector3 expectedFromInput = BuildExpectedDirection();
             
             if (syncRecent && expectedFromInput != Vector3.zero)
             {

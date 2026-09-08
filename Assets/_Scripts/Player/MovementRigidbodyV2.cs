@@ -192,6 +192,67 @@ namespace _Scripts.Player
             return CalculateDirection(axis, isTarget, inputMin, inputMax, minSpeed, maxSpeed);
         }
 
+        /// <summary>
+        /// Single-sourced, style-aware input quantization (spec
+        /// player-v2-movement "single-sourced quantization config", design
+        /// "quantization single-sourcing"). Movement owns ALL quantization
+        /// thresholds; rotation consumes this same method so no duplicated
+        /// configuration can drift (the historical bug: rotation hardcoded
+        /// inputMax=2 vs the prefab's 0.5).
+        /// </summary>
+        internal Vector2 QuantizeInput(Vector2 raw)
+        {
+            return movementStyle == MovementStyle.ShaolinMonks
+                ? QuantizeCardinalStatic(raw, monksCardinalDeadZone, normalizeDiagonal)
+                : QuantizeModern(raw, _isTarget, inputMin, inputMax, minSpeed, maxSpeed);
+        }
+
+        /// <summary>
+        /// Modern per-axis step quantization (0 / minSpeed / maxSpeed) with the
+        /// serialized thresholds. Pure static so EditMode tests cover the exact
+        /// logic without scenes.
+        /// </summary>
+        internal static Vector2 QuantizeModern(Vector2 raw, bool isTarget,
+            float inputMin, float inputMax, float minSpeed, float maxSpeed)
+        {
+            return new Vector2(
+                CalculateDirection(raw.x, isTarget, inputMin, inputMax, minSpeed, maxSpeed),
+                CalculateDirection(raw.y, isTarget, inputMin, inputMax, minSpeed, maxSpeed));
+        }
+
+        /// <summary>
+        /// ShaolinMonks cardinal/diagonal quantization (beat'em-up snap), extracted
+        /// from the movement's legacy private QuantizeCardinal so rotation and the
+        /// EditMode suite share the exact same logic. Pure static.
+        /// </summary>
+        internal static Vector2 QuantizeCardinalStatic(Vector2 input, float cardinalDeadZone, bool normalizeDiagonal)
+        {
+            // Convierte input analógico a direcciones cardinales/diagonales limpias estilo beat'em up
+            if (input.sqrMagnitude < cardinalDeadZone * cardinalDeadZone) return Vector2.zero;
+            Vector2 norm = input.normalized;
+            float ax = Mathf.Abs(norm.x);
+            float ay = Mathf.Abs(norm.y);
+            // Permitir diagonales si ambos ejes son suficientemente grandes
+            float diagonalThreshold = 0.55f; // si ambos > 0.55 consideramos diagonal
+            if (ax > diagonalThreshold && ay > diagonalThreshold)
+            {
+                // Diagonal exacta: redondeamos a signos 1/-1
+                norm.x = norm.x > 0 ? 1f : -1f;
+                norm.y = norm.y > 0 ? 1f : -1f;
+                if (normalizeDiagonal) norm = norm.normalized; // para misma velocidad
+                return norm;
+            }
+            // Cardinal: elegir el eje dominante
+            if (ax > ay)
+            {
+                return new Vector2(norm.x > 0 ? 1f : -1f, 0f);
+            }
+            else
+            {
+                return new Vector2(0f, norm.y > 0 ? 1f : -1f);
+            }
+        }
+
         // -----------------------------
         // Movimiento principal (llamado en FixedUpdate)
         // -----------------------------
@@ -203,10 +264,8 @@ namespace _Scripts.Player
                 return;
             }
 
-            // 1) Input cuantizado
-            var result = Vector2.zero;
-            result.y = CalculateDirection(_lastDirection.y, _isTarget);
-            result.x = CalculateDirection(_lastDirection.x, _isTarget);
+            // 1) Input cuantizado (single source: QuantizeInput)
+            var result = QuantizeInput(_lastDirection);
             bool hasInput = result.sqrMagnitude > 0.0001f;
 
             // 2) Decide caminar vs correr
@@ -427,47 +486,21 @@ namespace _Scripts.Player
             // Debug.Log($"[MovementRigidbodyV2] speed={_currentSpeed:F2} accelT={_accelTimer:F2} decelT={_decelTimer:F2} input={_lastDirection} onFloor={floorController.IsTouchingFloor()} jumping={jumpSystem.IsJump()} wall={isScalableWall}");
         }
 
-        private Vector2 QuantizeCardinal(Vector2 input)
-        {
-            // Convierte input analógico a direcciones cardinales/diagonales limpias estilo beat'em up
-            if (input.sqrMagnitude < monksCardinalDeadZone * monksCardinalDeadZone) return Vector2.zero;
-            Vector2 norm = input.normalized;
-            float ax = Mathf.Abs(norm.x);
-            float ay = Mathf.Abs(norm.y);
-            // Permitir diagonales si ambos ejes son suficientemente grandes
-            float diagonalThreshold = 0.55f; // si ambos > 0.55 consideramos diagonal
-            if (ax > diagonalThreshold && ay > diagonalThreshold)
-            {
-                // Diagonal exacta: redondeamos a signos 1/-1
-                norm.x = norm.x > 0 ? 1f : -1f;
-                norm.y = norm.y > 0 ? 1f : -1f;
-                if (normalizeDiagonal) norm = norm.normalized; // para misma velocidad
-                return norm;
-            }
-            // Cardinal: elegir el eje dominante
-            if (ax > ay)
-            {
-                return new Vector2(norm.x > 0 ? 1f : -1f, 0f);
-            }
-            else
-            {
-                return new Vector2(0f, norm.y > 0 ? 1f : -1f);
-            }
-        }
-
         private void ProcessShaolinMonksMovement()
         {
-            // Input digitalizado cardinal/diagonal
-            Vector2 raw = _lastDirection;
-            Vector2 q = QuantizeCardinal(raw);
+            // Input digitalizado cardinal/diagonal (single source: QuantizeInput)
+            Vector2 q = QuantizeInput(_lastDirection);
             bool hasInput = q != Vector2.zero;
 
             // Walk/Run: asumimos siempre run para estilo dinámico, puedes limitar si quieres
             float usedSpeed = _speedRun;
 
-            // Direccion deseada en mundo (usa cámara si existe para que adelante sea hacia adelante de cámara)
+            // Direccion deseada en mundo: MISMO basis canónico yaw-only que la
+            // rotación (helper compartido BuildCanonicalDirection), para que
+            // movimiento y facing nunca discrepen. Fallback camera.forward/right
+            // solo cuando no hay cámara.
             Vector3 desiredWorld = _camera != null
-                ? (_camera.transform.forward * q.y + _camera.transform.right * q.x)
+                ? InputMovementCustomV2.BuildCanonicalDirection(q, _camera, _rigidbody.gameObject)
                 : (transform.forward * q.y + transform.right * q.x);
             desiredWorld.y = 0f;
             Vector3 targetDir = desiredWorld.sqrMagnitude > 0.0001f ? desiredWorld.normalized : _currentVelocityXZ.normalized;
