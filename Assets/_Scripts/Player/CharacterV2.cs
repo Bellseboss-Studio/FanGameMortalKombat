@@ -60,6 +60,13 @@ namespace _Scripts.Player
 
         [SerializeField] private HealComponent healComponent;
 
+        // PR2 (stabilize-player-movement-rotation-basis): runtime-composed STABLE
+        // gameplay-yaw reference. The rendered vcam transform is the damped
+        // Cinemachine output (PositionDamping (1,1,1) + Composer Damping), which
+        // swings while the player strafes; movement/rotation must read gameplay
+        // direction from this stable reference instead (see StableYawReference).
+        private StableYawReference _stableYawReference;
+
 
         public event Action<float> OnEnterDamageEvent;
         public event Action<float> OnAddingEnergy;
@@ -434,11 +441,25 @@ namespace _Scripts.Player
 
         private void ConfigCamera(CinemachineVirtualCameraBase currentCamera)
         {
-            movementRigidbodyV2.Configure(rigidbody, speedWalk, speedRun, currentCamera.gameObject, this,
+            // PR2: both movement and rotation receive the STABLE yaw reference
+            // (undamped steady-state yaw), never the damped vcam transform, so the
+            // shared helper basis is decoupled from PositionDamping/Composer lag.
+            // Created once; re-targeted on camera swaps (SetCamera). Runtime-only:
+            // no serialized scene/prefab reference, zero asset migration.
+            if (_stableYawReference == null)
+            {
+                _stableYawReference = StableYawReference.Create(currentCamera, transform);
+            }
+            else
+            {
+                _stableYawReference.Configure(currentCamera);
+            }
+
+            movementRigidbodyV2.Configure(rigidbody, speedWalk, speedRun, _stableYawReference.gameObject, this,
                 _statisticsOfCharacter);
             combatSystemAngel.Configure(rigidbody, _statisticsOfCharacter, this, this);
             stunSystem.Configure(rigidbody, _statisticsOfCharacter, this, this, this);
-            rotationCharacterV2.Configure(currentCamera.gameObject, gameObject, this, forceRotation);
+            rotationCharacterV2.Configure(_stableYawReference.gameObject, gameObject, this, forceRotation);
         }
 
         public void UpdateAnimation()
